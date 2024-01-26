@@ -21,53 +21,86 @@
       font-size: 18px;
       margin-top: 20px;
     }
+    .analogy {
+      margin-bottom: 20px;
+    }
+    a {
+      color: #6ab5ff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Cybersecurity Chess Analogy</h1>
     <div class="analogies">
-      <p>
-        1. <strong>Discovered Attack (Analogous to Privilege Escalation):</strong>
-        - Chess: A discovered attack occurs when one piece moves to reveal an attack from another piece behind it.<br>
-        - Cybersecurity: Privilege escalation can be seen as a discovered attack. Attackers exploit vulnerabilities or weaknesses to reveal a hidden path to gain higher privileges within a system.
-      </p>
-      <p>
-        2. <strong>Overloading (Analogous to DDoS Attacks):</strong>
-        - Chess: Overloading in chess involves putting pressure on a piece or square with multiple threats, forcing the opponent to choose which threat to address.<br>
-        - Cybersecurity: DDoS attacks can be seen as overloading. Attackers flood a target system with traffic, overwhelming it and making it difficult for legitimate users to access.
-      </p>
-      <p>
-        3. <strong>Forks (Analogous to Credential Theft):</strong>
-        - Chess: A fork is a tactic where one piece attacks two or more opponent's pieces simultaneously.<br>
-        - Cybersecurity: Credential theft can be compared to a fork-like tactic. Attackers steal credentials to gain access to multiple accounts or systems simultaneously.
-      </p>
-      <p>
-        4. <strong>Skewers (Analogous to Data Exfiltration):</strong>
-        - Chess: A skewer is an attack that puts pressure on a more valuable piece by attacking a less valuable one in the same line.<br>
-        - Cybersecurity: Data exfiltration can be compared to a skewer. Attackers target less secure or less valuable data to put pressure on organizations, forcing them to protect their most sensitive information.
-      </p>
-      <p>
-        5. <strong>Pin (Analogous to Defense Evasion):</strong>
-        - Chess: A pin occurs when a piece cannot move because it would expose a more valuable piece to capture.<br>
-        - Cybersecurity: Defense evasion tactics can be seen as creating a pin. Attackers use techniques that restrict the movement or detection of security measures.
-      </p>
-      <p>
-        6. <strong>Sacrifice (Analogous to Diversionary Attacks):</strong>
-        - Chess: Sacrifices involve giving up a piece to gain a positional or tactical advantage.<br>
-        - Cybersecurity: Diversionary tactics can be likened to sacrifices. Attackers may intentionally expose or lose a less critical asset to divert attention from their primary objective.
-      </p>
-      <p>
-        7. <strong>Zwischenzug (Analogous to Evasive Maneuvers):</strong>
-        - Chess: Zwischenzug is a chess tactic where an unexpected intermediate move disrupts the natural flow of the game.<br>
-        - Cybersecurity: Evasive maneuvers can be compared to Zwischenzug. Attackers use unexpected tactics or techniques to disrupt defenders' responses.
-      </p>
-      <p>
-        8. <strong>Stalemate (Analogous to Defensive Success):</strong>
-        - Chess: Stalemate is a situation where the player cannot make any legal moves, resulting in a draw.<br>
-        - Cybersecurity: Defensive success or incident response can be seen as a stalemate. Defenders prevent attackers from achieving their objectives, resulting in a neutral outcome.
-      </p>
-      <!-- Add more analogies here as needed -->
+      <div class="analogy">
+        <p>
+          <strong>Discovered Attack (Analogous to Privilege Escalation):</strong><br>
+          - Chess: A discovered attack occurs when one piece moves to reveal an attack from another piece behind it.<br>
+          - Cybersecurity: Privilege escalation can be seen as a discovered attack. Attackers exploit vulnerabilities or weaknesses to reveal a hidden path to gain higher privileges within a system.<br>
+          - MITRE ATT&CK: Privilege escalation (Tactic: Privilege Escalation, Techniques: <a href="https://attack.mitre.org/techniques/T1078">T1078</a>, <a href="https://attack.mitre.org/techniques/T1068">T1068</a>).
+        </p>
+      </div>
+      <div class="analogy">
+        <p>
+          <strong>Overloading (Analogous to DDoS Attacks):</strong><br>
+          - Chess: Overloading in chess involves putting pressure on a piece or square with multiple threats, forcing the opponent to choose which threat to address.<br>
+          - Cybersecurity: DDoS attacks can be seen as overloading. Attackers flood a target system with traffic, overwhelming it and making it difficult for legitimate users to access.<br>
+          - MITRE ATT&CK: DDoS (Tactic: Impact, Technique: <a href="https://attack.mitre.org/techniques/T1498">T1498</a>).
+        </p>
+      </div>
+      <div class="analogy">
+        <p>
+          <strong>Forks (Analogous to Credential Theft):</strong><br>
+          - Chess: A fork is a tactic where one piece attacks two or more opponent's pieces simultaneously.<br>
+          - Cybersecurity: Credential theft can be compared to a fork-like tactic. Attackers steal credentials to gain access to multiple accounts or systems simultaneously.<br>
+          - MITRE ATT&CK: Credential theft (Tactic: Credential Access, Techniques: <a href="https://attack.mitre.org/techniques/T1003">T1003</a>, <a href="https://attack.mitre.org/techniques/T1555">T1555</a>).
+        </p>
+      </div>
+      <div class="analogy">
+        <p>
+          <strong>Skewers (Analogous to Data Exfiltration):</strong><br>
+          - Chess: A skewer is an attack that puts pressure on a more valuable piece by attacking a less valuable one in the same line.<br>
+          - Cybersecurity: Data exfiltration can be compared to a skewer. Attackers target less secure or less valuable data to put pressure on organizations, forcing them to protect their most sensitive information.<br>
+          - MITRE ATT&CK: Data exfiltration (Tactic: Exfiltration, Techniques: <a href="https://attack.mitre.org/techniques/T1041">T1041</a>, <a href="https://attack.mitre.org/techniques/T1048">T1048</a>).
+        </p>
+      </div>
+      <div class="analogy">
+        <p>
+          <strong>Pin (Analogous to Defense Evasion):</strong><br>
+          - Chess: A pin occurs when a piece cannot move because it would expose a more valuable piece to capture.<br>
+          - Cybersecurity: Defense evasion tactics can be seen as creating a pin. Attackers use techniques that restrict the movement or detection of security measures.<br>
+          - MITRE ATT&CK: Defense evasion (Tactic: Defense Evasion, Techniques: Various).
+        </p>
+      </div>
+      <div class="analogy">
+        <p>
+          <strong>Sacrifice (Analogous to Diversionary Attacks):</strong><br>
+          - Chess: Sacrifices involve giving up a piece to gain a positional or tactical advantage.<br>
+          - Cybersecurity: Diversionary tactics can be likened to sacrifices. Attackers may intentionally expose or lose a less critical asset to divert attention from their primary objective.<br>
+          - MITRE ATT&CK: Diversionary tactics (Tactic: Defense Evasion, Techniques: Various).
+        </p>
+      </div>
+      <div class="analogy">
+        <p>
+          <strong>Zwischenzug (Analogous to Evasive Maneuvers):</strong><br>
+          - Chess: Zwischenzug is a chess tactic where an unexpected intermediate move disrupts the natural flow of the game.<br>
+          - Cybersecurity: Evasive maneuvers can be compared to Zwischenzug. Attackers use unexpected tactics or techniques to disrupt defenders' responses.<br>
+          - MITRE ATT&CK: Evasive tactics (Tactic: Defense Evasion, Techniques: Various).
+        </p>
+      </div>
+      <div class="analogy">
+        <p>
+          <strong>Stalemate (Analogous to Defensive Success):</strong><br>
+          - Chess: Stalemate is a situation where the player cannot make any legal moves, resulting in a draw.<br>
+          - Cybersecurity: Defensive success or incident response can be seen as a stalemate. Defenders prevent attackers from achieving their objectives, resulting in a neutral outcome.<br>
+          - Cyber Kill Chain: Stalemate represents a successful defense that prevents the attacker from advancing through the Kill Chain phases.
+        </p>
+      </div>
     </div>
   </div>
 </body>
