@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybersecurity Chess</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        .chess-piece {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        h2 {
+            color: #333;
+        }
+        p {
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cybersecurity Chess</h1>
+
+    <div class="chess-piece">
+        <h2>Pawn (1 point)</h2>
+        <p><b>Basic reconnaissance:</b> Involves initial gathering of information about the target network. Identifies open ports, services, and subdomains without aggressive interaction.</p>
+        <p><b>Scanning and enumeration:</b> More in-depth analysis to discover vulnerabilities and weaknesses in the network's defenses, like outdated software or unprotected entry points.</p>
+    </div>
+
+    <div class="chess-piece">
+        <h2>Knight (3 points)</h2>
+        <p><b>Initial access:</b> Achieving user-level access to a host or non-critical system, often through exploiting known vulnerabilities or social engineering tactics.</p>
+        <p><b>Lateral movement:</b> Spreading across the network from the initial entry point, seeking higher privileges or more sensitive data, without yet gaining full control.</p>
+    </div>
+
+    <div class="chess-piece">
+        <h2>Bishop (5 points)</h2>
+        <p><b>Privileged access:</b> Gaining higher-level permissions, potentially including administrator rights, to access more critical systems or data.</p>
+        <p><b>Data exfiltration:</b> Transferring sensitive data from the target network to the attacker, often stealthily to avoid detection.</p>
+    </div>
+
+    <div class="chess-piece">
+        <h2>Rook (7 points)</h2>
+        <p><b>Persistence:</b> Establishing mechanisms to maintain access over time, often through backdoors or other covert methods.</p>
+        <p><b>Escalation of privileges:</b> Expanding access rights, often by exploiting system flaws, to gain higher level of control over network resources.</p>
+    </div>
+
+    <div class="chess-piece">
+        <h2>Queen (10 points)</h2>
+        <p><b>Root access:</b> Achieving the highest level of system access, allowing complete control over the network, akin to the most powerful chess piece.</p>
+        <p><b>Complete control:</b> Gaining authority over critical systems, which can include altering or halting essential operations.</p>
+    </div>
+
+    <div class="chess-piece">
+        <h2>Checkmate (15 points)</h2>
+        <p><b>Complete compromise:</b> Achieving full dominion over the target network, including root access, data theft, and the ability to disrupt operations, representing a decisive victory.</p>
+    </div>
+
+    <div class="chess-piece">
+        <h2>Position (Bonus Points)</h2>
+        <p><b>Mate in 3 (5 bonus points):</b> Securing a strategic position within the network, such as root privileges on an admin account or running command-and-control operations, reflecting a significant tactical advantage.</p>
+    </div>
+
+</body>
+</html>
