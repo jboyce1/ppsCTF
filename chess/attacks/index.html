@@ -1,20 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Cybersecurity Tactics and Chess: Offense</title>
+  <title>Cybersecurity Chess Analogy</title>
   <style>
     body {
-      background-color: black;
-      color: white;
+      background-color: #0a0a0a; /* Dark background */
+      color: #d9d9d9; /* Light grey text for readability */
       font-family: Arial, sans-serif;
     }
     .container {
       max-width: 800px;
       margin: 0 auto;
       padding: 20px;
+      background-color: #1a1a1a; /* Slightly lighter dark background for the container */
+      border-radius: 8px; /* Rounded corners for the container */
     }
     h1 {
-      color: white;
+      color: #6ab5ff; /* Neon blue color for the header, matching the banner */
       text-align: center;
     }
     .analogies {
@@ -23,9 +25,11 @@
     }
     .analogy {
       margin-bottom: 20px;
+      border-left: 3px solid #6ab5ff; /* Adding a neon blue left border to each analogy block */
+      padding-left: 10px;
     }
     a {
-      color: #6ab5ff;
+      color: #32cd32; /* Neon green color for links */
       text-decoration: none;
     }
     a:hover {
@@ -37,67 +41,73 @@
   <div class="container">
     <h1>Cybersecurity Chess Analogy</h1>
     <div class="analogies">
-      
-      <!-- Pawn -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cybersecurity Chess Analogy</title>
+  <style>
+    /* ... existing style ... */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Cybersecurity Chess Analogy</h1>
+    <div class="analogies">
+
+      <!-- Absolute Pin -->
       <div class="analogy">
         <p>
-          <strong>Pawn (1 point):</strong><br>
-          - Basic reconnaissance: Involves initial gathering of information about the target network.<br>
-          - Scanning and enumeration: Identifying potential vulnerabilities and weaknesses in the target's perimeter.<br>
+          <strong>Absolute Pin (Chess Tactic):</strong><br>
+          - <a href="https://attack.mitre.org/techniques/T1480">Execution Guardrails (T1480)</a>: Limits action like an absolute pin restricts a piece's movement.<br>
+          - <a href="https://attack.mitre.org/techniques/T1212">Exploitation for Credential Access (T1212)</a>: Similar to an absolute pin, it exploits a specific vulnerability to gain further advantage.<br>
+          - <a href="https://attack.mitre.org/techniques/T1055">Process Injection (T1055)</a>: Like a pinned piece, this technique discreetly operates within the confines of a legitimate process.<br>
         </p>
       </div>
 
-      <!-- Knight -->
+      <!-- Advanced Pawn -->
       <div class="analogy">
         <p>
-          <strong>Knight (3 points):</strong><br>
-          - Initial access: Gaining access to a user-level host or non-critical systems.<br>
-          - Lateral movement: Moving within the network after initial access, without reaching a highly privileged level.<br>
+          <strong>Advanced Pawn (Chess Tactic):</strong><br>
+          - <a href="https://attack.mitre.org/techniques/T1078">Valid Accounts (T1078)</a>: Represents advancing into enemy territory securely, like an advanced pawn.<br>
+          - <a href="https://attack.mitre.org/techniques/T1068">Privilege Escalation (T1068)</a>: Mirrors an advanced pawn's progression to becoming more powerful.<br>
+          - <a href="https://attack.mitre.org/techniques/T lateral">Lateral Movement (T lateral)</a>: The pawn's advance into enemy lines is akin to moving laterally within a network.<br>
         </p>
       </div>
 
-      <!-- Bishop -->
+      <!-- Alekhine’s Gun -->
       <div class="analogy">
         <p>
-          <strong>Bishop (5 points):</strong><br>
-          - Privileged access: Obtaining access to a privileged account or system.<br>
-          - Data exfiltration: Successfully exfiltrating sensitive data from the target network.<br>
+          <strong>Alekhine’s Gun (Chess Tactic):</strong><br>
+          - <a href="https://attack.mitre.org/techniques/T1104">Multi-Stage Channels (T1104)</a>: Aligns multiple components for a coordinated attack, like Alekhine’s Gun.<br>
+          - <a href="https://attack.mitre.org/techniques/T1071">Command and Control (T1071)</a>: Involves orchestrating attacks, much like the strategic arrangement in Alekhine’s Gun.<br>
+          - <a href="https://attack.mitre.org/techniques/T1583">Resource Development (T1583)</a>: Reflects the careful preparation and alignment of resources akin to setting up Alekhine’s Gun.<br>
         </p>
       </div>
 
-      <!-- Rook -->
+      <!-- Attraction -->
       <div class="analogy">
         <p>
-          <strong>Rook (7 points):</strong><br>
-          - Persistence: Establishing continued access within the target network.<br>
-          - Escalation of privileges: Gaining higher access within the network.<br>
+          <strong>Attraction (Chess Tactic):</strong><br>
+          - <a href="https://attack.mitre.org/techniques/T1189">Drive-by Compromise (T1189)</a>: Luring users to a compromised system, similar to attracting a piece into a vulnerable position.<br>
+          - <a href="https://attack.mitre.org/techniques/T1192">Spearphishing Link (T1192)</a>: Involves enticing a target to click a link, akin to the lure in the attraction tactic.<br>
+          - <a href="https://attack.mitre.org/techniques/T1204">User Execution (T1204)</a>: Reflects the tactic of tricking a user into making a move, much like luring a chess piece.<br>
         </p>
       </div>
 
-      <!-- Queen -->
+      <!-- Battery -->
       <div class="analogy">
         <p>
-          <strong>Queen (10 points):</strong><br>
-          - Root access: Achieving the highest level of access within the target network.<br>
-          - Complete control: Gaining control over critical systems or the entire network.<br>
+          <strong>Battery (Chess Tactic):</strong><br>
+          - <a href="https://attack.mitre.org/techniques/T1486">Data Encrypted for Impact (T1486)</a>: Aligns multiple systems for a concentrated attack, similar to a battery in chess.<br>
+          - <a href="https://attack.mitre.org/techniques/T1498">Network Denial of Service (T1498)</a>: Overwhelming a network resource, akin to the concentrated force of a battery.<br>
+          - <a href="https://attack.mitre.org/techniques/T1485">Impact(T1485)</a>: The collective effect of a battery is akin to creating a significant impact within a system.<br>
         </p>
       </div>
 
-      <!-- Checkmate -->
-      <div class="analogy">
-        <p>
-          <strong>Checkmate (15 points):</strong><br>
-          - Complete compromise: Full control over the target network, including root access and data exfiltration.<br>
-        </p>
-      </div>
-
-      <!-- Position (Bonus Points) -->
-      <div class="analogy">
-        <p>
-          <strong>Position (Bonus Points):</strong><br>
-          - Mate in 3 (5 bonus points): Achieving root privileges on an admin account or running C2 operations inside the adversary's network.<br>
-        </p>
-      </div>
+    </div>
+  </div>
+</body>
+</html>
 
     </div>
   </div>
