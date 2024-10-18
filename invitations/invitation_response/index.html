@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pps{CyberTacticsFest} Challenge</title>
+    <style>
+        body {
+            background-color: black;
+            color: #00FF00;
+            font-family: 'monospace', Courier, monospace;
+            font-size: 16px;
+            padding: 20px;
+        }
+
+        #console {
+            white-space: pre-wrap;
+            overflow-wrap: break-word;
+        }
+
+        .blinking-cursor {
+            font-weight: bold;
+            font-size: 18px;
+            color: #00FF00;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0% { opacity: 1; }
+            50% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="console"></div>
+<div class="blinking-cursor">|</div>
+
+<script>
+    const text = `
+Welcome to Kali Linux 2024.2 (GNU/Linux 5.15.0-76-generic x86_64)
+
+ppscybertacticsfest@kali:~$ `;
+
+    const commitmentText = `
+For anyone who did not participate last year, here is the level of commitment/participation you can anticipate:
+`;
+
+    const rapidText = `
+	- 2-4+ remote hours per week (depending on your team and involvement level) during the practice season February-April:
+
+   	 -- Cyber.org accounts: These are Kali Linux attack boxes designed to exploit vulnerabilities and conduct 'penetration tests.' They are on a separate network (a 'range') provided by cyber.org at no cost and can be accessed by your personal computer or by a school laptop.
+
+    	 -- Work role training: There were 7 "work roles" last year, which are collections of specific skills needed to capture flags during the competition.
+
+      	  	--- These are presented from 7-9pm one night per week.
+
+        	--- Each skill has explicit directions and a video walkthrough on how to complete the task.
+
+        	--- Each skill has a series of challenges that allow you to practice the skill while the skill is being presented.
+
+    	  -- Group Challenges: These are challenges designed specifically for teams to practice conducting operations as a team.
+
+    	  -- Individual Challenges: These are work-role specific challenges.
+
+	- Optional Saturdays in March-April from 9am-1pm at the Gifted Center to practice on the competition lab:
+
+    	  -- There is pizza, and usually some LAN gaming involved.
+
+	- One week worth of competition during the school day April 21-25th:
+
+    	  -- Depending on your team's performance and the tournament schedule.
+
+_________________________________________________________________________________________
+
+
+
+For those of you who participated last year, I have a couple of new things that will be added this year:
+
+	- Outside school districts will be participating with teams of 8 (two so far).
+
+	- More outside organizations will be helping serve as mentors (CMU, Army, Cyversity, Blackgirlshack).
+
+	- RSA Public/Private key tunneling and multiplexing (tunnels inside of tunnels).
+
+	- Proxychains for using Kali tools through tunnel chains.
+
+	- Reverse engineering for flags using Ghidra.
+
+_________________________________________________________________________________________
+
+
+
+I also have some things 'in the works' that have not come to fruition yet, but I am both hopeful and tenacious:
+
+	- Opportunities for merit-based CompTIA Sec+ or PenTest+ Vouchers (for Juniors/Seniors).
+
+	- Pizza shop "sponsorship" for Saturdays.
+
+	- Escape Room sponsorship for teams to practice their skills off the keyboard.
+
+_________________________________________________________________________________________
+
+
+
+I'll be in touch with more information soon. In the meantime, your school needs between 6-8 members on the team to successfully compete. Encourage your classmates to take the challenge.
+
+ppscybertacticsfest@kali:~$ 
+`;
+
+    let i = 0;
+    const slowSpeed = 150;  // Slow typing speed
+    const fastSpeed = 75;   // Faster typing speed for second part
+    const rapidSpeed = 10;  // Rapid speed for the rest
+    const gapDelay = 1000;  // Delay between sections
+
+    function typeText(txt, speed, callback) {
+        if (i < txt.length) {
+            document.getElementById("console").innerText += txt.charAt(i);
+            i++;
+            setTimeout(() => typeText(txt, speed, callback), speed);
+        } else {
+            if (callback) callback();
+        }
+    }
+
+    function startTyping() {
+        typeText(text, slowSpeed, () => {
+            i = 0;  // Reset for the next string
+            setTimeout(() => {
+                typeText("ppscybertacticsfest@kali:~$ ", fastSpeed, () => {
+                    i = 0;  // Reset for the next string
+                    setTimeout(() => {
+                        typeText(commitmentText, rapidSpeed, () => {
+                            i = 0;  // Reset for the next string
+                            setTimeout(() => {
+                                typeText(rapidText, rapidSpeed);
+                            }, gapDelay);
+                        });
+                    }, gapDelay);
+                });
+            }, gapDelay);
+        });
+    }
+
+    setTimeout(startTyping, 1000);  // Start typing after a 1-second delay
+</script>
+
+</body>
+</html>
