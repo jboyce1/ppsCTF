@@ -1,0 +1,6 @@
+To set up the challenge: 
+
+from ubuntu mahcine:
+git clone https://github.com/jboyce1/ppsCTF.git
+
+navigate to the file in gui and 'copy to' the desktop for both SCPJohnny Challenges
