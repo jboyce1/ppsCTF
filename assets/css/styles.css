@@ -36,15 +36,15 @@ nav h1 {
     margin-bottom: 20px;
 }
 
-/* Styling links in navigation */
-nav a {
-    color: #9bf; /* Light blue for links */
+/* Styling links in navigation and content */
+nav a, a {
+    color: #9bf; /* Unified light blue for links */
     text-decoration: none;
     display: block;
     margin-bottom: 10px;
 }
 
-nav a:hover {
+nav a:hover, a:hover {
     color: #ddf;
 }
 
