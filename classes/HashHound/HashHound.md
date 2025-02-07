@@ -104,8 +104,6 @@ man
 
 ## Suspicious Needle Search
 
-## Suspicious Needle Search
-
 You need to find the suspicious needle. They were all good when they left but something changed. The `knowngood_md5sums_filenames.txt` is a list of all the unsuspicious files.
 
 **step1:** Navigate to the directory containing `knowngood_md5sums_filenames.txt`  
