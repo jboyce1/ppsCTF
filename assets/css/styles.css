@@ -24,6 +24,7 @@ nav {
 
 /* Content area styling */
 main {
+    margin-left: 20px; /* Provide space from the left edge */
     margin-right: 220px; /* Adjust based on nav width */
     padding: 20px;
     background-color: #444; /* Slightly lighter dark background for content */
@@ -36,22 +37,32 @@ nav h1 {
     margin-bottom: 20px;
 }
 
-/* Styling links in navigation and content */
-nav a, a {
+/* Styling links in navigation */
+nav a {
     color: #9bf; /* Unified light blue for links */
     text-decoration: none;
     display: block;
     margin-bottom: 10px;
 }
 
-nav a:hover, a:hover {
+nav a:hover {
     color: #ddf;
+}
+
+/* Styling links in main content */
+a {
+    color: #9bf; /* Ensure main content links are the same light blue */
+    text-decoration: none; /* No underline for a cleaner look */
+}
+
+a:hover {
+    color: #ddf; /* Lighter blue on hover */
 }
 
 /* Main Content */
 main {
     max-width: 800px;
-    margin: 20px auto;
+    margin: auto;
     padding: 20px;
     background-color: #222; /* Dark background for main content */
     border: 1px solid #444;
