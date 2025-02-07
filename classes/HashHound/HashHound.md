@@ -51,20 +51,20 @@ pps{someflag}
 
 Walkthrough:
 ctrl + alt + t
-`cd /Desktop/`
-`ls`
-`cd Unit 1: Reverse Engineering`
-`ls`
-`cd Checking Hash Functions/`
-`ls`
-`cd 1 Fun New Game`
-`md5sum FuNeWgAmE.sh`
-************************************ FuNeWgAmE.sh
-`md5sum funnewGAME.sh`
-************************************ funnewGAME.sh
-etc etc
-double click on game with match of:
-cf9406bee74516677ca364c682c96d90    
+`cd /Desktop/`    
+`ls`    
+`cd Unit 1: Reverse Engineering`    
+`ls`    
+`cd Checking Hash Functions/`    
+`ls`    
+`cd 1 Fun New Game`    
+`md5sum FuNeWgAmE.sh`    
+************************************ FuNeWgAmE.sh    
+`md5sum funnewGAME.sh`    
+************************************ funnewGAME.sh    
+etc etc    
+double click on game with match of:    
+cf9406bee74516677ca364c682c96d90        
 
 <iframe src="https://mypps.sharepoint.com/sites/ppsCyberTacticsFest/_layouts/15/embed.aspx?UniqueId=8b3b12a4-1dd6-4873-a155-78602d0ae6ac&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Hash-Hound-Fun-New-Game.mp4"></iframe>
   
