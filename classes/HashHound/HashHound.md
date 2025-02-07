@@ -77,13 +77,13 @@ Here is your md5sum needle: c6fca9b96af058081fe4bfd89523f3f4
 
 step1: Navigate to the '2 Needle in the Hayloft' directory
 step2: Make a text file using the following command:
-`find . -type f -exec md5sum {} \; > 01md5sums.txt`
+**`find . -type f -exec md5sum {} \; > 01md5sums.txt`**
     
 Explaination for command    
--    `find .` searches for files and directories starting from the current directory (.).    
--    `-type f` specifies that we are interested in files only, not directories.    
--    `-exec md5sum {} \;` executes the md5sum command on each file found by find. {} represents the current file being processed by find.    
--    `> md5sums.txt` redirects the output (MD5 checksums) to a file named md5sums.txt.    
+-    **`find .`** searches for files and directories starting from the current directory (.).    
+-    **`-type f`** specifies that we are interested in files only, not directories.    
+-    **`-exec md5sum {} \;`** executes the md5sum command on each file found by find. {} represents the current file being processed by find.    
+-    **`> md5sums.txt`** redirects the output (MD5 checksums) to a file named md5sums.txt.    
    
 step3: open the text file and search (ctrl+f) the needle you are looking for        
 step4: open the file and find the flag
