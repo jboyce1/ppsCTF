@@ -50,7 +50,7 @@ pps{someflag}
 📥 [Practice 3](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%203).zip)    
 
 Walkthrough:
-ctrl + alt + t
+`ctrl + alt + t`    
 `cd /Desktop/`    
 `ls`    
 `cd Unit 1: Reverse Engineering`    
