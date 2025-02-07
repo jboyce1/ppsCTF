@@ -74,13 +74,32 @@ cf9406bee74516677ca364c682c96d90
 
 ## Needle in the Hayloft
 
-<iframe src="https://mypps.sharepoint.com/sites/ppsCyberTacticsFest/_layouts/15/embed.aspx?UniqueId=c5bd88bb-87aa-4db1-838a-64ff932260d6&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Hash-Hound-Needle-in-the-Hayloft.mp4"></iframe>
+Here is your md5sum needle: c6fca9b96af058081fe4bfd89523f3f4
+
+
+step1: Navigate to the '2 Needle in the Hayloft' directory
+step2: Make a text file using the following command:
+`find . -type f -exec md5sum {} \; > 01md5sums.txt`
+
+Explaination for command    
+   find . searches for files and directories starting from the current directory (.).    
+   -type f specifies that we are interested in files only, not directories.    
+   -exec md5sum {} \; executes the md5sum command on each file found by find. {} represents the current file being processed by find.    
+   > md5sums.txt redirects the output (MD5 checksums) to a file named md5sums.txt.    
+   
+step3: open the text file and search (ctrl+f) the needle you are looking for        
+step4: open the file and find the flag
+    
+For more informaiton on the functions: 
+man find    
+man    
 
 **Download Practice Files**:  
 📥 [Practice 1](./Needle%20in%20the%20Hayloft%20Practice/2%20Needle%20in%20the%20Hayloft%20(practice%201).zip)  
 📥 [Practice 2](./Needle%20in%20the%20Hayloft%20Practice/2%20Needle%20in%20the%20Hayloft%20(practice%202).zip)  
 📥 [Practice 3](./Needle%20in%20the%20Hayloft%20Practice/2%20Needle%20in%20the%20Hayloft%20(practice%203).zip)  
 
+<iframe src="https://mypps.sharepoint.com/sites/ppsCyberTacticsFest/_layouts/15/embed.aspx?UniqueId=c5bd88bb-87aa-4db1-838a-64ff932260d6&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Hash-Hound-Needle-in-the-Hayloft.mp4"></iframe>    
 ---
 
 ## Coming to Greps with the Past
