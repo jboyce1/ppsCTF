@@ -102,6 +102,30 @@ man
 
 ## Coming to Greps with the Past
 
+## Suspicious Needle Search
+
+You need to find the suspicious needle. They were all good when they left but something changed. 
+The `knowngood_md5sums_filenames.txt` is a list of all the unsuspicious files.
+
+**step1:** Navigate to the directory containing `knowngood_md5sums_filenames.txt`    
+
+**step2:** Make a text file using the following command:    
+`cut -d ' ' -f 1 knowngood_md5sums_filenames.txt > knowngood_hashes.txt`    
+
+**Explanation for command**    
+- `find .` searches for files and directories starting from the current directory (.).    
+- `-type f` specifies that we are interested in files only, not directories.    
+- `-exec md5sum {} \;` executes the md5sum command on each file found by find. {} represents the current file being processed by find.    
+- `> knowngood_hashes.txt` redirects the output (MD5 checksums) to a file named md5sums.txt.    
+
+**step3:** open the text file and search (ctrl+f) the needle you are looking for        
+
+**step4:** open the file and find the flag
+
+For more information on the functions:    
+`man find`    
+`man md5sum`    
+
 <iframe src="https://mypps.sharepoint.com/sites/ppsCyberTacticsFest/_layouts/15/embed.aspx?UniqueId=9f33c970-8bcc-4123-bd43-fdefbd355660&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Hash Hound Coming to greps with the past.mp4"></iframe>
 
 **Download Practice Files**:  
