@@ -19,6 +19,17 @@ title: Hash Hound
 
 <iframe src="https://mypps.sharepoint.com/sites/ppsCyberTacticsFest/_layouts/15/embed.aspx?UniqueId=8b3b12a4-1dd6-4873-a155-78602d0ae6ac&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Hash-Hound-Fun-New-Game.mp4"></iframe>
 
+Specific Skills
+-Use terminal to develop an md5sum hash of a string
+-Determine the md5sum hash of a file
+-Determine the md5sum has of multiple files
+-Create a text document from a command output
+-Use grep to search for a specific output in a list
+-Use find, cut, and grep to find a unknown hash from a list of known hashes
+
+To find a hash in terminal: 
+`echo -n YourStingHere | md5sum`
+26617986d9bafa5795a2c63fe209781e -
 **Download Practice Files**:  
 📥 [Practice 1](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%201).zip)  
 📥 [Practice 2](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%202).zip)  
