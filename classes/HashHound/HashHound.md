@@ -26,21 +26,20 @@ Specific Skills
 - Use grep to search for a specific output in a list
 - Use find, cut, and grep to find a unknown hash from a list of known hashes
 
-To find a hash in terminal: 
-`echo -n YourStingHere | md5sum`
-26617986d9bafa5795a2c63fe209781e -
+**To find a hash in terminal:**     
+`echo -n YourStingHere | md5sum`    
+Output looks like: 26617986d9bafa5795a2c63fe209781e -
 
 To complete the challenges, you will need to download them on a Linux device (e.g. Kali through cyber.org) 
-
- 
-
-Step 1: Click the link to open a new page
-Step 2: Download the .zip file by clicking the ‘Download’ button on the top left of the page
-Step 3: Go to your Downloads folder and find the file
-Step 4: Right click and extract the file
-Step 5: Go and find the Flag (watch the video, remember flags look like;
+- Step 1: Click the link to open a new page
+- Step 2: Download the .zip file by clicking the ‘Download’ button on the top left of the page
+- Step 3: Go to your Downloads folder and find the file
+- Step 4: Right click and extract the file
+- Step 5: Go and find the Flag (watch the video, remember flags look like;
 pps{someflag}
-Step 6: Click the “Flag” link after the practice and paste your flag to see if is correct
+- Step 6: Click the “Flag” link after the practice and paste your flag to see if is correct
+
+
 **Download Practice Files**:  
 📥 [Practice 1](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%201).zip)  
 
