@@ -1,0 +1,37 @@
+/* Dark Theme Styling */
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #333; /* Dark background */
+    color: #fff; /* White text */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+header {
+    text-align: center;
+    padding: 20px 0;
+    background-color: #444; /* Slightly lighter dark background */
+}
+
+header a {
+    text-decoration: none;
+    color: #fff; /* White links */
+}
+
+a {
+    color: #99c; /* Light blue links */
+    text-decoration: none;
+}
+
+a:hover {
+    color: #ddf;
+}
+
+main {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #222; /* Even darker background */
+    border: 1px solid #444;
+}
