@@ -75,7 +75,7 @@ cf9406bee74516677ca364c682c96d90
 
 Here is your md5sum needle: c6fca9b96af058081fe4bfd89523f3f4
 
-step1: Navigate to the '2 Needle in the Hayloft' directory
+step1: Navigate to the '2 Needle in the Hayloft' directory    
 step2: Make a text file using the following command:
 **`find . -type f -exec md5sum {} \; > 01md5sums.txt`**
     
