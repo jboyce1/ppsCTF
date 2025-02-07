@@ -37,6 +37,27 @@ nav h1 {
     margin-bottom: 20px;
 }
 
+/*------------------------------------*\
+  # Walkthrough Section
+\*------------------------------------*/
+
+.walkthrough-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.walkthrough-text, .walkthrough-video {
+    flex: 1;
+    min-width: 300px;
+}
+
+.walkthrough-video iframe {
+    width: 100%;
+    height: auto;
+}
+
 /* Styling links in navigation */
 nav a {
     color: #9bf; /* Unified light blue for links */
