@@ -1,4 +1,4 @@
-/* Dark Theme Styling */
+/* General Styling */
 body {
     font-family: 'Courier New', Courier, monospace;
     background-color: #333; /* Dark background */
@@ -8,30 +8,57 @@ body {
     line-height: 1.6;
 }
 
-header {
-    text-align: center;
-    padding: 20px 0;
-    background-color: #444; /* Slightly lighter dark background */
+/* Right-side fixed navigation bar */
+nav {
+    position: fixed;
+    right: 0;
+    top: 0;
+    width: 200px;
+    height: 100vh;
+    background-color: #222; /* Dark background for nav */
+    color: #fff;
+    padding: 20px;
+    overflow-y: auto; /* Allows scrolling within the navigation bar if needed */
+    box-shadow: -2px 0 5px rgba(0,0,0,0.5);
 }
 
-header a {
+/* Content area styling */
+main {
+    margin-right: 220px; /* Adjust based on nav width */
+    padding: 20px;
+    background-color: #444; /* Slightly lighter dark background for content */
+    min-height: 100vh; /* Ensure full height for smaller content pages */
+}
+
+/* Header within the navigation bar */
+nav h1 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+}
+
+/* Styling links in navigation */
+nav a {
+    color: #9bf; /* Light blue for links */
     text-decoration: none;
-    color: #fff; /* White links */
+    display: block;
+    margin-bottom: 10px;
 }
 
-a {
-    color: #99c; /* Light blue links */
-    text-decoration: none;
-}
-
-a:hover {
+nav a:hover {
     color: #ddf;
 }
 
+/* Main Content */
 main {
     max-width: 800px;
     margin: 20px auto;
     padding: 20px;
-    background-color: #222; /* Even darker background */
+    background-color: #222; /* Dark background for main content */
     border: 1px solid #444;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Improve readability of text */
+p, li, h1, h2, h3, h4, h5, h6 {
+    color: #ddd; /* Light grey for text to improve readability */
 }
