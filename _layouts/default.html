@@ -22,5 +22,28 @@
     <main class="main-content">
         {{ content }}
     </main>
+
+    <!-- JavaScript to Add "Copy" Buttons to Code Blocks -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll("pre code").forEach((block) => {
+            let button = document.createElement("button");
+            button.innerText = "Copy";
+            button.style.cssText = "position: absolute; right: 10px; top: 10px; background: #555; color: white; border: none; padding: 5px; cursor: pointer;";
+            
+            let wrapper = document.createElement("div");
+            wrapper.style.cssText = "position: relative; display: inline-block; width: 100%;";
+            block.parentNode.replaceWith(wrapper);
+            wrapper.appendChild(block);
+            wrapper.appendChild(button);
+
+            button.addEventListener("click", () => {
+                navigator.clipboard.writeText(block.innerText);
+                button.innerText = "Copied!";
+                setTimeout(() => button.innerText = "Copy", 2000);
+            });
+        });
+    });
+    </script>
 </body>
 </html>
