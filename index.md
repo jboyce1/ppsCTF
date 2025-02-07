@@ -16,7 +16,7 @@ title: Home
 - SCP files from your computers onto your opponents
 - Use terminal for directory and file navigation
 
-**2/11 Tuesday 7-9pm Teams Meeting**: [Hash Hound (Host)](./classes/HashHound)
+**2/11 Tuesday 7-9pm Teams Meeting**: [Hash Hound (Host)](./classes/HashHound/HashHound)
 - Develop an md5sum hash of a string
 - Determine the md5sum hash of a file
 - Determine the md5sum hash of multiple files
