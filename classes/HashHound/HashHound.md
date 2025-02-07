@@ -18,7 +18,7 @@ title: Hash Hound
 ## Fun New Game
 
 
-Specific Skills
+### Specific Skills
 - Use terminal to develop an md5sum hash of a string
 - Determine the md5sum hash of a file
 - Determine the md5sum has of multiple files
@@ -32,7 +32,7 @@ echo -n YourStingHere | md5sum
 ```      
 Output looks like: 26617986d9bafa5795a2c63fe209781e -
 
-To complete the challenges, you will need to download them on a Linux device (e.g. Kali through cyber.org) 
+### To complete the challenges, you will need to download them on a Linux device (e.g. Kali through cyber.org) 
 - Step 1: Click the link to open a new page
 - Step 2: Download the .zip file by clicking the ‘Download’ button on the top left of the page
 - Step 3: Go to your Downloads folder and find the file
