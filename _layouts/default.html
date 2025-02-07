@@ -7,13 +7,20 @@
     <link rel="stylesheet" href="{{ '/assets/css/styles.css' | relative_url }}">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1><a href="{{ '/' | relative_url }}">{{ site.title }}</a></h1>
-        </header>
-        <main>
-            {{ content }}
-        </main>
-    </div>
+    <nav>
+        <h1><a href="{{ '/' | relative_url }}">{{ site.title }}</a></h1>
+        <!-- Challenge Links -->
+        <a href="{{ '/classes/SSHerlock' | relative_url }}">SSH erlock (Network)</a>
+        <a href="{{ '/classes/HashHound' | relative_url }}">Hash Hound (Host)</a>
+        <a href="{{ '/classes/CyberCartographer' | relative_url }}">Cyber Cartographer (Network)</a>
+        <a href="{{ '/classes/MsDisin' | relative_url }}">Ms. Disin (Host)</a>
+        <a href="{{ '/classes/LANgeist' | relative_url }}">LAN geist (Network)</a>
+        <a href="{{ '/classes/Malchemist' | relative_url }}">Malchemist (Host)</a>
+        <a href="{{ '/classes/PortalLord' | relative_url }}">Portal lord (Network)</a>
+        <a href="{{ '/classes/8ball' | relative_url }}">8ball (Host)</a>
+    </nav>
+    <main class="main-content">
+        {{ content }}
+    </main>
 </body>
 </html>
