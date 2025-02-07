@@ -104,27 +104,31 @@ man
 
 ## Suspicious Needle Search
 
-You need to find the suspicious needle. They were all good when they left but something changed. 
-The `knowngood_md5sums_filenames.txt` is a list of all the unsuspicious files.
+## Suspicious Needle Search
 
-**step1:** Navigate to the directory containing `knowngood_md5sums_filenames.txt`    
+You need to find the suspicious needle. They were all good when they left but something changed. The `knowngood_md5sums_filenames.txt` is a list of all the unsuspicious files.
 
-**step2:** Make a text file using the following command:    
-`cut -d ' ' -f 1 knowngood_md5sums_filenames.txt > knowngood_hashes.txt`    
+**step1:** Navigate to the directory containing `knowngood_md5sums_filenames.txt`  
 
-**Explanation for command**    
-- `find .` searches for files and directories starting from the current directory (.).    
-- `-type f` specifies that we are interested in files only, not directories.    
-- `-exec md5sum {} \;` executes the md5sum command on each file found by find. {} represents the current file being processed by find.    
-- `> knowngood_hashes.txt` redirects the output (MD5 checksums) to a file named md5sums.txt.    
+**step2:** Extract all of the hashes from the `knowngood_md5sums_filenames.txt` using the command:  
+`cut -d ' ' -f 1 knowngood_md5sums_filenames.txt > knowngood_hashes.txt`  
 
-**step3:** open the text file and search (ctrl+f) the needle you are looking for        
+**Explanation for command**  
+- `cut -d ' '` specifies the delimiter as a space.  
+- `-f 1` selects the first field, which is typically the hash value.  
+- `> knowngood_hashes.txt` redirects the output to a file named `knowngood_hashes.txt`.  
 
-**step4:** open the file and find the flag
+**step3:** Find all the MD5 sums in the directory using the command:  
+`find . -type f -exec md5sum {} \; > current_md5sums_filenames.txt`  
 
-For more information on the functions:    
-`man find`    
-`man md5sum`    
+**step4:** Extract all hashes from the `current_md5sums_filenames.txt` using:  
+`cut -d ' ' -f 1 current_md5sums_filenames.txt > current_hashes.txt`  
+
+**step5:** Search for lines in `current_hashes.txt` that are not in `knowngood_hashes.txt` and write them to a new file called `non_matching_hashes.txt` using:  
+`grep -vf knowngood_hashes.txt current_hashes.txt > non_matching_hashes.txt`  
+
+**step6:** Find and inspect all the files in the `non_matching_hashes.txt` by finding (ctrl+f) the hashes in the `current_md5sums_filenames.txt` or use `grep` again to find these files:  
+`grep -F -f non_matching_hashes.txt current_md5sums_filenames.txt`  
 
 <iframe src="https://mypps.sharepoint.com/sites/ppsCyberTacticsFest/_layouts/15/embed.aspx?UniqueId=9f33c970-8bcc-4123-bd43-fdefbd355660&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Hash Hound Coming to greps with the past.mp4"></iframe>
 
