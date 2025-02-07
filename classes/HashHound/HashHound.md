@@ -49,7 +49,7 @@ pps{someflag}
 📥 [Practice 2](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%202).zip)  
 📥 [Practice 3](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%203).zip)    
 
-Walkthrough:
+### Walkthrough:    
 `ctrl + alt + t`    
 `cd /Desktop/`    
 `ls`    
