@@ -27,7 +27,9 @@ Specific Skills
 - Use find, cut, and grep to find a unknown hash from a list of known hashes
 
 **To find a hash in terminal:**     
-`echo -n YourStingHere | md5sum`    
+```bash
+echo -n YourStingHere | md5sum
+```        
 Output looks like: 26617986d9bafa5795a2c63fe209781e -
 
 To complete the challenges, you will need to download them on a Linux device (e.g. Kali through cyber.org) 
