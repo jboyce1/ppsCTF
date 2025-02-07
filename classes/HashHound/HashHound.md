@@ -13,7 +13,8 @@ title: Hash Hound
   <img src="{{ 'classes/HashHound/90255-Hash-Hound.png' | relative_url }}" alt="Hash Hound Logo" style="max-width: 80%; height: auto;">
 </div>
 
----
+
+
 
 ## Fun New Game
 
@@ -66,7 +67,10 @@ double click on game with match of:
 cf9406bee74516677ca364c682c96d90    
 
 <iframe src="https://mypps.sharepoint.com/sites/ppsCyberTacticsFest/_layouts/15/embed.aspx?UniqueId=8b3b12a4-1dd6-4873-a155-78602d0ae6ac&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Hash-Hound-Fun-New-Game.mp4"></iframe>
----
+  
+  <div style="text-align: center;">
+  <p>-------------------------------------------------------------------------</p>
+</div>    
 
 ## Needle in the Hayloft
 
