@@ -5,61 +5,69 @@ title: Hash Hound
 
 # Hash Hound
 
-**Focus**: Understanding and utilizing cryptographic hashing for security and integrity verification.      
-**Skill**: Practical use of hashing functions in various security contexts.      
-**Activity**: Hands-on hashing challenges with real-world applications.    
+**Focus**: Understanding and utilizing cryptographic hashing for security and integrity verification.  
+**Skill**: Practical use of hashing functions in various security contexts.  
+**Activity**: Hands-on hashing challenges with real-world applications.
 
 <div style="text-align: center;">
   <img src="{{ 'classes/HashHound/90255-Hash-Hound.png' | relative_url }}" alt="Hash Hound Logo" style="max-width: 80%; height: auto;">
-  </div>
+</div>
 
+---
 
+## Part 1: Fun New Game
 
+### Specific Skills
+- Use terminal to develop an md5sum hash of a string
+- Determine the md5sum hash of a file
+- Determine the md5sum hash of multiple files
+- Create a text document from a command output
+- Use `grep` to search for a specific output in a list
+- Use `find`, `cut`, and `grep` to find an unknown hash from a list of known hashes
 
-## Part 1: Fun New Game    
+---
 
-### Specific Skills    
-- Use terminal to develop an md5sum hash of a string       
-- Determine the md5sum hash of a file        
-- Determine the md5sum has of multiple files        
-- Create a text document from a command output        
-- Use grep to search for a specific output in a list        
-- Use find, cut, and grep to find a unknown hash from a list of known hashes        
+### Finding a Hash in Terminal
+```bash
+echo -n YourStringHere | md5sum
 
-**To find a hash in terminal:**         
-  ```bash
-  echo -n YourStingHere | md5sum
-  ```      
   Output looks like: 26617986d9bafa5795a2c63fe209781e -    
 
-### To complete the challenges, you will need to download them on a Linux device (e.g. Kali through cyber.org)     
-- Step 1: Click the link to open a new page    
-- Step 2: Download the .zip file by clicking the ‘Download’ button on the top left of the page    
-- Step 3: Go to your Downloads folder and find the file    
-- Step 4: Right click and extract the file    
-- Step 5: Go and find the Flag (watch the video, remember flags look like;
-pps{someflag}    
-- Step 6: Click the “Flag” link after the practice and paste your flag to see if is correct    
+### To complete the challenges, you will need to download them on a Linux device (e.g. Kali through cyber.org)
 
+1. **Click the link** to open a new page.  
+2. **Download the `.zip` file** by clicking the ‘Download’ button on the top left of the page.  
+3. **Go to your Downloads folder** and locate the file.  
+4. **Right-click and extract** the file.  
+5. **Find the Flag** (watch the video, remember flags look like `pps{someflag}`).  
+6. **Click the “Flag” link** after the practice and paste your flag to see if it is correct.  
 
-**Download Practice Files**:  
-📥 [Practice 1](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%201).zip)    
-📥 [Practice 2](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%202).zip)    
-📥 [Practice 3](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%203).zip)      
+---
 
-### Walkthrough:    
-`ctrl + alt + t`    
-`cd /Desktop/`    
-`ls`    
-`cd Unit 1: Reverse Engineering`    
-`ls`    
-`cd Checking Hash Functions/`    
-`ls`    
-`cd 1 Fun New Game`    
-`md5sum FuNeWgAmE.sh`    
-************************************ FuNeWgAmE.sh      
-`md5sum funnewGAME.sh`    
-************************************ funnewGAME.sh      
+## **Download Practice Files**
+📥 [Practice 1](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%201).zip)  
+📥 [Practice 2](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%202).zip)  
+📥 [Practice 3](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%203).zip)  
+
+---
+
+## **Walkthrough**
+Follow these steps to complete the challenge:
+
+```bash
+ctrl + alt + t
+cd /Desktop/
+ls
+cd Unit\ 1:\ Reverse\ Engineering/
+ls
+cd Checking\ Hash\ Functions/
+ls
+cd 1\ Fun\ New\ Game/
+md5sum FuNeWgAmE.sh
+************************************ FuNeWgAmE.sh
+md5sum funnewGAME.sh
+************************************ funnewGAME.sh
+ 
 etc etc    
 double click on game with match of:    
 cf9406bee74516677ca364c682c96d90      
