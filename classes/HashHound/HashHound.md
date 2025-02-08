@@ -25,7 +25,6 @@ title: Hash Hound
 - Use `grep` to search for a specific output in a list
 - Use `find`, `cut`, and `grep` to find an unknown hash from a list of known hashes
 
----
 
 ### Finding a Hash in Terminal
 ```bash
@@ -42,14 +41,12 @@ echo -n YourStringHere | md5sum
 5. **Find the Flag** (watch the video, remember flags look like `pps{someflag}`).  
 6. **Click the “Flag” link** after the practice and paste your flag to see if it is correct.  
 
----
 
 ## **Download Practice Files**
 📥 [Practice 1](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%201).zip)  
 📥 [Practice 2](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%202).zip)  
 📥 [Practice 3](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%203).zip)  
 
----
 
 ## **Walkthrough**
 Follow these steps to complete the challenge:
