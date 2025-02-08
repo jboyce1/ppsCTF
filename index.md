@@ -9,14 +9,14 @@ title: Home
 
 **2/4 Tuesday 7-9pm Teams Meeting**: Intro and overview, cyber.org range, big picture scenario, intro to outside resources; picoCTF.
 
-**2/6 Thursday 7-9pm Teams Meeting**: [SSH erlock (Network)](./classes/SSHerlock)
+**2/6 Thursday 7-9pm Teams Meeting**: [SSHerlock (Network)](./classes/SSHerlock/SSHerlock)
 - SSH into another computer with known password
 - SSH into another computer with an unknown password
 - SCP files from the opponent computers
 - SCP files from your computers onto your opponents
 - Use terminal for directory and file navigation
 
-**2/11 Tuesday 7-9pm Teams Meeting**: [Hash Hound (Host)](./classes/HashHound/HashHound)
+**2/11 Tuesday 7-9pm Teams Meeting**: [HashHound (Host)](./classes/HashHound/HashHound)
 - Develop an md5sum hash of a string
 - Determine the md5sum hash of a file
 - Determine the md5sum hash of multiple files
