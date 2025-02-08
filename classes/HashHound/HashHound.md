@@ -5,28 +5,28 @@ title: Hash Hound
 
 # Hash Hound
 
-**Focus**: Understanding and utilizing cryptographic hashing for security and integrity verification.  
-**Skill**: Practical use of hashing functions in various security contexts.  
-**Activity**: Hands-on hashing challenges with real-world applications.
+**Focus**: Understanding and utilizing cryptographic hashing for security and integrity verification.      
+**Skill**: Practical use of hashing functions in various security contexts.      
+**Activity**: Hands-on hashing challenges with real-world applications.    
 
 <div style="text-align: center;">
   <img src="{{ 'classes/HashHound/90255-Hash-Hound.png' | relative_url }}" alt="Hash Hound Logo" style="max-width: 80%; height: auto;">
-</div>
+  </div>
 
 
 
 
-## Part 1: Fun New Game
+## Part 1: Fun New Game    
 
-### Specific Skills
-- Use terminal to develop an md5sum hash of a string    
-- Determine the md5sum hash of a file    
-- Determine the md5sum has of multiple files    
-- Create a text document from a command output    
-- Use grep to search for a specific output in a list    
-- Use find, cut, and grep to find a unknown hash from a list of known hashes    
+### Specific Skills    
+- Use terminal to develop an md5sum hash of a string       
+- Determine the md5sum hash of a file        
+- Determine the md5sum has of multiple files        
+- Create a text document from a command output        
+- Use grep to search for a specific output in a list        
+- Use find, cut, and grep to find a unknown hash from a list of known hashes        
 
-**To find a hash in terminal:**     
+**To find a hash in terminal:**         
   ```bash
   echo -n YourStingHere | md5sum
   ```      
