@@ -27,10 +27,9 @@ title: Hash Hound
 
 
 ### Finding a Hash in Terminal
-```bash
-echo -n YourStringHere | md5sum
+`echo -n YourStringHere | md5sum`
 
-  Output looks like: 26617986d9bafa5795a2c63fe209781e -    
+  Output looks like: `26617986d9bafa5795a2c63fe209781e -`    
 
 ### To complete the challenges, you will need to download them on a Linux device (e.g. Kali through cyber.org)
 
@@ -51,19 +50,19 @@ echo -n YourStringHere | md5sum
 ## **Walkthrough**
 Follow these steps to complete the challenge:
 
-```bash
-ctrl + alt + t
-cd /Desktop/
-ls
-cd Unit\ 1:\ Reverse\ Engineering/
-ls
-cd Checking\ Hash\ Functions/
-ls
-cd 1\ Fun\ New\ Game/
-md5sum FuNeWgAmE.sh
-************************************ FuNeWgAmE.sh
-md5sum funnewGAME.sh
-************************************ funnewGAME.sh
+
+`ctrl + alt + t`   
+`cd /Desktop/`   
+`ls`  
+`cd Unit\ 1:\ Reverse\ Engineering/`  
+`ls`  
+`cd Checking\ Hash\ Functions/`  
+`ls`  
+`cd 1\ Fun\ New\ Game/`  
+`md5sum FuNeWgAmE.sh`  
+**`************************************ FuNeWgAmE.sh`**    
+`md5sum funnewGAME.sh`  
+**`************************************ funnewGAME.sh`**  
  
 etc etc    
 double click on game with match of:    
@@ -74,7 +73,7 @@ cf9406bee74516677ca364c682c96d90
 </div>
 ---
 
-## Part2: Needle in the Hayloft  
+## Part 2: Needle in the Hayloft  
   
 Here is your md5sum needle: c6fca9b96af058081fe4bfd89523f3f4  
   
@@ -143,5 +142,4 @@ You need to find the suspicious needle. They were all good when they left but so
   
 # Extracting Files  
 To extract a `.zip` file, use:  
-```bash 
-unzip filename.zip
+`unzip filename.zip`
