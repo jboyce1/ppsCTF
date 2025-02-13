@@ -6,3 +6,17 @@ git clone https://github.com/jboyce1/ppsCTF.git
 navigate to the file in gui and 'copy to' the desktop for all hashhound challenges
 
 sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
+
+Have participants scp the FunNewGame.sh to their own devices
+use terminal to extract the files
+can do one at a time or do:
+scp ubuntu@10.15.52.220:/home/Ubuntu/Desktop/*.zip ~/Desktop/
+
+unzip the folders individually 
+OR
+use terminal to extract the files:
+find . -name "*.zip" -exec unzip -o {} -d {}_extracted \;
+Explanation:
+  find . -name "*.zip": Finds all .zip files starting from the current directory (.).
+  -exec unzip -o {}: Executes the unzip command on each zip file found. The -o flag forces overwriting of existing files without prompting.
+  -d {}_extracted: Extracts the contents of each zip file into a folder named after the zip file, appending _extracted to the folder name.
