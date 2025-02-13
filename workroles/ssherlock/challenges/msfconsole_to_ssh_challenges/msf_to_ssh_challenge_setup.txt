@@ -1,0 +1,29 @@
+Msfconsole to ssh instructor directions 
+from ubuntu mahcine: 
+
+clone repo: 
+git clone https://github.com/jboyce1/ppsCTF.git 
+
+ 
+Allow for password authentication on  the VMs  
+sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh 
+
+ 
+Guest/Target 1 10.15.115.246 
+Username: HackproofHoudini 
+sudo adduser HackproofHoudini –force-badname 
+Password:  
+pps{M3ta5pl01tL0ve$$#} 
+
+Guest/Target Guest2: 10.15.95.46 
+Username: MetaMischiefMaker 
+sudo adduser MetaMischiefMaker –force-badname 
+Password:  
+pps{M3tasploitL0v3s5$H} 
+
+
+Guest/Target Guest3; 10.15.33.43 
+Username: CipherSensei 
+sudo adduser CipherSensei  –force-badname 
+Password:  
+pps{M3t4sploitL0ve5S$#} 
