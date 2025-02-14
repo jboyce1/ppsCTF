@@ -12,6 +12,7 @@ use terminal to extract the files
 can do one at a time or do:
 scp ubuntu@10.15.52.220:/home/Ubuntu/Desktop/*.zip ~/Desktop/
 
+For participants:
 unzip the folders individually 
 OR
 use terminal to extract the files:
@@ -20,3 +21,12 @@ Explanation:
   find . -name "*.zip": Finds all .zip files starting from the current directory (.).
   -exec unzip -o {}: Executes the unzip command on each zip file found. The -o flag forces overwriting of existing files without prompting.
   -d {}_extracted: Extracts the contents of each zip file into a folder named after the zip file, appending _extracted to the folder name.
+
+
+
+
+show how a log can be accessed and sanitized
+sudo cat /var/log/auth.log
+
+introduce cat /etc/passwd
+sudo cat /etc/shadow
