@@ -5,9 +5,9 @@ title: CyberCartographer
 
 # CyberCartographer    
 
-**Focus**: Network Mapping 
-**Skill**: Utilize nmap, zenmap and draw.io to develop actionable offensive and defensive maps 
-**Activity**: Identification of the most vulnerable machines on
+**Focus**: Network Mapping  
+**Skill**: Utilize nmap, zenmap and draw.io to develop actionable offensive and defensive maps  
+**Activity**: Identification of the most vulnerable machines on a network  
 
 <div style="text-align: center;">
   <img src="{{ 'classes/HashHound/90255-Hash-Hound.png' | relative_url }}" alt="Hash Hound Logo" style="max-width: 80%; height: auto;">
