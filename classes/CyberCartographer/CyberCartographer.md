@@ -50,34 +50,35 @@ Ensure the drawio is in the folder you are in by using ls
  - sudo apt-get install ./drawio-amd64-26.0.9.deb
 Run by checking the applications menu or using drawio in terminal
 
+Samba is not working in the range, so you will need to SCP for sharing
 
-## **Download Practice Files**
-📥 [Practice 1](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%201).zip)  
-📥 [Practice 2](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%202).zip)  
-📥 [Practice 3](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%203).zip)  
+## Use nmap to identify all hosts on the network
+## Use nmap to create a text file of all the open hosts
+
 
 
 ## **Walkthrough**
-Follow these steps to complete the challenge:
+Step 1) Determine the IP Address Range: To begin, find the range of IP addresses. Start by locating the default gateway, which is the lowest IP address on the network.  
+`arp -a`  
+Step 2) Calculate Subnet Size: Once you've found the lowest IP address, determine the number of IP addresses in the subnet. Identify the subnet mask (CIDR) using  
+`ip addr`
+Look for the number of blocked bits in the subnet mask (e.g., /17, /24). This indicates the number of blocks in the subnet. Combine the first two components to scan the entire network.
+`sudo nmap -sn 10.15.0.1/17`
+Step 3) Generate a Text File of Open Hosts:
+For convenience, create a text document containing all the hosts. Execute the following command:
+`ls`
+`cd Desktop`
+`sudo nmap -sn 10.15.0.1/17 > hostsup.txt`  
+Step 4) Extract only IP Addresses: To obtain only the IP addresses, use the following command:
+`nmap -n -sn <default.gate.way.address/subnet> -oG - | awk '/Up$/{print $2}'`
+To understand the command:  
+ - -n: Turns off reverse name resolution for faster processing.  
+ - -sn: Disables port scanning (equivalent to deprecated -sP).  
+ - -oG -: Sends grepable output to stdout for piping.  
+ - awk '/Up$/{print $2}': Selects lines ending with "Up" to capture online hosts' IP addresses. Prints the second whitespace-separated field, which is the IP address.  
+Step 5) And to turn this into a text file:  
+`nmap -n -sn <default.gate.way.address/subnet> -oG - | awk '/Up$/{print $2}' > HostsOnNetwork.txt`   
 
-
-`ctrl + alt + t`   
-`cd /Desktop/`   
-`ls`  
-`cd Unit\ 1:\ Reverse\ Engineering/`  
-`ls`  
-`cd Checking\ Hash\ Functions/`  
-`ls`  
-`cd 1\ Fun\ New\ Game/`  
-`md5sum FuNeWgAmE.sh`  
-**`************************************ FuNeWgAmE.sh`**    
-`md5sum funnewGAME.sh`  
-**`************************************ funnewGAME.sh`**  
- 
-etc etc    
-double click on game with match of:    
-cf9406bee74516677ca364c682c96d90      
-    
 <div style="text-align: center;">
 <iframe src="https://mypps.sharepoint.com/sites/ppsCyberTacticsFest/_layouts/15/embed.aspx?UniqueId=8b3b12a4-1dd6-4873-a155-78602d0ae6ac&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Hash-Hound-Fun-New-Game.mp4"></iframe>
 </div>
