@@ -26,7 +26,7 @@ title: Home
 
 **2/13 Thursday 7-9pm Teams Meeting**: Small Team Challenge (based on newly introduced skills)
 
-**2/18 Tuesday 7-9pm Teams Meeting**: [CyberCartographer (Network)](./classes/CyberCartographer)
+**2/18 Tuesday 7-9pm Teams Meeting**: [CyberCartographer (Network)](./classes/CyberCartographer/CyberCartographer)
 - Use nmap to identify all hosts on the network
 - Use nmap to create a text file of all open hosts
 - Use nmap to identify and isolate hosts with password authentication OpenSSH
