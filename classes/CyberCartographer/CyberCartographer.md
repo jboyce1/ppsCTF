@@ -82,7 +82,7 @@ Step 5) And to turn this into a text file:
 `nmap -n -sn <default.gate.way.address/subnet> -oG - | awk '/Up$/{print $2}' > HostsOnNetwork.txt`   
 
 <div style="text-align: center;">
-<iframe src="https://mypps.sharepoint.com/sites/ppsCyberTacticsFest/_layouts/15/embed.aspx?UniqueId=8b3b12a4-1dd6-4873-a155-78602d0ae6ac&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Hash-Hound-Fun-New-Game.mp4"></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/j-4UYbXKNVs?si=UsMmou5w9xgooYjM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 ---  
 
