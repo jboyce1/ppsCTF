@@ -78,15 +78,13 @@ Try to change the system password from ‘ubuntu’ to something else.
 
 #### **Setting Up SSH on Target Server:**  
 <div style="text-align: center;">
-    <iframe src="https://mypps.sharepoint.com/sites/ppsCyberTacticsFest/_layouts/15/embed.aspx?UniqueId=e2f0ec71-7722-430a-a163-42a76dcfabe0&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" 
-    width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="SSH set up target server.mp4"></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/TsFAvFm_vAk?si=aq33RB27vNUVrWVT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><iframe width="560" height="315" src="https://www.youtube.com/embed/WT5G5rkebxQ?si=6jxLBtwDpSfh0OkX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 
 
 #### **SSH into Target Machine:**  
 <div style="text-align: center;">
-    <iframe src="https://mypps.sharepoint.com/sites/ppsCyberTacticsFest/_layouts/15/embed.aspx?UniqueId=140ac197-d304-4650-9d25-18e8ee848259&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" 
-    width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="SSH into target.mp4"></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MhwCwABMktA?si=YOru8ARGgpBE8XGg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 
 ---
@@ -143,8 +141,7 @@ Step 3: To open the Metaspoitconsole run the following command:
 ### **Video Tutorial: SSH with Unknown Password**  
 
 <div style="text-align: center;">
-    <iframe src="https://mypps.sharepoint.com/sites/ppsCyberTacticsFest/_layouts/15/embed.aspx?UniqueId=750c9ed6-54fa-4467-a4a4-8472de8866c8&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" 
-    width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="SSH with Unknown Password.mp4"></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9CldeyP_RDE?si=DZtJe5NUbAvBbfMI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
   </div>
 
 ---
@@ -174,8 +171,7 @@ john -format=raw-md5 -wordlist:JohnnyPasswordList.txt SCPhash.txt
 ### **Part 4: SCP from Target and John with Password List**  
 
 <div style="text-align: center;">
-    <iframe src="https://mypps.sharepoint.com/sites/ppsCyberTacticsFest/_layouts/15/embed.aspx?UniqueId=e0d7b6c9-666f-4bcc-be65-464adeb135e1&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" 
-    width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="SCP from Target and John with Password List.mp4"></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/QUhyGpYgZi4?si=wRDW_igQop2cl5tU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 
 ---
@@ -198,8 +194,7 @@ Example:
 ### **SCP File from Local to Remote**   
 
 <div style="text-align: center;">
-    <iframe src="https://mypps.sharepoint.com/sites/ppsCyberTacticsFest/_layouts/15/embed.aspx?UniqueId=92d01278-8af2-4d7c-812f-b2502550eefc&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" 
-    width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="SCP File from Local to Remote.mp4"></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/lGtF_6nWL0Y?si=zW5Ix83BepMDKdFK" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 
 ---
