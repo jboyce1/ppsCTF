@@ -42,16 +42,16 @@ Once vulnerabilities are identified, the Blue Team can leverage Zenmap's reporti
 
 
 ### Setting up drawio on the cyber.org range (10-12 minutes in the range)
- - sudo apt-get update
- - sudo apt-get install default-jdk
- - wget https://github.com/jgraph/drawio-desktop/releases/download/v26.0.9/drawio-amd64-26.0.9.deb
+ - `sudo apt-get update`
+ - `sudo apt-get install default-jdk`
+ - `wget https://github.com/jgraph/drawio-desktop/releases/download/v26.0.9/drawio-amd64-26.0.9.deb`
 
 Ensure the drawio is in the folder you are in by using ls
- - sudo apt-get install ./drawio-amd64-26.0.9.deb
-Run by checking the applications menu or using drawio in terminal
+ - `sudo apt-get install ./drawio-amd64-26.0.9.deb`
+Run by checking the applications menu or using `drawio` in terminal
 
 Samba is not working in the range, so you will need to SCP for sharing
-
+## Part 1:  
 ## Use nmap to identify all hosts on the network
 ## Use nmap to create a text file of all the open hosts
 
@@ -82,67 +82,59 @@ Step 5) And to turn this into a text file:
 <div style="text-align: center;">
 <iframe src="https://mypps.sharepoint.com/sites/ppsCyberTacticsFest/_layouts/15/embed.aspx?UniqueId=8b3b12a4-1dd6-4873-a155-78602d0ae6ac&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Hash-Hound-Fun-New-Game.mp4"></iframe>
 </div>
----
+---  
 
-## Part 2: Needle in the Hayloft  
-  
-Here is your md5sum needle: c6fca9b96af058081fe4bfd89523f3f4  
-  
-step1: Navigate to the '2 Needle in the Hayloft' directory    
-step2: Make a text file using the following command:  
-**`find . -type f -exec md5sum {} \; > 01md5sums.txt`**  
+## Part 2:
+## Use nmap to identify and isolate hosts with password authentication OpenSSH  
 
-- Explaination for command      
-  - **`find .`** searches for files and directories starting from the current directory (.).    
-  - **`-type f`** specifies that we are interested in files only, not directories.    
-  - **`-exec md5sum {} \;`** executes the md5sum command on each file found by find. {} represents the current file being processed by find.    
-  - **`> md5sums.txt`** redirects the output (MD5 checksums) to a file named md5sums.txt.    
-  
-step3: open the text file and search (ctrl+f) the needle you are looking for       
-step4: open the file and find the flag  
+  Step 1) Use Text File of IP Addresses: 
+Utilizing the lua scripting language and nmap scripting library with flags to see the scripts from terminal:  
+`cd /usr/share/nmap/scripts/`  
+`ls`  
+Step 2 harder) Identify Hosts with OpenSSH: 
+We'll use nmap to scan for hosts with OpenSSH running on port 22. Here's the command breakdown:  
+`nmap -p 22 --script ssh-auth-methods --script-args="ssh.user=*" <targetIP>`  
 
-For more informaiton on the find functions, read the manual:   
-man find        
+ Flags explained:  
+-p 22: Specifies port 22, which is the default port for SSH.
+--script ssh-auth-methods: Runs the SSH authentication methods script to determine the authentication methods supported by the SSH server.
+--script-args="ssh.user=*": Specifies the username to be used for SSH authentication. The wildcard (*) indicates that any username can be used.
+Step 2 easier) Using -iL Flag with Text File: To use the text file containing IP addresses, we'll employ the -iL flag. 
+`nmap -p 22 --script ssh-auth-methods --script-args="ssh.user=*" -iL hosts.txt`
+-iL hosts.txt: Specifies the input file containing a list of IP addresses. Adjust the filename (hosts.txt) according to your text file's name.
 
-**Download Practice Files**:    
-📥 [Practice 1](./Needle%20in%20the%20Hayloft%20Practice/2%20Needle%20in%20the%20Hayloft%20(practice%201).zip)    
-📥 [Practice 2](./Needle%20in%20the%20Hayloft%20Practice/2%20Needle%20in%20the%20Hayloft%20(practice%202).zip)    
-📥 [Practice 3](./Needle%20in%20the%20Hayloft%20Practice/2%20Needle%20in%20the%20Hayloft%20(practice%203).zip)    
+OpenSSH hunt (1)
+
   <div style="text-align: center;">
 <iframe src="https://mypps.sharepoint.com/sites/ppsCyberTacticsFest/_layouts/15/embed.aspx?UniqueId=c5bd88bb-87aa-4db1-838a-64ff932260d6&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Hash-Hound-Needle-in-the-Hayloft.mp4"></iframe>   
   </div>
   
 ---
 
-## Part 3: Coming to Greps with the Past  
+## Part 3: 
+## Installing and using zenmap on the cyber.org range  
   
-### Suspicious Needle Search  
+Switch to Root User: Begin by switching to the root user to perform administrative tasks.  
+`sudo su`  
+Update Package Repository: Ensure that the package repository is up to date to fetch the latest available packages.  
+`sudo apt update`  
+Download Zenmap: Download Zenmap  
+Install Alien Package Converter: Since the downloaded package is in RPM format, it needs to be converted to a Debian package (.deb) format. Install the Alien package converter tool to facilitate this conversion.  
+`sudo apt-get install alien`  
+Convert RPM to DEB: Use Alien to convert the RPM package to a DEB package.  
+`sudo alien zenmap-7.94-1.noarch.rpm`  
+Install Zenmap: After conversion, install Zenmap using the DEB package.   
+`dpkg --install zenmap_7.94-2.all.deb`  
+Start Zenmap: Launch Zenmap from the terminal with administrative privileges.  
+`sudo zenmap`  
 
-You need to find the suspicious needle. They were all good when they left but something changed. The `knowngood_md5sums_filenames.txt` is a list of all the unsuspicious files.  
+Explanation of flags:  
+sudo: Execute the command with superuser privileges.  
+apt-get install: Command to install packages from the Debian package repository.  
+alien: A tool used to convert between different package formats.  
+dpkg --install: Command to install a package (in this case, the DEB package).  
+sudo: Execute the command with superuser privileges.  
   
-**step1:** Navigate to the directory containing `knowngood_md5sums_filenames.txt`  
-**step2:** Extract all of the hashes from the `knowngood_md5sums_filenames.txt` using the command:  
-`cut -d ' ' -f 1 knowngood_md5sums_filenames.txt > knowngood_hashes.txt`  
-  
-- Explanation for command
-  - `cut -d ' '` specifies the delimiter as a space.
-  - `-f 1` selects the first field, which is typically the hash value.
-  - `> knowngood_hashes.txt` redirects the output to a file named `knowngood_hashes.txt`.  
-  
-**step3:** Find all the MD5 sums in the directory using the command:    
-`find . -type f -exec md5sum {} \; > current_md5sums_filenames.txt`    
-  
-**step4:** Extract all hashes from the `current_md5sums_filenames.txt` using:  
-`cut -d ' ' -f 1 current_md5sums_filenames.txt > current_hashes.txt`  
-
-**step5:** Search for lines in `current_hashes.txt` that are not in `knowngood_hashes.txt` and write them to a new file called `non_matching_hashes.txt` using:    
-`grep -vf knowngood_hashes.txt current_hashes.txt > non_matching_hashes.txt`    
-  
-**step6:** Find and inspect all the files in the `non_matching_hashes.txt` by finding (ctrl+f) the hashes in the `current_md5sums_filenames.txt` or use `grep` again to find these files:    
-`grep -F -f non_matching_hashes.txt current_md5sums_filenames.txt`  
-  
-**Download Practice Files**:    
-📥 [Practice 1](./Coming%20to%20greps%20with%20the%20past/3%20Coming%20to%20greps%20with%20the%20past%20(practice%201).zip)    
 <div style="text-align: center;">
 <iframe src="https://mypps.sharepoint.com/sites/ppsCyberTacticsFest/_layouts/15/embed.aspx?UniqueId=9f33c970-8bcc-4123-bd43-fdefbd355660&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" width="640" height="360" frameborder="0" scrolling="no" allowfullscreen title="Hash Hound Coming to greps with the past.mp4"></iframe>
 </div>
@@ -151,6 +143,4 @@ You need to find the suspicious needle. They were all good when they left but so
 
 ## Command Line Basics  
   
-# Extracting Files  
-To extract a `.zip` file, use:  
-`unzip filename.zip`
+mkfifo /Desktop/remotecaptures/remotepacketcapture1
