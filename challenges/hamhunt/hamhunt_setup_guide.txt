@@ -2,9 +2,10 @@ Hamhunt setup guide:
 Step1: download files
 from ubuntu mahcine:
 sudo git clone https://github.com/jboyce1/ppsCTF.git
+cd /ppsCTF/challenges/hamhunt/
+sudo chmod +x deploy_hamhunt_ctf.sh
+sudo ./deploy_hamhunt_ctf.sh
+passwd
 
-Navigate to the directory and make script executable:
-sudo chmod +x /ppsCTF/challenges/hamhunt/deploy_hamhunt_ctf.sh
-
-Run Script:
-sudo /ppsCTF/challenges/hamhunt//deploy_pigfarm_ctf.sh
+test:
+username: leroy p: leroythehunt3 leroythehunt3r
