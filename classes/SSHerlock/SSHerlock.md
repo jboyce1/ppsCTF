@@ -150,7 +150,7 @@ Step 3: To open the Metaspoitconsole run the following command:
    
 In order to complete this challenge, you will need to pull a file from the Ubuntu machine to decipher the flag.  
 
-**Step 1:** scp the ‘SCPhash.txt’ and the ‘JohnnyPasswordList.txt’ 'from the Teacher Ubuntu Machine to your kali desktop
+**Step 1:** scp the ‘SCPhash.txt’ and the ‘JohnnyPasswordList.txt’ 'from the Teacher Ubuntu Machine to your kali desktop    
 **Step 2:** Use john the ripper to crack the hash from the password text file
 - 2a Navigate to the desktop in your kali machine (or wherever you put the SCPhash.txt and JohnnyPassword list files). 
  - The SCPhash.txt is hashed with md5sum
@@ -158,7 +158,7 @@ In order to complete this challenge, you will need to pull a file from the Ubunt
  ```bash
 john -format=raw-md5 -wordlist:JohnnyPasswordList.txt SCPhash.txt
 ```
-## **Now You Try**   
+### **Now You Try:**   
 
 - [SCPhash1](https://forms.office.com/Pages/ResponsePage.aspx?id=mhxxjxzsu023kLsMdxsdzM6J33C5yQRJgc1SHWy_64dUMjhJUVE0T1FBRDI1SFc5MDdVNVdBQVpNVC4u)  
 - [SCPhash2](https://forms.office.com/Pages/ResponsePage.aspx?id=mhxxjxzsu023kLsMdxsdzM6J33C5yQRJgc1SHWy_64dUQ1VBMTc0Q1hGVTFVWjZKNDlQSU9YRUI1Sy4u)  
