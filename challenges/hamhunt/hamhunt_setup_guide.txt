@@ -4,7 +4,7 @@ from ubuntu mahcine:
 sudo git clone https://github.com/jboyce1/ppsCTF.git
 
 Navigate to the directory and make script executable:
-chmod +x /ppsCTF/challenges/hamhunt/deploy_hamhunt_ctf.sh
+sudo chmod +x /ppsCTF/challenges/hamhunt/deploy_hamhunt_ctf.sh
 
 Run Script:
-sudo /deploy_pigfarm_ctf.sh
+sudo /ppsCTF/challenges/hamhunt//deploy_pigfarm_ctf.sh
