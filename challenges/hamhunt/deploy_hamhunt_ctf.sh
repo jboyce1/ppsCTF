@@ -22,10 +22,14 @@ ZIP_FILES=(
     ["callsign_hambone"]="callsign_hambone.zip"
 )
 
-# === Step 1: Clone GitHub Repository ===
-echo "[+] Cloning the PigFarmCTF repository..."
-rm -rf $TARGET_DIR
-git clone --depth 1 $GITHUB_REPO $TARGET_DIR
+# === Step 1: Clone or Update GitHub Repository ===
+echo "[+] Cloning or updating PigFarmCTF repository..."
+if [ -d "$TARGET_DIR" ]; then
+    cd $TARGET_DIR
+    git pull origin main
+else
+    git clone --depth 1 $GITHUB_REPO $TARGET_DIR
+fi
 cd $TARGET_DIR/challenges/hamhunt
 
 # === Step 2: Create Users and Set Passwords ===
@@ -54,14 +58,14 @@ for user in "${!ZIP_FILES[@]}"; do
 
     echo "[+] Processing $user..."
 
-    # Ensure old Desktop is removed
-    rm -rf "$desktop_path"
+    # Ensure Desktop folder exists
+    mkdir -p "$desktop_path"
 
-    # Extract ZIP directly to the user's home directory
-    unzip -q "$TARGET_DIR/challenges/hamhunt/$desktop_zip" -d "$user_home"
+    # Extract ZIP **without deleting the directory**
+    sudo unzip -qo "$TARGET_DIR/challenges/hamhunt/$desktop_zip" -d "$user_home"
 
     # Ensure correct ownership
-    chown -R "$user:$user" "$user_home/Desktop"
+    sudo chown -R "$user:$user" "$desktop_path"
 
     echo "[+] Desktop for $user has been updated!"
 done
