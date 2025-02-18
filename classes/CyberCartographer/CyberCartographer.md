@@ -59,7 +59,7 @@ Samba is not working in the range, so you will need to SCP for sharing
 
 
 
-## **Walkthrough**
+### **Walkthrough**
 Step 1) Determine the IP Address Range: To begin, find the range of IP addresses. Start by locating the default gateway, which is the lowest IP address on the network.  
 #### `arp -a`  
 Step 2) Calculate Subnet Size: Once you've found the lowest IP address, determine the number of IP addresses in the subnet. Identify the subnet mask (CIDR) using   
