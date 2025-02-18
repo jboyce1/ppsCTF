@@ -53,13 +53,25 @@ for user in "${!ZIP_FILES[@]}"; do
     desktop_path="$user_home/Desktop"
 
     echo "[+] Processing $user..."
-    
-    # Remove existing Desktop and extract new one
-    rm -rf "$desktop_path"
-    unzip -q "$TARGET_DIR/challenges/hamhunt/$desktop_zip" -d "$user_home/"
-    
+
+    # Ensure old Desktop is removed
+    sudo rm -rf "$desktop_path"
+
+    # Unzip to a temporary location
+    unzip_dir="$TARGET_DIR/temp_unzip_$user"
+    rm -rf "$unzip_dir"
+    mkdir -p "$unzip_dir"
+    sudo unzip -q "$TARGET_DIR/challenges/hamhunt/$desktop_zip" -d "$unzip_dir"
+
+    # Move the Desktop folder from the extracted contents
+    if [ -d "$unzip_dir/Desktop" ]; then
+        sudo mv "$unzip_dir/Desktop" "$desktop_path"
+    else
+        echo "[!] WARNING: No 'Desktop' folder found in $desktop_zip, skipping..."
+    fi
+
     # Ensure correct ownership
-    chown -R "$user:$user" "$desktop_path"
+    sudo chown -R "$user:$user" "$desktop_path"
 
     echo "[+] Desktop for $user has been updated!"
 done
