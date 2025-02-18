@@ -10,7 +10,7 @@ title: CyberCartographer
 **Activity**: Identification of the most vulnerable machines on a network  
 
 <div style="text-align: center;">
-  <img src="{{ 'classes/HashHound/90255-Hash-Hound.png' | relative_url }}" alt="Hash Hound Logo" style="max-width: 80%; height: auto;">
+  <img src="{{ 'classes/CyberCartographer/93909-CyberCartography-with-nmap-banner.png' | relative_url }}" alt="Hash Hound Logo" style="max-width: 80%; height: auto;">
 </div>
 
 ---
