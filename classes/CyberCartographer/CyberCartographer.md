@@ -24,7 +24,7 @@ title: CyberCartographer
 - Installing and using zenmap on the cyber.org range
 - Use draw.io to develop and annotate a network map
 
-How this skill can be used:  
+### How this skill can be used:  
 **Offensive:**  
 In the realm of offensive cybersecurity, the Red Team plays a critical role in reconnaissance and vulnerability exploitation. During the Discovery Phase, their primary objective is to gather intelligence about the network infrastructure, including identifying all hosts connected to it. The ability to swiftly and accurately enumerate network hosts is crucial for expediting subsequent attack phases.    
 
