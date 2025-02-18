@@ -47,7 +47,7 @@ Once vulnerabilities are identified, the Blue Team can leverage Zenmap's reporti
  - `wget https://github.com/jgraph/drawio-desktop/releases/download/v26.0.9/drawio-amd64-26.0.9.deb`
 
 Ensure the drawio is in the folder you are in by using ls
- - `sudo apt-get install ./drawio-amd64-26.0.9.deb`
+ - `sudo apt-get install ./drawio-amd64-26.0.9.deb`  
 Run by checking the applications menu or using `drawio` in terminal
 
 Samba is not working in the range, so you will need to SCP for sharing  
