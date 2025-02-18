@@ -142,6 +142,6 @@ sudo: Execute the command with superuser privileges.
 
 ---
 
-## Command Line Basics  
+## Command Line Extras:  
   
 mkfifo /Desktop/remotecaptures/remotepacketcapture1
