@@ -78,7 +78,7 @@ Try to change the system password from ‘ubuntu’ to something else.
 
 #### **Setting Up SSH on Target Server:**  
 <div style="text-align: center;">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/TsFAvFm_vAk?si=aq33RB27vNUVrWVT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe><iframe width="560" height="315" src="https://www.youtube.com/embed/WT5G5rkebxQ?si=6jxLBtwDpSfh0OkX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/WT5G5rkebxQ?si=6jxLBtwDpSfh0OkX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 
 
