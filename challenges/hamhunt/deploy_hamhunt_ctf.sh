@@ -3,7 +3,7 @@ set -e  # Exit immediately if a command fails
 
 # === Configuration ===
 GITHUB_REPO="https://github.com/jboyce1/ppsCTF.git"
-TARGET_DIR="/opt/pigfarm_ctf"
+TARGET_DIR="/ppsCTF"
 SSH_CONFIG="/etc/ssh/sshd_config"
 
 # User credentials
@@ -22,18 +22,13 @@ ZIP_FILES=(
     ["callsign_hambone"]="callsign_hambone.zip"
 )
 
-# === Step 1: Enable SSH Password Authentication ===
-echo "[+] Configuring SSH..."
-sed -i '/^PasswordAuthentication no/c\PasswordAuthentication yes' $SSH_CONFIG
-systemctl restart ssh
-
-# === Step 2: Clone GitHub Repository ===
+# === Step 1: Clone GitHub Repository ===
 echo "[+] Cloning the PigFarmCTF repository..."
 rm -rf $TARGET_DIR
 git clone --depth 1 $GITHUB_REPO $TARGET_DIR
 cd $TARGET_DIR/challenges/hamhunt
 
-# === Step 3: Create Users and Set Passwords ===
+# === Step 2: Create Users and Set Passwords ===
 echo "[+] Creating users..."
 for user in "${!USERS[@]}"; do
     if ! id "$user" &>/dev/null; then
@@ -45,6 +40,11 @@ for user in "${!USERS[@]}"; do
     fi
 done
 
+# === Step 3: Enable SSH Password Authentication ===
+echo "[+] Configuring SSH..."
+sed -i '/^PasswordAuthentication no/c\PasswordAuthentication yes' $SSH_CONFIG
+systemctl restart ssh
+
 # === Step 4: Deploy Desktop Folders ===
 echo "[+] Deploying challenge Desktops..."
 for user in "${!ZIP_FILES[@]}"; do
@@ -55,23 +55,13 @@ for user in "${!ZIP_FILES[@]}"; do
     echo "[+] Processing $user..."
 
     # Ensure old Desktop is removed
-    sudo rm -rf "$desktop_path"
+    rm -rf "$desktop_path"
 
-    # Unzip to a temporary location
-    unzip_dir="$TARGET_DIR/temp_unzip_$user"
-    rm -rf "$unzip_dir"
-    mkdir -p "$unzip_dir"
-    sudo unzip -q "$TARGET_DIR/challenges/hamhunt/$desktop_zip" -d "$unzip_dir"
-
-    # Move the Desktop folder from the extracted contents
-    if [ -d "$unzip_dir/Desktop" ]; then
-        sudo mv "$unzip_dir/Desktop" "$desktop_path"
-    else
-        echo "[!] WARNING: No 'Desktop' folder found in $desktop_zip, skipping..."
-    fi
+    # Extract ZIP directly to the user's home directory
+    unzip -q "$TARGET_DIR/challenges/hamhunt/$desktop_zip" -d "$user_home"
 
     # Ensure correct ownership
-    sudo chown -R "$user:$user" "$desktop_path"
+    chown -R "$user:$user" "$user_home/Desktop"
 
     echo "[+] Desktop for $user has been updated!"
 done
@@ -81,10 +71,6 @@ echo "[+] Removing sudo access for users..."
 for user in "${!USERS[@]}"; do
     deluser "$user" sudo || true
 done
-
-# === Step 6: Restart SSH to Apply Changes ===
-echo "[+] Restarting SSH service..."
-systemctl restart ssh
 
 # === Final Reminder ===
 echo "[!] REMINDER: Change the password for the Ubuntu sudo account!"
