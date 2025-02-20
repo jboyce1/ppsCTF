@@ -40,6 +40,42 @@ In the realm of defensive cybersecurity, the Blue Team plays a pivotal role in p
 
 Once vulnerabilities are identified, the Blue Team can leverage Zenmap's reporting capabilities to prioritize remediation efforts. By focusing on hosts with the highest risk exposure, they can allocate resources effectively and address critical security issues promptly.    
 
+---
+
+## Part 1: 
+## Installing and using zenmap on the cyber.org range
+## Installing and using draw.io on the cyber.org range
+  
+Switch to Root User: Begin by switching to the root user to perform administrative tasks.  
+#### `sudo su`  
+Update Package Repository: Ensure that the package repository is up to date to fetch the latest available packages.  
+#### `sudo apt update`  
+Download Zenmap: Download Zenmap
+#### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/CyberCartographer/zenmap-7.91-1.noarch.rpm`
+Install Alien Package Converter: Since the downloaded package is in RPM format, it needs to be converted to a Debian package (.deb) format. Install the Alien package converter tool to facilitate this conversion.
+#### `sudo apt-get install alien` 
+ - press y and enter when asked
+Convert RPM to DEB: Use Alien to convert the RPM package to a DEB package.  
+#### `sudo alien zenmap-7.94-1.noarch.rpm`  
+Install Zenmap: After conversion, install Zenmap using the DEB package.   
+#### `dpkg --install zenmap_7.94-2.all.deb`  
+Install all the dependencies for python2
+#### `sudo ln -s /usr/bin/python2 /usr/bin/python`
+#### `sudo apt-get install python-gtk2`
+#### `sudo apt-get install python-gnome2 libgnomecanvas2-0 libgdk-pixbuf2.0-0`
+Start Zenmap: Launch Zenmap from the terminal with administrative privileges.
+#### `sudo zenmap`  or Select application from the 
+
+Explanation of flags:  
+sudo: Execute the command with superuser privileges.  
+apt-get install: Command to install packages from the Debian package repository.  
+alien: A tool used to convert between different package formats.  
+dpkg --install: Command to install a package (in this case, the DEB package).  
+sudo: Execute the command with superuser privileges.  
+  
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/UrGKgu5HauE?si=ys1g6VsgT7xHxaxv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
 
 ### Setting up drawio on the cyber.org range (10-12 minutes in the range)
 ####  - `sudo apt-get update`
@@ -53,7 +89,7 @@ Run by checking the applications menu or using `drawio` in terminal
 Samba is not working in the range, so you will need to SCP for sharing  
 
 ---
-## Part 1:  
+## Part 2:  
 ## Use nmap to identify all hosts on the network
 ## Use nmap to create a text file of all the open hosts
 
@@ -86,7 +122,7 @@ Step 5) And to turn this into a text file:
 </div>
 ---  
 
-## Part 2:
+## Part 3:
 ## Use nmap to identify and isolate hosts with password authentication OpenSSH  
 
 **Step 1) Use Text File of IP Addresses** Utilizing the lua scripting language and nmap scripting library with flags to see the scripts from terminal: 
@@ -110,37 +146,22 @@ OpenSSH hunt (1)
 <iframe width="560" height="315" src="https://www.youtube.com/embed/qb_wUWrZAo8?si=uf2W5RIsKQEXBDOz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>  
   </div>
   
----
-
-## Part 3: 
-## Installing and using zenmap on the cyber.org range  
-  
-Switch to Root User: Begin by switching to the root user to perform administrative tasks.  
-#### `sudo su`  
-Update Package Repository: Ensure that the package repository is up to date to fetch the latest available packages.  
-#### `sudo apt update`  
-Download Zenmap: Download Zenmap  
-Install Alien Package Converter: Since the downloaded package is in RPM format, it needs to be converted to a Debian package (.deb) format. Install the Alien package converter tool to facilitate this conversion.  
-#### `sudo apt-get install alien`  
-Convert RPM to DEB: Use Alien to convert the RPM package to a DEB package.  
-#### `sudo alien zenmap-7.94-1.noarch.rpm`  
-Install Zenmap: After conversion, install Zenmap using the DEB package.   
-#### `dpkg --install zenmap_7.94-2.all.deb`  
-Start Zenmap: Launch Zenmap from the terminal with administrative privileges.  
-#### `sudo zenmap`  
-
-Explanation of flags:  
-sudo: Execute the command with superuser privileges.  
-apt-get install: Command to install packages from the Debian package repository.  
-alien: A tool used to convert between different package formats.  
-dpkg --install: Command to install a package (in this case, the DEB package).  
-sudo: Execute the command with superuser privileges.  
-  
-<div style="text-align: center;">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/UrGKgu5HauE?si=ys1g6VsgT7xHxaxv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</div>
 
 ---
+
+## Part 4:
+## Identify and validate telnet services on the network
+
+Install telnet on kali
+### `sudo apt update && sudo apt install telnet`
+- install the pacakage maintainer's version when asked
+
+  
+
+## Part 5:
+## Identify and validate ftp services on the network
+
+Scan high ports for ftp services
 
 ## Command Line Extras:  
   
