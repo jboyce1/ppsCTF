@@ -43,9 +43,7 @@ Once vulnerabilities are identified, the Blue Team can leverage Zenmap's reporti
 ---
 
 ## Part 1a: 
-## Installing and using zenmap on the cyber.org range
-## Installing and using draw.io on the cyber.org range
-  
+## Installing and using zenmap on the cyber.org range 
 Switch to Root User: Begin by switching to the root user to perform administrative tasks.  
 #### `sudo su`  
 Update Package Repository: Ensure that the package repository is up to date to fetch the latest available packages.  
@@ -54,7 +52,7 @@ Download Zenmap: Download Zenmap
 #### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/CyberCartographer/zenmap-7.91-1.noarch.rpm`
 Install Alien Package Converter: Since the downloaded package is in RPM format, it needs to be converted to a Debian package (.deb) format. Install the Alien package converter tool to facilitate this conversion.
 #### `sudo apt-get install alien` 
- - press y and enter when asked
+press y and enter when asked
 Convert RPM to DEB: Use Alien to convert the RPM package to a DEB package.  
 #### `sudo alien zenmap-7.94-1.noarch.rpm`  
 Install Zenmap: After conversion, install Zenmap using the DEB package.   
@@ -80,17 +78,17 @@ sudo: Execute the command with superuser privileges.
 ## Part 1b: 
 ### Setting up drawio on the cyber.org range (10-12 minutes in the range)
 Install the packages
-####  - `sudo apt-get update`
-####  - `sudo apt-get install default-jdk`
-####  - `wget https://github.com/jgraph/drawio-desktop/releases/download/v26.0.9/drawio-amd64-26.0.9.deb`
+#### `sudo apt-get update`
+#### `sudo apt-get install default-jdk`
+#### `wget https://github.com/jgraph/drawio-desktop/releases/download/v26.0.9/drawio-amd64-26.0.9.deb`
 
 Ensure the drawio is in the folder you are in by using ls
-####  - `sudo apt-get install ./drawio-amd64-26.0.9.deb`  
+#### `sudo apt-get install ./drawio-amd64-26.0.9.deb`  
 Run by checking the applications menu or using `drawio` in terminal
 
 Samba is not working in the range, so you will need to SCP for sharing
 Download the template and start adding information to it
-#### 'wget https://github.com/jboyce1/ppsCTF/raw/main/classes/CyberCartographer/CyberCartographer_template.drawio'
+#### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/CyberCartographer/CyberCartographer_template.drawio`
 
 Save the template locally (or in a shared shared folder)
 Add valid targets to the draw.io template in the next steps
@@ -221,7 +219,7 @@ Flags explained:
 - `-p 21`: Scans for FTP services on port 21.  
 - `--open`: Only shows hosts with **port 21 open** to filter out unnecessary data.  
 
-### Step 3) Scan a List of IPs for FTP  
+Scan a List of IPs for FTP  
 To scan **multiple hosts**, use an input file containing **a list of IP addresses**:  
 
 #### `nmap -p 21 --open -iL hosts.txt`  
@@ -249,7 +247,7 @@ When prompted for login:
 - **Username:** `anonymous`  
 - **Password:** Press **Enter**  
 
-### Step 6) Verify Anonymous Access  
+Verify Anonymous Access  
 Once connected, check if you can list and retrieve files:  
 
 #### `ls`  
@@ -268,7 +266,7 @@ Scan high ports for ftp services
 ## Part 6:
 ## Scan a range of high ports for services detected    
 If you know the port range you want to scan
-#### 'nmap -p 20000-24000 --open -sV 10.15.0.0/16'    
+#### `nmap -p 20000-24000 --open -sV 10.15.0.0/16`    
 -p 20000-24000 → Scans only high ports 20000-24000.    
 --open → Only show hosts with open ports.    
 -sV → Service version detection to identify if FTP, SSH, or Telnet is running.    
@@ -277,7 +275,7 @@ If you know the port range you want to scan
 If you have a file of hosts.txt that you want to scan
 #### `nmap -p 20000-24000 --open -sV -iL hosts.txt`    
 to save your results     
-#### 'nmap -p 20000-24000 --open -sV -iL hosts.txt -oN high_port_scan_results.txt`   
+#### `nmap -p 20000-24000 --open -sV -iL hosts.txt -oN high_port_scan_results.txt`   
 
 ---
 ## Other useful scans
