@@ -91,8 +91,11 @@ Download the template and start adding information to it
 #### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/CyberCartographer/CyberCartographer_template.drawio`
 
 Save the template locally (or in a shared shared folder)
-Add valid targets to the draw.io template in the next steps
+Add valid targets to the draw.io template in the next steps   
 
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xKIVex4OhXg?si=weB48EIq3UdooMSj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>  
 
 ---
 ## Part 2:  
