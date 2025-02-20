@@ -207,8 +207,128 @@ This closes the Telnet session and returns you to the **Kali terminal**.
 ## Part 5:
 ## Identify and validate ftp services on the network
 
+Install FTP Client on Kali    
+In termial type `ftp --version`, if anything comes up, skip the install.
+Ensure FTP client tools are installed before scanning:  
+#### `sudo apt update && sudo apt install ftp`  
+
+Use Nmap to Identify Hosts Running FTP  
+We'll use **Nmap** to scan the network and identify hosts with **FTP open on port 21**.  
+
+#### `nmap -p 21 --open <targetIP>`  
+
+Flags explained:  
+- `-p 21`: Scans for FTP services on port 21.  
+- `--open`: Only shows hosts with **port 21 open** to filter out unnecessary data.  
+
+### Step 3) Scan a List of IPs for FTP  
+To scan **multiple hosts**, use an input file containing **a list of IP addresses**:  
+
+#### `nmap -p 21 --open -iL hosts.txt`  
+`    
+Flags explained:  
+- `-iL hosts.txt`: Loads a file (`hosts.txt`) containing **multiple target IPs** for scanning.  
+#### `nmap -p 21 --open <targetIPlow>-<targetIPhigh> | grep "Nmap scan report for" | awk '{print $5}'    
+Use Nmap to Check for Anonymous FTP Access  
+Nmap has a built-in script to test for **anonymous FTP login**:  
+
+#### `nmap -p 21 --script ftp-anon <targetIP>`  
+#### `nmap -p 21 --script ftp-anon -iL hosts.txt`  
+Flags explained:  
+- `--script ftp-anon`: Runs a script that checks if **anonymous login is allowed** on the FTP server.  
+
+Use FTP Client to Manually Validate Access  
+Once you've identified an FTP server, connect to it:  
+
+#### `ftp <targetIP>`  
+
+If FTP is running on another port:  
+#### `ftp <targetIP> <port#>`  
+
+When prompted for login:  
+- **Username:** `anonymous`  
+- **Password:** Press **Enter**  
+
+### Step 6) Verify Anonymous Access  
+Once connected, check if you can list and retrieve files:  
+
+#### `ls`  
+#### `get <filename>`  
+
+If the command succeeds, **anonymous FTP is enabled**.  
+
+Exit the FTP Session  
+To safely disconnect, type:  
+#### `bye`  
+
+This closes the FTP session and returns you to the **Kali terminal**.
+
 Scan high ports for ftp services
 
-## Command Line Extras:  
+## Part 6:
+## Scan a range of high ports for services detected    
+If you know the port range you want to scan
+#### 'nmap -p 20000-24000 --open -sV 10.15.0.0/16'    
+-p 20000-24000 → Scans only high ports 20000-24000.    
+--open → Only show hosts with open ports.    
+-sV → Service version detection to identify if FTP, SSH, or Telnet is running.    
+10.15.0.0/16 → Replace with your target subnet.    
+
+If you have a file of hosts.txt that you want to scan
+#### `nmap -p 20000-24000 --open -sV -iL hosts.txt`    
+to save your results     
+#### 'nmap -p 20000-24000 --open -sV -iL hosts.txt -oN high_port_scan_results.txt`   
+
+---
+## Other useful scans
+#### 'nmap -p 20000-24000 --open -sV 10.15.0.0/16'    
+-p 20000-24000 → Scans only high ports 20000-24000.    
+--open → Only show hosts with open ports.    
+-sV → Service version detection to identify if FTP, SSH, or Telnet is running.    
+10.15.0.0/16 → Replace with your target subnet.    
+
+#### 'nmap -p 21,22,23 --open -sV -iL hosts.txt'  
+-p 21,22,23 → Scan for FTP, SSH, and Telnet.  
+--open → Only show hosts where a service is running.  
+-sV → Detect service versions.  
+-iL hosts.txt → Scan only IPs listed in hosts.txt.  
+
+#### 'nmap -sC -sV -p 80,443 10.15.0.0/16'  
+-sC → Runs default Nmap scripts.  
+-sV → Service version detection.  
+-p 80,443 → Scan for web servers on ports 80 (HTTP) and 443 (HTTPS).  
+
+#### 'nmap --script ftp-anon -p 21 10.15.0.0/16'  
+--script ftp-anon → Checks if anonymous FTP login is allowed.  
+-p 21 → Scan only FTP port.  
+
+#### 'nmap --script ssh-auth-methods -p 22 --open -iL hosts.txt'  
+--script ssh-auth-methods → Checks available SSH authentication methods.  
+-p 22 → Scan SSH port.  
+--open → Only show hosts with open ports.  
+-iL hosts.txt → Scan a list of known hosts.  
+
+#### 'nmap -p- --open -T4 -sV -iL hosts.txt'  
+-p- → Scan **all** 65,535 ports.  
+--open → Show only hosts with open ports.  
+-T4 → Faster scan timing.  
+-sV → Service version detection.  
+
+#### 'nmap -p 135,137,445 --script smb-enum-shares -iL hosts.txt'  
+-p 135,137,445 → Scan SMB ports.  
+--script smb-enum-shares → Enumerate SMB shares.  
+-iL hosts.txt → Use a list of known hosts.  
+
+#### 'nmap -p 3389 --open --script rdp-enum-encryption -iL hosts.txt'  
+-p 3389 → Scan for Remote Desktop Protocol (RDP).  
+--script rdp-enum-encryption → Detect RDP security settings.  
+-iL hosts.txt → Use a list of known hosts.  
+
+#### 'nmap -sU -p 161 --open --script=snmp-info -iL hosts.txt'  
+-sU → Scan UDP ports.  
+-p 161 → Scan for SNMP services.  
+--script=snmp-info → Extract SNMP system details.  
+-iL hosts.txt → Use a list of known hosts.  
+
   
 mkfifo /Desktop/remotecaptures/remotepacketcapture1
