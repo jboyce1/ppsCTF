@@ -42,7 +42,7 @@ Once vulnerabilities are identified, the Blue Team can leverage Zenmap's reporti
 
 ---
 
-## Part 1: 
+## Part 1a: 
 ## Installing and using zenmap on the cyber.org range
 ## Installing and using draw.io on the cyber.org range
   
@@ -77,7 +77,9 @@ sudo: Execute the command with superuser privileges.
 <iframe width="560" height="315" src="https://www.youtube.com/embed/UrGKgu5HauE?si=ys1g6VsgT7xHxaxv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 
+## Part 1b: 
 ### Setting up drawio on the cyber.org range (10-12 minutes in the range)
+Install the packages
 ####  - `sudo apt-get update`
 ####  - `sudo apt-get install default-jdk`
 ####  - `wget https://github.com/jgraph/drawio-desktop/releases/download/v26.0.9/drawio-amd64-26.0.9.deb`
@@ -86,7 +88,13 @@ Ensure the drawio is in the folder you are in by using ls
 ####  - `sudo apt-get install ./drawio-amd64-26.0.9.deb`  
 Run by checking the applications menu or using `drawio` in terminal
 
-Samba is not working in the range, so you will need to SCP for sharing  
+Samba is not working in the range, so you will need to SCP for sharing
+Download the template and start adding information to it
+#### 'wget https://github.com/jboyce1/ppsCTF/raw/main/classes/CyberCartographer/CyberCartographer_template.drawio'
+
+Save the template locally (or in a shared shared folder)
+Add valid targets to the draw.io template in the next steps
+
 
 ---
 ## Part 2:  
@@ -151,11 +159,49 @@ OpenSSH hunt (1)
 
 ## Part 4:
 ## Identify and validate telnet services on the network
-
+    
 Install telnet on kali
 ### `sudo apt update && sudo apt install telnet`
 - install the pacakage maintainer's version when asked
+    
+Use Nmap to Identify Hosts Running Telnet  
+We'll use **Nmap** to scan the network and identify hosts with **Telnet open on port 23**.  
+    
+#### `nmap -p 23 --open <targetIP>`  
+    
+Flags explained:  
+- `-p 23`: Scans for Telnet services on port 23.  
+- `--open`: Only shows hosts with **port 23 open** to filter out unnecessary data.  
+    
+Scan a List of IPs for Telnet  
+To scan multiple hosts, use an input file containing **a list of IP addresses**:  
+    
+#### `nmap -p 23 --open -iL hosts.txt`  
 
+Flags explained:  
+- `-iL hosts.txt`: Loads a file (`hosts.txt`) containing **multiple target IPs** for scanning.  
+    
+Log Into a Telnet Device to Validate Access  
+Once you've identified a host running Telnet, use the **telnet command** to connect:  
+#### `telnet <targetIP>`    
+If telnet is running on another port    
+#### `telnet <targetIP> <port#>`    
+
+If authentication is required, **enter the username and password** when prompted.
+
+Verify the Connection  
+After logging in, confirm the Telnet session is active by running:  
+#### `whoami`  
+#### `hostname`  
+#### `ls`  
+This validates **successful access** to the remote system.   
+    
+Exit the Telnet Session  
+To safely disconnect, type:  
+#### `exit`  
+    
+This closes the Telnet session and returns you to the **Kali terminal**.
+    
   
 
 ## Part 5:
