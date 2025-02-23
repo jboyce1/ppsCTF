@@ -60,9 +60,8 @@ atc
 </div>
 
 Start a Kali machine    
-Level 1:    
-On Kali    
-Download the cat observations   
+Level 1:      
+Download the cat observations     
 #### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/MsDisin/cat_observations.zip`    
 Unzip the contents of the folder.    
 Open a terminal inside the cat_observations folder    
