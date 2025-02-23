@@ -42,15 +42,15 @@ atc
 
  
 ### How this skill can be used:  
-Offensive Operations:
+**Offensive Operations:**
  - Data Extraction Tactics: Utilize combinations of grep, awk, and sed to extract sensitive information from opponent’s files, which could range from passwords to strategic plans.
  - Script Manipulation: Through direct file editing using sed and cat, alter scripts or configurations in the enemy's network to disrupt their operations or misdirect their strategies.
 
-Defensive Operations:
+**Defensive Operations:**
  - File Integrity Checks: Use grep and awk to monitor files for unauthorized changes that could indicate infiltration attempts.
  - Rapid Response Editing: Employ sed to quickly revert any unauthorized changes or to patch vulnerabilities in script configurations during live competitions.
-
-
+    
+    
 ---
 ## Use cat to combine multiple text files and display their contents quickly
 ### “cat” the cat and “grep” the dog (because who names a cat?)
@@ -63,6 +63,7 @@ Start a Kali machine
 Level 1:    
 On Kali    
 Download the cat observations   
+#### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/MsDisin/cat_observations.zip`    
 Unzip the contents of the folder.    
 Open a terminal inside the cat_observations folder    
 use the cat command to read each passage    
