@@ -6,8 +6,8 @@ title: Ms. Disin
 # Ms. Disin   
 
 **Focus**: Text manipulation  
-**Skill**: Use grep, sed, awk, diff, and sort to extract and manipulate text  
-**Activity**: Discover the most   
+**Skill**: Use grep, sed, awk, diff, xxd and sort to extract and manipulate text and data  
+**Activity**: Extract and manipulate files that are text based   
 
 <div style="text-align: center;">
   <img src="{{ 'classes/MsDisin/Ms_Disin Banner2.jpg' | relative_url }}" alt="Ms_Disin Banner2" style="max-width: 80%; height: auto;">
