@@ -16,8 +16,7 @@ title: Ms. Disin
 ## Sometimes the world is a web of lies
 ### Be a spider
 ---
-
-
+    
 **play a game while I yap**:     
 sudo apt install greed    
 greed    
