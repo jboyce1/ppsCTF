@@ -37,9 +37,9 @@ atc
 
 
 ### Things to experiment with on the range:     
-Regex with grep: Mastering regular expressions to refine search criteria and pinpoint exact data sets.    
-Stream editing with sed: Practice on-the-fly file content manipulations during competitive scenarios.    
-Data manipulation with awk: Leverage awk's programming capabilities to analyze and report on data extracted during competitions.    
+- Regex with grep: Mastering regular expressions to refine search criteria and pinpoint exact data sets.    
+- Stream editing with sed: Practice on-the-fly file content manipulations during competitive scenarios.    
+- Data manipulation with awk: Leverage awk's programming capabilities to analyze and report on data extracted during competitions.    
 
  
 ### How this skill can be used:  
@@ -50,8 +50,6 @@ Offensive Operations:
 Defensive Operations:
  - File Integrity Checks: Use grep and awk to monitor files for unauthorized changes that could indicate infiltration attempts.
  - Rapid Response Editing: Employ sed to quickly revert any unauthorized changes or to patch vulnerabilities in script configurations during live competitions.
-
- 
 
 
 ---
@@ -160,4 +158,8 @@ Explanation of Each Command:
  - **`sort`**: This sorts the words alphabetically, which is necessary for uniq to count all occurrences properly.    
  - **`uniq -c`**: This counts the number of occurrences of each word. The words need to be sorted as uniq only matches consecutive duplicate lines.    
  - **`sort -nr`**: This sorts the list numerically in reverse order, placing the most frequent words at the top.    
- - **`head -100`**: This displays only the top 100 results.    
+ - **`head -100`**: This displays only the top 100 results.
+
+Or add in awk capabilities to filter out small words
+### `tr -cs 'A-Za-z' '\n' < input.txt | tr 'A-Z' 'a-z' | awk 'length($0) > 3' | sort | uniq -c | sort -nr | head -100`
+
