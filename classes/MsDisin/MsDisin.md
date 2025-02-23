@@ -13,8 +13,8 @@ title: Ms. Disin
   <img src="{{ 'classes/MsDisin/Ms_Disin Banner2.jpg' | relative_url }}" alt="Ms_Disin Banner2" style="max-width: 80%; height: auto;">
 </div>    
 
-### Sometimes the world can be a web of lies
-## Be a spider
+## Sometimes the world can be a web of lies
+### Be a spider
 ---
 
 
@@ -116,36 +116,48 @@ Write a synopsis of what you think is happening here
 
 Find out who:
 Use grep to find the name of the person who was called the "Prince of Spies".
-grep -i "Prince of Spies" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt
+**`grep -i "Prince of Spies" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`**
 When did:
 Use grep to discover when the book "The World's Greatest Military Spies and Secret Service Agents" was first published.
-grep -i "first impression" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt
+**`grep -i "first impression" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`**
 Where did:
 Use grep and awk to find the location where "Belle Boyd" saved Stonewall Jackson.
-grep -i "Belle Boyd" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt | awk '{print $0}'
+**`grep -i "Belle Boyd" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt | awk '{print $0}'`**
 What event:
 Use grep to identify the event described as "the capture of Major André".
-grep -i "Major André" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt
-Manipulate names:
-Use sed to change all instances of "Napoleon" to "Roger Rabbit"
-sed -i 's/Napoleon/Roger Rabbit/g' The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt
-Alter dates:
+**`grep -i "Major André" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`**
+Manipulate names:    
+Use sed to change all instances of "Napoleon" to "Roger Rabbit"    
+**`sed -i 's/Napoleon/Roger Rabbit/g' The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`**   
+Alter dates:    
 Use sed to change all instances of the year "1917" to "1947".
-sed -i 's/1917/1947/g' The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt
+**`sed -i 's/1917/1947/g' The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`**
 Combine awk and sed:
 Use awk to find lines containing "King Philip" and then sed to change "King Philip" to "King Roger".
-awk '/King Philip/' The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt | sed 's/King Philip/King Roger/g'
+**`awk '/King Philip/' The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt | sed 's/King Philip/King Roger/g'`**
  Extracting sentences:
 Use grep to extract sentences that mention "Confederate spy"
-grep -i "Confederate spy" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt
+**`grep -i "Confederate spy" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`**
 Count occurrences:
 Use grep and wc to count how many times the word "secret" appears in the text.
-grep -o -i "secret" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt | wc -l
+**`grep -o -i "secret" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt | wc -l`**
 Spot the Differences:
 Use diff to extract what has changed in the two files line by line
-diff -y original_file.txt modified_file.txt
+**`diff -y original_file.txt modified_file.txt`** 
 or
-diff -u original_file.txt modified_file.txt
+**`diff -u original_file.txt modified_file.txt`**
 or for directories:
-diff -r original_directory modified_directory
- 
+**`diff -r original_directory modified_directory`**
+
+
+Finally, display the top 100 most common words.
+Here's how you can get the 100 most common words in a text file directly in the terminal:    
+#### `tr -cs 'A-Za-z' '\n' < input.txt | tr 'A-Z' 'a-z' | sort | uniq -c | sort -nr | head -100`  
+
+Explanation of Each Command:
+ - **`tr -cs 'A-Za-z' '\n'`**: This translates all sequences of characters that are not alphabets into newlines, effectively putting each word on a new line.
+ - **`tr 'A-Z' 'a-z'`**: This converts all uppercase letters to lowercase.
+ - **`sort`**: This sorts the words alphabetically, which is necessary for uniq to count all occurrences properly.
+ - **`uniq -c`**: This counts the number of occurrences of each word. The words need to be sorted as uniq only matches consecutive duplicate lines.
+ - **`sort -nr`**: This sorts the list numerically in reverse order, placing the most frequent words at the top.
+ - **`head -100`**: This displays only the top 100 results.
