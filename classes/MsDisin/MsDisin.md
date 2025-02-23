@@ -112,6 +112,9 @@ Write a synopsis of what you think is happening here
   <img src="{{ 'classes/MsDisin/worldsgreatestspies_cover.jpg' | relative_url }}" alt="worldsgreatestspies_cover" style="max-width: 80%; height: auto;">
 </div>  
 
+get the file:
+#### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/MsDisin/The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`
+
 Find out who:
 Use grep to find the name of the person who was called the "Prince of Spies".    
 **`grep -i "Prince of Spies" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`**    
