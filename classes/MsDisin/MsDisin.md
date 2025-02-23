@@ -164,5 +164,19 @@ Explanation of Each Command:
  - **`head -100`**: This displays only the top 100 results.
 
 Or add in awk capabilities to filter out small words
-### `tr -cs 'A-Za-z' '\n' < input.txt | tr 'A-Z' 'a-z' | awk 'length($0) > 3' | sort | uniq -c | sort -nr | head -100`
+#### `tr -cs 'A-Za-z' '\n' < input.txt | tr 'A-Z' 'a-z' | awk 'length($0) > 3' | sort | uniq -c | sort -nr | head -100`
 
+--- 
+### Use xxd to compare the hexidecimal difference between files    
+    
+#### `xxd original.txt > original.hex`    
+#### `xxd modified.txt > modified.hex`    
+#### `diff -u original.hex modified.hex`    
+
+<div style="text-align: center;">
+  <img src="{{ 'classes/MsDisin/xxd_screenshot.png' | relative_url }}" alt="worldsgreatestspies_cover" style="max-width: 80%; height: auto;">
+</div>  
+
+<div style="text-align: center;">
+  <img src="{{ 'classes/MsDisin/Ms_Disin Banner.jpg' | relative_url }}" alt="Ms_Disin Banner2" style="max-width: 80%; height: auto;">
+</div>    
