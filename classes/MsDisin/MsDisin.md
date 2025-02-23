@@ -10,12 +10,13 @@ title: Ms. Disin
 **Activity**: Discover the most   
 
 <div style="text-align: center;">
-  <img src="{{ 'classes/MsDisin/Ms_Disin Banner2.jpg' | relative_url }}" alt="Hash Hound Logo" style="max-width: 80%; height: auto;">
-</div>
+  <img src="{{ 'classes/MsDisin/Ms_Disin Banner2.jpg' | relative_url }}" alt="Ms_Disin Banner2" style="max-width: 80%; height: auto;">
+</div>    
 
----
 ### Sometimes the world can be a web of lies
 ## Be a spider
+---
+
 
 **play a game while I yap**:     
 sudo apt install greed    
@@ -108,7 +109,10 @@ Write a synopsis of what you think is happening here
 ### Use diff to determine the differences between two files    
 ### Use diff to determine the differences between two directories    
 
-On Kali
+
+<div style="text-align: center;">
+  <img src="{{ 'classes/MsDisin/worldsgreatestspies_cover.jpg' | relative_url }}" alt="worldsgreatestspies_cover" style="max-width: 80%; height: auto;">
+</div>  
 
 Find out who:
 Use grep to find the name of the person who was called the "Prince of Spies".
