@@ -13,7 +13,7 @@ title: Ms. Disin
   <img src="{{ 'classes/MsDisin/Ms_Disin Banner2.jpg' | relative_url }}" alt="Ms_Disin Banner2" style="max-width: 80%; height: auto;">
 </div>    
 
-## Sometimes the world can be a web of lies
+## Sometimes the world is a web of lies
 ### Be a spider
 ---
 
