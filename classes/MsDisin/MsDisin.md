@@ -10,7 +10,7 @@ title: Ms. Disin
 **Activity**: Discover the most   
 
 <div style="text-align: center;">
-  <img src="{{ 'classes/CyberCartographer/93909-CyberCartography-with-nmap-banner.png' | relative_url }}" alt="Hash Hound Logo" style="max-width: 80%; height: auto;">
+  <img src="{{ 'classes/MsDisin/Ms_Disin Banner2.jpg' | relative_url }}" alt="Hash Hound Logo" style="max-width: 80%; height: auto;">
 </div>
 
 ---
@@ -57,40 +57,46 @@ Defensive Operations:
 ## Use cat to combine multiple text files and display their contents quickly
 ### “cat” the cat and “grep” the dog (because who names a cat?)
 
-Start a Kali machine
-Level 1:
-On Kali
-Download the cat observations 
-Unzip the contents of the folder.
-Open a terminal inside the cat_observations folder
-use the cat command to read each passage
-cat cat_1
-(hint: use the up arrow key and backspace to quickly advance in the journal
-Level 2:
-
-On Kali
-
-From  inside the cat_observations folder, open a terminal
-
-To display all of the text in the files:
-find . -type f -exec cat {} +
-To display all of the text in the files with their file names in order and get really fancy?:
-find . -type f -name "*" | sort | xargs cat
-find . -type f -name "*.": Search for all files with an extension in the current directory (.) and its subdirectories.
-sort: Sort the list of filenames alphabetically.
-xargs cat: Pass the sorted list of filenames to the cat command to display their contents in order.
-
-Try it now
-
- 
-
-use the dog_oberservations.zip to do the same thing
-
-Write a synopsis of what you think is happening here
-  
 <div style="text-align: center;">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/UrGKgu5HauE?si=ys1g6VsgT7xHxaxv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  <img src="{{ 'classes/MsDisin/msdisins_dog.webp' | relative_url }}" alt="Hash Hound Logo" style="max-width: 80%; height: auto;">
 </div>
+
+Start a Kali machine    
+Level 1:    
+On Kali    
+Download the cat observations   
+Unzip the contents of the folder.    
+Open a terminal inside the cat_observations folder    
+use the cat command to read each passage    
+cat cat_1    
+(hint: use the up arrow key and backspace to quickly advance in the journal  
+
+Level 2:    
+On Kali
+
+From  inside the cat_observations folder, open a terminal    
+    
+To display all of the text in the files:    
+#### `find . -type f -exec cat {} +`    
+To display all of the text in the files with their file names in order and get really fancy?:    
+#### `find . -type f -name "*" | sort | xargs cat`    
+Explaination of flags:    
+ -  `find . -type f -name "*."`  Search for all files with an extension in the current directory (.) and its subdirectories.    
+ - `| sort` pipes the output to sort in order to list of filenames alphabetically.    
+ - `| xargs cat`  Pass the sorted list of filenames to the cat command to display their contents in order.   
+
+<div style="text-align: center;">
+  <img src="{{ 'classes/MsDisin/msdisins_cat.webp' | relative_url }}" alt="Hash Hound Logo" style="max-width: 80%; height: auto;">
+</div>    
+
+### Try it now    
+use the dog_oberservations.zip to do the same thing    
+Write a synopsis of what you think is happening here    
+
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jmTVwNt24Sk?si=6UXLuTWlRTuxneLB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+--- 
 
 ## Part 1b: 
 ### Setting up drawio on the cyber.org range (10-12 minutes in the range)
