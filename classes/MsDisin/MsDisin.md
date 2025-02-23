@@ -60,20 +60,17 @@ atc
 </div>
 
 Start a Kali machine    
-Level 1:      
+**Step 1:**      
 Download the cat observations     
 #### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/MsDisin/cat_observations.zip`    
 Unzip the contents of the folder.    
 Open a terminal inside the cat_observations folder    
 use the cat command to read each passage    
 cat cat_1    
-(hint: use the up arrow key and backspace to quickly advance in the journal  
-
-Level 2:    
-On Kali
-
-From  inside the cat_observations folder, open a terminal    
+(hint: use the up arrow key and backspace to quickly advance in the journal)    
     
+**Step 2:**    
+From  inside the cat_observations folder, open a terminal    
 To display all of the text in the files:    
 #### `find . -type f -exec cat {} +`    
 To display all of the text in the files with their file names in order and get really fancy?:    
