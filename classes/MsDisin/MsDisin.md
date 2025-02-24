@@ -86,8 +86,8 @@ Explaination of flags:
 
 ### Try it now    
 use the dog_oberservations.zip to do the same thing  
-wget https://github.com/jboyce1/ppsCTF/raw/main/classes/MsDisin/dog_observations.zip    
-Write a synopsis of what you think is happening here    
+#### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/MsDisin/dog_observations.zip`    
+Write a synopsis of what you think is happening <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=mhxxjxzsu023kLsMdxsdzM6J33C5yQRJgc1SHWy_64dUOFYxN1JKSUExN09WVzY3VzE0WFU1VU1IUC4u" target="_blank">here</a>  
 
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/jmTVwNt24Sk?si=6UXLuTWlRTuxneLB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
