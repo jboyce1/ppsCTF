@@ -85,7 +85,8 @@ Explaination of flags:
 </div>    
 
 ### Try it now    
-use the dog_oberservations.zip to do the same thing    
+use the dog_oberservations.zip to do the same thing  
+wget https://github.com/jboyce1/ppsCTF/raw/main/classes/MsDisin/dog_observations.zip    
 Write a synopsis of what you think is happening here    
 
 <div style="text-align: center;">
