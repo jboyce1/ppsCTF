@@ -26,14 +26,14 @@ title: Home
 
 **2/13 Thursday 7-9pm Teams Meeting**: Small Team Challenge (based on newly introduced skills)
 
-**2/18 Tuesday 7-9pm Teams Meeting**: [CyberCartographer (Network)](./classes/CyberCartographer/CyberCartographer)
+**2/20 Thursday 7-9pm Teams Meeting**: [CyberCartographer (Network)](./classes/CyberCartographer/CyberCartographer)
 - Use nmap to identify all hosts on the network
 - Use nmap to create a text file of all open hosts
 - Use nmap to identify and isolate hosts with password authentication OpenSSH
 - Install and use zenmap on the cyber.org range
 - Use draw.io to develop and annotate a network map
 
-**2/20 Thursday 7-9pm Teams Meeting**: [Ms. Disin (Host)](./classes/MsDisin)
+**2/25 Tuesday 7-9pm Teams Meeting**: [Ms. Disin (Host)](./classes//MsDisin/MsDisin)
 - Use cat to combine multiple text files and display their contents quickly
 - Use grep and find to locate specific patterns of text within files across different directories
 - Use sed to edit text files directly in the terminal
@@ -42,9 +42,9 @@ title: Home
 - Use diff to compare files
 - Use tail and head to view just the beginning or end of files
 
-**2/25 Tuesday 7-9pm Teams Meeting**: Small Team Challenge
+**2/27 Thursday 7-9pm Teams Meeting**: Small Team Challenge
 
-**2/27 Thursday 7-9pm Teams Meeting**: [LANgeist (Network)](./classes/LANgeist)
+**3/4 Tuesday 7-9pm Teams Meeting**: [LANgeist (Network)](./classes/LANgeist)
 - Use TCP dump to identify traffic, gather detailed information about each packet sent
 - Use TCP dump to gather the entire packet, including the packet payload
 - Use TCP dump to isolate attackers on your network with known IP addresses
@@ -52,21 +52,21 @@ title: Home
 - Use Wireshark to capture traffic in promiscuous mode
 - Use the Dsniff tool Macof to conduct a MAC Flood attack
 
-**3/4 Tuesday 7-9pm Teams Meeting**: [Malchemist (Host)](./classes/Malchemist)
+**3/6 Thursday 7-9pm Teams Meeting**: [Malchemist (Host)](./classes/Malchemist)
 - Deploy a basic trojan horse
 - Use IDLE to conduct malware analysis
 - Use IDLE any to modify python based malware
 - Use SSH and SCP to deploy and run scripts on remote devices
 - Use psutil to monitor actions on remote computer
 
-**3/6 Thursday 7-9pm Teams Meeting**: Small Team Challenge
+**3/11 Tuesday 7-9pm Teams Meeting**: Small Team Challenge
 
 **3/7-17th**: picoCTF Competition
 
-**3/11 Tuesday 7-9pm Teams Meeting**: [PortalLord (Network)](./classes/PortalLord)
+**3/13 Thursday 7-9pm Teams Meeting**: [PortalLord (Network)](./classes/PortalLord)
 - RSA keys, proxychains, multiplexing (Development in progress)
 
-**3/13 Thursday 7-9pm Teams Meeting**: [8ball (Host)](./classes/8ball)
+**3/18 Tuesday 7-9pm Teams Meeting**: [8ball (Host)](./classes/8ball)
 - Use zip to hide data inside of images
 - Use unzip to discover data from images
 - Use zip -e to password protect data hidden inside of images
@@ -75,15 +75,14 @@ title: Home
 - Use Steghide to hide data inside of images
 - Use Stegcracker & Stegseek to discover the password of an encrypted file
 
-**3/18 Tuesday 7-9pm Teams Meeting**: Small Team Challenge
+***3/20 Thursda 7-9pm Teams Meeting**: Small Team Challenge
 
-**3/20 Thursday 7-9pm Teams Meeting**: Whole Team Challenge
+**3/25 Tuesday 7-9pm Teams Meeting**: Whole Team Challenge
 
-**3/25 Tuesday 7-9pm Teams Meeting**: Whole Team Challenge Review
+**3/27 Thursday 7-9pm Teams Meeting**: Whole Team Challenge Review
 
-**3/27 Thursday 7-9pm Teams Meeting**: Whole Team Challenge
+**4/1 Tuesday 7-9pm Teams Meeting**: Whole Team Challenge
 
-**4/1 Tuesday 7-9pm Teams Meeting**: Whole Team Challenge Review
 
 **4/7 Monday 9am-2pm Greenway**: Round 1 A
 
