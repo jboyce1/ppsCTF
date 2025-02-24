@@ -112,6 +112,60 @@ Write a synopsis of what you think is happening <a href="https://forms.office.co
 get the file:
 #### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/MsDisin/The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`
 
+### grep overview:     
+grep searches for items and returns the entire line that contains the item    
+
+To search non-case sensitive:    
+#### `grep -i  "napoleon" file.txt`      
+    
+To search recursively (all files) in directories:    
+#### `grep -r "Napoleon" /path/to/directory/    
+    
+To get the file names that contain an item:    
+#### `grep -l "Napoleon" *.txt`    
+    
+To include the file names that contain an item:    
+#### `grep -H "Napoleon" *.txt`     
+    
+To invert the search and search of lines that do not contain the item:        
+#### `grep -v "Napoleon" file.txt`    
+    
+To count the matches:    
+#### `grep -c "Napoleon" file.txt`    
+    
+To see the lines before and after, use -B and -A      
+#### `grep -B 2 "Napoleon" file.txt`    
+#### `grep -A 2 "Napoleon" file.txt`    
+    
+To highlight matches in the text    
+#### `grep --color=auto "Napoleon" file.txt`    
+
+
+### awk overview:
+General pattern: awk 'pattern {action}' file    
+ - pattern: The condition you want to match (optional).    
+ - action: The operation to perform on the matched lines (optional).    
+- file: The file you're processing.    
+
+Use similar to grep
+#### `awk '/Prince of Spies/' The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`    
+ - similar to grep
+
+Add conditional logical controls    
+#### `awk '/Belle Boyd/ && /1917/' The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`    
+ - find lines containing "Belle Boyd" and  "1917"
+
+The an example of more powerful application of awk 
+#### `awk '/The Battle of/,/Confederate/ { if (index($0, "Belle Boyd") > 0) print $0 }' The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`
+ - `/The Battle of/,/Confederate/` is an awk range pattern. It tells awk to start processing lines when it encounters a line containing "The Battle of", and stop processing once it encounters a line containing "Confederate".
+So, awk will process all lines in between these two patterns.    
+ - `{ if (index($0, "Belle Boyd") > 0) print $0 }:`
+ - `$0`: This refers to the entire current line in awk.
+`index($0, "Belle Boyd")`: The `index()` function returns the position of the first occurrence of "Belle Boyd" in the current line. If "Belle Boyd" is found, it returns a position (a number greater than 0), otherwise it returns 0.
+ - `if (index($0, "Belle Boyd") > 0)`: This checks if "Belle Boyd" exists in the line (i.e., the position is greater than 0).
+print $0: If "Belle Boyd" is found, the entire line is printed.
+
+
 Find out who:
 Use grep to find the name of the person who was called the "Prince of Spies".    
 **`grep -i "Prince of Spies" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`**    
