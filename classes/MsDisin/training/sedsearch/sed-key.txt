@@ -1,0 +1,3 @@
+s/  GREATEST/Four/p
+s/MILITARY/Score and /p
+s/Secret Service Agents/ seven years/p
