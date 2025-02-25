@@ -1,0 +1,5 @@
+
+
+Command to extract top altered words:
+grep -o -w -f replaced_words.txt Altered_Federalist_Papers.txt | sort | uniq -c | sort -nr | awk '{{print $2}}' | head -6 | cut -c1 | tr -d '
+'
