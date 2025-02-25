@@ -2,3 +2,5 @@ To set up the challenge:
 
 from ubuntu mahcine:
 git clone https://github.com/jboyce1/ppsCTF.git
+
+sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
