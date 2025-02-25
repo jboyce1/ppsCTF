@@ -236,6 +236,16 @@ Or add in awk capabilities to filter out small words
   <img src="{{ 'classes/MsDisin/xxd_screenshot.png' | relative_url }}" alt="worldsgreatestspies_cover" style="max-width: 80%; height: auto;">
 </div>  
 
+## Training links:
+
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/Altered_The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`
+
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents_modified.txt`
+
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/replaced_words.txt`
+
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/mrboyce_traffic_history.db`
+
 <div style="text-align: center;">
   <img src="{{ 'classes/MsDisin/Ms_Disin Banner.jpg' | relative_url }}" alt="Ms_Disin Banner2" style="max-width: 80%; height: auto;">
 </div>    
