@@ -33,6 +33,7 @@ atc
 - Use sort and uniq for sorting data and finding duplicates
 - Use diff to compare files
 - Use tail and head to view just the beginning or end of files
+- Use sqlite to query webbrowser history
 
 
 ### Things to experiment with on the range:     
@@ -236,6 +237,26 @@ Or add in awk capabilities to filter out small words
   <img src="{{ 'classes/MsDisin/xxd_screenshot.png' | relative_url }}" alt="worldsgreatestspies_cover" style="max-width: 80%; height: auto;">
 </div>  
 
+---
+## Part 3
+### Use sqlite to query web browser history
+
+Navigate the the directory with the .db file in it
+
+In terminal, open sqlite
+#### `sqlite3`
+
+Verify database is open and you are able to access the tables    
+#### `.tables`    
+ - you should see something like browsing_history
+Inspect the stucture of the tables    
+#### `PRAGMA table_info(browsing_history);`
+  - commands will execute once they end with a semi-colon `;`
+
+Test a basic query from the browsing_history table
+
+
+---
 ## Training links:
 
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/Altered_The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`
