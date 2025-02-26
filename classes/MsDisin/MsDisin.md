@@ -253,8 +253,20 @@ Inspect the stucture of the tables
 #### `PRAGMA table_info(browsing_history);`
   - commands will execute once they end with a semi-colon `;`
 
-Test a basic query from the browsing_history table
+Test a basic query from the browsing_history table    
+#### `SELECT * FROM browsing_history LIMIT 10;`    
 
+Quit out of the sqlite3    
+#### `.quit`
+
+Query the most visited sites:
+```
+sqlite> select url, COUNT(*) as visit_count
+   ...> FROM browsing_history
+   ...> GROUP BY url
+   ...> ORDER BY visit_count DESC
+   ...> LIMIT 100;
+```
 
 ---
 ## Training links:
