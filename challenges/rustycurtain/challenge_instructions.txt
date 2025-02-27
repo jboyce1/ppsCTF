@@ -1,0 +1,6 @@
+instructions:
+Complete all the zip files on VM
+run ctf1.py on as many cyber.org vms as teams are competing
+rung ctf2.py on as many cyber.org vms as teams are competing
+
+use the rustycurtainchallengemap.doc and rustycurtainanswerkey.xlxs to guide challenge.
