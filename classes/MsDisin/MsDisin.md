@@ -255,35 +255,42 @@ Inspect the stucture of the tables
   - commands will execute once they end with a semi-colon `;`
 
 Test a basic query from the browsing_history table    
-#### `SELECT * FROM browsing_history LIMIT 10;`    
+#### `SELECT * FROM browsing_history LIMIT 1000;`    
 
 Quit out of the sqlite3    
 #### `.quit`
 
+Now you try it:
+Download the sample database
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/spy_traffic_history.db`
+
 Query the most visited sites:
-```
-sqlite> select url, COUNT(*) as visit_count
-   ...> FROM browsing_history
-   ...> GROUP BY url
-   ...> ORDER BY visit_count DESC
-   ...> LIMIT 100;
-```
+
+SELECT url, COUNT(url) AS visit_count
+FROM browsing_history
+GROUP BY url
+ORDER BY visit_count DESC
+LIMIT 100;
+
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uemcs2H9uMw?si=F20xyvQccYlW7MAi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
 
 ### Identify and determine spikes in web traffic
 
 Download the sample database
-#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/spy_traffic_history.db`
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/spykid_traffic_history.db`
 
 Open the database
-#### `sqlite3 spy_traffic_history.db`
+#### `sqlite3 spykid_traffic_history.db`
 
 Look for spikes in activity that seem excessively high or low on a weekly basis
-```
+
 SELECT strftime('%Y-%W', timestamp) AS week, COUNT(*) AS visit_count
 FROM browsing_history
 GROUP BY week
 ORDER BY week ASC;
-```
+
 Here the number 94 stands out
 <div style="text-align: center;">
   <img src="{{ 'classes/MsDisin/high_activity_in_method1.png' | relative_url }}" alt="worldsgreatestspies_cover" style="max-width: 80%; height: auto;">
@@ -291,21 +298,21 @@ Here the number 94 stands out
 
 
 Look find the average web traffic and the highest web traffic
-```
+
 SELECT AVG(visit_count) AS avg_visits, MAX(visit_count) AS max_visits
 FROM (
     SELECT strftime('%Y-%W', timestamp) AS week, COUNT(*) AS visit_count
     FROM browsing_history
     GROUP BY week
 );
-```
+
 Here we see the average of 37.03 with a max of 94
 <div style="text-align: center;">
   <img src="{{ 'classes/MsDisin/screenshot-avg-visit-most-visit.png' | relative_url }}" alt="worldsgreatestspies_cover" style="max-width: 80%; height: auto;">
 </div>  
 
 Find traffic that is above or below the average visits by a certain threshold
-```
+
 WITH weekly_traffic AS (
     SELECT strftime('%Y-%W', timestamp) AS week, COUNT(*) AS visit_count
     FROM browsing_history
@@ -318,7 +325,7 @@ SELECT wt.week, wt.visit_count
 FROM weekly_traffic wt, stats s
 WHERE wt.visit_count > s.avg_visits * 1.5
 ORDER BY wt.visit_count DESC;
-```
+
 You can ajust the `WHERE wt.visit_count > s.avg_visits * 1.5` to define your own thresholds
 Here we see the week of high activity was 2025-00
 <div style="text-align: center;">
@@ -326,18 +333,23 @@ Here we see the week of high activity was 2025-00
 </div>  
 
 Investigate specific weeks by getting a count of the sites visited during that week
-```
+
 SELECT url, COUNT(*) AS visit_count
 FROM browsing_history
 WHERE strftime('%Y-%W', timestamp) = '2025-00'
 GROUP BY url
 ORDER BY visit_count DESC
 LIMIT 5;
-```
+
 Here we can see the url that was suspicous
 <div style="text-align: center;">
   <img src="{{ 'classes/MsDisin/investigate_week_by_traffic.png' | relative_url }}" alt="worldsgreatestspies_cover" style="max-width: 80%; height: auto;">
 </div>  
+
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_l9exLe5sG8?si=TA1FQflvVs8oHDW_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
 ---
 ## Training links:
 
