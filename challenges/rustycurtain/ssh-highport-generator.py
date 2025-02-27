@@ -6,8 +6,8 @@ import sys
 # === CONFIGURATION (EDIT THESE) ===
 BOX_LEVEL = "1"          # e.g. "1"
 CHALLENGE_VALUE = "3"    # e.g. "3"
-PORT_LOW = 3000          # minimum random port
-PORT_HIGH = 10000        # maximum random port
+PORT_LOW = 21000          # minimum random port
+PORT_HIGH = 24000        # maximum random port
 
 def run_cmd(cmd, exit_on_fail=True):
     """Utility to run shell commands."""
