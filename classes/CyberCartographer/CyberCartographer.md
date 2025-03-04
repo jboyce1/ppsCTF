@@ -124,7 +124,7 @@ To understand the command:
  - -oG -: Sends grepable output to stdout for piping.  
  - awk '/Up$/{print $2}': Selects lines ending with "Up" to capture online hosts' IP addresses. Prints the second whitespace-separated field, which is the IP address.  
 Step 5) And to turn this into a text file:  
-#### `nmap -n -sn <default.gate.way.address/subnet> -oG - | awk '/Up$/{print $2}' > hosts-up-ip.txt`   
+#### `nmap -n -sn <default.gate.way.address/subnet> -oG - | awk '/Up$/{print $2}' > hosts.txt`   
 
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/j-4UYbXKNVs?si=UsMmou5w9xgooYjM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -217,7 +217,7 @@ Use Nmap to Identify Hosts Running FTP
 We'll use **Nmap** to scan the network and identify hosts with **FTP open on port 21**.  
 
 #### `nmap -p 21 --open <targetIP>`  
-#### `nmap -p 21 --open hosts-up-ip.txt'    
+#### `nmap -p 21 --open hosts.txt'    
 
 Flags explained:  
 - `-p 21`: Scans for FTP services on port 21.  
@@ -226,7 +226,7 @@ Flags explained:
 Scan a List of IPs for FTP  
 To scan **multiple hosts**, use an input file containing **a list of IP addresses**:  
 
-#### `nmap -p 21 --open -iL hosts-up-ip.txt`  
+#### `nmap -p 21 --open -iL hosts.txt`  
 `    
 Flags explained:  
 - `-iL hosts.txt`: Loads a file (`hosts.txt`) containing **multiple target IPs** for scanning.  
@@ -235,7 +235,7 @@ Use Nmap to Check for Anonymous FTP Access
 Nmap has a built-in script to test for **anonymous FTP login**:  
 
 #### `nmap -p 21 --script ftp-anon <targetIP>`  
-#### `nmap -p 21 --script ftp-anon -iL hosts-up-ip.txt`  
+#### `nmap -p 21 --script ftp-anon -iL hosts.txt`  
 Flags explained:  
 - `--script ftp-anon`: Runs a script that checks if **anonymous login is allowed** on the FTP server.  
 
@@ -245,7 +245,7 @@ Once you've identified an FTP server, connect to it:
 #### `ftp <targetIP>`  
 
 Check if FTP is running on another port:  
-#### 'nmap -p 21000-24000 --script ftp-anon -iL HostsUp.txt -oN ftp_high_ports.txt'    
+#### 'nmap -p 21000-24000 --script ftp-anon -iL Hosts.txt -oN ftp_high_ports.txt'    
 
 To connect:    
 #### `ftp <targetIP> <port#>`    
@@ -273,7 +273,8 @@ Scan high ports for ftp services
 ## Part 6:
 ## Scan a range of high ports for services detected    
 If you know the port range you want to scan
-#### `nmap -p 20000-24000 --open -sV 10.15.0.0/16`    
+#### `nmap -p 20000-24000 --open -sV 10.15.0.0/17`    
+
 -p 20000-24000 → Scans only high ports 20000-24000.    
 --open → Only show hosts with open ports.    
 -sV → Service version detection to identify if FTP, SSH, or Telnet is running.    
