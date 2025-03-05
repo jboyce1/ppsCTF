@@ -59,7 +59,7 @@ def main():
     print("[+] Checking if telnet is listening on port 23...")
     netstat_output = run_cmd("sudo netstat -tuln || sudo ss -tulnp", exit_on_fail=False)
     if ":23" not in netstat_output:
-        print("[-] Telnet does NOT appear to be running on port 23.")
+        print("[-] Telnet does NOT appear to be running on port 23 run sudo netstat -tuln to check.")
         print("    Possibly an IPv6 issue or xinetd didn't load properly.")
         sys.exit(1)
 
