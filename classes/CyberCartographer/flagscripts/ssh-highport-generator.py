@@ -4,8 +4,6 @@ import subprocess
 import sys
 
 # === CONFIGURATION (EDIT THESE) ===
-BOX_LEVEL = "1"          # e.g. "1"
-CHALLENGE_VALUE = "3"    # e.g. "3"
 PORT_LOW = 3000          # minimum random port
 PORT_HIGH = 10000        # maximum random port
 
@@ -39,7 +37,6 @@ def set_random_port(random_port):
 def enable_password_auth():
     """Ensure PasswordAuthentication is set to yes."""
     print("[+] Enabling password authentication...")
-    # Uncomment or replace the 'PasswordAuthentication no' line, or if it's commented, remove it.
     run_cmd("sudo sed -i 's/^#PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config", exit_on_fail=False)
     run_cmd("sudo sed -i 's/^PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config", exit_on_fail=False)
 
@@ -56,7 +53,7 @@ def verify_ssh_port(random_port):
         print(f"[-] SSH not showing up on port {random_port}!")
         print("    Possibly it's binding to IPv6, or the environment disallows this port.")
         sys.exit(1)
-    print(f"[+] SSH is running on port {random_port}!\n")
+    print(f"[+] SSH is running on port {random_port}!")
 
 def main():
     # 1) Install/Update OpenSSH
@@ -78,9 +75,8 @@ def main():
     # 6) Verify new SSH port
     verify_ssh_port(random_port)
 
-    # 7) Print final flag
-    flag = f"pps{{{BOX_LEVEL}x{CHALLENGE_VALUE}_sshp0rt#{random_port}}}"
-    print(f"🎯 FLAG: {flag}\n")
+    # 7) Print the new SSH port
+    print(f"🚀 SSH is now running on port: {random_port}\n")
 
 if __name__ == "__main__":
     main()
