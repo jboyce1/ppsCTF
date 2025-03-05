@@ -117,14 +117,14 @@ For convenience, create a text document containing all the hosts. Execute the fo
 #### `cd Desktop`  
 #### `sudo nmap -sn 10.15.0.1/17 > hostsup.txt`    
 Step 4) Extract only IP Addresses: To obtain only the IP addresses, use the following command:    
-#### `nmap -n -sn <default.gate.way.address/subnet> -oG - | awk '/Up$/{print $2}'`    
+#### `sudo nmap -n -sn <default.gate.way.address/subnet> -oG - | awk '/Up$/{print $2}'`    
 To understand the command:      
  - -n: Turns off reverse name resolution for faster processing.      
  - -sn: Disables port scanning (equivalent to deprecated -sP).      
  - -oG -: Sends grepable output to stdout for piping.  
  - awk '/Up$/{print $2}': Selects lines ending with "Up" to capture online hosts' IP addresses. Prints the second whitespace-separated field, which is the IP address.  
 Step 5) And to turn this into a text file:  
-#### `nmap -n -sn <default.gate.way.address/subnet> -oG - | awk '/Up$/{print $2}' > hosts.txt`   
+#### `sudo nmap -n -sn <default.gate.way.address/subnet> -oG - | awk '/Up$/{print $2}' > hosts.txt`   
 
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/j-4UYbXKNVs?si=UsMmou5w9xgooYjM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -138,7 +138,7 @@ Step 5) And to turn this into a text file:
 #### `cd /usr/share/nmap/scripts/`  
 #### `ls`  
 **Step 2 (hard)) Identify Hosts with OpenSSH** We'll use nmap to scan for hosts with OpenSSH running on port 22. Here's the command breakdown:  
-#### `nmap -p 22 --script ssh-auth-methods --script-args="ssh.user=*" <targetIP>`  
+#### `sudo nmap -p 22 --script ssh-auth-methods --script-args="ssh.user=*" <targetIP>`  
 
  Flags explained:  
 -p 22: Specifies port 22, which is the default port for SSH.
@@ -146,7 +146,7 @@ Step 5) And to turn this into a text file:
 --script-args="ssh.user=*": Specifies the username to be used for SSH authentication. The wildcard (*) indicates that any username can be used.    
 
 **Step 2 (easy))** Using -iL Flag with Text File: To use the text file containing IP addresses, we'll employ the -iL flag.   
-#### `nmap -p 22 --script ssh-auth-methods --script-args="ssh.user=*" -iL hosts.txt`    
+#### `sudo nmap -p 22 --script ssh-auth-methods --script-args="ssh.user=*" -iL hosts.txt`    
 -iL hosts.txt: Specifies the input file containing a list of IP addresses. Adjust the filename (hosts.txt) according to your text file's name.    
     
 OpenSSH hunt (1)
@@ -168,7 +168,7 @@ Install telnet on kali
 Use Nmap to Identify Hosts Running Telnet  
 We'll use **Nmap** to scan the network and identify hosts with **Telnet open on port 23**.  
     
-#### `nmap -p 23 --open <targetIP>`  
+#### `sudo nmap -p 23 --open <targetIP>`  
     
 Flags explained:  
 - `-p 23`: Scans for Telnet services on port 23.  
@@ -177,7 +177,7 @@ Flags explained:
 Scan a List of IPs for Telnet  
 To scan multiple hosts, use an input file containing **a list of IP addresses**:  
     
-#### `nmap -p 23 --open -iL hosts.txt`  
+#### `sudo nmap -p 23 --open -iL hosts.txt`  
 
 Flags explained:  
 - `-iL hosts.txt`: Loads a file (`hosts.txt`) containing **multiple target IPs** for scanning.  
@@ -216,8 +216,8 @@ Ensure FTP client tools are installed before scanning:
 Use Nmap to Identify Hosts Running FTP  
 We'll use **Nmap** to scan the network and identify hosts with **FTP open on port 21**.  
 
-#### `nmap -p 21 --open <targetIP>`  
-#### `nmap -p 21 --open hosts.txt'    
+#### `sudo nmap -p 21 --open <targetIP>`  
+#### `sudo nmap -p 21 --open hosts.txt'    
 
 Flags explained:  
 - `-p 21`: Scans for FTP services on port 21.  
@@ -226,16 +226,16 @@ Flags explained:
 Scan a List of IPs for FTP  
 To scan **multiple hosts**, use an input file containing **a list of IP addresses**:  
 
-#### `nmap -p 21 --open -iL hosts.txt`  
+#### `sudo nmap -p 21 --open -iL hosts.txt`  
 `    
 Flags explained:  
 - `-iL hosts.txt`: Loads a file (`hosts.txt`) containing **multiple target IPs** for scanning.  
-#### `nmap -p 21 --open <targetIPlow>-<targetIPhigh> | grep "Nmap scan report for" | awk '{print $5}'    
+#### `sudo nmap -p 21 --open <targetIPlow>-<targetIPhigh> | grep "Nmap scan report for" | awk '{print $5}'    
 Use Nmap to Check for Anonymous FTP Access  
 Nmap has a built-in script to test for **anonymous FTP login**:  
 
-#### `nmap -p 21 --script ftp-anon <targetIP>`  
-#### `nmap -p 21 --script ftp-anon -iL hosts.txt`  
+#### `sudo nmap -p 21 --script ftp-anon <targetIP>`  
+#### `sudo nmap -p 21 --script ftp-anon -iL hosts.txt`  
 Flags explained:  
 - `--script ftp-anon`: Runs a script that checks if **anonymous login is allowed** on the FTP server.  
 
@@ -245,7 +245,7 @@ Once you've identified an FTP server, connect to it:
 #### `ftp <targetIP>`  
 
 Check if FTP is running on another port:  
-#### 'nmap -p 21000-24000 --script ftp-anon -iL Hosts.txt -oN ftp_high_ports.txt'    
+#### 'sudo nmap -p 21000-24000 --script ftp-anon -iL Hosts.txt -oN ftp_high_ports.txt'    
 
 To connect:    
 #### `ftp <targetIP> <port#>`    
@@ -274,7 +274,7 @@ Scan high ports for ftp services
 ## Part 6:
 ## Scan a range of high ports for services detected    
 If you know the port range you want to scan
-#### `nmap -p 20000-24000 --open -sV 10.15.0.0/17`    
+#### `sudo nmap -p 20000-24000 --open -sV 10.15.0.0/17`    
 
 -p 20000-24000 → Scans only high ports 20000-24000.    
 --open → Only show hosts with open ports.    
@@ -282,9 +282,9 @@ If you know the port range you want to scan
 10.15.0.0/16 → Replace with your target subnet.    
 
 If you have a file of hosts.txt that you want to scan
-#### `nmap -p 20000-24000 --open -sV -iL hosts.txt`    
+#### `sudo nmap -p 20000-24000 --open -sV -iL hosts.txt`    
 to save your results     
-#### `nmap -p 20000-24000 --open -sV -iL hosts.txt -oN high_port_scan_results.txt`   
+#### `sudo nmap -p 20000-24000 --open -sV -iL hosts.txt -oN high_port_scan_results.txt`   
 ---
 ## Practice and explore
    
