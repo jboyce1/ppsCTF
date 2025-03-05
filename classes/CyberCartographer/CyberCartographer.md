@@ -270,6 +270,7 @@ This closes the FTP session and returns you to the **Kali terminal**.
 
 Scan high ports for ftp services
 
+---
 ## Part 6:
 ## Scan a range of high ports for services detected    
 If you know the port range you want to scan
@@ -292,7 +293,8 @@ Or just do the whole room
 https://tryhackme.com/room/networkservices    
 
  
-### Find your own high ports (best done with multiple teammates on the range)    
+### Find your own high ports    
+### Best done with multiple teammates on the range   
 Step 1:    Start your ubuntu machine from the cyber.org range and open up some services      
     
 start telnet       
