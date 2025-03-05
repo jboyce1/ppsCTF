@@ -2,13 +2,14 @@ import os
 import subprocess
 import sys
 
-def run_cmd(cmd):
-    """Run a shell command, exit if error."""
+def run_cmd(cmd, exit_on_fail=True):
+    """Run a shell command, optionally exiting on error."""
     proc = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
     if proc.returncode != 0:
         print(f"[!] Error running: {cmd}")
         print(proc.stderr)
-        sys.exit(1)
+        if exit_on_fail:
+            sys.exit(1)
     return proc.stdout
 
 def main():
