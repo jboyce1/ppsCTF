@@ -204,7 +204,7 @@ To safely disconnect, type:
 This closes the Telnet session and returns you to the **Kali terminal**.
     
   
-
+---
 ## Part 5:
 ## Identify and validate ftp services on the network
 
@@ -284,6 +284,36 @@ If you have a file of hosts.txt that you want to scan
 #### `nmap -p 20000-24000 --open -sV -iL hosts.txt`    
 to save your results     
 #### `nmap -p 20000-24000 --open -sV -iL hosts.txt -oN high_port_scan_results.txt`   
+---
+## Practice and explore
+   
+### [TryHackMe-Independent-nmap]({{ 'classes/CyberCartographer/TryHackMe-Independent-nmap.pdf' | relative_url }})
+Or just do the whole room    
+https://tryhackme.com/room/networkservices    
+
+ 
+### Find your own high ports (best done with multiple teammates on the range)    
+Step 1:    Start your ubuntu machine from the cyber.org range and open up some services      
+    
+start telnet       
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/CyberCartographer/flagscripts/deploy-telnet-23.py`    
+#### `sudo python3 deploy-telnet-23.py`    
+    
+start an ftp server and place a file in it
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/CyberCartographer/flagscripts/ftp-anon-login.py`
+#### `sudo python3 ftp-anon-login.py`    
+#### `nano test.txt`
+#### `chmod 777 test.txt`
+    
+start ssh on a highport    
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/CyberCartographer/flagscripts/ssh-highport-generator.py`    
+#### `sudo python3 ssh-highport-generator.py`    
+
+start ftp on a highport    
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/CyberCartographer/flagscripts/ftp-anon-highport.py`    
+#### `sudo python3 ftp-anon-highport.py`    
+
+Step 2:    Start your kali machine from the cyber.org range try to find your open ports     
 
 ---
 ## Other useful scans
