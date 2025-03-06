@@ -20,7 +20,9 @@ title: Hash Hound
 - Create a text document from a command output
 - Use `grep` to search for a specific output in a list
 - Use `find`, `cut`, and `grep` to find an unknown hash from a list of known hashes
+  
 ---
+
 # Part 1: use md5sum in terminal   
 ## Fun New Game    
 
