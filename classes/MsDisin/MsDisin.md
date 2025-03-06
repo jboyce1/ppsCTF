@@ -375,8 +375,8 @@ Here we can see the url that was suspicous:
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/replaced_words.txt`      
 
  - Command to extract top altered words:    
-#### `grep -o -w -f replaced_words.txt Altered_Federalist_Papers.txt | sort | uniq -c | sort -nr | awk '{{print $2}}' | head -6 | cut -c1 | tr -d '
-'`
+#### 'grep -o -w -f replaced_words.txt Altered_Federalist_Papers.txt | sort | uniq -c | sort -nr | head -6'
+
 
     
 ### Situation 3: find the most visited site in the mrboyce_traffic_history.db    
