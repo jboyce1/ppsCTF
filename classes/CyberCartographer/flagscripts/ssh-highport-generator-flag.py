@@ -5,7 +5,7 @@ import sys
 
 # === CONFIGURATION (EDIT THESE) ===
 BOX_VALUE = "1"          # e.g. "1"
-CHALLENGE_VALUE = "3"    # e.g. "3"
+CHALLENGE_VALUE = "1"    # e.g. "3"
 PORT_LOW = 21000          # minimum random port
 PORT_HIGH = 24000        # maximum random port
 
