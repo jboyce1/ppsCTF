@@ -1,0 +1,38 @@
+This is before the rusty curtain challenge to familiarize the participants with the types of things they might need 
+
+first, open up and access the services
+
+Walk the students through the following from cybercartographer Practice and explore:
+Step 1: Start your ubuntu machine from the cyber.org range and open up some services
+
+start telnet
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/CyberCartographer/flagscripts/deploy-telnet-23.py
+sudo python3 deploy-telnet-23.py
+
+start an ftp server and place a file in it
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/CyberCartographer/flagscripts/ftp-anon-login.py
+sudo python3 ftp-anon-login.py
+nano test.txt
+chmod 777 test.txt
+
+start ssh on a highport
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/CyberCartographer/flagscripts/ssh-highport-generator.py
+sudo python3 ssh-highport-generator.py
+
+start ftp on a highport
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/CyberCartographer/flagscripts/ftp-anon-highport.py
+sudo python3 ftp-anon-highport.py
+
+Step 2: Start your kali machine from the cyber.org range try to find your open ports
+
+MsDisin
+Things to practice:
+
+use wc to put together a phrase based on the number of words given
+
+use sed and 'replaced words' to make a quote that has a famous year
+
+sqlite search for most visited websites
+sqlsearch for a spike in website usage
+
+
