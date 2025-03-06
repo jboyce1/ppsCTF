@@ -243,7 +243,7 @@ Use xxd to determine the hexidecimal difference between files
 </div>  
 
 ---
-## Part 6: Use sqlite to query web browser history
+# Part 6: Use sqlite to query web browser history
     
 ### Determine the visited sites in the database
 Navigate the the directory with the .db file in it
@@ -361,7 +361,7 @@ Here we can see the url that was suspicous:
 </div>
 
 ---
-# Training links:
+# Training links
 
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/Altered_The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`
 
