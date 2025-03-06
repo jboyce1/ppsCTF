@@ -13,18 +13,16 @@ title: Hash Hound
   <img src="{{ 'classes/HashHound/90255-Hash-Hound.png' | relative_url }}" alt="Hash Hound Logo" style="max-width: 80%; height: auto;">
 </div>
 
----
-
-## Part 1: Fun New Game
-
-### Specific Skills
+### Specific Skills:
 - Use terminal to develop an md5sum hash of a string
 - Determine the md5sum hash of a file
 - Determine the md5sum hash of multiple files
 - Create a text document from a command output
 - Use `grep` to search for a specific output in a list
 - Use `find`, `cut`, and `grep` to find an unknown hash from a list of known hashes
-
+---
+# Part 1: use md5sum in terminal   
+## Fun New Game    
 
 ### Finding a Hash in Terminal
 `echo -n YourStringHere | md5sum`
@@ -73,7 +71,8 @@ cf9406bee74516677ca364c682c96d90
 </div>
 ---
 
-## Part 2: Needle in the Hayloft  
+# Part 2: use find with the -type and -exec flags to create a file of md5sums
+## Needle in the Hayloft  
   
 Here is your md5sum needle: c6fca9b96af058081fe4bfd89523f3f4  
   
@@ -103,7 +102,8 @@ man find
   
 ---
 
-## Part 3: Coming to Greps with the Past  
+# Part 3: use find, cut, and grep to isolate suspcious files 
+## Coming to Greps with the Past  
   
 ### Suspicious Needle Search  
 
