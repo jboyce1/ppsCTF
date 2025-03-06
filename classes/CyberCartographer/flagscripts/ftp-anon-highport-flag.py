@@ -6,8 +6,8 @@ import sys
 # === CONFIGURATION (EDIT THESE VALUES) ===
 BOX_VALUE = "1"          # e.g. "1"
 CHALLENGE_VALUE = "3"    # e.g. "3"
-PORT_LOW = 3000          # Minimum random port
-PORT_HIGH = 4000        # Maximum random port
+PORT_LOW = 21000          # Minimum random port
+PORT_HIGH = 24000        # Maximum random port
 
 # If left blank, will default to "pps{{{BOX_VALUE}x{CHALLENGE_VALUE}_ftp0rt#{random_port}}}.txt"
 FLAG_FILENAME = ""  # e.g. "my_custom_flag.txt"
