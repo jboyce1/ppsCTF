@@ -139,7 +139,6 @@ You need to find the suspicious needle. They were all good when they left but so
 ---
 
 ## Command Line Basics  
-  
-# Extracting Files  
+Extracting Files  
 To extract a `.zip` file, use:  
 `unzip filename.zip`
