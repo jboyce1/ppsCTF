@@ -53,7 +53,7 @@ atc
     
     
 ---
-## Use cat to combine multiple text files and display their contents quickly
+# Part 1: Use cat to combine multiple text files and display their contents quickly
 ### “cat” the cat and “grep” the dog (because who names a cat?)
 
 <div style="text-align: center;">
@@ -95,8 +95,8 @@ Write a synopsis of what you think is happening <a href="https://forms.office.co
 </div>
 --- 
 
-## Part 2: 
-
+# Part 2: use cat and grep to find text in files and directories    
+    
 ### Use grep to find specific instances of strings    
 ### Use grep and awk to find locations of strings within a text    
 ### Use sed to change all instances of a string to another string    
@@ -141,6 +141,8 @@ To see the lines before and after, use -B and -A
 To highlight matches in the text    
 #### `grep --color=auto "Napoleon" file.txt`    
 
+---
+# Part 3: use awk to perform complex searches
 
 ### awk overview:
 General pattern: awk 'pattern {action}' file    
@@ -156,7 +158,7 @@ Add conditional logical controls
 #### `awk '/Belle Boyd/ && /1917/' The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`    
  - find lines containing "Belle Boyd" and  "1917"
 
-The an example of more powerful application of awk 
+This is an example of more powerful application of awk 
 #### `awk '/The Battle of/,/Confederate/ { if (index($0, "Belle Boyd") > 0) print $0 }' The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`
  - `/The Battle of/,/Confederate/` is an awk range pattern. It tells awk to start processing lines when it encounters a line containing "The Battle of", and stop processing once it encounters a line containing "Confederate".
 So, awk will process all lines in between these two patterns.    
@@ -202,16 +204,10 @@ Use grep to extract sentences that mention "Confederate spy"
 Count occurrences:    
 Use grep and wc to count how many times the word "secret" appears in the text.    
 **`grep -o -i "secret" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt | wc -l`**    
-    
-Spot the Differences:    
-Use diff to extract what has changed in the two files line by line    
-**`diff -y original_file.txt modified_file.txt`**     
-or    
-**`diff -u original_file.txt modified_file.txt`**    
-or for directories:    
-**`diff -r original_directory modified_directory`**    
-    
-Finally, display the top 100 most common words.    
+      
+---
+# Part 4: use wc tr sort uniq to derive data from text strings    
+
 Here's how you can get the 100 most common words in a text file directly in the terminal:    
 #### `tr -cs 'A-Za-z' '\n' < input.txt | tr 'A-Z' 'a-z' | sort | uniq -c | sort -nr | head -100`    
     
@@ -227,8 +223,17 @@ Or add in awk capabilities to filter out small words
 #### `tr -cs 'A-Za-z' '\n' < input.txt | tr 'A-Z' 'a-z' | awk 'length($0) > 3' | sort | uniq -c | sort -nr | head -100`    
     
 --- 
-### Use xxd to compare the hexidecimal difference between files    
-    
+# Part 5: Use diff and xxd to compare files  
+
+Spot the Differences:    
+Use diff to extract what has changed in the two files line by line    
+**`diff -y original_file.txt modified_file.txt`**     
+or    
+**`diff -u original_file.txt modified_file.txt`**    
+or for directories:    
+**`diff -r original_directory modified_directory`**   
+
+Use xxd to determine the hexidecimal difference between files
 #### `xxd original.txt > original.hex`    
 #### `xxd modified.txt > modified.hex`    
 #### `diff -u original.hex modified.hex`    
@@ -238,8 +243,7 @@ Or add in awk capabilities to filter out small words
 </div>  
 
 ---
-## Part 3
-### Use sqlite to query web browser history
+## Part 6: Use sqlite to query web browser history
     
 ### Determine the visited sites in the database
 Navigate the the directory with the .db file in it
@@ -357,7 +361,7 @@ Here we can see the url that was suspicous:
 </div>
 
 ---
-## Training links:
+# Training links:
 
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/Altered_The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`
 
