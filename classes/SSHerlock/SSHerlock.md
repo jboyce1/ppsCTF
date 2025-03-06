@@ -26,11 +26,12 @@ title: SSHerlock
 #### **Specific Skills:**  
 - Update and adjust SSH configuration file  
 - Find and replace weak passwords to prevent SSH with unknown passwords  
-- Use terminal for directory and file navigation *(same link as above)*  
+- Use terminal for directory and file navigation *(same link as above)*
+    
 ---
 
-#### **Access O365 from cyber.org range VM**  
-[SSHerlock SharePoint Page](https://mypps.sharepoint.com/sites/ppsCyberTacticsFest/SitePages/SSHerlock.aspx) [SSHerlock Github Page](https://jboyce1.github.io/ppsCTF/classes/SSHerlock/SSHerlock)
+#### **Access O365 from cyber.org range VM**        
+[SSHerlock Github Page](https://jboyce1.github.io/ppsCTF/classes/SSHerlock/SSHerlock)    
 
 #### **To Copy and Paste into the Cyber.org Range:**  
 1. Press **Ctrl + Alt + Shift** to open the side window.  
@@ -50,9 +51,8 @@ To try this, you will need **both an Ubuntu VM and a Kali VM on the cyber.org ra
 Follow these documents to set up an SSH server on the target machine and connect remotely from an SSH client.   
 📄 **[Setting up SSH Server on Target Machine](./classes/SSHerlock/Setting%20up%20Secure%20Shell%20Server.pdf)**  
 📄 **[Remotely Connecting to Remote Machine with SSH Client](./classes/SSHerlock/Setting%20up%20Secure%20Shell%20Client.pdf)**  
-
-
-
+    
+    
 ### **Step 2: Use the SSH Client (Kali) to Access Your Ubuntu Machine**  
 
 Once the SSH server is configured, establish the connection and try the following exercises:
@@ -74,7 +74,6 @@ Once the SSH server is configured, establish the connection and try the followin
 
 Try to change the system password from ‘ubuntu’ to something else.
 
-### **Video Tutorials:**  
 
 #### **Setting Up SSH on Target Server:**  
 <div style="text-align: center;">
@@ -91,7 +90,7 @@ Try to change the system password from ‘ubuntu’ to something else.
 
 # Part 2: SSH into Another Computer with an Unknown Password    
 
-### **Before You Start**  
+#### Before You Start
 
 #### **Kali - Files Required:**  
 - Password list in a text file  
@@ -166,13 +165,14 @@ john -format=raw-md5 -wordlist:JohnnyPasswordList.txt SCPhash.txt
 
 ### **More Details**  
 📖 [Using SCP Command in Linux: 10 Practical Examples Explained - Linux Handbook](https://linuxhandbook.com/scp-command/)  
+    
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/QUhyGpYgZi4?si=wRDW_igQop2cl5tU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>    
 
 --- 
 # Part 4: scp files into a target computer
 
-<div style="text-align: center;">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/QUhyGpYgZi4?si=wRDW_igQop2cl5tU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</div>
 
 ### SCP files into the opponent computers    
 This challenge will require you to send a file that only exists on your Kali box to an Ubuntu box.   
