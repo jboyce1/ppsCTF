@@ -17,7 +17,7 @@ nav {
     height: 100vh;
     background-color: #111; /* Dark background for nav */
     color: #fff;
-    padding: 20px 40px;
+    padding: 20px 10px;
     overflow-y: auto; /* Allows scrolling within the navigation bar if needed */
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
 }
