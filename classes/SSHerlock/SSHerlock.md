@@ -40,7 +40,7 @@ title: SSHerlock
    
 ---   
 
-## **Part 1: SSH into Another Computer with a Known Password**  
+# Part 1: SSH into Another Computer with a Known Password
 
 There is no flag-based challenge to complete this; however, it is good practice and will help you in follow-on challenges.  
 
@@ -89,7 +89,7 @@ Try to change the system password from ‘ubuntu’ to something else.
 
 ---
 
-## **Part 2: SSH into Another Computer with an Unknown Password**  
+# Part 2: SSH into Another Computer with an Unknown Password    
 
 ### **Before You Start**  
 
@@ -134,7 +134,7 @@ Step 3: To open the Metaspoitconsole run the following command:
 - [Guest/Target (2)](https://forms.office.com/Pages/ResponsePage.aspx?id=mhxxjxzsu023kLsMdxsdzM6J33C5yQRJgc1SHWy_64dUQVE5SVVUTVQ4RVc3VjdFOE1JWUgzOFVBRS4u)  
 - [Guest/Target (3)](https://forms.office.com/Pages/ResponsePage.aspx?id=mhxxjxzsu023kLsMdxsdzM6J33C5yQRJgc1SHWy_64dUOVQxMDUzRE9TR0Q4SjlKMVZVR1haSlg1RC4u)  
 
-## **More Resources**  
+## More Resources 
 
 📖 [How to Brute-Force SSH in Kali Linux? - GeeksforGeeks](https://www.geeksforgeeks.org/how-to-brute-force-ssh-in-kali-linux/)  
 
@@ -146,7 +146,7 @@ Step 3: To open the Metaspoitconsole run the following command:
 
 ---
    
-## **Part 3: SCP files from the opponent computers**   
+# Part 3: scp from target and use john the ripper with password list  
    
 In order to complete this challenge, you will need to pull a file from the Ubuntu machine to decipher the flag.  
 
@@ -167,15 +167,14 @@ john -format=raw-md5 -wordlist:JohnnyPasswordList.txt SCPhash.txt
 ### **More Details**  
 📖 [Using SCP Command in Linux: 10 Practical Examples Explained - Linux Handbook](https://linuxhandbook.com/scp-command/)  
 
-### **Part 4: SCP from Target and John with Password List**  
+--- 
+# Part 4: scp files into a target computer
 
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/QUhyGpYgZi4?si=wRDW_igQop2cl5tU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 
----
-  
-## SCP files into the opponent computers    
+### SCP files into the opponent computers    
 This challenge will require you to send a file that only exists on your Kali box to an Ubuntu box.   
 **Step 1:** Start up both your Kali box and Ubuntu boxes (or use the class target box given during the live session) and use SSH to access the Ubuntu box.   
 ex. ssh ubuntu@10.15.43.43  
