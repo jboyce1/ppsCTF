@@ -363,24 +363,27 @@ Here we can see the url that was suspicous:
 ---
 # Practice and Explore      
 
-Situation 1: use the sed-key to alter the contents of the file to reveal a researchable event:    
-sed-key:    
+### Situation 1: use the sed-key to alter the contents of the file to reveal a researchable event:    
+ - sed-key:    
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/sedsearch/sed-key.txt`  
-file to alter:    
+ - file to alter:    
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/Altered_The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`    
 
-  
-Situation 2: put the "altered words" in order, and use the first letter in each word to develop a code    
+    
+### Situation 2: put the "altered words" in order, and use the first letter in each word to develop a code    
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents_modified.txt`        
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/replaced_words.txt`      
 
-Command to extract top altered words:
-grep -o -w -f replaced_words.txt Altered_Federalist_Papers.txt | sort | uniq -c | sort -nr | awk '{{print $2}}' | head -6 | cut -c1 | tr -d '
-'
+ - Command to extract top altered words:    
+#### `grep -o -w -f replaced_words.txt Altered_Federalist_Papers.txt | sort | uniq -c | sort -nr | awk '{{print $2}}' | head -6 | cut -c1 | tr -d '
+'`
 
-Situation 3: find the most visited site in the mrboyce_traffic_history.db    
+    
+### Situation 3: find the most visited site in the mrboyce_traffic_history.db    
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/mrboyce_traffic_history.db`    
-Situation 4: find the a spike in the traffic to a site in spykid_traffic_history.db
+
+    
+### Situation 4: find the a spike in the traffic to a site in spykid_traffic_history.db
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/spykid_traffic_history.db`    
 <div style="text-align: center;">
   <img src="{{ 'classes/MsDisin/Ms_Disin Banner.jpg' | relative_url }}" alt="Ms_Disin Banner2" style="max-width: 80%; height: auto;">
