@@ -6,8 +6,8 @@ import sys
 # === CONFIGURATION (EDIT THESE) ===
 BOX_VALUE = "1"          # e.g. "1"
 CHALLENGE_VALUE = "3"    # e.g. "3"
-PORT_LOW = 3000          # minimum random port
-PORT_HIGH = 10000        # maximum random port
+PORT_LOW = 21000          # minimum random port
+PORT_HIGH = 24000        # maximum random port
 
 USER_NAME = "ubuntu"     # Which user's Desktop will hold the flag?
 FLAG_FILENAME = ""        # If blank, defaults to pps{{{BOX_VALUE}x{CHALLENGE_VALUE}_sshp0rt#{PORT}}}.txt
