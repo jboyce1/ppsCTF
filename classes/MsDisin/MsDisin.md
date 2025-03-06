@@ -361,7 +361,7 @@ Here we can see the url that was suspicous:
 </div>
 
 ---
-# Training links      
+# Practice and Explore      
 
 Situation 1: use the sed-key to alter the contents of the file to reveal a researchable event:    
 sed-key:    
