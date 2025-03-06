@@ -90,6 +90,36 @@ main {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+/* Ensure the left nav stays below the main content */
+#left-nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    height: 100vh;
+    background: #222;
+    color: white;
+    padding: 15px;
+    overflow-y: auto;
+    border-right: 2px solid #444;
+    z-index: 50; /* Ensures it's behind the main content */
+}
+
+.main-content {
+    margin-left: 270px; /* Push content right to avoid overlap */
+    margin-right: 220px; /* Account for right nav */
+    position: relative;
+    background-color: #222; /* Ensure same background as main */
+    z-index: 100; /* Higher than left nav */
+    padding: 20px;
+    max-width: calc(100% - 490px); /* Adjusts width dynamically */
+    min-height: 100vh;
+    border: 1px solid #444;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+
+
 /* Improve readability of text */
 p, li, h1, h2, h3, h4, h5, h6 {
     color: #ddd; /* Light grey for text to improve readability */
