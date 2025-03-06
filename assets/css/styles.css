@@ -15,7 +15,7 @@ nav {
     top: 0;
     width: 200px;
     height: 100vh;
-    background-color: #222; /* Dark background for nav */
+    background-color: #111; /* Dark background for nav */
     color: #fff;
     padding: 20px 20px;
     overflow-y: auto; /* Allows scrolling within the navigation bar if needed */
@@ -50,7 +50,7 @@ nav a:hover {
     padding: 20px;
     max-width: calc(100% - 490px); /* Adjust width dynamically */
     min-height: 100vh;
-    border: 1px solid #444;
+    border: 10px solid #444;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -61,11 +61,11 @@ nav a:hover {
     top: 0;
     width: 250px;
     height: 100vh;
-    background: #222;
+    background: #111;
     color: white;
     padding: 15px;
     overflow-y: auto;
-    border-right: 2px solid #444;
+    border-right: 10px solid #444;
     z-index: 50; /* Behind main content */
 }
 
