@@ -4,8 +4,8 @@ import subprocess
 import sys
 
 # === CONFIGURATION (EDIT THESE) ===
-PORT_LOW = 3000          # minimum random port
-PORT_HIGH = 10000        # maximum random port
+PORT_LOW = 21000          # minimum random port
+PORT_HIGH = 24000        # maximum random port
 
 def run_cmd(cmd, exit_on_fail=True):
     """Utility to run shell commands."""
