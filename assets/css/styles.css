@@ -91,6 +91,16 @@ p, li, h1, h2, h3, h4, h5, h6 {
     width: 100%;
     height: auto;
 }
+/* Global hyperlink color settings */
+a, a:visited, a:hover, a:active {
+    color: #9bf; /* Light blue for all links */
+    text-decoration: none; /* Removes underline */
+}
+
+/* Make hover effect slightly brighter */
+a:hover {
+    color: #ddf; /* Lighter blue on hover */
+}
 
 /* Mobile Styles */
 @media screen and (max-width: 768px) {
