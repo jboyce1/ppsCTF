@@ -42,8 +42,8 @@ Once vulnerabilities are identified, the Blue Team can leverage Zenmap's reporti
 
 ---
 
-## Part 1a: 
-## Installing and using zenmap on the cyber.org range 
+# Part 1a: Installing and using zenmap on the cyber.org range  
+  
 Switch to Root User: Begin by switching to the root user to perform administrative tasks.  
 #### `sudo su`  
 Update Package Repository: Ensure that the package repository is up to date to fetch the latest available packages.  
@@ -75,8 +75,8 @@ sudo: Execute the command with superuser privileges.
 <iframe width="560" height="315" src="https://www.youtube.com/embed/UrGKgu5HauE?si=ys1g6VsgT7xHxaxv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 
-## Part 1b: 
-### Setting up drawio on the cyber.org range (10-12 minutes in the range)
+# Part 1b: Setting up drawio on the cyber.org range   
+### 10-12 minutes in the range  
 Install the packages
 #### `sudo apt-get update`
 #### `sudo apt-get install default-jdk`
@@ -98,11 +98,7 @@ Add valid targets to the draw.io template in the next steps
 </div>  
 
 ---
-## Part 2:  
-## Use nmap to identify all hosts on the network
-## Use nmap to create a text file of all the open hosts
-
-
+# Part 2: Use nmap to identify all hosts on the network and output a file
 
 ### **Walkthrough**
 Step 1) Determine the IP Address Range: To begin, find the range of IP addresses. Start by locating the default gateway, which is the lowest IP address on the network.  
@@ -131,8 +127,7 @@ Step 5) And to turn this into a text file:
 </div>
 ---  
 
-## Part 3:
-## Use nmap to identify and isolate hosts with password authentication OpenSSH  
+# Part 3: Use nmap to identify and isolate hosts with password authentication OpenSSH  
 
 **Step 1) Use Text File of IP Addresses** Utilizing the lua scripting language and nmap scripting library with flags to see the scripts from terminal: 
 #### `cd /usr/share/nmap/scripts/`  
@@ -158,8 +153,7 @@ OpenSSH hunt (1)
 
 ---
 
-## Part 4:
-## Identify and validate telnet services on the network
+# Part 4: Identify and validate telnet services on the network
     
 Install telnet on kali
 ### `sudo apt update && sudo apt install telnet`
@@ -205,8 +199,7 @@ This closes the Telnet session and returns you to the **Kali terminal**.
     
   
 ---
-## Part 5:
-## Identify and validate ftp services on the network
+# Part 5: Identify and validate ftp services on the network
 
 Install FTP Client on Kali    
 In termial type `ftp --version`, if anything comes up, skip the install.
@@ -271,8 +264,7 @@ This closes the FTP session and returns you to the **Kali terminal**.
 Scan high ports for ftp services
 
 ---
-## Part 6:
-## Scan a range of high ports for services detected    
+# Part 6: Scan a range of high ports for services detected    
 If you know the port range you want to scan
 #### `sudo nmap -p 20000-24000 --open -sV 10.15.0.0/17`    
 
@@ -286,7 +278,7 @@ If you have a file of hosts.txt that you want to scan
 to save your results     
 #### `sudo nmap -p 20000-24000 --open -sV -iL hosts.txt -oN high_port_scan_results.txt`   
 ---
-## Practice and explore
+# Practice and explore
    
 ### [TryHackMe-Independent-nmap]({{ 'classes/CyberCartographer/TryHackMe-Independent-nmap.pdf' | relative_url }})
 Or just do the whole room    
@@ -321,7 +313,7 @@ Step 2:    Start your kali machine from the cyber.org range try to find your ope
 <iframe width="560" height="315" src="https://www.youtube.com/embed/jxwBPS5FCdc?si=SbFmfsg7CaUZW0mQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 ---
-## Other useful scans
+# Other useful scans
 #### 'nmap -p 20000-24000 --open -sV 10.15.0.0/16'    
 -p 20000-24000 → Scans only high ports 20000-24000.    
 --open → Only show hosts with open ports.    
