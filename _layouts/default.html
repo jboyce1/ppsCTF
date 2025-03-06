@@ -26,12 +26,14 @@
     <main class="main-content">
         {{ content }}
     </main>
+   
     <script>
     document.addEventListener("DOMContentLoaded", function () {
         const toc = document.getElementById("toc");
         const content = document.querySelector(".main-content");
         const headers = content.querySelectorAll("h1, h2, h3");
     
+        // Generate TOC links
         headers.forEach(header => {
             if (!header.id) {
                 header.id = header.innerText.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, ""); // Generate ID if missing
@@ -44,6 +46,30 @@
             let listItem = document.createElement("li");
             listItem.appendChild(link);
             toc.appendChild(listItem);
+        });
+    
+        // Smooth scrolling
+        document.querySelectorAll("#toc a").forEach(anchor => {
+            anchor.addEventListener("click", function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute("href")).scrollIntoView({
+                    behavior: "smooth",
+                    block: "start"
+                });
+            });
+        });
+    
+        // Highlight active section while scrolling
+        window.addEventListener("scroll", () => {
+            let fromTop = window.scrollY + 50; // Adjust offset to match section visibility
+            headers.forEach(header => {
+                let link = document.querySelector(`a[href="#${header.id}"]`);
+                if (header.offsetTop <= fromTop && header.offsetTop + header.offsetHeight > fromTop) {
+                    link.classList.add("active");
+                } else {
+                    link.classList.remove("active");
+                }
+            });
         });
     });
     </script>
