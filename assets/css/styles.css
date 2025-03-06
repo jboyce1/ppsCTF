@@ -19,34 +19,62 @@ nav {
     color: #fff;
     padding: 20px;
     overflow-y: auto; /* Allows scrolling within the navigation bar if needed */
-    box-shadow: -2px 0 5px rgba(0,0,0,0.5);
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
 }
 
-/* Content area styling */
-.main-content {
-    margin-left: 270px; /* Push content right to avoid left nav overlap */
-    margin-right: 220px; /* Account for right-side nav */
-    position: relative;
-    background-color: #222; /* Ensure same background as main */
-    z-index: 100; /* Higher than left nav */
-    padding: 20px;
-    max-width: calc(100% - 490px); /* Adjusts width dynamically */
-    min-height: 100vh;
-    border: 1px solid #444;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-
-/* Header within the navigation bar */
+/* Header inside the navigation bar */
 nav h1 {
     font-size: 1.5em;
     margin-bottom: 20px;
 }
 
-/*------------------------------------*\
-  # Walkthrough Section
-\*------------------------------------*/
+/* Styling links in navigation */
+nav a {
+    color: #9bf; /* Light blue links */
+    text-decoration: none;
+    display: block;
+    margin-bottom: 10px;
+}
 
+nav a:hover {
+    color: #ddf;
+}
+
+/* Main Content */
+.main-content {
+    margin-left: 270px; /* Push content to avoid left nav overlap */
+    margin-right: 220px; /* Account for right nav */
+    position: relative;
+    background-color: #222; /* Match page background */
+    z-index: 100;
+    padding: 20px;
+    max-width: calc(100% - 490px); /* Adjust width dynamically */
+    min-height: 100vh;
+    border: 1px solid #444;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Ensure the left nav stays below the main content */
+#left-nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 250px;
+    height: 100vh;
+    background: #222;
+    color: white;
+    padding: 15px;
+    overflow-y: auto;
+    border-right: 2px solid #444;
+    z-index: 50; /* Behind main content */
+}
+
+/* Improve readability of text */
+p, li, h1, h2, h3, h4, h5, h6 {
+    color: #ddd; /* Light grey for better readability */
+}
+
+/* Walkthrough Section */
 .walkthrough-container {
     display: flex;
     flex-wrap: wrap;
@@ -64,90 +92,25 @@ nav h1 {
     height: auto;
 }
 
-/* Styling links in navigation */
-nav a {
-    color: #9bf; /* Unified light blue for links */
-    text-decoration: none;
-    display: block;
-    margin-bottom: 10px;
-}
-
-nav a:hover {
-    color: #ddf;
-}
-
-/* Styling links in main content */
-a {
-    color: #9bf; /* Ensure main content links are the same light blue */
-    text-decoration: none; /* No underline for a cleaner look */
-}
-
-a:hover {
-    color: #ddf; /* Lighter blue on hover */
-}
-
-/* Main Content */
-main {
-    max-width: 800px;
-    margin: auto;
-    padding: 20px;
-    background-color: #222; /* Dark background for main content */
-    border: 1px solid #444;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-/* Ensure the left nav stays below the main content */
-#left-nav {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 250px;
-    height: 100vh;
-    background: #222;
-    color: white;
-    padding: 15px;
-    overflow-y: auto;
-    border-right: 2px solid #444;
-    z-index: 50; /* Ensures it's behind the main content */
-}
-
-.main-content {
-    margin-left: 270px; /* Push content right to avoid overlap */
-    margin-right: 220px; /* Account for right nav */
-    position: relative;
-    background-color: #222; /* Ensure same background as main */
-    z-index: 100; /* Higher than left nav */
-    padding: 20px;
-    max-width: calc(100% - 490px); /* Adjusts width dynamically */
-    min-height: 100vh;
-    border: 1px solid #444;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-}
-
-
-
-/* Improve readability of text */
-p, li, h1, h2, h3, h4, h5, h6 {
-    color: #ddd; /* Light grey for text to improve readability */
-}
-
+/* Mobile Styles */
 @media screen and (max-width: 768px) {
-    /* Hide left-side TOC navigation on small screens */
+    /* Hide left-side TOC navigation */
     #left-nav {
-        display: none;
+        display: none !important;
+        visibility: hidden;
+        position: absolute;
+        left: -9999px;
     }
 
     /* Make main content full width */
     .main-content {
-        margin-left: 0;
-        margin-right: 0;
-        width: 100%;
+        margin: 0 auto; /* Center content */
+        width: 90%; /* Provide some margin on small screens */
         max-width: 100%;
         padding: 15px;
     }
 
     /* Adjust right navigation */
-    /* Adjust right navigation for mobile */
     nav {
         width: 100%;
         height: auto;
@@ -157,18 +120,18 @@ p, li, h1, h2, h3, h4, h5, h6 {
         justify-content: center;
         align-items: center;
         padding: 10px;
-        background: #222; /* Keeps the dark background */
+        background: #222;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        overflow: hidden; /* Prevents excessive space usage */
     }
-    
+
     /* Stack navigation links horizontally */
     nav a {
         display: inline-block;
-        padding: 8px;
-        font-size: 14px;
-        margin: 5px;
+        padding: 6px 8px;
+        font-size: 13px;
+        margin: 4px;
         text-align: center;
-        white-space: nowrap; /* Prevents wrapping on small screens */
+        white-space: nowrap; /* Prevents wrapping */
     }
-
 }
