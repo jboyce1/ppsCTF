@@ -70,6 +70,199 @@ The use of SSH for secure communication exemplifies best practices in encryption
 ### A Data-network packet analyzer program that runs inside the Terminal 
 
 Step 1) Find your internet connection
-#### `tcpdump -D`
+#### `tcpdump -D`    
+
+ <div style="text-align: center;">
+  <img src="{{ 'classes/LANgeist/images/tcpdump--D.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+
+Step 2) Run the packet capture    
+sudo tcpdump -i eth0    
+hit Ctrl + C to stop the packet   
+ <div style="text-align: center;">
+  <img src="{{ 'classes/LANgeist/images/tcpdump-packet-description.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+    
+    
+Step 3) Dig a bit deeper into TCP dump (v stands for verbose)    
+#### `sudo tcpdump -i eth0 -c 10 -v`    
+#### `sudo tcpdump -i eth0 -c 100 -v | grep “tcp 8949”`    
+    
+Step 4) To get un-human readable, such as we will use later, see what looks like (capturing the whole packet)    
+#### `sudo tcpdump -s 0 -U -n -w - -i eth0`    
+    
+Step 5) Finally print the whole thing to a text file:    
+First, navigate to the Desktop directory using the following command:    
+#### `cd Desktop`
+    
+Now, capture the packets as a txt file use the > redirection tool:    
+#### `sudo tcpdump -c 10 -q > localtcpdump.txt`    
+is redirecting the output from the screen to a file named localtcpdump.txt    
+    
+To read the file, use the following command:    
+#### `cat localtcpdump.txt` 
+    
+**Try it now:**
+Create a localtcpdump.txt file on your desktop
+Open the file and read its contents
+
+### Explanation of flags in step 3 of TCP Dump
+
+**Skip this if you're not curious- it is just information and less relevant**
+**1**: This is the packet number in the sequence of captured packets.    
+**16:27:02.202246**: The timestamp when the packet was captured, given in hours, minutes, seconds, and microseconds.    
+**IP**: Indicates that this is an IP packet.    
+**tos 0x0**: The Type of Service (ToS) field (now known as the Differentiated Services Field, DSCP), here showing a value of 0, indicating default precedence.    
+**ttl 64**: Time To Live, the remaining hops before the packet is discarded. Here, it's set to 64.    
+**id 45646**: Identification number of the IP packet. This is used to help piece together data fragments.    
+**offset 0**: The fragment offset in the packet. An offset of 0 indicates this is the first (or only) fragment.    
+**flags [DF]**: Flags set on the packet. DF stands for "Don't Fragment," indicating that this packet should not be fragmented.    
+**proto TCP (6)**: The protocol used, TCP, with a protocol number of 6.    
+**length 89**: The total length of the IP packet, including headers and data, in bytes.    
+**10.15.128.194.38886 > 10.15.23.143.5901**: Source and destination IP addresses and ports. The packet is from IP 10.15.128.194, port 38886, to IP 10.15.23.143, port 5901.    
+**Flags [P.]**: TCP flags. P stands for PSH (Push Function), indicating the sender wants the receiving application to be prompted to read this data immediately. The dot represents the ACK flag, acknowledging receipt of a packet.    
+**cksum 0x1dde (correct)**: The checksum of the TCP segment, which is used to detect data corruption in the header and payload. "Correct" indicates the checksum is valid.    
+**seq 1829878155:1829878192**: The sequence number of the first byte in this packet and the sequence number the next packet will start with, indicating the order of the packets.    
+**ack 1760819870**: The acknowledgment number, indicating the next sequence number expected from the other side, confirming receipt of packets up to this number.    
+**win 3983**: The window size, indicating how many bytes of data the sender of this packet is willing to receive (TCP flow control).    
+**options [nop,nop,TS val 1036420066 ecr 270331338]**: TCP options present in this packet. "nop" stands for "No Operation" and is used for alignment. "TS val" and "ecr" are related to TCP timestamps for RTT measurement and PAWS (Protection Against Wrapped Sequence numbers). The value after "TS val" is the timestamp, and "ecr" is the echo reply of the timestamp.    
+**length 37**: The length of the TCP payload, in bytes. This does not include the IP or TCP header sizes.d:    
+
+---
+# Part 2: use tcpdump to isolate attackers on your network with a known IP address    
+
+Precise Capture with TCP dump:
+
+Step 1) Use -q and --number to make it more human readable. You can use -c to limit the number of packets captured    
+#### `sudo tcpdump -i eth0 -q --number`    
+    
+Grep the command to see only what you search for:    
+#### `sudo tcpdump -i eth0 -q --number | grep “10.15.23”`    
+    
+This will only return IP addresses between 10.15.23.0- 10.15.23.255        
+**Questions to ponder… what could this be useful for?**    
+
+ <div style="text-align: center;">
+  <img src="{{ 'classes/LANgeist/images/Use--q-and---number-to-make-it-more-human-readable.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+    
+Try it now:    
+Open your Ubuntu machine and get its IP address    
+Open your Kali machine and get its IP address    
+Now, from your Ubuntu machine, ping your Kali ip address (ping 10.15.x.x)    
+Now, from your Kali machine, try to use tcpdump and grep to see find the ip address of your Ubuntu machine    
+
+---
+# Part 3: setting up  Wireshark   
+    
+Step 1) Set Wireshark to promiscuous mode:    
+    
+#### `sudo ifconfig eth0 promisc`    
+OR    
+#### `sudo ip link set eth0 promisc on`    
+    
+Step 2) verify the state of promiscuous mode:
+Looks  like this:  
+    
+2: eth0: <BROADCAST,MULTICAST,PROMISC,UP,LOWER_UP> mtu 9001 qdisc mq state UP group default qlen 1000 link/ether 0a:f7:a7:09:d9:1b brd ff:ff:ff:ff:ff:ff inet 10.15.75.96/17 brd 10.15.127.255 scope global dynamic eth0 valid_lft 2134sec preferred_lft 2134sec inet6 fe80::8f7:a7ff:fe09:d91b/64 scope link valid_lft forever preferred_lft forever    
+    
+The presence of PROMISC indicates that the eth0 inferface is running in promiscuous mode    
+    
+Step 3) Open wireshark as a superuser    
+#### `sudo wireshark`
+
+select the eth0    
+    
+Step 4) Select filters from the drop-down menu at the top of the Wireshark GUI    
+delete all filters    
+
+**PCAP challenges:**    
+simplehttp.pcap: Find the password that was submitted via http protocol
+#### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/LANgeist/simplehttp.pcap`
+ - Hint: You can search for things in the search bar, protocols in particular
+submit PacketCAPture1 response here    
+
+SSH_10-15-17-162-to-10.15.2.-29.pcapng: Describe what happens in this PCAP  
+#### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/LANgeist/simplehttp.pcap`  
+submit PacketCapture2 response here    
+
+---
+# Part 4: remote wireshark capture with ssh    
+    
+Pre-steps) set up ssh server to password authenticate    
+    
+Step 1) Create a named pipe (called a FIFO)    
+create directory for the captured files:    
+#### `mkdir ~/Desktop/rc/``    
+
+trial 1:    
+#### `mkfifo ~/Desktop/rc/rc12369ens5`
+    
+Here, you're creating a named pipe called remotepacketcapture1 in the /Desktop/tmp/ directory. This named pipe acts as a communication channel or endpoint for passing data between processes.    
+    
+Step 2) Starting Wireshark with -k and -i options    
+#### `sudo wireshark -k -i ~/Desktop/rc/rc90159ens5`   
+
+This command starts Wireshark with the -k option to prepare it for packet capture without actually capturing packets immediately, and the -i option specifies the interface from which Wireshark should capture packets, in this case, the named pipe remotepacketcapture1.    
+
+Step 3: Capturing Packets with tcpdump over SSH    
+#### `ssh <user>@<target.ip.address> “sudo tcpdump -s 0 -U -n -w - -i ens5 not port 22” > ~/Desktop/rc/rc12369ens5`    
+    
+Here, you're SSHing into <target.ip.address> as <user> and running tcpdump with sudo privileges to capture packets on interface eth0. The captured packets are then streamed through SSH and redirected (>) into the named pipe remotepacketcapture1.
+    
+sudo: This command is used to execute tcpdump with superuser (root) privileges. This is necessary because capturing packets typically requires elevated permissions.    
+    
+tcpdump: This is the command-line packet analyzer. It allows you to capture or filter network traffic.    
+    
+-s 0: This flag sets the snapshot length to 0, which means tcpdump will capture the entire packet. By default, tcpdump captures only the first 68 bytes of each packet, but -s 0 ensures that the entire packet is captured.    
+    
+-U: This flag sets the output to be unbuffered. Without this flag, tcpdump might buffer its output, which can cause delays in displaying packets, especially in real-time scenarios.    
+    
+-n: This flag tells tcpdump not to resolve IP addresses to hostnames. Instead of resolving IP addresses to hostnames using DNS, tcpdump will display numeric IP addresses.    
+    
+-w -: This flag specifies the file to which tcpdump should write the captured packets. In this case, - indicates that tcpdump should write the packets to standard output (stdout) instead of a file. This is important because the output is then redirected to the SSH connection and subsequently to the named pipe.    
+    
+With this setup, Wireshark is reading packets from the named pipe remotepacketcapture, while tcpdump is capturing packets on the remote system and streaming them into the same named pipe. This allows you to effectively capture and view network traffic in real-time using Wireshark.    
+-i eth0: This flag specifies the interface on which tcpdump should capture packets. In this case, eth0 is specified, indicating the first Ethernet interface.    
+not port 22: This is a filter expression used to exclude packets with a destination or source port of 22 (SSH). It means tcpdump will capture all packets except those associated with SSH traffic. This can be useful to avoid capturing your own SSH traffic, which might flood the output.    
   
+Defense:    
+Developing RSA key pair for more secure remote log-in    
+ 
+
+ 
+
+### Try it now    
+Log into your Ubuntu box    
+Ensure sshd is running and password enabled (see SSHerlock)    
+Log into your Kali box    
+Remote SSH capture with Wireshark from your Kali box    
+In a different terminal on your Kali box, ping your Ubuntu box    
+ping 10.15.x.x    
+See if you can read the pings on your Kali box from the perspective of the ubuntu box    
+ 
+## Remote Wireshark Capture with SSH Practice
+**Must be pre-set up in lab**  
+    
+LANgeist Target7:    
+IP:10.15.34.250    
+Username: agent    
+Password: agent    
+What IP address is pinging Target7?
+    
+LANgeist Target6:    
+IP:10.15.69.25    
+Username: agent    
+Password: agent    
+What IP address is pinging Target6?
+    
+LANgeist Target5:    
+IP:    
+Username: You're going to have to use a wordlist    
+Password: You're going to have to use a wordlist    
+    
+LANgeist Target4:    
+IP:    
+Username: You're going to have to use a wordlist    
+Password: You're going to have to use a wordlist    
  
