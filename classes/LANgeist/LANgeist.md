@@ -129,6 +129,10 @@ Open the file and read its contents
 **options [nop,nop,TS val 1036420066 ecr 270331338]**: TCP options present in this packet. "nop" stands for "No Operation" and is used for alignment. "TS val" and "ecr" are related to TCP timestamps for RTT measurement and PAWS (Protection Against Wrapped Sequence numbers). The value after "TS val" is the timestamp, and "ecr" is the echo reply of the timestamp.    
 **length 37**: The length of the TCP payload, in bytes. This does not include the IP or TCP header sizes.d:    
 
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/j3yEfOxOHTU?si=eeobo7EP1nzXN8df" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
 ---
 # Part 2: use tcpdump to isolate attackers on your network with a known IP address    
 
@@ -152,6 +156,10 @@ Open your Ubuntu machine and get its IP address
 Open your Kali machine and get its IP address    
 Now, from your Ubuntu machine, ping your Kali ip address (ping 10.15.x.x)    
 Now, from your Kali machine, try to use tcpdump and grep to see find the ip address of your Ubuntu machine    
+
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Q55KTQj5FGw?si=PQLeyg79d7GaNXHi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
 
 ---
 # Part 3: setting up  Wireshark   
@@ -186,6 +194,10 @@ submit PacketCAPture1 response here
 SSH_10-15-17-162-to-10.15.2.-29.pcapng: Describe what happens in this PCAP  
 #### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/LANgeist/simplehttp.pcap`  
 submit PacketCapture2 response here    
+
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/TYqdU9GPRDE?si=raK3NlXORXF6iOtP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
 
 ---
 # Part 4: remote wireshark capture with ssh    
@@ -266,6 +278,10 @@ LANgeist Target4:
 IP:    
 Username: You're going to have to use a wordlist    
 Password: You're going to have to use a wordlist    
+
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/STaGzIRAZG8?si=6Iq3ddsSPJmtm5MV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
  
 ---
 
