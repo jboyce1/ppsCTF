@@ -16,16 +16,16 @@ title: LANgeist
 ## You can talk about us...
 ### `but you can't talk without us` 
 ---
-**play a game while I yap:**
-#### `sudo apt install nsnake`
-#### `nsnake`
+**play a game while I yap:**    
+#### `sudo apt install nsnake`    
+#### `nsnake`    
     
-#### `sudo apt install moon-buggy
-#### `moon-buggy`
+#### `sudo apt install moon-buggy    
+#### `moon-buggy`    
     
-#### `sudo apt install bsdgames
-#### `man atc
-#### `atc`
+#### `sudo apt install bsdgames    
+#### `man atc    
+#### `atc`    
     
 
 **Specific Skills:**    
@@ -36,7 +36,7 @@ title: LANgeist
 - Use Wireshark to capture traffic in promiscuous mode    
 - Use the Dsniff tool Macof to conduct a MAC Flood attack    
     
-**Offensive Operations:**   
+## **Offensive Operations:**   
 In the context of offensive cyber operations, tools like TCPdump, Wireshark, and Dsniff are integral to the toolkit of a skilled attacker or Red Team member. These tools serve multiple purposes, from reconnaissance to active network disruption.    
     
 **Reconnaissance and Data Exfiltration:**    
@@ -48,7 +48,7 @@ Further exploiting network vulnerabilities, an attacker could employ the Dsniff 
 **Remote Traffic Capture:**
 Combining SSH with Wireshark provides an attacker the ability to remotely capture network traffic in a stealthy manner. By establishing an SSH tunnel to a compromised host within the target network, attackers can remotely execute Wireshark or TCPdump, funneling captured traffic back through the tunnel for analysis. This method allows for the monitoring of network traffic without being physically present on the network, reducing the risk of detection. This is going to be critical to get into the other teams network to see how their defenders are trying to protect their computers.    
     
-**Defensive Operations:**    
+## **Defensive Operations:**    
 On the flip side, the same tools can be invaluable for defensive cyber operations, aiding Blue Team members in monitoring, diagnosing, and responding to threats.    
     
 **Network Monitoring and Anomaly Detection:**
@@ -63,4 +63,13 @@ From a defensive perspective, understanding and simulating attack techniques lik
 **Secure Configuration and Encryption:**    
 The use of SSH for secure communication exemplifies best practices in encryption and secure configuration management. Encouraging the use of encrypted protocols for remote administration and data transfer can significantly reduce the risk of credential interception and unauthorized access. This is hard to get around as your students and staff will need to be able to log in and you cannot choose multifactor authentication for students or expect them to have RSA tokens on their devices.    
 
+  ---
+  # Part 1: tcp dump to identify traffic and capture packets    
+
+## TCP Dump 
+### A Data-network packet analyzer program that runs inside the Terminal 
+
+Step 1) Find your internet connection
+#### `tcpdump -D`
+  
  
