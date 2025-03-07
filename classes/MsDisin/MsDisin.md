@@ -367,16 +367,15 @@ Here we can see the url that was suspicous:
  - sed-key:    
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/sedsearch/sed-key.txt`  
  - file to alter:    
-#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/Altered_The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`    
-
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/sedsearch/The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`    
+now use sed -n -f <sed text here> "Name_of_text_to_Change_Here.txt" to reveal the event
     
 ### Situation 2: put the "altered words" in order, and use the first letter in each word to develop a code    
-#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents_modified.txt`        
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/Altered_The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`        
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/replaced_words.txt`      
 
  - Command to extract top altered words:    
-#### 'grep -o -w -f replaced_words.txt Altered_Federalist_Papers.txt | sort | uniq -c | sort -nr | head -6'
-
+#### `grep -o -w -f replaced_words.txt Altered_Federalist_Papers.txt | sort | uniq -c | sort -nr`
 
     
 ### Situation 3: find the most visited site in the mrboyce_traffic_history.db    
