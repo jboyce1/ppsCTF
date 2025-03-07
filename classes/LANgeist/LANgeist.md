@@ -211,21 +211,21 @@ Step 3: Capturing Packets with tcpdump over SSH
     
 Here, you're SSHing into <target.ip.address> as <user> and running tcpdump with sudo privileges to capture packets on interface eth0. The captured packets are then streamed through SSH and redirected (>) into the named pipe remotepacketcapture1.
     
-sudo: This command is used to execute tcpdump with superuser (root) privileges. This is necessary because capturing packets typically requires elevated permissions.    
+**sudo**: This command is used to execute tcpdump with superuser (root) privileges. This is necessary because capturing packets typically requires elevated permissions.    
     
-tcpdump: This is the command-line packet analyzer. It allows you to capture or filter network traffic.    
+**tcpdump**: This is the command-line packet analyzer. It allows you to capture or filter network traffic.    
     
--s 0: This flag sets the snapshot length to 0, which means tcpdump will capture the entire packet. By default, tcpdump captures only the first 68 bytes of each packet, but -s 0 ensures that the entire packet is captured.    
+**-s 0**: This flag sets the snapshot length to 0, which means tcpdump will capture the entire packet. By default, tcpdump captures only the first 68 bytes of each packet, but -s 0 ensures that the entire packet is captured.    
     
--U: This flag sets the output to be unbuffered. Without this flag, tcpdump might buffer its output, which can cause delays in displaying packets, especially in real-time scenarios.    
+**-U**: This flag sets the output to be unbuffered. Without this flag, tcpdump might buffer its output, which can cause delays in displaying packets, especially in real-time scenarios.    
     
--n: This flag tells tcpdump not to resolve IP addresses to hostnames. Instead of resolving IP addresses to hostnames using DNS, tcpdump will display numeric IP addresses.    
+**-n**: This flag tells tcpdump not to resolve IP addresses to hostnames. Instead of resolving IP addresses to hostnames using DNS, tcpdump will display numeric IP addresses.    
     
--w -: This flag specifies the file to which tcpdump should write the captured packets. In this case, - indicates that tcpdump should write the packets to standard output (stdout) instead of a file. This is important because the output is then redirected to the SSH connection and subsequently to the named pipe.    
+**-w -**: This flag specifies the file to which tcpdump should write the captured packets. In this case, - indicates that tcpdump should write the packets to standard output (stdout) instead of a file. This is important because the output is then redirected to the SSH connection and subsequently to the named pipe.    
     
 With this setup, Wireshark is reading packets from the named pipe remotepacketcapture, while tcpdump is capturing packets on the remote system and streaming them into the same named pipe. This allows you to effectively capture and view network traffic in real-time using Wireshark.    
--i eth0: This flag specifies the interface on which tcpdump should capture packets. In this case, eth0 is specified, indicating the first Ethernet interface.    
-not port 22: This is a filter expression used to exclude packets with a destination or source port of 22 (SSH). It means tcpdump will capture all packets except those associated with SSH traffic. This can be useful to avoid capturing your own SSH traffic, which might flood the output.    
+**-i eth0**: This flag specifies the interface on which tcpdump should capture packets. In this case, eth0 is specified, indicating the first Ethernet interface.    
+**not port 22**: This is a filter expression used to exclude packets with a destination or source port of 22 (SSH). It means tcpdump will capture all packets except those associated with SSH traffic. This can be useful to avoid capturing your own SSH traffic, which might flood the output.    
   
 Defense:    
 Developing RSA key pair for more secure remote log-in    
@@ -267,3 +267,101 @@ IP:
 Username: You're going to have to use a wordlist    
 Password: You're going to have to use a wordlist    
  
+---
+
+# Use the Dsniff tool Macof to conduct a MAC Flood attack     
+
+https://charlesreid1.com/wiki/MITM/Wired/MAC_Flood#MAC_Flood_Attack
+
+---
+
+# Part 5: on-path attack with ettercap    
+## does not work on cyber.org range    
+    
+**Step 1: Allow IP forwarding in on the attack machine (Kali2)**    
+### `echo 1 > /proc/sys/net/ipv4/ip_forward`    
+to verify:    
+#### `cat /proc/sys/net/ipv4/ip_forward`    
+
+ <div style="text-align: center;">
+  <img src="{{ 'classes/LANgeist/images/ettercap-1.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+    
+set ethernet to promiscuous mode      
+#### `set eth0 to promisc`    
+
+ <div style="text-align: center;">
+  <img src="{{ 'classes/LANgeist/images/ettercap-2.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+    
+**Step 2: Setup Ettercap on the Attacker Machine (Kali2)**    
+Open Ettercap: Launch Ettercap in graphical mode on Kali2 (the attacking machine) by searching for it in the application menu or running    
+    
+Get the routers IP address (if arping to the internet and not just on LAN)    
+#### `ip r`
+
+ <div style="text-align: center;">
+  <img src="{{ 'classes/LANgeist/images/ettercap-3.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+    
+open ettercap on terminal    
+#### `sudo ettercap -G`    
+    
+<div style="text-align: center;">
+  <img src="{{ 'classes/LANgeist/images/ettercap-4.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+    
+
+Select the Network Interface: In Ettercap, select the network interface connected to the 10.15.0.1/17 network.     
+
+Click the checkmark up in the corner that says “accept” when you hover over it    
+    
+Click the Magnify glass in the top left of the Ettercap window to scan for hosts    
+    
+Scan for Hosts: Use Ettercap to scan the network for hosts. This can typically be done under the "Hosts" menu, selecting "Scan for hosts". After scanning, you should see a list of detected hosts in your network, including the Ubuntu server (10.15.109.49) and Kali1 (10.15.39.9).    
+    
+If you know the hosts you are targeting, you can select the three dots in the top right, select ‘current tagets’ add the IP addresses and then select “Scan for hosts”, this takes a great deal less time on larger networks.     
+    
+Add Targets: In Ettercap, add your targets. Target 1 should be the Ubuntu SSH server (10.15.109.49), and Target 2 should be Kali1 (10.15.39.9), the machine attempting to SSH into the Ubuntu server.    
+    
+<div style="text-align: center;">
+  <img src="{{ 'classes/LANgeist/images/ettercap-5.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+    
+**Step 3: ARP Poisoning**    
+    
+ARP Poisoning: With both targets set, initiate ARP poisoning to place Kali2 in the communication path between Kali1 and the Ubuntu server. This is typically done from the "MitM" (Man in The Middle) menu, selecting "ARP poisoning". Make sure to check the option to "Sniff remote connections" if available.    
+    
+Start Sniffing: After initiating ARP poisoning, start sniffing the network traffic by selecting the "Start Sniffing" option. This action enables Ettercap to capture the packets passing between Kali1 and the Ubuntu server.    
+<div style="text-align: center;">
+  <img src="{{ 'classes/LANgeist/images/ettercap-6.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+    
+**Step 3: Monitor and Analyze Traffic**
+    
+Monitor SSH Attempts: On Kali2, watch the traffic captured by Ettercap for any SSH login attempts from Kali1 to the Ubuntu server. Remember, SSH traffic will be encrypted, including authentication attempts, so capturing the password directly is not possible through this method.    
+
+<div style="text-align: center;">
+  <img src="{{ 'classes/LANgeist/images/ettercap-7.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+
+<div style="text-align: center;">
+  <img src="{{ 'classes/LANgeist/images/ettercap-8.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+
+<div style="text-align: center;">
+  <img src="{{ 'classes/LANgeist/images/ettercap-9.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+    
+ Use Wireshark: For a more detailed analysis, you might also use Wireshark in parallel to Ettercap on Kali2 to capture and analyze the traffic. This can give you insights into the encryption and protocol negotiation, but, as with Ettercap, decrypting SSH traffic to reveal passwords is not feasible without the encryption keys.    
+    
+**Post-Attack Steps**    
+    
+Stop the Attack: When your analysis is complete, remember to stop ARP poisoning and sniffing in Ettercap to restore normal network operation.    
+    
+Analyze Findings: Reflect on the implications of your findings and the importance of securing network communications against on-path attacks.    
+    
+Report: In a real-world ethical hacking scenario, you would now report your findings, including the techniques used, the data captured, and recommendations for mitigating such attacks.    
+
+**Conclusion**    
+While Ettercap can demonstrate the ease of conducting on-path attacks and capturing network traffic, the secure nature of SSH encryption highlights the challenges of intercepting sensitive information such as passwords. This exercise underscores the importance of securing networks and educating about the potential vulnerabilities and the effectiveness of encryption in protecting data.    
