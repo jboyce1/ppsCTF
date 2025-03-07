@@ -64,8 +64,9 @@ From a defensive perspective, understanding and simulating attack techniques lik
 **Secure Configuration and Encryption:**    
 The use of SSH for secure communication exemplifies best practices in encryption and secure configuration management. Encouraging the use of encrypted protocols for remote administration and data transfer can significantly reduce the risk of credential interception and unauthorized access. This is hard to get around as your students and staff will need to be able to log in and you cannot choose multifactor authentication for students or expect them to have RSA tokens on their devices.    
 
-  ---
-  # Part 1: tcp dump to identify traffic and capture packets    
+---
+
+# Part 1: tcp dump to identify traffic and capture packets    
 
 ## TCP Dump 
 ### A Data-network packet analyzer program that runs inside the Terminal 
