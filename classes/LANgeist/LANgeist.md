@@ -71,14 +71,14 @@ The use of SSH for secure communication exemplifies best practices in encryption
 ## TCP Dump 
 ### A Data-network packet analyzer program that runs inside the Terminal 
 
-Step 1) Find your internet connection
+**Step 1) Find your internet connection**
 #### `tcpdump -D`    
 
  <div style="text-align: center;">
   <img src="{{ 'classes/LANgeist/images/tcpdump--D.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
 </div>
 
-Step 2) Run the packet capture    
+**Step 2) Run the packet capture**    
 sudo tcpdump -i eth0    
 hit Ctrl + C to stop the packet   
  <div style="text-align: center;">
@@ -86,14 +86,14 @@ hit Ctrl + C to stop the packet
 </div>
     
     
-Step 3) Dig a bit deeper into TCP dump (v stands for verbose)    
+**Step 3) Dig a bit deeper into TCP dump (v stands for verbose)**    
 #### `sudo tcpdump -i eth0 -c 10 -v`    
 #### `sudo tcpdump -i eth0 -c 100 -v | grep “tcp 8949”`    
     
-Step 4) To get un-human readable, such as we will use later, see what looks like (capturing the whole packet)    
+**Step 4) To get un-human readable, such as we will use later, see what looks like (capturing the whole packet)**    
 #### `sudo tcpdump -s 0 -U -n -w - -i eth0`    
     
-Step 5) Finally print the whole thing to a text file:    
+**Step 5) Print the output to a text file**    
 First, navigate to the Desktop directory using the following command:    
 #### `cd Desktop`
     
@@ -103,14 +103,15 @@ is redirecting the output from the screen to a file named localtcpdump.txt
     
 To read the file, use the following command:    
 #### `cat localtcpdump.txt` 
+
     
-**Try it now:**
+### Try it now:
 Create a localtcpdump.txt file on your desktop
 Open the file and read its contents
 
 ### Explanation of flags in step 3 of TCP Dump
-
-**Skip this if you're not curious- it is just information and less relevant**
+**Skip this if you're not curious- it is just information and less relevant**    
+    
 **1**: This is the packet number in the sequence of captured packets.    
 **16:27:02.202246**: The timestamp when the packet was captured, given in hours, minutes, seconds, and microseconds.    
 **IP**: Indicates that this is an IP packet.    
@@ -137,16 +138,15 @@ Open the file and read its contents
 ---
 # Part 2: use tcpdump to isolate attackers on your network with a known IP address    
 
-Precise Capture with TCP dump:
-
-Step 1) Use -q and --number to make it more human readable. You can use -c to limit the number of packets captured    
+**Precise Capture with TCP dump:**    
+Use -q and --number to make output more human readable. You can use -c to limit the number of packets captured       
 #### `sudo tcpdump -i eth0 -q --number`    
-    
+        
 Grep the command to see only what you search for:    
 #### `sudo tcpdump -i eth0 -q --number | grep “10.15.23”`    
     
 This will only return IP addresses between 10.15.23.0- 10.15.23.255        
-**Questions to ponder… what could this be useful for?**    
+**Question to ponder… what could this be useful for?**    
 
  <div style="text-align: center;">
   <img src="{{ 'classes/LANgeist/images/Use--q-and---number-to-make-it-more-human-readable.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
@@ -165,37 +165,38 @@ Now, from your Kali machine, try to use tcpdump and grep to see find the ip addr
 ---
 # Part 3: setting up  Wireshark   
     
-Step 1) Set Wireshark to promiscuous mode:    
+**Step 1) Set Wireshark to promiscuous mode:**    
     
 #### `sudo ifconfig eth0 promisc`    
 OR    
 #### `sudo ip link set eth0 promisc on`    
     
-Step 2) verify the state of promiscuous mode:
+**Step 2) verify the state of promiscuous mode:**
 Looks  like this:  
     
 2: eth0: <BROADCAST,MULTICAST,PROMISC,UP,LOWER_UP> mtu 9001 qdisc mq state UP group default qlen 1000 link/ether 0a:f7:a7:09:d9:1b brd ff:ff:ff:ff:ff:ff inet 10.15.75.96/17 brd 10.15.127.255 scope global dynamic eth0 valid_lft 2134sec preferred_lft 2134sec inet6 fe80::8f7:a7ff:fe09:d91b/64 scope link valid_lft forever preferred_lft forever    
     
 The presence of PROMISC indicates that the eth0 inferface is running in promiscuous mode    
     
-Step 3) Open wireshark as a superuser    
+**Step 3) Open wireshark as a superuser:**    
 #### `sudo wireshark`
 
 select the eth0    
     
-Step 4) Select filters from the drop-down menu at the top of the Wireshark GUI    
+**Step 4) Select filters from the drop-down menu at the top of the Wireshark GUI**    
 delete all filters    
 
 **PCAP challenges:**    
-simplehttp.pcap: Find the password that was submitted via http protocol
+simplehttp.pcap: **Find the password that was submitted via http protocol**
 #### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/LANgeist/simplehttp.pcap`
  - Hint: You can search for things in the search bar, protocols in particular
 submit PacketCAPture1 response here    
-
+    
+    
 SSH_10-15-17-162-to-10.15.2.-29.pcapng: Describe what happens in this PCAP  
 #### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/LANgeist/simplehttp.pcap`  
 submit PacketCapture2 response here    
-
+      
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/TYqdU9GPRDE?si=raK3NlXORXF6iOtP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
@@ -203,9 +204,9 @@ submit PacketCapture2 response here
 ---
 # Part 4: remote wireshark capture with ssh    
     
-Pre-steps) set up ssh server to password authenticate    
+**Pre-steps) set up ssh server to password authenticate**    
     
-Step 1) Create a named pipe (called a FIFO)    
+**Step 1) Create a named pipe (called a FIFO)**    
 create directory for the captured files:    
 #### `mkdir ~/Desktop/rc/``    
 
@@ -214,12 +215,12 @@ trial 1:
     
 Here, you're creating a named pipe called remotepacketcapture1 in the /Desktop/tmp/ directory. This named pipe acts as a communication channel or endpoint for passing data between processes.    
     
-Step 2) Starting Wireshark with -k and -i options    
+**Step 2) Starting Wireshark with -k and -i options**    
 #### `sudo wireshark -k -i ~/Desktop/rc/rc90159ens5`   
 
 This command starts Wireshark with the -k option to prepare it for packet capture without actually capturing packets immediately, and the -i option specifies the interface from which Wireshark should capture packets, in this case, the named pipe remotepacketcapture1.    
 
-Step 3: Capturing Packets with tcpdump over SSH    
+**Step 3: Capturing Packets with tcpdump over SSH**    
 #### `ssh <user>@<target.ip.address> “sudo tcpdump -s 0 -U -n -w - -i ens5 not port 22” > ~/Desktop/rc/rc12369ens5`    
     
 Here, you're SSHing into <target.ip.address> as <user> and running tcpdump with sudo privileges to capture packets on interface eth0. The captured packets are then streamed through SSH and redirected (>) into the named pipe remotepacketcapture1.
@@ -292,8 +293,9 @@ https://charlesreid1.com/wiki/MITM/Wired/MAC_Flood#MAC_Flood_Attack
 
 ---
 
-# Part 5: on-path attack with ettercap    
+# Part 5: on-path attack with ettercap
 ## does not work on cyber.org range    
+
     
 **Step 1: Allow IP forwarding in on the attack machine (Kali2)**    
 ### `echo 1 > /proc/sys/net/ipv4/ip_forward`    
@@ -308,7 +310,7 @@ set ethernet to promiscuous mode
 #### `set eth0 to promisc`    
 
  <div style="text-align: center;">
-  <img src="{{ 'classes/LANgeist/images/ettercap-2.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+  <img src="{{ 'classes/LANgeist/images/ettercap2.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
 </div>
     
 **Step 2: Setup Ettercap on the Attacker Machine (Kali2)**    
@@ -318,14 +320,14 @@ Get the routers IP address (if arping to the internet and not just on LAN)
 #### `ip r`
 
  <div style="text-align: center;">
-  <img src="{{ 'classes/LANgeist/images/ettercap-3.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+  <img src="{{ 'classes/LANgeist/images/ettercap3.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
 </div>
     
 open ettercap on terminal    
 #### `sudo ettercap -G`    
     
 <div style="text-align: center;">
-  <img src="{{ 'classes/LANgeist/images/ettercap-4.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+  <img src="{{ 'classes/LANgeist/images/ettercap4.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
 </div>
     
 
@@ -342,7 +344,7 @@ If you know the hosts you are targeting, you can select the three dots in the to
 Add Targets: In Ettercap, add your targets. Target 1 should be the Ubuntu SSH server (10.15.109.49), and Target 2 should be Kali1 (10.15.39.9), the machine attempting to SSH into the Ubuntu server.    
     
 <div style="text-align: center;">
-  <img src="{{ 'classes/LANgeist/images/ettercap-5.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+  <img src="{{ 'classes/LANgeist/images/ettercap5.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
 </div>
     
 **Step 3: ARP Poisoning**    
@@ -351,7 +353,7 @@ ARP Poisoning: With both targets set, initiate ARP poisoning to place Kali2 in t
     
 Start Sniffing: After initiating ARP poisoning, start sniffing the network traffic by selecting the "Start Sniffing" option. This action enables Ettercap to capture the packets passing between Kali1 and the Ubuntu server.    
 <div style="text-align: center;">
-  <img src="{{ 'classes/LANgeist/images/ettercap-6.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+  <img src="{{ 'classes/LANgeist/images/ettercap6.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
 </div>
     
 **Step 3: Monitor and Analyze Traffic**
@@ -359,15 +361,15 @@ Start Sniffing: After initiating ARP poisoning, start sniffing the network traff
 Monitor SSH Attempts: On Kali2, watch the traffic captured by Ettercap for any SSH login attempts from Kali1 to the Ubuntu server. Remember, SSH traffic will be encrypted, including authentication attempts, so capturing the password directly is not possible through this method.    
 
 <div style="text-align: center;">
-  <img src="{{ 'classes/LANgeist/images/ettercap-7.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+  <img src="{{ 'classes/LANgeist/images/ettercap7.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
 </div>
 
 <div style="text-align: center;">
-  <img src="{{ 'classes/LANgeist/images/ettercap-8.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+  <img src="{{ 'classes/LANgeist/images/ettercap8.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
 </div>
 
 <div style="text-align: center;">
-  <img src="{{ 'classes/LANgeist/images/ettercap-9.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+  <img src="{{ 'classes/LANgeist/images/ettercap9.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
 </div>
     
  Use Wireshark: For a more detailed analysis, you might also use Wireshark in parallel to Ettercap on Kali2 to capture and analyze the traffic. This can give you insights into the encryption and protocol negotiation, but, as with Ettercap, decrypting SSH traffic to reveal passwords is not feasible without the encryption keys.    
