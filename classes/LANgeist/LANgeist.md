@@ -10,7 +10,7 @@ title: LANgeist
 **Activity**:   
 
 <div style="text-align: center;">
-  <img src="{{ 'classes/CyberCartographer/93909-CyberCartography-with-nmap-banner.png' | relative_url }}" alt="Hash Hound Logo" style="max-width: 80%; height: auto;">
+  <img src="{{ 'classes/LANgeist/images/GhostofLAN.png' | relative_url }}" alt="LANgeist Logo" style="max-width: 80%; height: auto;">
 </div>
 
 ## You can talk about us...
