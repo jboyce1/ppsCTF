@@ -1,0 +1,28 @@
+Phase 1:
+
+- set up the tcp_udp_icmp_cyberbully.py on an ubuntu-bully box using the ubuntu-victims IP 
+
+- install iftop on victim machine
+sudo apt update && sudo apt install -y iftop
+
+have participants ssh into victim computer 
+find active connections iftop
+
+find the interet connection using ip addr
+
+find the top connections using iftop
+iftop 
+
+sudo tcpdump -i <interface> -q --number | grep -v ssh | grep -v domain
+OR 
+sudo tcpdump -i <interface> -q --number | grep -Ev "ssh|domain"
+
+
+sudo tcpdump -i ens5
+once you have the device attacked we can try to ping flood attack to bully to see if the the packets decrease in volume:
+sudo ping -f -s 65000 <BULLY-IP>
+
+Phase 2: Set up wireshark on local machines
+- set up the icmp_broadcast_to_net.py and let it run while getting the students set up on their boxes with wireshark
+
+turn on wireshark and inspect captured packets
