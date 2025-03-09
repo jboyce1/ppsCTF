@@ -136,17 +136,42 @@ Open the file and read its contents
 </div>
 
 ---
-# Part 2: use tcpdump to isolate attackers on your network with a known IP address    
+# Part 2: use iftop and tcpdump to isolate attackers on your network with a known IP address    
+
+Download iftop
+#### `sudo apt update && sudo apt install -y iftop`
+
+Find your interface using    
+#### `ip addr'    
+ - Look for the interface name (usually something like eth0 or ens5)    
+
+Now run iftop:
+#### `sudo iftop -i <interface>`
+
+This will give you all of the active connections of the box you are on:
+
+
+## Narrow down and investigate the connections with tcpdump
 
 **Precise Capture with TCP dump:**    
 Use -q and --number to make output more human readable. You can use -c to limit the number of packets captured       
 #### `sudo tcpdump -i eth0 -q --number`    
         
-Grep the command to see only what you search for:    
-#### `sudo tcpdump -i eth0 -q --number | grep “10.15.23”`    
+Grep the command to see only what you are looking for:    
+#### `sudo tcpdump -i eth0 -q --number | grep “10.15.23”` 
+This will only return IP addresses between 10.15.23.0- 10.15.23.255     
+
+Use a reverse grep commmand to filter out the traffic that we do not care to see, such as ssh and domain traffic
     
-This will only return IP addresses between 10.15.23.0- 10.15.23.255        
-**Question to ponder… what could this be useful for?**    
+#### `sudo tcpdump -i <interface> | grep -v ssh | grep -v domain`    
+or    
+#### `sudo tcpdump -i <interface> | grep -Ev "ssh|domain"`    
+    
+Combine these commands to futher narrow down your searches and look at the precise packets being sent:    
+#### `sudo tcpdump -i <interface> | grep grep -Ev "ssh|domain|10.15.171.53"`
+
+       
+
 
  <div style="text-align: center;">
   <img src="{{ 'classes/LANgeist/images/Use--q-and---number-to-make-it-more-human-readable.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
@@ -157,6 +182,14 @@ Open your Ubuntu machine and get its IP address
 Open your Kali machine and get its IP address    
 Now, from your Ubuntu machine, ping your Kali ip address (ping 10.15.x.x)    
 Now, from your Kali machine, try to use tcpdump and grep to see find the ip address of your Ubuntu machine    
+
+So... fight back.   
+**Slow down the attackers network traffic with a ping flood**    
+Once you get attackers ip address, send them a ping flood as a warning    
+#### `sudo ping -f <attacker ip address>    
+or send a larger message (as in packet size)    
+#### `sudo ping -f -s 65000 <attacker ip address>    
+
 
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Q55KTQj5FGw?si=PQLeyg79d7GaNXHi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
