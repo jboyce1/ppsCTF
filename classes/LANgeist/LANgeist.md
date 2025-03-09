@@ -148,9 +148,9 @@ Find your interface using
 Now run iftop:
 #### `sudo iftop -i <interface>`
 
-This will give you all of the active connections of the box you are on:
+ - This will give you all of the active connections of the box you are on:
 
-
+    
 ## Narrow down and investigate the connections with tcpdump
 
 **Precise Capture with TCP dump:**    
@@ -177,12 +177,13 @@ Combine these commands to futher narrow down your searches and look at the preci
   <img src="{{ 'classes/LANgeist/images/Use--q-and---number-to-make-it-more-human-readable.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
 </div>
     
-Try it now:    
+**Try it now**:    
 Open your Ubuntu machine and get its IP address    
 Open your Kali machine and get its IP address    
 Now, from your Ubuntu machine, ping your Kali ip address (ping 10.15.x.x)    
 Now, from your Kali machine, try to use tcpdump and grep to see find the ip address of your Ubuntu machine    
 
+    
 So... fight back.   
 **Slow down the attackers network traffic with a ping flood**    
 Once you get attackers ip address, send them a ping flood as a warning    
