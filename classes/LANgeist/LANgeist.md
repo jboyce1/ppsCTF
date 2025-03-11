@@ -142,7 +142,7 @@ Download iftop
 #### `sudo apt update && sudo apt install -y iftop`
 
 Find your interface using    
-#### `ip addr'    
+#### `ip addr`    
  - Look for the interface name (usually something like eth0 or ens5)    
 
 Now run iftop:
@@ -184,14 +184,15 @@ Now, from your Ubuntu machine, ping your Kali ip address (ping 10.15.x.x)
 Now, from your Kali machine, try to use tcpdump and grep to see find the ip address of your Ubuntu machine    
 
     
-So... fight back.   
+**So... fight back**   
 **Slow down the attackers network traffic with a ping flood**    
 Once you get attackers ip address, send them a ping flood as a warning    
-#### `sudo ping -f <attacker ip address>    
+#### `sudo ping -f <attacker ip address>`    
 or send a larger message (as in packet size)    
-#### `sudo ping -f -s 65000 <attacker ip address>    
+#### `sudo ping -f -s 65000 <attacker ip address>`    
 
 
+Take a look at the iftop from the ubuntu machine you have sent a ping flood to.
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Q55KTQj5FGw?si=PQLeyg79d7GaNXHi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
@@ -228,7 +229,7 @@ submit PacketCAPture1 response here
     
     
 SSH_10-15-17-162-to-10.15.2.-29.pcapng: Describe what happens in this PCAP  
-#### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/LANgeist/simplehttp.pcap`  
+#### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/LANgeist/SSH_10-15-17-162-to-10.15.2.-29.pcapng`  
 submit PacketCapture2 response here    
       
 <div style="text-align: center;">
@@ -279,8 +280,6 @@ Defense:
 Developing RSA key pair for more secure remote log-in    
  
 
- 
-
 ### Try it now    
 Log into your Ubuntu box    
 Ensure sshd is running and password enabled (see SSHerlock)    
@@ -304,17 +303,21 @@ IP:10.15.69.25
 Username: agent    
 Password: agent    
 What IP address is pinging Target6?
-    
-LANgeist Target5:    
-IP:    
-Username: You're going to have to use a wordlist    
-Password: You're going to have to use a wordlist    
-    
-LANgeist Target4:    
-IP:    
-Username: You're going to have to use a wordlist    
-Password: You're going to have to use a wordlist    
 
+**Attacking the attacker:**    
+ICMP (ping flood)	Overloads bully’s ICMP traffic    
+#### `ping -f -s 65507 <bully-ip>`	    
+#### `hping3 --flood --icmp <bully-ip>`	    
+    
+TCP RST attack: Closes TCP connections on specific ports    
+#### `hping3 --rst -p <port#> -c 10000 <bully-ip>`	  
+#### `iptables -A OUTPUT -p tcp --dport <port#> -d <bully-ip> -j DROP`	  
+
+UDP attack: Overload and Block:    
+#### `hping3 --flood --udp -p 9999 <bully-ip>`	    
+#### `iptables -A INPUT -p udp --sport 9999 -s <bully-ip> -j DROP`	    
+    
+    
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/STaGzIRAZG8?si=6Iq3ddsSPJmtm5MV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
