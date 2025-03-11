@@ -97,6 +97,6 @@ title: Home
 Upcoming Events:
 - **May-June**: Western PA PicoCTF Regional Invitational Competition (Date TBD)
 
-# A nod of respect to those who have helped this process:
+# A nod of respect to those who have helped this process
 Carnegie Melon's PicoCTF Team - Supplying Coaches and Mentors
 BlackGirlsHack - Supplying Coaches and Mentors
