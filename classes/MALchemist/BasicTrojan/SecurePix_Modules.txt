@@ -1,0 +1,84 @@
+"""1 Create a Popup Message"""
+import tkinter as tk
+from tkinter import messagebox
+
+def perform_secret_action():
+		root = tk.Tk()
+		root.withdraw()  # Hide the main window
+		messagebox.showinfo("Look!", "Why was the math book sad? It had too many problems.")
+		root.destroy()
+	
+"""2 Speak a Text"""
+import subprocess
+
+def speak_text():
+		""" Make the computer speak a text """
+		text = "Hello, this is your computer speaking!"
+		subprocess.run(["espeak", text])
+
+
+"""3 Show system informatoin"""
+import subprocess
+
+def show_system_info():
+    """ Display colorful system information """
+    subprocess.run(["neofetch"])
+
+"""4 Random Number Generation (random)"""
+import random
+
+def generate_random_password():
+  """ Generates a random password with 10 characters """
+  # Generate random lowercase letters, uppercase letters, and digits
+  letters = "abcdefghijklmnopqrstuvwxyz"
+  uppercase_letters = letters.upper()
+  digits = "0123456789"
+  all_chars = letters + uppercase_letters + digits
+
+  # Sample 10 characters randomly from the pool
+  password = "".join(random.sample(all_chars, 10))
+  print(f"Your random password is: {password}")
+
+# Call the function to generate a random password
+generate_random_password()
+
+
+"""5 Create and Open a Text Message """
+import subprocess
+import os
+
+def create_and_open_message():
+    """ Create a text file with a message and open it with the default text editor """
+    message = "The secret to all victory lies in the organization of the non-obvious. - Marcus Aurelius"
+    file_name = "secret_message.txt"
+    
+    # Write the message to a text file
+    with open(file_name, 'w') as file:
+        file.write(message)
+    
+    # Open the text file with the default text editor
+    subprocess.run(["xdg-open", file_name])
+    
+# Add this function to the main execution flow where appropriate
+# create_and_open_message()
+
+"""6 Opening a URL in Firefox (webbrowser)"""
+import webbrowser
+
+def open_picoctf_in_firefox():
+  """ Opens the PicoCTF website in a new Firefox tab """
+  url = "https://picoctf.org/"
+  webbrowser.open(url, new=2)  # New window parameter (2) opens a new tab
+
+# Open PicoCTF in a new Firefox tab
+open_picoctf_in_firefox()
+
+"""7 Launching Wireshark (subprocess)"""
+import subprocess
+
+def launch_wireshark():
+  """ Launches the Wireshark network protocol analyzer """
+  subprocess.run(["wireshark"])  # Runs the 'wireshark' command
+
+# Launch Wireshark
+launch_wireshark()
