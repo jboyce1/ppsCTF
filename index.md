@@ -52,7 +52,7 @@ title: Home
 - Use Wireshark to capture traffic in promiscuous mode
 - Use the Dsniff tool Macof to conduct a MAC Flood attack
 
-**3/6 Thursday 7-9pm Teams Meeting**: [MALchemist (Host)](./classes/MALchemist/MALchenist)
+**3/6 Thursday 7-9pm Teams Meeting**: [MALchemist (Host)](./classes/MALchemist/MALchemist)
 - Deploy a basic trojan horse
 - Use IDLE to conduct malware analysis
 - Use IDLE any to modify python based malware
