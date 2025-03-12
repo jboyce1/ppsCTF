@@ -44,7 +44,7 @@ title: Home
 
 **2/27 Thursday 7-9pm Teams Meeting**: Small Team Challenge
 
-**3/4 Tuesday 7-9pm Teams Meeting**: [LANgeist (Network)](./classes/LANgeist)
+**3/4 Tuesday 7-9pm Teams Meeting**: [LANgeist (Network)](./classes/LANgeist/LANgeist)
 - Use TCP dump to identify traffic, gather detailed information about each packet sent
 - Use TCP dump to gather the entire packet, including the packet payload
 - Use TCP dump to isolate attackers on your network with known IP addresses
@@ -52,7 +52,7 @@ title: Home
 - Use Wireshark to capture traffic in promiscuous mode
 - Use the Dsniff tool Macof to conduct a MAC Flood attack
 
-**3/6 Thursday 7-9pm Teams Meeting**: [Malchemist (Host)](./classes/Malchemist)
+**3/6 Thursday 7-9pm Teams Meeting**: [Malchemist (Host)](./classes/Malchemist/Malchenist)
 - Deploy a basic trojan horse
 - Use IDLE to conduct malware analysis
 - Use IDLE any to modify python based malware
