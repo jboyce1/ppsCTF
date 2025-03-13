@@ -257,7 +257,7 @@ submit PacketCapture2 response here:
     
 **Step 1) Create a named pipe (called a FIFO)**    
 create directory for the captured files:    
-#### `mkdir ~/Desktop/rc/``    
+#### `mkdir ~/Desktop/rc/`    
 
 trial 1:    
 #### `mkfifo ~/Desktop/rc/rc12369ens5`
