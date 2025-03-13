@@ -59,15 +59,20 @@ Start a Kali machine and Ubuntu machine
     
 On Kali    
 Download the SecurePixViewer-ping.py file to your downloads folder on the kali machine into the Downloads folder:
-#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/BasicTrojan/SecurePixViewer_ping.py`  
-or add the flag to direct it to go to the downloads folder    
 <div class="scroll-box">
-#### `wget -P ~/Downloads https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/BasicTrojan/SecurePixViewer_ping.py`
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/BasicTrojan/SecurePixViewer_ping.py 
+</div>   
+
+or add the flag to direct it to go to the downloads folder    
+    
+<div class="scroll-box">
+wget -P ~/Downloads https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/BasicTrojan/SecurePixViewer_ping.py
 </div>
       
 Download the Trojan_Horse.jpg to the Downloads folder    
-#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/BasicTrojan/Trojan_Horse.jpg`    
-
+<div class="scroll-box">
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/BasicTrojan/Trojan_Horse.jpg    
+</div>
 <div style="text-align: center;">
   <img src="{{ 'classes/MALchemist/BasicTrojan/Trojan_Horse.jpg' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
 </div>
