@@ -101,6 +101,30 @@ a, a:visited, a:hover, a:active {
 a:hover {
     color: #ddf; /* Lighter blue on hover */
 }
+        /* ===== Scrollable Code Block Styling ===== */
+    .scroll-box {
+        background-color: #1e1e1e; /* Dark background for contrast */
+        color: #9bf; /* Light blue text */
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #444;
+        border-radius: 5px;
+        font-family: 'Courier New', Courier, monospace;
+        font-size: 14px;
+        overflow-x: auto; /* Enables horizontal scrolling */
+        max-width: 100%; /* Prevents bleeding */
+        white-space: pre-wrap; /* Wraps lines properly */
+        word-wrap: break-word; /* Breaks long words to prevent overflow */
+        display: block;
+    }
+    
+    /* Optional: Customize inline code for readability */
+    code {
+        background-color: #222;
+        color: #ffcc66; /* Highlighted text */
+        padding: 2px 5px;
+        border-radius: 3px;
+    }
 
 /* Mobile Styles */
 @media screen and (max-width: 768px) {
@@ -143,29 +167,5 @@ a:hover {
         margin: 4px;
         text-align: center;
         white-space: nowrap; /* Prevents wrapping */
-    }
-        /* ===== Scrollable Code Block Styling ===== */
-    .scroll-box {
-        background-color: #1e1e1e; /* Dark background for contrast */
-        color: #9bf; /* Light blue text */
-        padding: 10px;
-        margin: 10px 0;
-        border: 1px solid #111;
-        border-radius: 5px;
-        font-family: 'Courier New', Courier, monospace;
-        font-size: 14px;
-        overflow-x: auto; /* Enables horizontal scrolling */
-        max-width: 100%; /* Prevents bleeding */
-        white-space: pre-wrap; /* Wraps lines properly */
-        word-wrap: break-word; /* Breaks long words to prevent overflow */
-        display: block;
-    }
-    
-    /* Optional: Customize inline code for readability */
-    code {
-        background-color: #333;
-        color: #ffcc66; /* Highlighted text */
-        padding: 2px 5px;
-        border-radius: 3px;
     }
 }
