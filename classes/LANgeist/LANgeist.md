@@ -248,26 +248,28 @@ submit PacketCapture2 response here:
 ---
 # Part 4: remote wireshark capture with ssh    
     
-**Pre-steps) set up ssh server to password authenticate**    
+**Pre-steps) set up ssh server to password authenticate**   
+From the ubuntu machine:
+#### `sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh`    
     
 **Step 1) Create a named pipe (called a FIFO)**    
 create directory for the captured files:    
-#### `mkdir ~/Desktop/rc/`    
+#### `mkdir -p ~/Desktop/rc/`
+#### `mkfifo ~/Desktop/rc/capture_pipe`
 
-trial 1:    
-#### `mkfifo ~/Desktop/rc/rc12369ens5`
     
 Here, you're creating a named pipe called remotepacketcapture1 in the /Desktop/tmp/ directory. This named pipe acts as a communication channel or endpoint for passing data between processes.    
     
 **Step 2) Starting Wireshark with -k and -i options**    
-#### `sudo wireshark -k -i ~/Desktop/rc/rc90159ens5`   
+#### `sudo wireshark -k -i ~/Desktop/rc/capture_pipe`   
 
-This command starts Wireshark with the -k option to prepare it for packet capture without actually capturing packets immediately, and the -i option specifies the interface from which Wireshark should capture packets, in this case, the named pipe remotepacketcapture1.    
+This command starts Wireshark with the -k option to prepare it for packet capture without actually capturing packets immediately, and the -i option specifies the interface from which Wireshark should capture packets, in this case, the named pipe capture_pipe.    
 
 **Step 3: Capturing Packets with tcpdump over SSH**    
-#### `ssh <user>@<target.ip.address> “sudo tcpdump -s 0 -U -n -w - -i ens5 not port 22” > ~/Desktop/rc/rc12369ens5`    
+#### `ssh <user>@<target.ip.address> “sudo tcpdump -s 0 -U -n -w - -i ens5 not port 22” > ~/Desktop/rc/capture_pipe` 
+ - ex. ssh -t ubuntu@10.15.62.207 "sudo tcpdump -s 0 -U -n -w - -i ens5 not port 22" > ~/Desktop/rc/capture_pipe
     
-Here, you're SSHing into <target.ip.address> as <user> and running tcpdump with sudo privileges to capture packets on interface eth0. The captured packets are then streamed through SSH and redirected (>) into the named pipe remotepacketcapture1.
+Here, you're SSHing into <target.ip.address> as <user> and running tcpdump with sudo privileges to capture packets on interface eth5. The captured packets are then streamed through SSH and redirected (>) into the named pipe capture_pipe.
     
 **sudo**: This command is used to execute tcpdump with superuser (root) privileges. This is necessary because capturing packets typically requires elevated permissions.    
     
