@@ -118,13 +118,6 @@ a:hover {
         display: block;
     }
     
-    /* Optional: Customize inline code for readability */
-    code {
-        background-color: #222;
-        color: #ffcc66; /* Highlighted text */
-        padding: 2px 5px;
-        border-radius: 3px;
-    }
 
 /* Mobile Styles */
 @media screen and (max-width: 768px) {
