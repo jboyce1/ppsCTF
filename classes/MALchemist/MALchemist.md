@@ -194,22 +194,21 @@ Find the filepath for the SCP by navigating to where your file is (in Kali) and 
 #### `pwd`
 
 Now in the Kali machine (replace what is in the red and blue with where the file is and where it is going from the pwd command)
+    
 #### `scp /home/kali/Downloads/wiresharkspy.py ubuntu@10.15.x.x:/home/ubuntu/Desktop`
 
-#### `<span style="color:red;">/home/kali/Downloads/wiresharkspy.py</span>`
+Back into the SSH session in the Ubuntu machine    
+Navigate to the location of the file using ls and cd until you can ls and see the wiresharkspy.py    
+#### `python3 wiresharkspy.py`    
+        
+Go to the Ubuntu machine and open wireshark    
+#### `sudo wireshark`    
+Actually go back to the Kali machine to see if you received a notification    
     
-Back into the SSH session in the Ubuntu machine
-Navigate to the location of the file using ls and cd until you can ls and see the wiresharkspy.py
-#### `python3 wiresharkspy.py`
-    
-Go to the Ubuntu machine and open wireshark
-#### `sudo wireshark`
-Actually go back to the Kali machine to see if you received a notification
-
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GjSZiXmqwpk?si=5r7Xp5Xi1ATsH0eM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
-
-<a href="https://github.com/jboyce1/ppsCTF/blob/main/classes/MALchemist/msfvenom.txt" target="_blank" rel="noopener noreferrer">
-    Open msfvenom.txt in a new window
+    
+<a href="https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/msfvenom.txt" target="_blank" rel="noopener noreferrer">
+    msfvenom.txt
 </a>
