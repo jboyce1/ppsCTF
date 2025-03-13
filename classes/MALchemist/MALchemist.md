@@ -183,10 +183,10 @@ Open a new terminal and test it by running
 
 ### Move to remote device      
 Open up your Ubuntu machine, get its ip address and ssh into it with x11 forwarding:    
-#### `ssh -X ubuntu@10.15.x.x    
+#### `ssh -X ubuntu@10.15.x.x`    
     
 Now that you're connected, install the necessary dependencies:    
-#### `sudo apt intall pip      
+#### `sudo apt intall pip`      
 #### `sudo pip install psutil`    
 #### `python3`    
 >>> #### `import psutil`    
