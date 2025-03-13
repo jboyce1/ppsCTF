@@ -106,24 +106,27 @@ Change some of the parameters (ping size/timing or message) and run it again.
 ---
 # Part 2: use IDLE to conduct malware analysis
 
-Start a Kali machine 
-**On Kali**  Install IDLE
-#### `sudo apt install idle`
-Open SecurePixViewer_ping.py by right clicking and opening with IDLE (right click and scroll down in the applications)
-Things to notice:
-Imports
-Try to determine why a program would want that to run
-Comments
-Try to understand why the developer would put these comments in
-Code blocks
-Try to determine what each ‘block’ is intending to do
-Look at the def perform_secret_action():
+Start a Kali machine     
+**On Kali**  Install IDLE    
+#### `sudo apt install idle` 
 
+Download the SecurePixViewer_ping.py malware:
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/BasicTrojan/SecurePixViewer_ping.py`    
+    
+Open SecurePixViewer_ping.py by right clicking and opening with IDLE (right click and scroll down in the applications)    
+Things to notice:    
+Imports    
+Try to determine why a program would want that to run    
+Comments    
+Try to understand why the developer would put these comments in    
+Code blocks    
+Try to determine what each ‘block’ is intending to do    
+Look at the def perform_secret_action():    
+    
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/yjSL5aWEj5U?si=D2nFFnDkSlI3Pjnk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>    
-
-
+    
 Download aSecurePixViewer.txt
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/BasicTrojan/aSecurePixViewer.txt`     
     
