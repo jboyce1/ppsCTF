@@ -61,7 +61,9 @@ On Kali
 Download the SecurePixViewer-ping.py file to your downloads folder on the kali machine into the Downloads folder:
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/BasicTrojan/SecurePixViewer_ping.py`  
 or add the flag to direct it to go to the downloads folder    
+<div class="scroll-box">
 #### `wget -P ~/Downloads https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/BasicTrojan/SecurePixViewer_ping.py`
+</div>
       
 Download the Trojan_Horse.jpg to the Downloads folder    
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/BasicTrojan/Trojan_Horse.jpg`    
