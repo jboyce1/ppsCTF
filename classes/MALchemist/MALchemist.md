@@ -14,7 +14,7 @@ title: MALchemist
 </div>    
 
 ## Some wizards cast spells that seem like magic
-### that other wizards craft in code
+### other wizards craft them
 ---
 **play a game while I yap**:    
 sudo apt install greed    
