@@ -221,7 +221,9 @@ select the eth0
 **Step 4) Select filters from the drop-down menu at the top of the Wireshark GUI**    
 delete all filters    
 
-**PCAP challenges:**    
+**PCAP challenges:**      
+From wireshark, go to File > Open > find/your/pcap.pcap    
+    
 1. simplehttp.pcap: **Find the password that was submitted via http protocol**
 #### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/LANgeist/simplehttp.pcap`
  - Hint: You can search for things in the search bar, protocols in particular
