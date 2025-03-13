@@ -435,3 +435,5 @@ Report: In a real-world ethical hacking scenario, you would now report your find
 
 **Conclusion**    
 While Ettercap can demonstrate the ease of conducting on-path attacks and capturing network traffic, the secure nature of SSH encryption highlights the challenges of intercepting sensitive information such as passwords. This exercise underscores the importance of securing networks and educating about the potential vulnerabilities and the effectiveness of encryption in protecting data.    
+
+.
