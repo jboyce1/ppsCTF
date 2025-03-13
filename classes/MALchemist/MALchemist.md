@@ -16,17 +16,17 @@ title: MALchemist
 ## Some wizards cast spells that seem like magic
 ### that other wizards craft in code
 ---
-**play a game while I yap**:
-sudo apt install greed
-greed
-
-sudo apt install pacman4console
-pacman4console
-
-sudo apt install zangband
-man atc
-atc
-
+**play a game while I yap**:    
+sudo apt install greed    
+greed    
+    
+sudo apt install pacman4console    
+pacman4console    
+    
+sudo apt install zangband    
+man atc    
+atc    
+    
 Specific Skills:
 - Deploy a basic trojan horse
 - Use IDLE to conduct malware analysis
@@ -34,10 +34,10 @@ Specific Skills:
 - Use SSH and SCP to deploy and run scripts on remote devices
 - Use psutil to monitor actions on remote computer
     
-**Thing to experiment with on the range**:
-VNC
-msfconsole payloads
-    
+**Thing to experiment with on the range**:    
+VNC    
+msfconsole payloads    
+        
 #### Offensive Operations:
 Deploying Trojans: Malchemists can craft and deploy Trojan horses, disguising them within seemingly legitimate software or scripts. These Trojans can be used to establish backdoors, exfiltrate data, or disrupt operations within an enemy's network.     
     
@@ -53,7 +53,7 @@ Malware Decontamination: The defensive Malchemist is skilled in identifying, cla
 Both offensive and defensive cyber operations can benefit from the capabilities of these tools, either by exploiting their potential to penetrate and compromise systems or by leveraging their strengths to defend and fortify against such intrusions. It’s a digital arms race where the same tools can be purposed for attack or defense, depending on the hands they are in.
 
 ---
-# part 1: deploy a basic trojan horse    
+# Part 1: deploy a basic trojan horse    
 
 Start a Kali machine and Ubuntu machine
     
@@ -66,24 +66,90 @@ or add the flag to direct it to go to the downloads folder
 Download the Trojan_Horse.jpg to the Downloads folder    
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/BasicTrojan/Trojan_Horse.jpg`    
 
+<div style="text-align: center;">
+  <img src="{{ 'classes/MALchemist/BasicTrojan/Trojan_Horse.jpg' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+    
 Navigate to the Downloads directory from terminal (or open a terminal from the Downloads directory)    
 run the program from terminal using the following command:    
 #### `python3 SecurePixViewer-ping.py`    
 Ctrl + C to quit the process    
 
 **Now lets get it to ping your ubuntu machine**:    
-On Ubuntu open a terminal, write down its ip address and start wireshark with superuser priviledges   
-sudo wireshark    
+**On Ubuntu** open a terminal, write down its ip address and start wireshark with superuser priviledges   
+#### `sudo wireshark`    
 Click on the network interface that is connecting to the internet (activity on line graph next to it)    
-On Kali    
+**On Kali**    
 Open terminal and open the SecurePixViewer-ping.py    
-nano SecurePixViewer-ping.py    
+#### `nano SecurePixViewer-ping.py`    
 Replace the 192.168.1.100 with the ip address of your ubuntu machine    
 Run the program again    
-python3 SecurePixViewer-ping.py    
-On Ubuntu    
+#### `python3 SecurePixViewer-ping.py`    
+**On Ubuntu**    
 Stop Wireshark by clicking on the red box in the top left    
 In the search bar look for the pings by searching    
-ip.addr == your.kali.ip.here    
+#### `ip.addr == your.kali.ip.here`    
 Try it now    
 Change some of the parameters (ping size/timing or message) and run it again.
+
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/0waugi7-F9I?si=JkgGyEs7ieu3r4T9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
+---
+# Part 2: use IDLE to conduct malware analysis
+
+Start a Kali machine 
+**On Kali**  Install IDLE
+#### `sudo apt install idle`
+Open SecurePixViewer_ping.py by right clicking and opening with IDLE (right click and scroll down in the applications)
+Things to notice:
+Imports
+Try to determine why a program would want that to run
+Comments
+Try to understand why the developer would put these comments in
+Code blocks
+Try to determine what each ‘block’ is intending to do
+Look at the def perform_secret_action():
+
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/yjSL5aWEj5U?si=D2nFFnDkSlI3Pjnk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>    
+
+
+Download aSecurePixViewer.txt
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/BasicTrojan/aSecurePixViewer.txt`     
+    
+Open the file with IDLE    
+Predict its actions and attempt to run it to see if what you predict is correct.   
+    
+**Try it now**    
+Change some of the parameters:    
+what type of file is opened (.txt, .py, .wav)    
+the message    
+trigger timing    
+    
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/f5k5oWXEfCY?si=Qlb_OXnaF29C_hGZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
+---
+# Part 3: use IDLE any to modify python-based malware    
+
+Download the aSecurePixViewer.txt and the SecurePix_Modules.txt to mix and match your own malware.     
+    
+For the competition, you will have access to the malware that is on the range, but you will not be allowed to bring any of your own. If you are using modules outside of what is provided, they must be ‘approved' by the range.     
+    
+     
+Try it now
+
+If you get something fun or interesting, upload it here so I can share it or use it!
+    
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/caXhiVwJrCk?si=TRP5FqA3yJvrcc5B" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
+---
+Part 4: use ssh and scp to deploy and run scripts on remote devicesc & use psutil to monitor actions on remote computers
+
+
