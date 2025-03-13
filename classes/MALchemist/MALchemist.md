@@ -36,7 +36,11 @@ Specific Skills:
     
 **Thing to experiment with on the range**:    
 VNC    
-msfconsole payloads    
+msfconsole payloads  
+<a href="https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/msfvenom.txt" target="_blank" rel="noopener noreferrer">
+    msfvenom.txt
+</a>
+
         
 #### Offensive Operations:
 Deploying Trojans: Malchemists can craft and deploy Trojan horses, disguising them within seemingly legitimate software or scripts. These Trojans can be used to establish backdoors, exfiltrate data, or disrupt operations within an enemy's network.     
@@ -212,6 +216,3 @@ Actually go back to the Kali machine to see if you received a notification
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GjSZiXmqwpk?si=5r7Xp5Xi1ATsH0eM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
     
-<a href="https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/msfvenom.txt" target="_blank" rel="noopener noreferrer">
-    msfvenom.txt
-</a>
