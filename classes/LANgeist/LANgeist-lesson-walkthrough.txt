@@ -1,0 +1,42 @@
+
+
+For the Training session: 
+
+Phase 1: Ping all active hosts on network
+sudo git clone https://github.com/jboyce1/ppsCTF.git
+cd /home/kali/ppsCTF/classes/LANgeist/training
+sudo python3 
+
+Phase 2:
+- set up the tcp_udp_icmp_cyberbully.py on an ubuntu-bully box using the ubuntu-victims IP 
+Kali:
+sudo git clone https://github.com/jboyce1/ppsCTF.git
+cd /home/kali/ppsCTF/classes/LANgeist/training
+nano tcp_udp_icmp_cyberbully.py
+
+- install iftop on victim machine
+Ubuntu:
+sudo apt update && sudo apt install -y iftop
+sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
+
+have participants ssh into victim computer 
+find active connections iftop
+
+find the interet connection using ip addr
+
+find the top connections using iftop
+iftop 
+
+sudo tcpdump -i <interface> -q --number | grep -v ssh | grep -v domain
+OR 
+sudo tcpdump -i <interface> -q --number | grep -Ev "ssh|domain"
+
+
+sudo tcpdump -i ens5
+once you have the device attacked we can try to ping flood attack to bully to see if the the packets decrease in volume:
+sudo ping -f -s 65000 <BULLY-IP>
+
+Phase 2: Set up wireshark on local machines
+- set up the icmp_broadcast_to_net.py and let it run while getting the students set up on their boxes with wireshark
+
+turn on wireshark and inspect captured packets
