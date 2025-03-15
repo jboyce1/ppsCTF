@@ -1,3 +1,4 @@
+note# double check ctf2.py for functinoality, students were not able to see contents Feb 2025
 instructions:
 
 from ubuntu mahcine:
