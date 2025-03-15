@@ -3,25 +3,40 @@
 For the Training session: 
 
 Phase 1: Ping all active hosts on network
+Kali 1:
 sudo git clone https://github.com/jboyce1/ppsCTF.git
 cd /home/kali/ppsCTF/classes/LANgeist/training
-sudo python3 
+sudo python3 icmp_broadcast.py
+
+Now ping with a flag from a different 
+Kali 2:
+sudo git clone https://github.com/jboyce1/ppsCTF.git
+cd /home/kali/ppsCTF/classes/LANgeist/training
+sudo python3 icmp_broadcast.py
+
+Ask students to identify and ping flood the kali that is being the bully
+They need to open wireshark with sudo wireshark and then look for the conversations: isolate the conversations by applying filters
+
+Wireshark > statistics > conversations > ipv4
+Wireshark > statistics > protocol hierarchy
+apply vnc filter with !(vnc) in filter bar
+
 
 Phase 2:
 - set up the tcp_udp_icmp_cyberbully.py on an ubuntu-bully box using the ubuntu-victims IP 
-Kali:
+Kali 3:
 sudo git clone https://github.com/jboyce1/ppsCTF.git
 cd /home/kali/ppsCTF/classes/LANgeist/training
 nano tcp_udp_icmp_cyberbully.py
+adjust ip address to Ubuntu 1 ip address
 
 - install iftop on victim machine
-Ubuntu:
+Ubuntu 1:
 sudo apt update && sudo apt install -y iftop
 sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
 
 have participants ssh into victim computer 
 find active connections iftop
-
 find the interet connection using ip addr
 
 find the top connections using iftop
@@ -36,7 +51,28 @@ sudo tcpdump -i ens5
 once you have the device attacked we can try to ping flood attack to bully to see if the the packets decrease in volume:
 sudo ping -f -s 65000 <BULLY-IP>
 
-Phase 2: Set up wireshark on local machines
+Phase 3: Set up wireshark on local machines to check out the packets
 - set up the icmp_broadcast_to_net.py and let it run while getting the students set up on their boxes with wireshark
 
 turn on wireshark and inspect captured packets
+Step 1 : open wireshark with sudo 
+Step 2: Select Capture > Options > SSH remote capture: sshdump
+Step 3a: Add in the IP address and the port # for the device you are trying to capture from
+Step 3b: Add in authentication
+Username: ubuntu
+Password: password
+Step 3c: Add in capture data
+sudo tcpdump -s 0 -U -n -w - -i ens5 not port 22
+
+now follow the same 
+Wireshark > statistics > conversations > ipv4
+Wireshark > statistics > protocol hierarchy
+
+read tcp by selecting the tcp packets, right clicking and clicking 'follow stream' 
+identify the port number the packet is being sent from:
+Below where it says Transmission Control Protocol, Src Port: xxxx
+fire away back at the source port with the same protocol as being sent from:
+
+hping3 --flood --udp -p <port#> <bully-ip>
+iptables -A INPUT -p udp --sport <port#> -s <bully-ip> -j DROP
+
