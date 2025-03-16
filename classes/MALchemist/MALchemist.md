@@ -220,7 +220,7 @@ Actually go back to the Kali machine to see if you received a notification
 # Part 5: practice and explore
     
 ## Use the following scripts to experiment on the range  
- - create a blank document that ends in .py (ex memory_hog.py) and run it by opening a terminal in the same directory and typing python3 memory_hog.py. Some scripts you run might need to be run with sudo privileges sudo python3 my_script.py
+ - create a blank document using touch or nano (ex. nano memory_hog.py) that ends in .py and run it by opening a terminal in the same directory and typing python3 memory_hog.py. Some scripts you run might need to be run with sudo privileges sudo python3 my_script.py
     
 ## Scripts that work if you are on another user    
 Use the ability to write to the /tmp/ directory and run scripts from it to impact other users    
