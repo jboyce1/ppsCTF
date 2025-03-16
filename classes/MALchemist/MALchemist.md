@@ -225,7 +225,7 @@ Actually go back to the Kali machine to see if you received a notification
 ## Scripts that work if you are on another user    
 Use the ability to write to the /tmp/ directory and run scripts from it to impact other users    
 #### `scp kill_bully_memory.py <user>@<ip.address.here.blah>:/tmp/`
-#### `ssh user@ip.address.here.blah`
+#### `ssh <user>@<ip.address.here.blah>`
 #### `python3 /tmp/kill_bully_memory.py`
 
 --    
