@@ -8,8 +8,8 @@ def monitor_cpu_usage():
     """ Monitor the CPU usage and notify when it exceeds a certain threshold """
     threshold = 20  # Set the CPU usage percentage threshold
 
-    # Wait for 30 minutes before starting the monitoring
-    time.sleep(1800)  # 1800 seconds = 30 minutes
+    # Wait for 10 minutes before starting the monitoring
+    time.sleep(600)  # 1800 seconds = 30 minutes
 
     while True:
         cpu_usage = psutil.cpu_percent(interval=1)
