@@ -219,9 +219,9 @@ Actually go back to the Kali machine to see if you received a notification
 ---
 # Part 5: practice and explore
     
-Use the following scripts to 
-Memory Hog (Consumes RAM Until the Bully’s System Freezes)
+## Use the following scripts to experiment on the range     
 
+### Memory Hog (Consumes RAM Until the opponent system freezes)
 <div class="scroll-box">
 #!/usr/bin/env python3    
 import multiprocessing    
@@ -238,4 +238,32 @@ if __name__ == "__main__":
     for _ in range(multiprocessing.cpu_count()):    
         p = multiprocessing.Process(target=memory_hog)    
         p.start()    
+</div>
+   
+
+### Process Killer (kills processes running in python3)    
+<div class="scroll-box">
+#!/usr/bin/env python3
+import subprocess
+import time
+
+BULLY_PROCESS = "python3"  # Target process running the bully script
+
+def find_and_kill_process():
+    """Finds and kills the bully script running as a Python process."""
+    try:
+        output = subprocess.run(["pgrep", "-f", BULLY_PROCESS], capture_output=True, text=True)
+        pids = output.stdout.strip().split("\n")
+        for pid in pids:
+            if pid.isdigit():
+                print(f"[+] Killing bully process: PID {pid}")
+                subprocess.run(["kill", "-9", pid])
+        print("[+] Bully script terminated.")
+    except Exception as e:
+        print(f"[-] Error terminating bully script: {e}")
+
+if __name__ == "__main__":
+    while True:
+        find_and_kill_process()
+        time.sleep(2)  # Check every 2 seconds
 </div>
