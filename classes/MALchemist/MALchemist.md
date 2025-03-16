@@ -283,7 +283,8 @@ if __name__ == "__main__":
         time.sleep(2)  # Check every 2 seconds
 </div>
 
-## Not useful for the competition, but fun... learn by breaking things    
+## Not useful for the competition, but fun...     
+## learn by breaking things      
 --    
 ### UI Chaos (Randomly Moves & Clicks the Mouse)    
  - Uses PyAutoGUI to randomly move and click the mouse    
