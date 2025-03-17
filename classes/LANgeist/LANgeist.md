@@ -324,7 +324,9 @@ Because we are still in a virtual environment and you are using ssh into the box
 
 Step 4: Select Start    
 
-
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/JWdGPClLBaw?si=Lti2olTado-CNXAu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
 
 
 Defense:    
