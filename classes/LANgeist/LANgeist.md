@@ -251,7 +251,8 @@ submit PacketCapture2 response here:
 **Pre-steps) set up ssh server to password authenticate**   
 From the ubuntu machine:
 #### `sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh`    
-    
+
+## Method 1: more versitile and more complicated    
 **Step 1) Create a named pipe (called a FIFO)**    
 create directory for the captured files:    
 #### `mkdir -p ~/Desktop/rc/`
@@ -286,7 +287,46 @@ Here, you're SSHing into <target.ip.address> as <user> and running tcpdump with 
 With this setup, Wireshark is reading packets from the named pipe remotepacketcapture, while tcpdump is capturing packets on the remote system and streaming them into the same named pipe. This allows you to effectively capture and view network traffic in real-time using Wireshark.    
 **-i eth0**: This flag specifies the interface on which tcpdump should capture packets. In this case, eth0 is specified, indicating the first Ethernet interface.    
 **not port 22**: This is a filter expression used to exclude packets with a destination or source port of 22 (SSH). It means tcpdump will capture all packets except those associated with SSH traffic. This can be useful to avoid capturing your own SSH traffic, which might flood the output.    
-  
+
+
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/STaGzIRAZG8?si=6Iq3ddsSPJmtm5MV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+    
+## Method 2: less versitile fewer complications
+## ssh fea    
+Step 1: open wireshark with sudo 
+#### `sudo wireshark'    
+
+ <div style="text-align: center;">
+  <img src="{{ 'classes/LANgeist/images/sshwireshark1-openwireshark.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+
+Step 2: Select Capture > Options > SSH remote capture: sshdump    
+
+Step 3a: Add in the IP address and the port # for the device you are trying to capture from
+
+ <div style="text-align: center;">
+  <img src="{{ 'classes/LANgeist/images/sshwireshark2-server-address.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+
+Step 3b: Add in authentication    
+Username: ubuntu    
+Password: password    
+    
+Step 3c: Add in capture data    
+Because we are still in a virtual environment and you are using ssh into the box you are getting into, filter out port 22      
+##### `sudo tcpdump -s 0 -U -n -w - -i ens5 not port 22`    
+      
+ <div style="text-align: center;">
+  <img src="{{ 'classes/LANgeist/images/sshwireshark2-server-address.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+
+Step 4: Select Start    
+
+
+
+
 Defense:    
 Developing RSA key pair for more secure remote log-in    
  
@@ -329,9 +369,7 @@ UDP attack: Overload and Block
 #### `iptables -A INPUT -p udp --sport <port#> -s <bully-ip> -j DROP`	    
     
     
-<div style="text-align: center;">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/STaGzIRAZG8?si=6Iq3ddsSPJmtm5MV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</div>
+
  
 ---
 
