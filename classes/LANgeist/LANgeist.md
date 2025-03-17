@@ -293,10 +293,10 @@ With this setup, Wireshark is reading packets from the named pipe remotepacketca
 <iframe width="560" height="315" src="https://www.youtube.com/embed/STaGzIRAZG8?si=6Iq3ddsSPJmtm5MV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
     
-## Method 2: less versitile fewer complications
-## ssh fea    
+## Method 2: wireshark sshdump feature
+## less versitile fewer complications   
 Step 1: open wireshark with sudo 
-#### `sudo wireshark'    
+#### `sudo wireshark`    
 
  <div style="text-align: center;">
   <img src="{{ 'classes/LANgeist/images/sshwireshark1-openwireshark.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
