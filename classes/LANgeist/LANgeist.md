@@ -246,7 +246,7 @@ submit PacketCapture2 response here:
 
 
 ---
-# Part 4: remote wireshark capture with ssh    
+# Part 4a: remote wireshark capture with ssh through 'named pipe' (fifo method)   
     
 **Pre-steps) set up ssh server to password authenticate**   
 From the ubuntu machine:
@@ -292,9 +292,9 @@ With this setup, Wireshark is reading packets from the named pipe remotepacketca
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/STaGzIRAZG8?si=6Iq3ddsSPJmtm5MV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
-    
-## Method 2: wireshark sshdump feature
-## less versitile fewer complications   
+---
+# Part 4b: remote wireshark capture with sshdump 
+## less versitile for tunneling, fewer complications and more robust options 
 Step 1: open wireshark with sudo 
 #### `sudo wireshark`    
 
@@ -473,4 +473,5 @@ Report: In a real-world ethical hacking scenario, you would now report your find
 **Conclusion**    
 While Ettercap can demonstrate the ease of conducting on-path attacks and capturing network traffic, the secure nature of SSH encryption highlights the challenges of intercepting sensitive information such as passwords. This exercise underscores the importance of securing networks and educating about the potential vulnerabilities and the effectiveness of encryption in protecting data.    
 
-.
+---
+
