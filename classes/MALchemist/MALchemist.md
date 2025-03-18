@@ -217,7 +217,14 @@ Actually go back to the Kali machine to see if you received a notification
 </div>
 
 ---
-# Part 5: practice and explore
+# Part 5: use ssh and scp to deploy scripts and make them the default applications used to execute actions
+
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nD6owJoYdwA?si=9b9HthkWf6g99XQq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
+---
+# Part 6: practice and explore
     
 ## Use the following scripts to experiment on the range  
  - create a blank document using touch or nano (ex. nano memory_hog.py) that ends in .py and run it by opening a terminal in the same directory and typing python3 memory_hog.py. Some scripts you run might need to be run with sudo privileges sudo python3 my_script.py
