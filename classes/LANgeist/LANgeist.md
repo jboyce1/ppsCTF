@@ -295,6 +295,11 @@ With this setup, Wireshark is reading packets from the named pipe remotepacketca
 ---
 # Part 4b: remote wireshark capture with sshdump 
 ## less versitile for tunneling, fewer complications and more robust options 
+
+Pre-step
+prepare ubuntu for ssh
+#### `sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh`
+
 Step 1: open wireshark with sudo 
 #### `sudo wireshark`    
 
