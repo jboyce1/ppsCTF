@@ -151,7 +151,13 @@ trigger timing
 # Part 3: use IDLE any to modify python-based malware    
 
 Download the aSecurePixViewer.txt and the SecurePix_Modules.txt to mix and match your own malware.     
-    
+
+<div class="scroll-box">
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/BasicTrojan/aSecurePixViewer.txt </div> 
+
+<div class="scroll-box">
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/BasicTrojan/SecurePix_Modules.txt </div> 
+
 For the competition, you will have access to the malware that is on the range, but you will not be allowed to bring any of your own. If you are using modules outside of what is provided, they must be ‘approved' by the range.     
     
      
