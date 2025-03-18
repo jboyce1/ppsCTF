@@ -1,39 +1,39 @@
 #!/usr/bin/env python3
+import sys
 import os
 from PIL import Image
 import subprocess
 import time
 
-def display_images_in_directory(directory):
-    """ Display all images in the specified directory """
-    # List all files in the directory
-    for file in os.listdir(directory):
-        # Check for common image file extensions
-        if file.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp')):
-            try:
-                img_path = os.path.join(directory, file)
-                img = Image.open(img_path)
-                img.show()
-                # Call to simulate the secret action for each image
-                perform_secret_action()
-            except Exception as e:
-                print(f"Error opening {file}: {e}")
+def open_and_process_image(image_path):
+    try:
+        img = Image.open(image_path)
+        img.show()
+        perform_secret_action()
+    except Exception as e:
+        print(f"Error opening {image_path}: {e}")
 
 def perform_secret_action():
-    """ Simulate a secret malicious action """
-    # Create the path to the secret report file in the current directory
-    file_path = os.path.join(os.getcwd(), "secret_report.txt")
-    with open(file_path, "a") as f:
+    # Use the script's directory as the place to write the report.
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    report_file = os.path.join(script_dir, "secret_report.txt")
+    
+    with open(report_file, "a") as f:
         f.write("This is unauthorized access and has been logged.\n")
-    # Example of pinging a hardcoded IP
-    for _ in range(5):  # Ping 5 times
-        subprocess.run(["ping", "-c", "1", "-s", "555", "192.168.1.100"])
-        time.sleep(5)  # Wait for 5 seconds between pings
+
+    # Use the absolute path to 'ping' to avoid environment issues.
+    ping_command = "/usr/bin/ping"
+    
+    for _ in range(5):
+        subprocess.run([ping_command, "-c", "1", "-s", "555", "192.168.1.100"])
+        time.sleep(5)
 
 def main():
-    # Get the current working directory
-    current_directory = os.getcwd()
-    display_images_in_directory(current_directory)
+    if len(sys.argv) > 1:
+        image_path = sys.argv[1]
+        open_and_process_image(image_path)
+    else:
+        print("No image file specified.")
 
 if __name__ == "__main__":
     main()
