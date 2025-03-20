@@ -2,7 +2,6 @@
 import os
 import subprocess
 import tarfile
-import shutil
 
 # === CONFIGURATION ===
 TAR_FILE = "Bully1.tar.gz"
@@ -17,9 +16,13 @@ USER_CREDENTIALS = {
 # === STEP 1: EXTRACT TAR FILE ===
 def extract_tar():
     print(f"[+] Extracting {TAR_FILE}...")
-    with tarfile.open(TAR_FILE, "r:gz") as tar:
-        tar.extractall(EXTRACT_PATH)
-    print("[+] Extraction complete!")
+    if os.path.exists(TAR_FILE):
+        with tarfile.open(TAR_FILE, "r:gz") as tar:
+            tar.extractall(EXTRACT_PATH)
+        print("[+] Extraction complete!")
+    else:
+        print(f"[!] ERROR: {TAR_FILE} not found!")
+        exit(1)
 
 # === STEP 2: CREATE USERS & SET PASSWORDS ===
 def create_users():
@@ -50,8 +53,8 @@ def configure_ssh():
         auth_keys = f"{ssh_dir}/authorized_keys"
 
         subprocess.run(["sudo", "mkdir", "-p", ssh_dir])
-        subprocess.run(["sudo", "chmod", "700", ssh_dir])
-        subprocess.run(["sudo", "touch", auth_keys])
+        subprocess.run(["sudo", "chmod", "700", ssh_dir"])
+        subprocess.run(["sudo", "touch", auth_keys"])
         subprocess.run(["sudo", "chmod", "600", auth_keys"])
         subprocess.run(["sudo", "chown", "-R", f"{user}:{user}", ssh_dir])
 
