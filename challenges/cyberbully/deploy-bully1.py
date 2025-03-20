@@ -16,10 +16,9 @@ USER_CREDENTIALS = {
 # Function to install required dependencies
 def install_dependencies():
     print("[+] Installing required packages...")
-    subprocess.run("echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections", shell=True)
     packages = ["python3-scapy", "tcpdump", "iftop", "nmap", "python3-pip"]
     subprocess.run(["sudo", "apt-get", "update"], check=True)
-    subprocess.run(["sudo", "apt-get", "install", "-y", "--force-yes"] + packages, check=True)
+    subprocess.run(["sudo", "apt-get", "install", "-y"] + packages, check=True)
     print("[+] All dependencies installed successfully!")
 
 # Function to extract tar file
@@ -39,12 +38,9 @@ def create_users():
         print(f"[+] Creating user: {user}")
         subprocess.run(["sudo", "useradd", "-m", "-s", "/bin/bash", user], check=True)
         subprocess.run(f"echo '{user}:{password}' | sudo chpasswd", shell=True)
-
-# Function to grant sudo privileges for specific commands
-def grant_sudo_privileges():
-    with open('/etc/sudoers.d/ctf_users', 'w') as sudoers_file:
-        for user in USER_CREDENTIALS:
-            sudoers_file.write(f"{user} ALL=(ALL) NOPASSWD: /usr/bin/apt-get\n")
+        if user == "Brady1":  # Giving Brady1 sudo privileges
+            with open('/etc/sudoers.d/brady1', 'w') as sudoers_file:
+                sudoers_file.write(f"{user} ALL=(ALL) NOPASSWD: ALL\n")
 
 # Function to setup SSH access
 def setup_ssh():
@@ -78,7 +74,6 @@ def main():
     install_dependencies()
     extract_tar()
     create_users()
-    grant_sudo_privileges()
     setup_ssh()
     distribute_files()
     print("[✅] Bully1 setup complete! Ready for CTF deployment.")
