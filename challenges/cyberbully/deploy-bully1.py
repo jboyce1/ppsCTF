@@ -18,7 +18,7 @@ def install_dependencies():
     print("[+] Installing required packages...")
     packages = ["python3-scapy", "tcpdump", "iftop", "nmap", "python3-pip"]
     subprocess.run(["sudo", "apt-get", "update"], check=True)
-    subprocess.run(["sudo", "apt-get", "install", "-y"] + packages, check=True)
+    subprocess.run(["sudo", "apt-get", "install", "-y", "--allow-change-held-packages"] + packages, check=True)
     print("[+] All dependencies installed successfully!")
 
 # Function to extract tar file
@@ -38,8 +38,8 @@ def create_users():
         print(f"[+] Creating user: {user}")
         subprocess.run(["sudo", "useradd", "-m", "-s", "/bin/bash", user], check=True)
         subprocess.run(f"echo '{user}:{password}' | sudo chpasswd", shell=True)
-        if user == "Brady1":  # Giving Brady1 sudo privileges
-            with open('/etc/sudoers.d/brady1', 'w') as sudoers_file:
+        if user.endswith('1'):  # Granting sudo privileges to users whose names end with '1'
+            with open(f'/etc/sudoers.d/{user}', 'w') as sudoers_file:
                 sudoers_file.write(f"{user} ALL=(ALL) NOPASSWD: ALL\n")
 
 # Function to setup SSH access
