@@ -5,9 +5,8 @@ import tarfile
 import shutil
 
 # Configuration
-TAR_FILE = "Bully1.tar.gz"  # The tar.gz file in the current working directory
+TAR_FILE = "Bully1.tar.gz"  # Assumed to be in the same directory as the script
 EXTRACT_PATH = os.getcwd()  # Extract in the current directory
-
 USER_CREDENTIALS = {
     "Brady1": "123123123",
     "Brandon2": "br@nd0nrulz!",
@@ -29,22 +28,24 @@ def extract_tar():
 def create_users():
     for user, password in USER_CREDENTIALS.items():
         print(f"[+] Creating user: {user}")
-        subprocess.run(["sudo", "useradd", "-m", "-s", "/bin/bash", "-p", password, user], check=True)
-        subprocess.run(f"echo '{user}:{password}' | sudo chpasswd", shell=True)
+        subprocess.run(["sudo", "useradd", "-m", "-s", "/bin/bash", user], check=True)
+        subprocess.run(["echo", f"{user}:{password}", "|", "sudo", "chpasswd"], shell=True)
 
 # Function to setup SSH access
 def setup_ssh():
     print("[+] Configuring SSH access for all users...")
     for user in USER_CREDENTIALS.keys():
-        subprocess.run(f"sudo mkdir -p /home/{user}/.ssh", shell=True)
-        subprocess.run(f"sudo chmod 700 /home/{user}/.ssh", shell=True)
-        subprocess.run(f"sudo touch /home/{user}/.ssh/authorized_keys", shell=True)
-        subprocess.run(f"sudo chmod 600 /home/{user}/.ssh/authorized_keys", shell=True)
+        ssh_dir = f"/home/{user}/.ssh"
+        os.makedirs(ssh_dir, exist_ok=True)
+        subprocess.run(["sudo", "chmod", "700", ssh_dir])
+        subprocess.run(["sudo", "touch", f"{ssh_dir}/authorized_keys"])
+        subprocess.run(["sudo", "chmod", "600", f"{ssh_dir}/authorized_keys"])
 
 # Function to move extracted files to user directories
 def distribute_files():
+    base_extracted_path = os.path.join(EXTRACT_PATH, "Bully1")
     for user in USER_CREDENTIALS.keys():
-        user_path = os.path.join(EXTRACT_PATH, user)
+        user_path = os.path.join(base_extracted_path, user)
         if os.path.exists(user_path):
             dest_path = f"/home/{user}"
             if os.path.exists(dest_path):
