@@ -13,6 +13,14 @@ USER_CREDENTIALS = {
     "Brian3": "Yer-muh-b0y_b1u3!"
 }
 
+# Function to install required dependencies
+def install_dependencies():
+    print("[+] Installing required packages...")
+    packages = ["python3-scapy", "tcpdump", "iftop", "nmap", "python3-pip"]
+    subprocess.run(["sudo", "apt-get", "update"], check=True)
+    subprocess.run(["sudo", "apt-get", "install", "-y"] + packages, check=True)
+    print("[+] All dependencies installed successfully!")
+
 # Function to extract tar file
 def extract_tar():
     print(f"[+] Extracting {TAR_FILE}...")
@@ -53,15 +61,14 @@ def distribute_files():
                 for item in os.listdir(user_path):
                     item_path = os.path.join(user_path, item)
                     if os.path.isdir(item_path):
-                        # If it's a directory, use copytree
                         shutil.copytree(item_path, os.path.join(dest_path, item), dirs_exist_ok=True)
                     else:
-                        # It's a file, use copy
                         shutil.copy(item_path, os.path.join(dest_path, item))
                 print(f"[+] Files copied for {user}")
 
 # Main function
 def main():
+    install_dependencies()
     extract_tar()
     create_users()
     setup_ssh()
