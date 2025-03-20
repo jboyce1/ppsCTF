@@ -35,12 +35,13 @@ def create_users():
 def setup_ssh():
     print("[+] Configuring SSH access for all users...")
     for user in USER_CREDENTIALS.keys():
-        subprocess.run(f"sudo mkdir -p /home/{user}/.ssh", shell=True)
-        subprocess.run(f"sudo chmod 700 /home/{user}/.ssh", shell=True)
-        subprocess.run(f"sudo touch /home/{user}/.ssh/authorized_keys", shell=True)
-        subprocess.run(f"sudo chmod 600 /home/{user}/.ssh/authorized_keys", shell=True)
+        ssh_dir = f"/home/{user}/.ssh"
+        os.makedirs(ssh_dir, exist_ok=True)
+        subprocess.run(["sudo", "chmod", "700", ssh_dir])
+        subprocess.run(["sudo", "touch", f"{ssh_dir}/authorized_keys"])
+        subprocess.run(["sudo", "chmod", "600", f"{ssh_dir}/authorized_keys"])
 
-# Function to move extracted files to user directories
+# Function to copy extracted files to user directories
 def distribute_files():
     base_extracted_path = os.path.join(EXTRACT_PATH, "Bully1")
     for user in USER_CREDENTIALS.keys():
@@ -48,10 +49,17 @@ def distribute_files():
         if os.path.exists(user_path):
             dest_path = f"/home/{user}"
             if os.path.exists(dest_path):
-                print(f"[+] Distributing files for {user}...")
+                print(f"[+] Copying files for {user}...")
                 for item in os.listdir(user_path):
-                    shutil.move(os.path.join(user_path, item), os.path.join(dest_path, item))
-                print(f"[+] Files moved for {user}")
+                    shutil.copy(os.path.join(user_path, item), os.path.join(dest_path, item))
+                print(f"[+] Files copied for {user}")
+
+# Function to give specific sudo rights
+def grant_script_sudo():
+    for user in USER_CREDENTIALS.keys():
+        if user.endswith('1'):  # Assuming users ending in '1' need to run scripts
+            with open("/etc/sudoers.d/" + user, "w") as sudoers_file:
+                sudoers_file.write(f"{user} ALL=(ALL) NOPASSWD: /home/{user}/*.py\n")
 
 # Main function
 def main():
@@ -59,6 +67,7 @@ def main():
     create_users()
     setup_ssh()
     distribute_files()
+    grant_script_sudo()
     print("[✅] Bully1 setup complete! Ready for CTF deployment.")
 
 if __name__ == "__main__":
