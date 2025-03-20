@@ -51,15 +51,14 @@ def distribute_files():
             if os.path.exists(dest_path):
                 print(f"[+] Copying files for {user}...")
                 for item in os.listdir(user_path):
-                    shutil.copy(os.path.join(user_path, item), os.path.join(dest_path, item))
+                    item_path = os.path.join(user_path, item)
+                    if os.path.isdir(item_path):
+                        # If it's a directory, use copytree
+                        shutil.copytree(item_path, os.path.join(dest_path, item), dirs_exist_ok=True)
+                    else:
+                        # It's a file, use copy
+                        shutil.copy(item_path, os.path.join(dest_path, item))
                 print(f"[+] Files copied for {user}")
-
-# Function to give specific sudo rights
-def grant_script_sudo():
-    for user in USER_CREDENTIALS.keys():
-        if user.endswith('1'):  # Assuming users ending in '1' need to run scripts
-            with open("/etc/sudoers.d/" + user, "w") as sudoers_file:
-                sudoers_file.write(f"{user} ALL=(ALL) NOPASSWD: /home/{user}/*.py\n")
 
 # Main function
 def main():
@@ -67,7 +66,6 @@ def main():
     create_users()
     setup_ssh()
     distribute_files()
-    grant_script_sudo()
     print("[✅] Bully1 setup complete! Ready for CTF deployment.")
 
 if __name__ == "__main__":
