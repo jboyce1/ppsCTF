@@ -37,9 +37,9 @@ def create_users():
         print(f"[+] Creating user: {user}")
         subprocess.run(["sudo", "useradd", "-m", "-s", "/bin/bash", user], check=True)
         subprocess.run(f"echo '{user}:{password}' | sudo chpasswd", shell=True)
-        if user.endswith('1'):  # Granting sudo privileges to users whose names end with '1'
-            with open(f'/etc/sudoers.d/{user}', 'w') as sudoers_file:
-                sudoers_file.write(f"{user} ALL=(ALL) NOPASSWD: ALL\n")
+        # Granting sudo privileges for tcpdump to both users
+        with open(f'/etc/sudoers.d/{user}', 'w') as sudoers_file:
+            sudoers_file.write(f"{user} ALL=(ALL) NOPASSWD: /usr/sbin/tcpdump\n")
 
 # Function to setup SSH access
 def setup_ssh():
