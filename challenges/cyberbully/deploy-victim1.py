@@ -40,7 +40,18 @@ def create_users():
         # Granting sudo privileges for tcpdump to both users
         with open(f'/etc/sudoers.d/{user}', 'w') as sudoers_file:
             sudoers_file.write(f"{user} ALL=(ALL) NOPASSWD: /usr/sbin/tcpdump\n")
-
+            
+# Function to enable password authentication for SSH
+def configure_ssh_password_authentication():
+    print("[+] Enabling SSH password authentication...")
+    subprocess.run([
+        "sudo", "sed", "-i",
+        's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/',
+        "/etc/ssh/sshd_config"
+    ], check=True)
+    subprocess.run(["sudo", "systemctl", "restart", "ssh"], check=True)
+    print("[+] SSH password authentication enabled and SSH service restarted.")
+    
 # Function to setup SSH access
 def setup_ssh():
     print("[+] Configuring SSH access for all users...")
@@ -73,6 +84,7 @@ def main():
     install_dependencies()
     extract_tar()
     create_users()
+    configure_ssh_password_authentication()  # Enable SSH password authentication
     setup_ssh()
     distribute_files()
     print("[✅] Victim1 setup complete! Ready for CTF deployment.")
