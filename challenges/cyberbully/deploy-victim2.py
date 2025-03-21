@@ -51,6 +51,16 @@ def setup_ssh():
         subprocess.run(["sudo", "touch", f"{ssh_dir}/authorized_keys"])
         subprocess.run(["sudo", "chmod", "600", f"{ssh_dir}/authorized_keys"])
 
+def configure_ssh_password_authentication():
+    print("[+] Enabling SSH password authentication...")
+    subprocess.run([
+        "sudo", "sed", "-i",
+        's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/',
+        "/etc/ssh/sshd_config"
+    ], check=True)
+    subprocess.run(["sudo", "systemctl", "restart", "ssh"], check=True)
+    print("[+] SSH password authentication enabled and SSH service restarted.")
+
 # Function to copy extracted files to user directories
 def distribute_files():
     base_extracted_path = os.path.join(EXTRACT_PATH, "Victim2")
@@ -73,6 +83,7 @@ def main():
     install_dependencies()
     extract_tar()
     create_users()
+    configure_ssh_password_authentication()
     setup_ssh()
     distribute_files()
     print("[✅] Victim2 setup complete! Ready for CTF deployment.")
