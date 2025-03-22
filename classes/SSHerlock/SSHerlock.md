@@ -147,8 +147,9 @@ Step 3: To open the Metaspoitconsole run the following command:
    
 # Part 3: scp from target and use john the ripper with password list  
    
-In order to complete this challenge, you will need to pull a file from the Ubuntu machine to decipher the flag.  
-📄 **[Setting up SCP](./classes/SSHerlock/Setting up Secure Copy Protocol.pdf)**  
+In order to complete this challenge, you will need to pull a file from the Ubuntu machine to decipher the flag.      
+
+📄 **[Setting up SCP](./classes/SSHerlock/Setting%20up%20Secure%20Copy%20Protocol.pdf)**          
 
 **Step 1:** scp the ‘SCPhash.txt’ and the ‘JohnnyPasswordList.txt’ 'from the Teacher Ubuntu Machine to your kali desktop    
 **Step 2:** Use john the ripper to crack the hash from the password text file
