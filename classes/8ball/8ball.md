@@ -68,28 +68,28 @@ OR
 open terminal ( Ctrl + Alt + t) and ls cd your way to the directory        
     
 Step 2) Create and edit the text document    
-nano secretmessage.txt    
+#### `nano secretmessage.txt`    
     
 type your message    
 save your message (ctrl+x, then Y then ENTER)    
     
 Step 3) Create a directory    
-mkdir secretdirectory    
+#### `mkdir secretdirectory`    
     
 Step 4) Move the message to the directory    
-mv secretmessage.txt secretdirectory    
+#### `mv secretmessage.txt secretdirectory`        
     
 Step 5) zip the directory    
-zip -r secret.zip secretdirectory    
+#### `zip -r secret.zip secretdirectory`        
     
 Step 6) Remove old directory    
-rm secretdirectory -rf    
+#### `rm secretdirectory -rf`        
     
 Step 7) Concatenate the zipped file with the image    
-cat image.jpg secret.zip > definatlyjustapicture.jpg    
+#### `cat image.jpg secret.zip > definatlyjustapicture.jpg`        
   
 Step 8) Delete the old zipped file    
-rm secret.zip     
+#### `rm secret.zip`         
 
 <div style="text-align: center;">
   <img src="{{ 'classes/8ball/images/2244832679-zip-to-hide-1.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
