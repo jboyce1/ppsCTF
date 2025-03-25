@@ -5,7 +5,7 @@ title: 8ball
 
 # 8 ball   
 
-**Focus**: Malware  
+**Focus**: Stegnography  
 **Skill**: Analyze, Create, and Deploy Basic Malware  
 **Activity**:  
 
