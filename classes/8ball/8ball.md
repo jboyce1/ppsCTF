@@ -122,7 +122,7 @@ Yet telling tales the stars could not enable.
 
 O steganography, thou art the key     
 To whisper love and revolution free."    
-
+    
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/4plMNYqKfxg?si=llHYgSudetIFF21b" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
@@ -130,10 +130,20 @@ To whisper love and revolution free."
 ---     
 # Part 2: use unzip to discover data from images  
 
+Pre-steps: Must have an image with a zipped file embedded    
+Step 1)  Open a terminal and navigate to the folder that your image with an embedded zip file is in    
+Step 2) unzip the file    
+#### `unzip imagefile.jpg`        
+      
+Step 3) Inspect/read the message    
+Try it now:    
+
+see if you can find the message you embedded in the 8 ball image you created above
+
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/efkOXHRcnoo?si=waeDUTf2gPRNOLPN" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
-    
+
 ---    
 # Part 3: embed a file inside an image with a password
     
