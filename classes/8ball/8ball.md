@@ -59,7 +59,7 @@ Hashcat: Defensively, Hashcat aids in assessing the strength of password hashes 
 **Both offensive and defensive cyber operations can benefit from the capabilities of these tools, either by exploiting their potential to penetrate and compromise systems or by leveraging their strengths to defend and fortify against such intrusions. It’s a digital arms race where the same tools can be purposed for attack or defense, depending on the hands they are in.**
 
 ---
-# Part 1: Use zip to hide data inside of images    
+# Part 1: use zip to hide data inside of images    
     
 Step 1) Navigate to the directory with your image in it     
 either :    
@@ -273,33 +273,33 @@ use the passphrase: steg
 </div>  
 
 ```
-"In ancient lands, where dino footprints press,
-A creature roamed, quite large, yet less astute.
-Stegosaurus, with plates along its crest,
-A giant, yet its brain was minute.
-
-In forests lush, it wandered, dim and slow,
-Beside the ferns and cycads, lost in thought.
-Or lack thereof, for it was not to know
-The predators that in the shadows sought.
-
-Its tail, with spikes, a fearsome weapon made,
-Yet seldom used with cunning or with guile.
-In brute force battles, it could well persuade,
-But intellect? It barely walked a mile.
-
-Yet do not mock this beast for lack of wit,
-For in its time, it still found ways to fit.
-
-Its size and spikes, its very form and frame,
-Were just enough to play nature's game.
-Despite its brain, the size of walnut, small,
-Stegosaurus stood, quite proud and tall.
-
-So let us not the ancient beast deride,
-For in its world, it lived, it thrived, it died.
-A marvel of an era long passed by,
-Its legacy, in fossil beds, does lie.
+"In ancient lands, where dino footprints press,    
+A creature roamed, quite large, yet less astute.    
+Stegosaurus, with plates along its crest,    
+A giant, yet its brain was minute.    
+    
+In forests lush, it wandered, dim and slow,    
+Beside the ferns and cycads, lost in thought.    
+Or lack thereof, for it was not to know    
+The predators that in the shadows sought.    
+    
+Its tail, with spikes, a fearsome weapon made,    
+Yet seldom used with cunning or with guile.    
+In brute force battles, it could well persuade,    
+But intellect? It barely walked a mile.    
+    
+Yet do not mock this beast for lack of wit,    
+For in its time, it still found ways to fit.    
+    
+Its size and spikes, its very form and frame,    
+Were just enough to play nature's game.    
+Despite its brain, the size of walnut, small,    
+Stegosaurus stood, quite proud and tall.    
+    
+So let us not the ancient beast deride,    
+For in its world, it lived, it thrived, it died.    
+A marvel of an era long passed by,    
+Its legacy, in fossil beds, does lie.    
 ```
 <div style="text-align: center;">
   <img src="{{ 'classes/8ball/images/steghide1-use-Steghide-to-hide-data-inside-of-images.png' | relative_url }}" alt="" style="max-width: 50%; height: auto;">
