@@ -1,1 +1,17 @@
+For bully1- broadcast, no need to update script
+ctrl + alt +t
+git clone https://github.com/jboyce1/ppsCTF.git && cd ppsCTF/challenges/cyberbully/ && sudo python3 deploy-bully1.py
 
+For victim1- broadcast, no need to update script
+git clone https://github.com/jboyce1/ppsCTF.git && cd ppsCTF/challenges/cyberbully/ && sudo python3 deploy-victim1.py
+
+For bully2- change IP in bully.py to victim1 IP
+git clone https://github.com/jboyce1/ppsCTF.git && cd ppsCTF/challenges/cyberbully/ && sudo python3 deploy-bully2.py
+
+
+For victim2- broadcast, no need to update script
+git clone https://github.com/jboyce1/ppsCTF.git && cd ppsCTF/challenges/cyberbully/ && sudo python3 deploy-victim2.py
+
+
+For bully3- change IP in bully.py to victim2 IP
+git clone https://github.com/jboyce1/ppsCTF.git && cd ppsCTF/challenges/cyberbully/ && sudo python3 deploy-bully3.py
