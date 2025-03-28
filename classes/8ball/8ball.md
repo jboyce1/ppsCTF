@@ -385,28 +385,28 @@ Step 7) zip them all, unencrypted into the image of your mascot (step 1 from ton
   <img src="{{ 'classes/8ball/PracticeandExplore/ThisManLooksLikeARabbitHole.jpeg' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
 </div>    
     
- #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/ThisManLooksLikeARabbitHole.jpeg`    
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/ThisManLooksLikeARabbitHole.jpeg`   
     
 [Interesting Read - Open With Firefox](https://github.com/jboyce1/ppsCTF/blob/main/classes/8ball/PracticeandExplore/InterestingRead_OpenWithFireFox.pdf)    
 
- #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/InterestingRead_OpenWithFireFox.pdf`    
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/InterestingRead_OpenWithFireFox.pdf`    
     
 <div style="text-align: center;">
   <img src="{{ 'classes/8ball/PracticeandExplore/LookAtThisGuy.jpg' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
 </div>    
-    
- #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/LookAtThisGuy.jpg`    
+  
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/LookAtThisGuy.jpg`    
 
 <div style="text-align: center;">
   <img src="{{ 'classes/8ball/PracticeandExplore/StrappingYoungLad.jpg' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
 </div>    
-    
- #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/StrappingYoungLad.jpg`  
+  
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/StrappingYoungLad.jpg`  
     
  <div style="text-align: center;">
   <img src="{{ 'classes/8ball/PracticeandExplore/Puthoff_Harold.jpg' | relative_url }}" alt="" style="max-width: 50%; height: auto;">
 </div>    
     
- #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/Puthoff_Harold.jpg`    
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/Puthoff_Harold.jpg`    
 
     
