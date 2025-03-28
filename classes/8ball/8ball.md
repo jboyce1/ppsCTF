@@ -375,5 +375,38 @@ Step 3) Pick a motto - create a file called “motto.txt”
 Step 4) Tell me what your strengths are - create a file called “stengths.txt”    
 Step 5) Tell me what your weaknesses are- create a file called “weaknesses.txt”    
 Step 6) Tell me why you're better than the other teams! (create a file called “better.txt”    
-Step 7) zip them all, unencrypted into the image of your mascot (step 1 from tonight)    
+Step 7) zip them all, unencrypted into the image of your mascot (step 1 from tonight)   
 
+---
+# Practice and Explore    
+## Good luck going down this rabbit hole    
+    
+<div style="text-align: center;">
+  <img src="{{ 'classes/8ball/PracticeandExplore/ThisManLooksLikeARabbitHole.jpeg' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>    
+    
+ #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/ThisManLooksLikeARabbitHole.jpeg`    
+    
+[Interesting Read - Open With Firefox](https://github.com/jboyce1/ppsCTF/blob/main/classes/8ball/PracticeandExplore/InterestingRead_OpenWithFireFox.pdf)    
+
+ #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/InterestingRead_OpenWithFireFox.pdf`    
+    
+<div style="text-align: center;">
+  <img src="{{ 'classes/8ball/PracticeandExplore/LookAtThisGuy.jpg' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>    
+    
+ #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/LookAtThisGuy.jpg`    
+
+<div style="text-align: center;">
+  <img src="{{ 'classes/8ball/PracticeandExplore/StrappingYoungLad.jpg' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>    
+    
+ #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/StrappingYoungLad.jpg`  
+    
+ <div style="text-align: center;">
+  <img src="{{ 'classes/8ball/PracticeandExplore/Puthoff_Harold.jpg' | relative_url }}" alt="" style="max-width: 50%; height: auto;">
+</div>    
+    
+ #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/Puthoff_Harold.jpg`    
+
+    
