@@ -210,9 +210,9 @@ ls and cd to the directory
     
 Step 2) Separate the jpg file from the zip file     
 All zip files typically start with the same code, so you can search for the code using the following command:    
-#### `grep -aobP ‘\x50\x48\x03\x04’ imagefile.jpg`    
+#### `grep -aobP ‘\x50\x4B\x03\x04’ imagefile.jpg`    
 
-- the byte pattern \x50\x48\x03\x04 corresponds to the magic number that marks the start of a ZIP file entry (more specifically, a local file header in a ZIP archive).    
+- the byte pattern \x50\x4B\x03\x04 corresponds to the magic number that marks the start of a ZIP file entry (more specifically, a local file header in a ZIP archive).    
  - 0x50 0x48 0x03 0x04 (in ASCII: PK\x03\x04)
  - "PK" are the initials of Phil Katz, the creator of the ZIP format.
     
