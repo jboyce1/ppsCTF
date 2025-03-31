@@ -387,8 +387,7 @@ Step 7) zip them all, unencrypted into the image of your mascot (step 1 from ton
     
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/ThisManLooksLikeARabbitHole.jpeg`   
     
-[Interesting Read - Open With Firefox](https://github.com/jboyce1/ppsCTF/blob/main/classes/8ball/PracticeandExplore/InterestingRead_OpenWithFireFox.pdf)    
-
+Interesting Read:    
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/InterestingRead_OpenWithFireFox.pdf`    
     
 <div style="text-align: center;">
