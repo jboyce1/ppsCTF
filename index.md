@@ -45,11 +45,11 @@ title: Home
 
 **4/3 Thursday 7-9pm Teams Meeting**: Whole Team Challenge Review   
 
-**4/9 Wednesday 9am-2pm Greenway**: Round 1 A (SciTech/ObamaHouse)
+**4/9 Wednesday 9am-2pm Greenway**: Round 1 A (Brashear/CAPAdice)
 
-**4/10 Thursday 9am-2pm Greenway**: Round 1 B (Brashear/CAPAdice)
+**4/10 Thursday 9am-2pm Greenway**: Round 1 B (SciTech/ObamaHouse)
 
-**4/11 Friday 9am-2pm Greenway**: Round 2 A/B
+**4/11 Friday 9am-2pm Greenway**: Round 2 A/B 
 
 Upcoming Events:
 - **May-June**: Western PA PicoCTF Regional Invitational Competition (Date TBD)
