@@ -1,0 +1,18 @@
+Games while I yap: 
+Pacman4console 
+sudo apt install pacman4console 
+pacman4console 
+2048 
+sudo apt install gcc 
+wget https://raw.githubusercontent.com/mevdschee/2048.c/master/2048.c 
+gcc -o 2048 2048.c 
+./2048 
+
+use the arrow keys to play. 
+
+Concept of operation: 
+use teams to achieve challenges that require groupwork and different skillsets 
+Workroles to review before the match:  
+SSHerlock 
+8ball 
+Set up for the Challenge 
