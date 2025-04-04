@@ -27,128 +27,22 @@ Box 2:
 
 adduser <choose from below>
 
-stejackson8
-stathompson2
-sterodriguez7
-stjsmith5
-stogarcia3
-stathomas8
-stsmoore4
-stahernandez8
-stdtaylor2
-stjwhite1
-stmdavis5
-stejohnson8
-stjjones8
-stmmiller4
-stebrown8
-sthwilson1
-stmwilliams2
-stamartinez9
-staanderson4
-stdbates1
+stjones8
+stmiller4
+stbrown8
 
 password:
-M3tasplo1t!
-W0rdl1$t@
-Pa$$w0rdl1$t
-Gu3$$th1$
-Y0uf0undm3@
-M3t@sploit123
-W0rdlist2020
-Pa$$wordlist8
-Gu3$$thi$
-Y0uf0undm3!
-M3tasplo1t@
-W0rdlist!
-Pa$$word8
-Gu3$$thi$123
-Y0uf0undm3_
-M3tasplo1t_2020
-W0rdl1$t123
-Pa$$w0rdlist!
-Gu3$$th1$2020
-Y0uf0undm3B
-M3t@splo1t
-W0rdlist8!
-Pa$$wordlist123
-Gu3$$thi$_2020
-Y0uf0undm3@8
-M3tasplo1t2020
-W0rdl1$t!
-Pa$$w0rdlist@
-Gu3$$thi$2021
-Y0uf0undm3_123
-M3t@splo1t!
-W0rdlist1234
-Pa$$word8!
-Gu3$$thi$B
-Y0uf0undm3@2020
-M3tasplo1t_!
-W0rdlist2021
-Pa$$w0rdlist123
-Gu3$$th1$!
-Y0uf0undm3_8
-M3t@splo1t123
-W0rdl1$t_2020
-Pa$$wordlist!
-Gu3$$thi$_123
-Y0uf0undm3B@
-M3tasplo1t@!
-W0rdlist123!
-Pa$$w0rd8
-Gu3$$thi$2022
-Y0uf0undm3_2020
-M3t@splo1t_123
-W0rdl1$t1234
-Pa$$wordlist@8
-Gu3$$th1$123
-Y0uf0undm3@!
-M3tasplo1t2021
-W0rdlist!2020
-Pa$$w0rdlist1234
-Gu3$$thi$_!
-Y0uf0undm3_2021
-M3t@splo1t123!
-W0rdlist12345
-Pa$$word8@
-Gu3$$thi$2023
-Y0uf0undm3B_2020
-M3tasplo1t@123
-W0rdl1$t2020!
-Pa$$wordlist123!
-Gu3$$th1$_2020
-Y0uf0undm3@8!
-M3t@splo1t_2020
-W0rdlist2021!
-Pa$$w0rdlist12345
-Gu3$$thi$1234
-Y0uf0undm3_2022
-M3tasplo1t1234
-W0rdlist!2021
-Pa$$word8_2020
-Gu3$$thi$2024
 Y0uf0undm3B@!
-M3t@splo1t2020
-W0rdlist123456
-Pa$$wordlist@123
-Gu3$$th1$123!
-Y0uf0undm3@2021
-M3tasplo1t_1234
-W0rdlist2022
-Pa$$w0rdlist!123
-Gu3$$thi$_2021
-Y0uf0undm3_2023
-M3t@splo1t123!
-W0rdlist1234567
-Pa$$word8!2020
-Gu3$$thi$2025
-Y0uf0undm3B_2021
-M3tasplo1t@1234
-W0rdlist!2022
-Pa$$wordlist123456
-Gu3$$th1$1234!
-Y0uf0undm3@2022!
+P@ssw0rd!
+Secur1ty!
+Cha1nL0ck!
+H@ckM3N0w!
+Saf3Guard!
+K33p0ut!
+Pr0t3ct!
+F0rtR3ss!
+Gu@rd1@n!
+LockD0wn!
 
 su <user>
 password <password>
@@ -160,10 +54,10 @@ sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/s
 
 box 3:
 sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
-adduser RogerDodger
+adduser rogerdodger
 Password J@ney8aby
 
-su RogerDodger
+su rogerdodger
 
 wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/challenges/CornerPocket/CornerPocket3.zip
 unzip CornerPocket3.zip
