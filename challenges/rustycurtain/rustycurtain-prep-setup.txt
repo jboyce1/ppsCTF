@@ -1,5 +1,4 @@
 This is before the rusty curtain challenge to familiarize the participants with the types of things they might need 
-
 first, open up and access the services
 
 Walk the students through the following from cybercartographer Practice and explore:
@@ -27,11 +26,8 @@ Step 2: Start your kali machine from the cyber.org range try to find your open p
 
 MsDisin
 Things to practice:
-
 use wc to put together a phrase based on the number of words given
-
 use sed and 'replaced words' to make a quote that has a famous year
-
 sqlite search for most visited websites
 sqlsearch for a spike in website usage
 
