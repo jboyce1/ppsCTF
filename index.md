@@ -9,7 +9,7 @@ title: Home
 
 **1/14 Wednesday PM**: Sci-Tech Kickoff Event (PM)
 
-**1/15 Thursday PM**: Intro and overview, cyber.org range, big picture scenario, intro to outside resources; picoCTF
+**1/15 Thursday 7-9pm Teams Meeting**: Intro and overview, cyber.org range, big picture scenario, intro to outside resources; picoCTF
 
 **1/20 Tuesday 7-9pm Teams Meeting**: [SSHerlock](./classes/SSHerlock/SSHerlock)
 
