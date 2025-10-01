@@ -10,9 +10,9 @@ cd ppsCTF/challenges/rustycurtain
 ls to ensure the files are there
 
 
-run ctf1.py on as many cyber.org vms as teams are competing
-sudo python3 ctf1.py 
-rung ctf2.py on as many cyber.org vms as teams are competing
-sudo python3 ctf2.py 
+run deploy_rustycurtain_1.py on as many cyber.org vms as teams are competing
+sudo python3 deploy_rustycurtain_1.py 
+rung deploy_rustycurtain_2.py on as many cyber.org vms as teams are competing
+sudo python3 deploy_rustycurtain_2.py 
 
 use the rustycurtainchallengemap.doc and rustycurtainanswerkey.xlxs to guide challenge.
