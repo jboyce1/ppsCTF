@@ -49,8 +49,8 @@ To try this, you will need **both an Ubuntu VM and a Kali VM on the cyber.org ra
 
 ### **Step 1: Establish the Connection**  
 Follow these documents to set up an SSH server on the target machine and connect remotely from an SSH client.   
-📄 **[Setting up SSH Server on Target Machine](./classes/SSHerlock/SettingSecureShellServer.pdf)**  
-📄 **[Remotely Connecting to Remote Machine with SSH Client](./classes/SSHerlock/SettingSecureShellClient.pdf)**  
+📄 **[Setting up SSH Server on Target Machine](./SettingSecureShellServer.pdf)**  
+📄 **[Remotely Connecting to Remote Machine with SSH Client](./SettingSecureShellClient.pdf)**  
     
     
 ### **Step 2: Use the SSH Client (Kali) to Access Your Ubuntu Machine**  
@@ -149,7 +149,7 @@ Step 3: To open the Metaspoitconsole run the following command:
    
 In order to complete this challenge, you will need to pull a file from the Ubuntu machine to decipher the flag.      
 
-📄 **[Setting up SCP](./classes/SSHerlock/SettingSecureCopyProtocol.pdf)**          
+📄 **[Setting up SCP](./SettingSecureCopyProtocol.pdf)**          
 
 **Step 1:** scp the ‘SCPhash.txt’ and the ‘JohnnyPasswordList.txt’ 'from the Teacher Ubuntu Machine to your kali desktop    
 **Step 2:** Use john the ripper to crack the hash from the password text file
