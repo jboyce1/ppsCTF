@@ -121,7 +121,7 @@ def deploy_ftp_treasure(profile_root: Path) -> None:
     if not src_treasure.exists() or not src_treasure.is_dir():
         raise SystemExit(f"ERROR: Missing required folder: {src_treasure}")
 
-    print("[*] Deploying BuriedTreasure to anonymous FTP root")
+    print("[*] Deploying FTP")
 
     FTP_ROOT.mkdir(parents=True, exist_ok=True)
 
