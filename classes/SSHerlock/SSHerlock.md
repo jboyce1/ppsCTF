@@ -230,6 +230,10 @@ Part 2:
 
 One box, 3 users, 15 passwords that rotate every 5 minutes; your goal is to log into the box and set up an sshkey pair to maintain persistance as the passwords rotate.
 
+to set up:
+
+`wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/SSHerlock/ssherlock_edwardian_rotator.py`
+
 ## More Resources 
 
 📖 [How to Brute-Force SSH in Kali Linux? - GeeksforGeeks](https://www.geeksforgeeks.org/how-to-brute-force-ssh-in-kali-linux/)  
