@@ -88,7 +88,75 @@ Try to change the system password from ‘ubuntu’ to something else.
 
 ---
 
-# Part 2: SSH into Another Computer with an Unknown Password    
+# Part 2: SSH into Another Computer with X11 Forwarding
+
+
+For this, you will almost cerainly need to turn on X-11 forwarding. 
+check to see if you have sudo priviledges to adjust the ssh_config file, you need to have sudo priviledge:
+
+`whoami`
+-gives the output of what your device knows you as
+`sudo -l`
+-gives the list of users with sudo permission.
+
+<div style="text-align: center;">
+  <img src="{{ 'classes/SSHerlock/whoami-sudo-l.png' | relative_url }}" alt="whoami and sudo-l" style="max-width: 80%; height: auto;">
+</div>
+
+If you have sudo premissions, turn x11 forwarding on:
+`sudo nano /etc/ssh/sshd_config`
+
+adjust the settings by taking 
+
+`X11Forwarding yes
+X11DisplayOffset 10
+X11UseLocalhost yes`
+
+<div style="text-align: center;">
+  <img src="{{ 'classes/SSHerlock/config_x11_sshdconfig.png' | relative_url }}" alt="config_x11_sshdconfig" style="max-width: 80%; height: auto;">
+</div>
+
+now save out and reset the sshd
+ctrl+x, y
+
+`sudo systemctl restart ssh`
+
+Open a new terminal and use an x flag to get back into the target machine:
+`ssh -X user@x.x.x.x`
+
+Now, when you make commands that would normally show up in your users GUI, they show up in yours.
+
+`firefox -new-tab “https:www.picoctf.org”`
+
+or open the file structure by running the file manager that exists on the target machine:
+
+`nautilus`
+
+---
+
+# Part 3: Use a key bind to connect without the need for a password
+
+Use SSH keys instead of passwords to log into a remote machine.
+
+`ssh-keygen`
+press enter to put your keys where the ssh will look for them
+
+This makes two keys
+-Private key: ~/.ssh/id_rsa
+-Public key: ~/.ssh/id_rsa.pub
+
+Next, copy your public key to the remote machines expected location for a public key
+`ssh-copy-id username@x.x.x.x`
+
+A couple of things to keep in mind:
+If the password of that machine changes, your key will allow you to bypass it
+To see (or delete) authorized keys you can run
+`cat ~/.ssh/authorized_keys`
+
+
+---
+
+# Part 4: SSH into Another Computer with an Unknown Password    
 
 #### Before You Start
 
@@ -145,7 +213,7 @@ Step 3: To open the Metaspoitconsole run the following command:
 
 ---
    
-# Part 3: scp from target and use john the ripper with password list  
+# Part 5: scp from target and use john the ripper with password list  
    
 In order to complete this challenge, you will need to pull a file from the Ubuntu machine to decipher the flag.      
 
@@ -173,7 +241,7 @@ john -format=raw-md5 -wordlist:JohnnyPasswordList.txt SCPhash.txt
 </div>    
 
 --- 
-# Part 4: scp files into a target computer
+# Part 6: scp files into a target computer
 
 
 ### SCP files into the opponent computers    
