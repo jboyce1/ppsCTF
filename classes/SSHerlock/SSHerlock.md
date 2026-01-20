@@ -234,6 +234,10 @@ to set up:
 
 `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/SSHerlock/ssherlock_edwardian_rotator.py`
 
+to see who has been using ssh to access the machine:
+
+`cat /var/log/auth.log | grep ssh2`
+
 ## More Resources 
 
 📖 [How to Brute-Force SSH in Kali Linux? - GeeksforGeeks](https://www.geeksforgeeks.org/how-to-brute-force-ssh-in-kali-linux/)  
