@@ -90,13 +90,18 @@ Try to change the system password from ‘ubuntu’ to something else.
 
 # Part 2: SSH into Another Computer with X11 Forwarding
 
+X11 (the X Window System) is a network-transparent graphics system that allows programs to run on one computer while displaying their graphical interface on another. When used over SSH with X11 forwarding, every window update, mouse movement, and keyboard event is sent across the network, making it much louder, slower, and more bandwidth-intensive than a simple text terminal. Because of this overhead, X11 is rarely the best default choice for remote work; experienced users rely on the terminal for speed and stealth, using X11 only when a graphical tool is truly necessary.
 
-For this, you will almost cerainly need to turn on X-11 forwarding. 
-check to see if you have sudo priviledges to adjust the ssh_config file, you need to have sudo priviledge:
+For this, you will almost cerainly need to turn on X-11 forwarding and adjust the config file.
+
+Check to see if you have sudo priviledges to adjust the ssh_config file, you need to have sudo priviledge:
 
 `whoami`
+
 -gives the output of what your device knows you as
+
 `sudo -l`
+
 -gives the list of users with sudo permission.
 
 <div style="text-align: center;">
@@ -104,24 +109,29 @@ check to see if you have sudo priviledges to adjust the ssh_config file, you nee
 </div>
 
 If you have sudo premissions, turn x11 forwarding on:
+
 `sudo nano /etc/ssh/sshd_config`
 
 adjust the settings by taking 
 
-`X11Forwarding yes
-X11DisplayOffset 10
-X11UseLocalhost yes`
+`X11Forwarding yes`
+
+`X11DisplayOffset 10`
+
+`X11UseLocalhost yes`
 
 <div style="text-align: center;">
   <img src="{{ 'classes/SSHerlock/config_x11_sshdconfig.png' | relative_url }}" alt="config_x11_sshdconfig" style="max-width: 80%; height: auto;">
 </div>
 
-now save out and reset the sshd
+Now save out and reset the sshd
+
 ctrl+x, y
 
 `sudo systemctl restart ssh`
 
-Open a new terminal and use an x flag to get back into the target machine:
+Open a new terminal and use an -X flag (capitalization matters) to get back into the target machine:
+
 `ssh -X user@x.x.x.x`
 
 Now, when you make commands that would normally show up in your users GUI, they show up in yours.
@@ -132,27 +142,40 @@ or open the file structure by running the file manager that exists on the target
 
 `nautilus`
 
+Play around with this, try to copy & paste or open txt files or pictures. 
 ---
 
-# Part 3: Use a key bind to connect without the need for a password
+# Part 3: Use a key bind to connect without the need for a password.
 
 Use SSH keys instead of passwords to log into a remote machine.
 
 `ssh-keygen`
+
 press enter to put your keys where the ssh will look for them
 
 This makes two keys
+
 -Private key: ~/.ssh/id_rsa
+
 -Public key: ~/.ssh/id_rsa.pub
 
 Next, copy your public key to the remote machines expected location for a public key
+
 `ssh-copy-id username@x.x.x.x`
 
 A couple of things to keep in mind:
+
 If the password of that machine changes, your key will allow you to bypass it
-To see (or delete) authorized keys you can run
+
+To see (or delete) authorized keys you can access them with
+
 `cat ~/.ssh/authorized_keys`
 
+or
+
+`nano ~/.ssh/authorized_keys`
+
+Consider the offense and defense of this
 
 ---
 
@@ -197,9 +220,15 @@ Step 3: To open the Metaspoitconsole run the following command:
 
 ## **Challenges in Cyber.org (Must Be Set Up Ahead of Time)**  
 
+Part 1:
+
 - [Guest/Target (1)](https://forms.office.com/Pages/ResponsePage.aspx?id=mhxxjxzsu023kLsMdxsdzM6J33C5yQRJgc1SHWy_64dUQ01ZQjZNWjdYNEhKVkM3RjczRzIzM1RUTS4u)  
 - [Guest/Target (2)](https://forms.office.com/Pages/ResponsePage.aspx?id=mhxxjxzsu023kLsMdxsdzM6J33C5yQRJgc1SHWy_64dUQVE5SVVUTVQ4RVc3VjdFOE1JWUgzOFVBRS4u)  
 - [Guest/Target (3)](https://forms.office.com/Pages/ResponsePage.aspx?id=mhxxjxzsu023kLsMdxsdzM6J33C5yQRJgc1SHWy_64dUOVQxMDUzRE9TR0Q4SjlKMVZVR1haSlg1RC4u)  
+
+Part 2:
+
+One box, 3 users, 15 passwords that rotate every 5 minutes; your goal is to log into the box and set up an sshkey pair to maintain persistance as the passwords rotate.
 
 ## More Resources 
 
