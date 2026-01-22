@@ -33,19 +33,24 @@ title: Hash Hound
 
 ### To complete the challenges, you will need to download them on a Linux device (e.g. Kali through cyber.org)
 
-1. **Click the link** to open a new page.  
-2. **Download the `.zip` file** by clicking the ‘Download’ button on the top left of the page.  
-3. **Go to your Downloads folder** and locate the file.  
-4. **Right-click and extract** the file.  
-5. **Find the Flag** (watch the video, remember flags look like `pps{someflag}`).  
-6. **Click the “Flag” link** after the practice and paste your flag to see if it is correct.  
+1. Open a terminal where you want the file to download
+2. Copy the wget command into shared clipboard (ctrl, alt, shift for the cyber.org range)
+3. Paste the wget command into terminal (ctrl, shift, v)
+4. Hit enter 
 
 
 ## **Download Practice Files**
-📥 [Practice 1](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%201).zip)  
-📥 [Practice 2](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%202).zip)  
-📥 [Practice 3](./Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%203).zip)  
+`wget -O hashhound_practice1.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%201).zip`
 
+`wget -O hashhound_practice2.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%202).zip`
+
+`wget -O hashhound_practice3.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%203).zip
+`
+
+## Command Line Basics  
+Extracting Files  
+To extract a `.zip` file, use:  
+`unzip filename.zip`
 
 ## **Walkthrough**
 Follow these steps to complete the challenge:
@@ -95,9 +100,15 @@ For more informaiton on the find functions, read the manual:
 man find        
 
 **Download Practice Files**:    
-📥 [Practice 1](./Needle%20in%20the%20Hayloft%20Practice/2%20Needle%20in%20the%20Hayloft%20(practice%201).zip)    
-📥 [Practice 2](./Needle%20in%20the%20Hayloft%20Practice/2%20Needle%20in%20the%20Hayloft%20(practice%202).zip)    
-📥 [Practice 3](./Needle%20in%20the%20Hayloft%20Practice/2%20Needle%20in%20the%20Hayloft%20(practice%203).zip)    
+`wget -O needle_hayloft_practice1.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Needle%20in%20the%20Hayloft%20Practice/2%20Needle%20in%20the%20Hayloft%20(practice%201).zip
+`
+
+`wget -O needle_hayloft_practice2.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Needle%20in%20the%20Hayloft%20Practice/2%20Needle%20in%20the%20Hayloft%20(practice%202).zip
+`
+
+`wget -O needle_hayloft_practice3.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Needle%20in%20the%20Hayloft%20Practice/2%20Needle%20in%20the%20Hayloft%20(practice%203).zip
+`
+
   <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/iDQTr-loTe0?si=j5mmNbN_vddz3_Ig" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
   </div>
@@ -133,14 +144,12 @@ You need to find the suspicious needle. They were all good when they left but so
 `grep -F -f non_matching_hashes.txt current_md5sums_filenames.txt`  
   
 **Download Practice Files**:    
-📥 [Practice 1](./Coming%20to%20greps%20with%20the%20past/3%20Coming%20to%20greps%20with%20the%20past%20(practice%201).zip)    
+
+`wget -O coming_to_greps_practice1.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Coming%20to%20greps%20with%20the%20past/3%20Coming%20to%20greps%20with%20the%20past%20(practice%201).zip`
+
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/8piZLy8QhGg?si=-NwNQLoRDKrkBomj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 
 ---
 
-## Command Line Basics  
-Extracting Files  
-To extract a `.zip` file, use:  
-`unzip filename.zip`
