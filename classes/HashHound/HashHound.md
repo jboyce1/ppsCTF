@@ -40,11 +40,11 @@ title: Hash Hound
 
 
 ## **Download Practice Files**
-`wget -O hashhound_practice1.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%201).zip`
+`wget -O hashhound_practice1.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20\(practice%201\).zip`
 
-`wget -O hashhound_practice2.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%202).zip`
+`wget -O hashhound_practice2.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20\(practice%202\).zip`
 
-`wget -O hashhound_practice3.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20(practice%203).zip
+`wget -O hashhound_practice3.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Fun%20New%20Game%20Practice/1%20Fun%20New%20Game%20\(practice%203\).zip
 `
 
 ## Command Line Basics  
@@ -100,13 +100,13 @@ For more informaiton on the find functions, read the manual:
 man find        
 
 **Download Practice Files**:    
-`wget -O needle_hayloft_practice1.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Needle%20in%20the%20Hayloft%20Practice/2%20Needle%20in%20the%20Hayloft%20(practice%201).zip
+`wget -O needle_hayloft_practice1.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Needle%20in%20the%20Hayloft%20Practice/2%20Needle%20in%20the%20Hayloft%20\(practice%201\).zip
 `
 
-`wget -O needle_hayloft_practice2.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Needle%20in%20the%20Hayloft%20Practice/2%20Needle%20in%20the%20Hayloft%20(practice%202).zip
+`wget -O needle_hayloft_practice2.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Needle%20in%20the%20Hayloft%20Practice/2%20Needle%20in%20the%20Hayloft%20\(practice%202\).zip
 `
 
-`wget -O needle_hayloft_practice3.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Needle%20in%20the%20Hayloft%20Practice/2%20Needle%20in%20the%20Hayloft%20(practice%203).zip
+`wget -O needle_hayloft_practice3.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Needle%20in%20the%20Hayloft%20Practice/2%20Needle%20in%20the%20Hayloft%20\(practice%203\).zip
 `
 
   <div style="text-align: center;">
@@ -145,7 +145,7 @@ You need to find the suspicious needle. They were all good when they left but so
   
 **Download Practice Files**:    
 
-`wget -O coming_to_greps_practice1.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Coming%20to%20greps%20with%20the%20past/3%20Coming%20to%20greps%20with%20the%20past%20(practice%201).zip`
+`wget -O coming_to_greps_practice1.zip https://github.com/jboyce1/ppsCTF/raw/main/classes/HashHound/Coming%20to%20greps%20with%20the%20past/3%20Coming%20to%20greps%20with%20the%20past%20\(practice%201\).zip`
 
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/8piZLy8QhGg?si=-NwNQLoRDKrkBomj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
