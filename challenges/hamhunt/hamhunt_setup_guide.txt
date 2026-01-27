@@ -1,3 +1,8 @@
+Easier:
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/challenges/hamhunt/deploy_hamhunt.py
+sudo python3 deploy_hamhunt.py
+
+Harder:
 Hamhunt setup guide:
 Step1: download files
 from ubuntu mahcine:
