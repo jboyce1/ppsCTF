@@ -2,10 +2,10 @@ Hamhunt setup guide:
 Step1: download files
 from ubuntu mahcine:
 sudo git clone https://github.com/jboyce1/ppsCTF.git
-cd /ppsCTF/challenges/hamhunt/
-sudo chmod +x deploy_hamhunt_ctf.sh
-sudo ./deploy_hamhunt_ctf.sh
+cd ppsCTF/challenges/hamhunt/
+sudo chmod +x deploy_hamhunt_v2.sh
+sudo ./deploy_hamhunt_v2.sh
 passwd
 
 test:
-username: leroy p: leroythehunt3 leroythehunt3r
+username: leroy p: leroythehunt3r
