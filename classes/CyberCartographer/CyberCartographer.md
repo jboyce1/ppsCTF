@@ -42,7 +42,7 @@ Once vulnerabilities are identified, the Blue Team can leverage Zenmap's reporti
 
 ---
 
-# Part 1: Setting up drawio on the cyber.org range 
+# Part 1a: Setting up drawio on the cyber.org range 
   
 Get to your Desktop of not already there
 #### `cd ~/Desktop`  
@@ -55,6 +55,28 @@ Run the program
 
 In another terminal download the base image:
 ####  `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/CyberCartographer/CyberTacticsFest_Scenerio_Base.drawio`
+
+---
+# Part 1b: Setting up a simple team share > one way team communication
+
+Set up a host teamshare
+
+#### `mkdir ~/teamshare`
+#### `cd ~/teamshare`
+#### `python3 -m http.server 8080`
+
+You can call your teamshare something more unique and put it on a different port.
+
+Access the server (teammates only)
+#### `http://<host_ip>:8080`
+
+At this point, the teammates can download with a right click and a "save link as" 
+
+OR
+
+#### `wget http://<host_ip>:8080/notes.txt`
+#### `curl -O http://<host_ip>:8080/scan.xml`
+
 
 ---
 # Part 2: Use nmap to identify all hosts on the network and output a file
