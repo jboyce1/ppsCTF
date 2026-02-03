@@ -53,6 +53,10 @@ Change the file to make it executeable (or right click, go to permissions and ch
 Run the program
 #### `./drawio-x86_64-29.3.6.AppImage` 
 
+In another terminal download the base image:
+####  `wget -O CyberTacticsFest_Scenerio_Base.drawio \
+"https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/CyberCartographer/CyberTacticsFest_Scenerio_Base.drawio"`
+
 ---
 # Part 2: Use nmap to identify all hosts on the network and output a file
 
