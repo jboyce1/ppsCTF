@@ -42,7 +42,7 @@ Once vulnerabilities are identified, the Blue Team can leverage Zenmap's reporti
 
 ---
 
-# Part 1a: Setting up drawio on the cyber.org range 
+# Part 1: Setting up drawio on the cyber.org range 
   
 Get to your Desktop of not already there
 #### `cd ~/Desktop`  
@@ -88,7 +88,7 @@ Step 5) And to turn this into a text file:
 **Step 1) Use Text File of IP Addresses** Utilizing the lua scripting language and nmap scripting library with flags to see the scripts from terminal: 
 #### `cd /usr/share/nmap/scripts/`  
 #### `ls`  
-**Step 2 (hard)) Identify Hosts with OpenSSH** We'll use nmap to scan for hosts with OpenSSH running on port 22. Here's the command breakdown:  
+**Step 2) Identify Hosts with OpenSSH** We'll use nmap to scan for hosts with OpenSSH running on port 22. Here's the command breakdown:  
 #### `sudo nmap -p 22 --script ssh-auth-methods --script-args="ssh.user=*" <targetIP>`  
 
  Flags explained:  
@@ -96,7 +96,7 @@ Step 5) And to turn this into a text file:
 --script ssh-auth-methods: Runs the SSH authentication methods script to determine the authentication methods supported by the SSH server.
 --script-args="ssh.user=*": Specifies the username to be used for SSH authentication. The wildcard (*) indicates that any username can be used.    
 
-**Step 2 (easy))** Using -iL Flag with Text File: To use the text file containing IP addresses, we'll employ the -iL flag.   
+**Step 2)** Using -iL Flag with Text File: To use the text file containing IP addresses, we'll employ the -iL flag.   
 #### `sudo nmap -p 22 --script ssh-auth-methods --script-args="ssh.user=*" -iL hosts.txt`    
 -iL hosts.txt: Specifies the input file containing a list of IP addresses. Adjust the filename (hosts.txt) according to your text file's name.    
     
@@ -227,7 +227,7 @@ If you know the port range you want to scan
 -p 20000-24000 → Scans only high ports 20000-24000.    
 --open → Only show hosts with open ports.    
 -sV → Service version detection to identify if FTP, SSH, or Telnet is running.    
-10.15.0.0/16 → Replace with your target subnet.    
+10.15.0.0/17 → Replace with your target subnet.    
 
 If you have a file of hosts.txt that you want to scan
 #### `sudo nmap -p 20000-24000 --open -sV -iL hosts.txt`    
