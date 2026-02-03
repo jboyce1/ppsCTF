@@ -42,60 +42,16 @@ Once vulnerabilities are identified, the Blue Team can leverage Zenmap's reporti
 
 ---
 
-# Part 1a: Installing and using zenmap on the cyber.org range  
+# Part 1a: Setting up drawio on the cyber.org range 
   
-Switch to Root User: Begin by switching to the root user to perform administrative tasks.  
-#### `sudo su`  
-Update Package Repository: Ensure that the package repository is up to date to fetch the latest available packages.  
-#### `sudo apt update`  
-Download Zenmap: Download Zenmap
-#### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/CyberCartographer/zenmap-7.91-1.noarch.rpm`
-Install Alien Package Converter: Since the downloaded package is in RPM format, it needs to be converted to a Debian package (.deb) format. Install the Alien package converter tool to facilitate this conversion.
-#### `sudo apt-get install alien` 
-press y and enter when asked
-Convert RPM to DEB: Use Alien to convert the RPM package to a DEB package.  
-#### `sudo alien zenmap-7.94-1.noarch.rpm`  
-Install Zenmap: After conversion, install Zenmap using the DEB package.   
-#### `dpkg --install zenmap_7.94-2.all.deb`  
-Install all the dependencies for python2
-#### `sudo ln -s /usr/bin/python2 /usr/bin/python`
-#### `sudo apt-get install python-gtk2`
-#### `sudo apt-get install python-gnome2 libgnomecanvas2-0 libgdk-pixbuf2.0-0`
-Start Zenmap: Launch Zenmap from the terminal with administrative privileges.
-#### `sudo zenmap`  or Select application from the 
-
-Explanation of flags:  
-sudo: Execute the command with superuser privileges.  
-apt-get install: Command to install packages from the Debian package repository.  
-alien: A tool used to convert between different package formats.  
-dpkg --install: Command to install a package (in this case, the DEB package).  
-sudo: Execute the command with superuser privileges.  
-  
-<div style="text-align: center;">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/UrGKgu5HauE?si=ys1g6VsgT7xHxaxv" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</div>
-
-# Part 1b: Setting up drawio on the cyber.org range   
-### 10-12 minutes in the range  
-Install the packages
-#### `sudo apt-get update`
-#### `sudo apt-get install default-jdk`
-#### `wget https://github.com/jgraph/drawio-desktop/releases/download/v26.0.9/drawio-amd64-26.0.9.deb`
-
-Ensure the drawio is in the folder you are in by using ls
-#### `sudo apt-get install ./drawio-amd64-26.0.9.deb`  
-Run by checking the applications menu or using `drawio` in terminal
-
-Samba is not working in the range, so you will need to SCP for sharing
-Download the template and start adding information to it
-#### `wget https://github.com/jboyce1/ppsCTF/raw/main/classes/CyberCartographer/CyberCartographer_template.drawio`
-
-Save the template locally (or in a shared shared folder)
-Add valid targets to the draw.io template in the next steps   
-
-<div style="text-align: center;">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/xKIVex4OhXg?si=weB48EIq3UdooMSj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</div>  
+Get to your Desktop of not already there
+#### `cd ~/Desktop`  
+Download the appimage of drawio from the github repo
+#### `wget -L https://github.com/jgraph/drawio-desktop/releases/download/v29.3.6/drawio-x86_64-29.3.6.AppImage`  
+Change the file to make it executeable (or right click, go to permissions and check the box to allow to run as program)
+#### `chmod +x drawio-x86_64-29.3.6.AppImage`
+Run the program
+#### `./drawio-x86_64-29.3.6.AppImage` 
 
 ---
 # Part 2: Use nmap to identify all hosts on the network and output a file
