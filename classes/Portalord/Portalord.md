@@ -6,7 +6,9 @@ title: Portalord
 # Portalord    
 
 **Focus**: Multi-plexing
+
 **Skill**: Remote ssh, key-exchange, localhost chaining
+
 **Activity**: Develop pathways to machines inaccesible from your host machine  
 
 <div style="text-align: center;">
