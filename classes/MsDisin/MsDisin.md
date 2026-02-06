@@ -221,6 +221,11 @@ Explanation of Each Command:
     
 Or add in awk capabilities to filter out small words    
 #### `tr -cs 'A-Za-z' '\n' < input.txt | tr 'A-Z' 'a-z' | awk 'length($0) > 3' | sort | uniq -c | sort -nr | head -100`    
+
+Try to use what you have learned so far to get the flags in these files:
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/spy_traffic_history.db/msdis_practice1.zip
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/spy_traffic_history.db/msdis_practice2.zip
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MsDisin/training/spy_traffic_history.db/msdis_practice3.zip
     
 --- 
 # Part 5: Use diff and xxd to compare files  
