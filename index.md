@@ -25,9 +25,13 @@ title: Home
 
 **2/12 Thursday 7-9pm Teams Meeting**: Mini-Challenge Review
 
+**2/14 Saturday 10-2pm at Carnnegie Main Library Teen Space**: LAN Games and ARP spoofing
+
 **2/17 Tuesday 7-9pm Teams Meeting**: [LANgeist](./classes/LANgeist/LANgeist)
 
 **2/19 Thursday 7-9pm Teams Meeting**: [Malchemist](./classes/Malchemist/Malchemist)
+
+**2/21 Saturday 10-2pm at Carnegie Main Library Teen Space**: Undecided
 
 **2/24 Tuesday 7-9pm Teams Meeting**: Mini-Challenge
 
@@ -41,6 +45,8 @@ title: Home
 
 **3/12 Thursday 7-9pm Teams Meeting**: Mini-Challenge Review
 
+**3/14 Saturday 10-2pm at Carnegie Main Library Teen Space**: Lockpicking
+
 **3/17 Tuesday 7-9pm Teams Meeting**: [SIEMstress](./classes/SIEMstress/SIEMstress)
 
 **3/19 Thursday 7-9pm Teams Meeting**: [Cyberus](./classes/Cyberus/Cyberus)
@@ -50,6 +56,8 @@ title: Home
 **3/26 Thursday 7-9pm Teams Meeting**: Mini-Challenge Review + Tournament Overview
 
 **3/27 Friday 7-9pm Teams Meeting**: Seeding Challenge (2-hr Offensive/Defensive Free-for-All)
+
+**3/28 Saturday 10-2pm at Carnegie Main Library Teen Space**: Wireless attacks
 
 **4/8 Wednesday 9am-2pm Greenway**: Tournament Day 1 (Rounds 1–2)
 
