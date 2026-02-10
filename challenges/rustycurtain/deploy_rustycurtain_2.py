@@ -131,7 +131,7 @@ def find_subdir_case_insensitive(base_dir, target):
 def extract_nikoli_zip(zip_file, dest_path):
     """
     Extracts nikoli.zip to a temp folder, searches for 'ftp' dir anywhere,
-    and moves its contents into /srv (dest_path).
+    and moves its contents into /srv/ftp (dest_path).
     """
     if not os.path.isfile(zip_file):
         logging.warning(f"ZIP file '{zip_file}' not found. Skipping extraction.")
@@ -304,7 +304,7 @@ def main():
 
     # 3) Set up FTP on random port, then extract nikoli.zip => /srv
     ftp_port = setup_ftp_on_random_port()
-    extract_nikoli_zip(NIKOLI_ZIP, "/srv")
+    extract_nikoli_zip(NIKOLI_ZIP, "/srv/ftp")
 
     # 4) Set up SSH on random port, then extract yuri.zip => Desktop & firefox
     ssh_port = setup_ssh_on_random_port()
