@@ -25,13 +25,13 @@ title: Home
 
 **2/12 Thursday 7-9pm Teams Meeting**: Mini-Challenge Review
 
-**2/14 Saturday 10-2pm at Carnnegie Main Library Teen Space**: LAN Games and ARP spoofing
+**2/14 Saturday 10am-2pm at Carnnegie Main Library Teen Space**: LAN Games and ARP spoofing
 
 **2/17 Tuesday 7-9pm Teams Meeting**: [LANgeist](./classes/LANgeist/LANgeist)
 
 **2/19 Thursday 7-9pm Teams Meeting**: [Malchemist](./classes/Malchemist/Malchemist)
 
-**2/21 Saturday 10-2pm at Carnegie Main Library Teen Space**: Undecided
+**2/21 Saturday 10am-2pm at Carnegie Main Library Teen Space**: Undecided
 
 **2/24 Tuesday 7-9pm Teams Meeting**: Mini-Challenge
 
@@ -45,7 +45,7 @@ title: Home
 
 **3/12 Thursday 7-9pm Teams Meeting**: Mini-Challenge Review
 
-**3/14 Saturday 10-2pm at Carnegie Main Library Teen Space**: Lockpicking
+**3/14 Saturday 12-2pm at Carnegie Main Library Teen Space**: Lockpicking
 
 **3/17 Tuesday 7-9pm Teams Meeting**: [SIEMstress](./classes/SIEMstress/SIEMstress)
 
