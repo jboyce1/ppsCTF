@@ -1,12 +1,35 @@
 #!/usr/bin/env python3
+"""
+CTF RustyCurtain Deployer (FTP/Telnet/SSH) — clean, predictable, and testable.
+
+What it does:
+- Requires running as root (sudo).
+- Clones/pulls https://github.com/jboyce1/ppsCTF.git into /home/<invoking_user>/ppsCTF
+- Creates users: ivan, tanya, boris and sets passwords.
+- Extracts ivan.zip -> /srv/ftp (anonymous FTP drop)
+         tanya.zip -> /home/tanya/Desktop
+         boris.zip -> /home/boris/Desktop
+  Extraction avoids one-level "nesting folder" inside ZIPs.
+- Installs/configures:
+    vsftpd (anonymous read-only)
+    xinetd + telnetd (telnet on port 23)
+    openssh-server (password auth enabled)
+- Prompts operator to set a NEW root password (local account)
+- Explicitly disables SSH root login (PermitRootLogin no) so students can't SSH root.
+- Verifies services are active.
+"""
+
 import os
+import sys
 import subprocess
 import logging
 import zipfile
 import shutil
+import getpass
+from pathlib import Path
 
 # -----------------------------------------------------------------------------
-# Configure Logging
+# Logging
 # -----------------------------------------------------------------------------
 logging.basicConfig(
     level=logging.INFO,
@@ -15,189 +38,211 @@ logging.basicConfig(
 )
 
 # -----------------------------------------------------------------------------
-# Global Variables
+# Config
 # -----------------------------------------------------------------------------
-CURRENT_USER = os.getlogin()
 GITHUB_REPO_URL = "https://github.com/jboyce1/ppsCTF.git"
-LOCAL_REPO_PATH = f"/home/{CURRENT_USER}/ppsCTF"
 
-# Challenge sub-directory containing the ZIP files
-CHALLENGES_PATH = os.path.join(LOCAL_REPO_PATH, "challenges", "rustycurtain")
-
-# Define user accounts, passwords, and ZIP files
 USERS = [
     {
         "username": "ivan",
         "password": "TheT3rrible",
         "zip_file": "ivan.zip",
-        "extract_to": "/srv/ftp",        # for FTP (anonymous)
+        "extract_to": "/srv/ftp",                 # anonymous FTP drop
+        "chown_recursive": False,                 # keep root:root
     },
     {
         "username": "tanya",
         "password": "L3tsG0",
         "zip_file": "tanya.zip",
-        "extract_to": "/home/tanya/Desktop",  # for Telnet
+        "extract_to": "/home/tanya/Desktop",      # telnet user drop
+        "chown_recursive": True,
     },
     {
         "username": "boris",
         "password": "Pieinth3sky",
         "zip_file": "boris.zip",
-        "extract_to": "/home/boris/Desktop",  # for SSH
+        "extract_to": "/home/boris/Desktop",      # ssh user drop
+        "chown_recursive": True,
     }
 ]
 
 # -----------------------------------------------------------------------------
-# Helper Functions
+# Helpers
 # -----------------------------------------------------------------------------
-def run_command(command_list, check=True, capture_output=False, input_data=None):
-    """
-    Safely run a shell command via subprocess.
-    :param command_list: list of command + arguments
-    :param check: raise an error if command fails
-    :param capture_output: capture stdout/stderr if True
-    :param input_data: optional data passed to subprocess stdin
-    :return: CompletedProcess instance
-    """
-    logging.debug(f"Running command: {' '.join(command_list)}")
+def run_command(command_list, check=True, capture_output=False, input_data=None, text=False):
+    logging.debug("Running: %s", " ".join(command_list))
     return subprocess.run(
         command_list,
         check=check,
         capture_output=capture_output,
-        input=input_data
+        input=input_data,
+        text=text
     )
 
-def clone_repo_if_needed():
+def require_root():
+    if os.geteuid() != 0:
+        logging.error("Run this script with sudo/root.")
+        sys.exit(1)
+
+def get_invoking_user_home():
     """
-    Clone the GitHub repo if it doesn't exist, otherwise pull the latest.
+    When running under sudo, os.getlogin() can be flaky.
+    Prefer SUDO_USER if available, else fallback to current.
     """
-    if not os.path.isdir(LOCAL_REPO_PATH):
-        logging.info(f"Cloning {GITHUB_REPO_URL} -> {LOCAL_REPO_PATH} ...")
-        run_command(["git", "clone", GITHUB_REPO_URL, LOCAL_REPO_PATH])
+    sudo_user = os.environ.get("SUDO_USER")
+    user = sudo_user if sudo_user else os.environ.get("USER") or "root"
+    home = str(Path("~" + user).expanduser())
+    return user, home
+
+def clone_or_pull_repo(local_repo_path: str):
+    if not os.path.isdir(local_repo_path):
+        logging.info("Cloning %s -> %s", GITHUB_REPO_URL, local_repo_path)
+        run_command(["git", "clone", GITHUB_REPO_URL, local_repo_path])
     else:
-        logging.info(f"Repository already at {LOCAL_REPO_PATH}. Pulling latest changes...")
-        run_command(["git", "-C", LOCAL_REPO_PATH, "pull"])
+        logging.info("Repo exists at %s. Pulling latest...", local_repo_path)
+        run_command(["git", "-C", local_repo_path, "pull"])
 
-def create_user(username, password):
-    """
-    Create a Linux user if not exists and set the password.
-    """
+def user_exists(username: str) -> bool:
     try:
-        subprocess.run(["id", username], check=True, capture_output=True)
-        user_exists = True
+        run_command(["id", username], check=True, capture_output=True)
+        return True
     except subprocess.CalledProcessError:
-        user_exists = False
+        return False
 
-    if not user_exists:
-        logging.info(f"Creating user '{username}'...")
+def create_or_update_user(username: str, password: str):
+    if not user_exists(username):
+        logging.info("Creating user '%s'...", username)
         run_command(["useradd", "-m", "-s", "/bin/bash", username])
     else:
-        logging.info(f"User '{username}' already exists. Skipping creation...")
+        logging.info("User '%s' exists. Skipping creation.", username)
 
-    # Set or update password
-    logging.info(f"Setting password for user '{username}'...")
-    run_command(["chpasswd"], input_data=f"{username}:{password}".encode("utf-8"))
+    logging.info("Setting password for '%s'...", username)
+    run_command(["chpasswd"], input_data=f"{username}:{password}\n".encode("utf-8"))
 
-def ensure_directory(path, owner=None, mode=None):
-    """
-    Ensure a directory exists, optionally set owner and mode.
-    """
-    if not os.path.isdir(path):
-        os.makedirs(path, exist_ok=True)
-    if owner:
-        run_command(["chown", owner, path])
-    if mode:
-        run_command(["chmod", mode, path])
+def ensure_directory(path: str):
+    os.makedirs(path, exist_ok=True)
 
-def extract_zip_no_nesting(zip_path, dest_path):
+def extract_zip_flat_one_level(zip_path: str, dest_path: str):
     """
-    Extract the contents of a ZIP file into dest_path, avoiding nested directories.
+    Extract zip to dest_path, flattening a single top-level folder if present.
+    - If zip contains a single top-level directory, its contents are moved into dest_path.
+    - If zip contains multiple top-level items, they are moved into dest_path as-is.
     """
     if not os.path.isfile(zip_path):
-        logging.error(f"ZIP file not found: {zip_path}")
-        return
+        logging.error("ZIP not found: %s", zip_path)
+        return False
 
-    logging.info(f"Extracting {zip_path} -> {dest_path}")
+    logging.info("Extracting %s -> %s", zip_path, dest_path)
     ensure_directory(dest_path)
 
-    # Temporary extraction folder
-    temp_extract_path = "/tmp/ctf_extract_temp"
-    if os.path.exists(temp_extract_path):
-        shutil.rmtree(temp_extract_path)
-    os.makedirs(temp_extract_path)
+    temp_dir = "/tmp/ctf_extract_temp"
+    if os.path.exists(temp_dir):
+        shutil.rmtree(temp_dir)
+    os.makedirs(temp_dir)
 
-    # Extract to temp
-    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-        zip_ref.extractall(temp_extract_path)
+    with zipfile.ZipFile(zip_path, "r") as zf:
+        zf.extractall(temp_dir)
 
-    # Move items from temp's top-level into dest_path
-    for root, dirs, files in os.walk(temp_extract_path, topdown=True):
-        # Move directories
-        for d in dirs:
-            src_dir = os.path.join(root, d)
-            for item in os.listdir(src_dir):
-                src_item = os.path.join(src_dir, item)
-                dst_item = os.path.join(dest_path, item)
-                shutil.move(src_item, dst_item)
-            break  # Only handle top-level
-        # Move files
-        for f in files:
-            src_file = os.path.join(root, f)
-            dst_file = os.path.join(dest_path, f)
-            shutil.move(src_file, dst_file)
-        break  # top-level only
+    # Determine top-level items
+    top_items = os.listdir(temp_dir)
+    if len(top_items) == 1 and os.path.isdir(os.path.join(temp_dir, top_items[0])):
+        # Single folder nesting; move its contents up
+        nested = os.path.join(temp_dir, top_items[0])
+        for item in os.listdir(nested):
+            shutil.move(os.path.join(nested, item), os.path.join(dest_path, item))
+    else:
+        # Move all top-level items directly
+        for item in top_items:
+            shutil.move(os.path.join(temp_dir, item), os.path.join(dest_path, item))
 
-    shutil.rmtree(temp_extract_path)
+    shutil.rmtree(temp_dir)
+    return True
 
-def configure_ftp():
+def chown_recursive(path: str, user: str):
+    run_command(["chown", "-R", f"{user}:{user}", path])
+
+def prompt_set_root_password():
+    logging.info("Rotate/Set the LOCAL root password (students should not know it).")
+    pw1 = getpass.getpass("Enter NEW root password: ")
+    pw2 = getpass.getpass("Confirm NEW root password: ")
+
+    if not pw1:
+        logging.error("Root password cannot be empty.")
+        sys.exit(1)
+    if pw1 != pw2:
+        logging.error("Passwords do not match.")
+        sys.exit(1)
+
+    run_command(["chpasswd"], input_data=f"root:{pw1}\n".encode("utf-8"))
+    logging.info("Root password updated.")
+
+def write_file_backup_once(path: str, backup_path: str):
+    if not os.path.isfile(backup_path):
+        shutil.copyfile(path, backup_path)
+
+def set_or_append_config_line(lines, key, value):
     """
-    Install and configure vsftpd for anonymous (read-only) access.
+    Replace existing key line (even if commented) or append if missing.
     """
-    logging.info("Installing and configuring vsftpd (FTP)...")
+    out = []
+    found = False
+    for line in lines:
+        stripped = line.strip()
+        if stripped.startswith(key) or stripped.startswith(f"#{key}"):
+            out.append(f"{key} {value}\n")
+            found = True
+        else:
+            out.append(line)
+    if not found:
+        out.append(f"{key} {value}\n")
+    return out
+
+# -----------------------------------------------------------------------------
+# Services
+# -----------------------------------------------------------------------------
+def configure_vsftpd_anonymous():
+    logging.info("Installing/configuring vsftpd (anonymous read-only FTP)...")
     run_command(["apt-get", "update"])
     run_command(["apt-get", "-y", "install", "vsftpd"])
 
-    vsftpd_config = "/etc/vsftpd.conf"
-    backup_config = "/etc/vsftpd.conf.bak"
-    if not os.path.isfile(backup_config):
-        shutil.copyfile(vsftpd_config, backup_config)
+    conf = "/etc/vsftpd.conf"
+    bak = "/etc/vsftpd.conf.bak"
+    write_file_backup_once(conf, bak)
 
-    # Force 'anonymous_enable=YES' in config
-    new_config_lines = []
-    with open(backup_config, 'r') as f:
-        for line in f:
-            if line.strip().startswith("anonymous_enable"):
-                new_config_lines.append("anonymous_enable=YES\n")
-            else:
-                new_config_lines.append(line)
+    with open(bak, "r") as f:
+        lines = f.readlines()
 
-    # If missing, append
-    if not any("anonymous_enable" in line for line in new_config_lines):
-        new_config_lines.append("anonymous_enable=YES\n")
+    # Force anonymous on; keep it simple
+    # NOTE: we intentionally do not enable write.
+    new_lines = []
+    saw_anon = False
+    for line in lines:
+        if line.strip().startswith("anonymous_enable"):
+            new_lines.append("anonymous_enable=YES\n")
+            saw_anon = True
+        else:
+            new_lines.append(line)
+    if not saw_anon:
+        new_lines.append("anonymous_enable=YES\n")
 
-    # Write updated config
-    with open(vsftpd_config, 'w') as f:
-        f.writelines(new_config_lines)
+    with open(conf, "w") as f:
+        f.writelines(new_lines)
 
-    # Ensure /srv/ftp exists
+    # Ensure ftp root
     ensure_directory("/srv/ftp")
-    # Make /srv/ftp owned by root:root and not writable by others (755)
     run_command(["chown", "root:root", "/srv/ftp"])
     run_command(["chmod", "755", "/srv/ftp"])
 
-    # Enable and restart vsftpd
     run_command(["systemctl", "enable", "vsftpd"])
     run_command(["systemctl", "restart", "vsftpd"])
 
-def configure_telnet():
-    """
-    Install & enable Telnet via xinetd for Tanya.
-    """
-    logging.info("Installing and configuring Telnet (xinetd)...")
+def configure_telnet_xinetd():
+    logging.info("Installing/configuring telnet via xinetd...")
     run_command(["apt-get", "update"])
     run_command(["apt-get", "-y", "install", "xinetd", "telnetd"])
 
-    telnet_config = "/etc/xinetd.d/telnet"
-    if not os.path.isfile(telnet_config):
+    telnet_conf = "/etc/xinetd.d/telnet"
+    if not os.path.isfile(telnet_conf):
         config_text = """# Telnet service via xinetd
 service telnet
 {
@@ -212,94 +257,98 @@ service telnet
     port            = 23
 }
 """
-        with open(telnet_config, 'w') as f:
+        with open(telnet_conf, "w") as f:
             f.write(config_text)
 
     run_command(["systemctl", "enable", "xinetd"])
     run_command(["systemctl", "restart", "xinetd"])
 
-def configure_ssh():
-    """
-    Install and configure SSH with password authentication for Boris.
-    """
-    logging.info("Installing and configuring OpenSSH (SSH)...")
+def configure_ssh_password_auth_and_disable_root_login():
+    logging.info("Installing/configuring OpenSSH (password auth on, root SSH disabled)...")
     run_command(["apt-get", "update"])
     run_command(["apt-get", "-y", "install", "openssh-server"])
 
-    ssh_config_file = "/etc/ssh/sshd_config"
-    backup_config = "/etc/ssh/sshd_config.bak"
-    if not os.path.isfile(backup_config):
-        shutil.copyfile(ssh_config_file, backup_config)
+    conf = "/etc/ssh/sshd_config"
+    bak = "/etc/ssh/sshd_config.bak"
+    write_file_backup_once(conf, bak)
 
-    # Ensure PasswordAuthentication is yes
-    new_config_lines = []
-    with open(backup_config, 'r') as f:
-        for line in f:
-            if line.strip().startswith("PasswordAuthentication"):
-                new_config_lines.append("PasswordAuthentication yes\n")
-            else:
-                new_config_lines.append(line)
+    with open(bak, "r") as f:
+        lines = f.readlines()
 
-    if not any("PasswordAuthentication" in line for line in new_config_lines):
-        new_config_lines.append("PasswordAuthentication yes\n")
+    # Ensure password auth yes, explicitly block root SSH login
+    lines = set_or_append_config_line(lines, "PasswordAuthentication", "yes")
+    lines = set_or_append_config_line(lines, "PermitRootLogin", "no")
 
-    with open(ssh_config_file, 'w') as f:
-        f.writelines(new_config_lines)
+    with open(conf, "w") as f:
+        f.writelines(lines)
 
     run_command(["systemctl", "enable", "ssh"])
     run_command(["systemctl", "restart", "ssh"])
 
-def verify_service(service_name):
-    """
-    Verify that a given service (systemd) is active.
-    """
+def verify_service(service_name: str):
     try:
-        result = run_command(["systemctl", "is-active", service_name], capture_output=True)
-        status = result.stdout.decode().strip()
+        res = run_command(["systemctl", "is-active", service_name], capture_output=True)
+        status = res.stdout.decode().strip()
         if status == "active":
-            logging.info(f"Service '{service_name}' is active.")
+            logging.info("Service '%s' is active.", service_name)
         else:
-            logging.warning(f"Service '{service_name}' is NOT active (status={status}).")
+            logging.warning("Service '%s' is NOT active (status=%s).", service_name, status)
     except subprocess.CalledProcessError:
-        logging.error(f"Failed to verify service '{service_name}'.")
+        logging.error("Failed to verify service '%s'.", service_name)
 
 # -----------------------------------------------------------------------------
-# Main Function
+# Main
 # -----------------------------------------------------------------------------
 def main():
-    # 1) Clone or update the GitHub repo
-    clone_repo_if_needed()
+    require_root()
 
-    # 2) Create/Update user accounts
-    for user in USERS:
-        create_user(user["username"], user["password"])
+    invoking_user, invoking_home = get_invoking_user_home()
+    local_repo_path = os.path.join(invoking_home, "ppsCTF")
+    challenges_path = os.path.join(local_repo_path, "challenges", "rustycurtain")
 
-    # 3) Extract each user's ZIP file to the correct location
-    for user in USERS:
-        zip_file_path = os.path.join(CHALLENGES_PATH, user["zip_file"])
-        extract_zip_no_nesting(zip_file_path, user["extract_to"])
+    logging.info("Invoking user: %s", invoking_user)
+    logging.info("Repo path: %s", local_repo_path)
+    logging.info("Challenge ZIP path: %s", challenges_path)
 
-        # Ownership rules
-        if user["username"] == "ivan":
-            # For anonymous FTP, we keep /srv/ftp owned by root:root + chmod 755
-            # so do NOT set ftp:ftp ownership (which triggers chroot error).
-            pass
+    # 0) Prompt to rotate root password (local) and block root SSH regardless
+    prompt_set_root_password()
+
+    # 1) Clone or update repo
+    clone_or_pull_repo(local_repo_path)
+
+    # 2) Create/update users
+    for u in USERS:
+        create_or_update_user(u["username"], u["password"])
+
+    # 3) Extract zips
+    for u in USERS:
+        zip_path = os.path.join(challenges_path, u["zip_file"])
+        ok = extract_zip_flat_one_level(zip_path, u["extract_to"])
+        if not ok:
+            logging.warning("Skipping ownership for %s because extraction failed.", u["username"])
+            continue
+
+        if u["chown_recursive"]:
+            chown_recursive(u["extract_to"], u["username"])
         else:
-            # For tanya, boris => own their Desktop files
-            run_command(["chown", "-R", f"{user['username']}:{user['username']}", user["extract_to"]])
+            # Keep /srv/ftp root-owned for anonymous FTP.
+            run_command(["chown", "root:root", u["extract_to"]])
+            run_command(["chmod", "755", u["extract_to"]])
 
-    # 4) Configure vsftpd, Telnet, and SSH
-    configure_ftp()
-    configure_telnet()
-    configure_ssh()
+    # 4) Configure services
+    configure_vsftpd_anonymous()
+    configure_telnet_xinetd()
+    configure_ssh_password_auth_and_disable_root_login()
 
-    # 5) Verify services are running
-    verify_service("vsftpd")  # FTP
-    verify_service("xinetd")  # Telnet
-    verify_service("ssh")     # SSH
+    # 5) Verify services
+    verify_service("vsftpd")
+    verify_service("xinetd")
+    verify_service("ssh")
 
-    logging.info("CTF environment setup complete!")
-    logging.info("Use ftp/telnet/ssh to test. Anonymous FTP will be read-only without the OOPS error.")
+    logging.info("CTF environment setup complete.")
+    logging.info("FTP: anonymous -> /srv/ftp")
+    logging.info("Telnet: enabled on port 23 (use tanya creds)")
+    logging.info("SSH: password auth enabled (use boris creds); root SSH disabled.")
 
 if __name__ == "__main__":
     main()
