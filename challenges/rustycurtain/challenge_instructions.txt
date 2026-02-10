@@ -16,3 +16,6 @@ rung deploy_rustycurtain_2.py on as many cyber.org vms as teams are competing
 sudo python3 deploy_rustycurtain_2.py 
 
 use the rustycurtainchallengemap.doc and rustycurtainanswerkey.xlxs to guide challenge.
+
+notes for the range:
+use 7z x <file-to-unzip>
