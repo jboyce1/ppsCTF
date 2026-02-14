@@ -10,7 +10,7 @@ title: Cyberus
 **Activity**: Identify attackers and remove them from the network  
 
 <div style="text-align: center;">
-  <img src="{{ 'classes/Cyberus/images/cyberus_banner.png' | relative_url }}" alt="Cyberus Logo" style="max-width: 80%; height: auto;">
+  <img src="{{ 'classes/cyberus/images/cyberus1.png' | relative_url }}" alt="Cyberus Logo" style="max-width: 80%; height: auto;">
 </div>
 
 ---
