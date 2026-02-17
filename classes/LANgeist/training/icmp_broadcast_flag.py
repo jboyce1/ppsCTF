@@ -6,14 +6,13 @@ import re
 from scapy.all import send, IP, ICMP, Raw
 
 # === AUTO-INSTALL SCAPY IF MISSING ===
-try:
+
     from scapy.all import send, IP, ICMP, Raw
 except ImportError:
     print("[!] Scapy not found. Installing it now...")
     subprocess.run(["sudo", "apt", "update", "-y"], capture_output=True, text=True)
     subprocess.run(["sudo", "apt", "install", "python3-scapy", "-y"], capture_output=True, text=True)
     from scapy.all import send, IP, ICMP, Raw  # Retry import after installation
-
 # === CONFIGURATION: Customize Your Flag and Timing Here ===
 BOX_VALUE = "1"                # Change the box difficulty
 CHALLENGE_VALUE = "1"          # Change the challenge level
