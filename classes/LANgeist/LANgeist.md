@@ -103,7 +103,9 @@ is redirecting the output from the screen to a file named localtcpdump.txt
     
 To read the file, use the following command:    
 #### `cat localtcpdump.txt` 
-
+or try 
+#### `tail localtcpdump.txt`
+for just the most recently collected
     
 ### Try it now:
 Create a localtcpdump.txt file on your desktop
