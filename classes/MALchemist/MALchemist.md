@@ -115,8 +115,11 @@ Start a Kali machine
 #### `sudo apt install idle` 
 
 Download the SecurePixViewer_ping.py malware:
-#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/BasicTrojan/SecurePixViewer_ping.py`    
-    
+<div class="scroll-box">
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/BasicTrojan/SecurePixViewer_ping.py    
+</div>  
+
+
 Open SecurePixViewer_ping.py by right clicking and opening with IDLE (right click and scroll down in the applications)    
 Things to notice:    
 Imports    
@@ -132,7 +135,9 @@ Look at the def perform_secret_action():
 </div>    
     
 Download aSecurePixViewer.txt
-#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/BasicTrojan/aSecurePixViewer.txt`     
+<div class="scroll-box">
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/BasicTrojan/aSecurePixViewer.txt
+</div>  
     
 Open the file with IDLE    
 Predict its actions and attempt to run it to see if what you predict is correct.   
@@ -173,7 +178,9 @@ If you get something fun or interesting, upload it here so I can share it or use
 # Part 4: use ssh and scp to deploy and run scripts on remote devicesc & use psutil to monitor actions on remote computers
 
 ### Use wiresharkspy.py to compete this
-#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/LogicBasedAction/wiresharkspy.py`
+<div class="scroll-box">
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/MALchemist/LogicBasedAction/wiresharkspy.py
+</div>  
     
 ### Test on our own environment:    
 It is always helpful to work the bugs out as much as you can on your own computer before moving on. Open terminal in Kali and type these commands one at a time:
