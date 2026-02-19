@@ -12,7 +12,7 @@ Now ping with a flag from a different
 Kali 2:
 sudo git clone https://github.com/jboyce1/ppsCTF.git
 cd /home/kali/ppsCTF/classes/LANgeist/training
-sudo python3 icmp_broadcast.py
+sudo python3 icmp_broadcast_flag.py
 
 Ask students to identify and ping flood the kali that is being the bully
 They need to open wireshark with sudo wireshark and then look for the conversations: isolate the conversations by applying filters
