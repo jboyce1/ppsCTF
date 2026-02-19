@@ -14,6 +14,8 @@ sudo git clone https://github.com/jboyce1/ppsCTF.git
 cd /home/kali/ppsCTF/classes/LANgeist/training
 sudo python3 icmp_broadcast_flag.py
 
+if no scapy found install with: sudo apt update -y && sudo apt install python3-scapy -y
+
 Ask students to identify and ping flood the kali that is being the bully
 They need to open wireshark with sudo wireshark and then look for the conversations: isolate the conversations by applying filters
 
