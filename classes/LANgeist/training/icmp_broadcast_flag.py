@@ -13,6 +13,9 @@ except ImportError:
     subprocess.run(["sudo", "apt", "update", "-y"], capture_output=True, text=True)
     subprocess.run(["sudo", "apt", "install", "python3-scapy", "-y"], capture_output=True, text=True)
     from scapy.all import send, IP, ICMP, Raw  # Retry import after installation
+# if this doesnt work: 
+#sudo apt update -y && sudo apt install python3-scapy -y
+
 
 # === CONFIGURATION: Customize Your Flag and Timing Here ===
 BOX_VALUE = "1"                # Change the box difficulty
