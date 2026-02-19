@@ -93,7 +93,7 @@ Click on the network interface that is connecting to the internet (activity on l
 **On Kali**    
 Open terminal and open the SecurePixViewer-ping.py    
 #### `nano SecurePixViewer-ping.py`    
-Replace the 192.168.1.100 with the ip address of your ubuntu machine    
+Replace the local loopback 0.0.0.0 with the ip address of your ubuntu machine    
 Run the program again    
 #### `python3 SecurePixViewer-ping.py`    
 **On Ubuntu**    
