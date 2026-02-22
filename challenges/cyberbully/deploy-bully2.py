@@ -5,6 +5,7 @@ import tarfile
 import shutil
 import subprocess
 import tempfile
+import time
 from pathlib import Path
 
 TAR_FILE = "Bully2.tar.gz"
@@ -21,53 +22,119 @@ CONF_PATH = f"/home/{BULLY_USER}/.cyberbully.conf"
 LOG_PATH = f"/home/{BULLY_USER}/.cyberbully.log"
 PID_PATH = f"/home/{BULLY_USER}/.cyberbully.pid"
 
-def run(cmd, check=True, shell=False):
-    return subprocess.run(cmd, check=check, shell=shell)
+APT_LOCKS = [
+    "/var/lib/dpkg/lock-frontend",
+    "/var/lib/dpkg/lock",
+    "/var/cache/apt/archives/lock",
+    "/var/lib/apt/lists/lock",
+]
+
+# ----------------------------
+# Helpers
+# ----------------------------
+def run(cmd, check=True, shell=False, env=None):
+    return subprocess.run(cmd, check=check, shell=shell, env=env)
 
 def user_exists(username: str) -> bool:
     r = subprocess.run(["id", "-u", username], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     return r.returncode == 0
 
+def is_locked() -> bool:
+    for lf in APT_LOCKS:
+        r = subprocess.run(["sudo", "fuser", lf], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        if r.returncode == 0:
+            return True
+    return False
+
+def wait_for_apt(timeout_sec=600):
+    """
+    Wait for apt/dpkg locks. On Kali, unattended upgrades / apt timers often hold locks.
+    We wait, and if still locked, we stop the common services/timers once.
+    """
+    start = time.time()
+    attempted_stop = False
+
+    while is_locked():
+        if time.time() - start > timeout_sec:
+            raise RuntimeError("Timed out waiting for apt/dpkg locks.")
+
+        if not attempted_stop:
+            attempted_stop = True
+            # Stop common background apt jobs on Kali/Debian.
+            run(["sudo", "systemctl", "stop", "unattended-upgrades"], check=False)
+            run(["sudo", "systemctl", "stop", "apt-daily.service", "apt-daily-upgrade.service"], check=False)
+            run(["sudo", "systemctl", "stop", "packagekit.service"], check=False)
+            # Stop timers so they don't restart immediately
+            run(["sudo", "systemctl", "stop", "apt-daily.timer", "apt-daily-upgrade.timer"], check=False)
+
+        print("[*] Waiting for apt/dpkg lock to clear...")
+        time.sleep(2)
+
+    # If a background apt run was interrupted, make sure dpkg isn't half-configured.
+    run(["sudo", "dpkg", "--configure", "-a"], check=False)
+    run(["sudo", "apt-get", "-f", "install", "-y"], check=False)
+
+def apt_install(packages: list[str]):
+    """
+    Non-interactive install:
+    - Keeps existing config files if prompted
+    - Avoids curses prompt hangs
+    """
+    env = os.environ.copy()
+    env["DEBIAN_FRONTEND"] = "noninteractive"
+
+    # Update
+    wait_for_apt()
+    run(["sudo", "apt-get", "update"], check=True, env=env)
+
+    # Install with dpkg options to prevent interactive prompts
+    wait_for_apt()
+    cmd = [
+        "sudo", "apt-get", "install", "-y",
+        "-o", "Dpkg::Options::=--force-confold",
+        "-o", "Dpkg::Options::=--force-confdef",
+    ] + packages
+    run(cmd, check=True, env=env)
+
+# ----------------------------
+# Steps
+# ----------------------------
 def install_dependencies_and_enable_ssh():
     print("[+] Installing required packages and enabling SSH...")
     packages = ["python3-scapy", "tcpdump", "iftop", "nmap", "openssh-server"]
-    run(["sudo", "apt-get", "update"])
-    run(["sudo", "apt-get", "install", "-y"] + packages)
+    apt_install(packages)
 
-    # Enable/start SSH (service name on Ubuntu is typically "ssh")
+    # Enable/start SSH (Kali service usually "ssh")
     run(["sudo", "systemctl", "enable", "--now", "ssh"], check=False)
     run(["sudo", "systemctl", "restart", "ssh"], check=False)
 
     print("[+] Dependencies installed; SSH enabled.")
 
-def secure_ubuntu_account():
-    print("\n[!] Step 1: Set a NEW password for the 'ubuntu' account.")
+def secure_kali_account():
+    print("\n[!] Step 1: Set a NEW password for the 'kali' account.")
     print("[!] Students should NOT know this password.\n")
 
-    # Interactive prompt
-    run(["sudo", "passwd", "ubuntu"])
+    # Interactive prompt (intended)
+    run(["sudo", "passwd", "kali"])
 
-    # If this box came from a cloud image, ubuntu might have NOPASSWD in /etc/sudoers.d
-    # We'll try to convert any ubuntu NOPASSWD entries to PASSWD safely.
-    print("[+] Checking for passwordless sudo entries for ubuntu...")
+    # Convert any NOPASSWD for kali in /etc/sudoers.d (best effort)
+    print("[+] Checking for passwordless sudo entries for kali...")
     try:
         grep = subprocess.run(
-            ["sudo", "grep", "-R", "-n", r"ubuntu.*NOPASSWD", "/etc/sudoers.d"],
+            ["sudo", "grep", "-R", "-n", r"\bkali\b.*NOPASSWD", "/etc/sudoers.d"],
             capture_output=True,
             text=True,
             check=False
         )
         if grep.returncode == 0 and grep.stdout.strip():
-            print("[!] Found potential NOPASSWD sudo entries for ubuntu. Converting to PASSWD...")
-            # For each hit, replace NOPASSWD: with PASSWD:
+            print("[!] Found NOPASSWD entries for kali. Converting to PASSWD...")
             for line in grep.stdout.strip().splitlines():
                 file_path = line.split(":", 1)[0]
-                # backup once per file
                 run(["sudo", "cp", "-a", file_path, f"{file_path}.bak"], check=False)
                 run(["sudo", "sed", "-i", "s/NOPASSWD:/PASSWD:/g", file_path], check=False)
-            print("[+] Converted ubuntu NOPASSWD entries (backups saved as *.bak).")
+            print("[+] Converted kali NOPASSWD entries (backups saved as *.bak).")
         else:
-            print("[+] No ubuntu NOPASSWD sudo entries found (good).")
+            print("[+] No kali NOPASSWD sudo entries found (good).")
     except Exception:
         print("[!] Could not scan /etc/sudoers.d for NOPASSWD entries (continuing).")
 
@@ -96,11 +163,11 @@ def create_users_no_sudo():
     print("[+] Creating users (NO sudo for students)...")
     for user, password in USER_CREDENTIALS.items():
         if not user_exists(user):
-            run(["sudo", "useradd", "-m", "-s", "/bin/bash", user])
-        # set password
-        run(f"echo '{user}:{password}' | sudo chpasswd", shell=True)
+            run(["sudo", "useradd", "-m", "-s", "/bin/bash", user], check=True)
 
-        # ensure they are not sudoers
+        run(f"echo '{user}:{password}' | sudo chpasswd", shell=True, check=True)
+
+        # Ensure they are not sudoers; also remove any leftover sudoers file.
         run(["sudo", "deluser", user, "sudo"], check=False)
         run(["sudo", "rm", "-f", f"/etc/sudoers.d/{user}"], check=False)
 
@@ -110,11 +177,11 @@ def setup_ssh_dirs():
     print("[+] Setting up SSH directories...")
     for user in USER_CREDENTIALS.keys():
         ssh_dir = Path(f"/home/{user}/.ssh")
-        run(["sudo", "mkdir", "-p", str(ssh_dir)])
-        run(["sudo", "chmod", "700", str(ssh_dir)])
-        run(["sudo", "touch", str(ssh_dir / "authorized_keys")])
-        run(["sudo", "chmod", "600", str(ssh_dir / "authorized_keys")])
-        run(["sudo", "chown", "-R", f"{user}:{user}", str(ssh_dir)])
+        run(["sudo", "mkdir", "-p", str(ssh_dir)], check=True)
+        run(["sudo", "chmod", "700", str(ssh_dir)], check=True)
+        run(["sudo", "touch", str(ssh_dir / "authorized_keys")], check=True)
+        run(["sudo", "chmod", "600", str(ssh_dir / "authorized_keys")], check=True)
+        run(["sudo", "chown", "-R", f"{user}:{user}", str(ssh_dir)], check=True)
     print("[+] SSH dirs set.")
 
 def distribute_files(extracted_root: Path):
@@ -134,7 +201,7 @@ def distribute_files(extracted_root: Path):
             else:
                 shutil.copy2(item, dst_item)
 
-        run(["sudo", "chown", "-R", f"{user}:{user}", str(dst)])
+        run(["sudo", "chown", "-R", f"{user}:{user}", str(dst)], check=True)
 
     print("[+] Files copied.")
 
@@ -152,21 +219,24 @@ victim_ip={victim_ip}
 tcp_port=31337
 udp_port=31337
 interval=2
-message=you dont belong here
+behavior=1
+# message=uncomment to override rotation
 """
     tmp = Path(tempfile.mkstemp(prefix="cyberbully_conf_", text=True)[1])
     tmp.write_text(conf_text, encoding="utf-8")
 
-    run(["sudo", "mv", str(tmp), CONF_PATH])
-    run(["sudo", "chown", f"{BULLY_USER}:{BULLY_USER}", CONF_PATH])
-    run(["sudo", "chmod", "600", CONF_PATH])
+    run(["sudo", "mv", str(tmp), CONF_PATH], check=True)
+    run(["sudo", "chown", f"{BULLY_USER}:{BULLY_USER}", CONF_PATH], check=True)
+    run(["sudo", "chmod", "600", CONF_PATH], check=True)
 
 def start_broadcaster_background():
     print("[+] Starting broadcaster in background (NOT systemd)...")
-    # Stop previous instance if PID file exists and process is alive
+
+    # Stop previous instance if PID file exists
     stop_cmd = f"""
+set -e
 if [ -f "{PID_PATH}" ]; then
-  pid=$(cat "{PID_PATH}" 2>/dev/null || true)
+  pid="$(cat "{PID_PATH}" 2>/dev/null || true)"
   if [ -n "$pid" ] && kill -0 "$pid" 2>/dev/null; then
     kill "$pid" 2>/dev/null || true
     sleep 1
@@ -176,14 +246,22 @@ fi
 """
     run(["sudo", "bash", "-lc", stop_cmd], check=False)
 
-    # Start new instance as becky1; log + pidfile owned by becky1
+    # Sanity: ensure bully script exists
+    exists_cmd = f'test -f "{BULLY_SCRIPT}"'
+    r = subprocess.run(["sudo", "bash", "-lc", exists_cmd])
+    if r.returncode != 0:
+        print(f"[!] ERROR: bully script not found at {BULLY_SCRIPT}")
+        sys.exit(1)
+
+    # Start new instance as becky1; log + pid file
     start_cmd = f"""
+set -e
 nohup /usr/bin/python3 "{BULLY_SCRIPT}" --config "{CONF_PATH}" >> "{LOG_PATH}" 2>&1 &
 echo $! > "{PID_PATH}"
 """
     run(["sudo", "-u", BULLY_USER, "bash", "-lc", start_cmd], check=True)
 
-    # lock down log/pid permissions
+    # Lock down permissions
     run(["sudo", "chown", f"{BULLY_USER}:{BULLY_USER}", LOG_PATH, PID_PATH], check=False)
     run(["sudo", "chmod", "600", PID_PATH], check=False)
     run(["sudo", "chmod", "644", LOG_PATH], check=False)
@@ -192,22 +270,18 @@ echo $! > "{PID_PATH}"
     print(f"[+] Log file: {LOG_PATH}")
 
 def remove_repo_self_destruct():
-    # Determine repo root: .../ppsCTF/challenges/cyberbully/deploy-bully2.py -> parents[2] == ppsCTF
     script_path = Path(__file__).resolve()
     repo_root = script_path.parents[2]  # cyberbully -> challenges -> ppsCTF
     print(f"[+] Removing repo directory to prevent answer leakage: {repo_root}")
 
-    # Move out of repo before deleting
     os.chdir("/")
-
-    # Use sudo rm -rf (safer than shutil when permissions vary)
     run(["sudo", "rm", "-rf", str(repo_root)], check=False)
 
 def main():
     script_dir = Path(__file__).resolve().parent
 
     install_dependencies_and_enable_ssh()
-    secure_ubuntu_account()
+    secure_kali_account()
 
     extracted_root = extract_tar_to_temp(script_dir)
     create_users_no_sudo()
@@ -226,8 +300,8 @@ def main():
 
     remove_repo_self_destruct()
 
-    print("\n[✅] Bully2 deployed.")
-    print("\nUseful commands:")
+    print("\n[✅] Bully2 deployed.\n")
+    print("Useful commands:")
     print(f"  Tail bully log:   sudo tail -f {LOG_PATH}")
     print(f"  Check PID:        sudo cat {PID_PATH}")
     print(f"  Stop bully:       sudo kill $(cat {PID_PATH})")
