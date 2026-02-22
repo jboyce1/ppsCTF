@@ -1,250 +1,238 @@
 #!/usr/bin/env python3
-"""
-deploy-victim2.py  (boys: virgil1 + vinny2)
-
-Run from:
-  git clone https://github.com/jboyce1/ppsCTF.git && cd ppsCTF/challenges/cyberbully/ && sudo python3 deploy-victim2.py
-
-Assumptions:
-- You are currently in ppsCTF/challenges/cyberbully/
-- The folder Victim2/ exists beside this script (tracked in git), with:
-    Victim2/
-      virgil1/
-        icmp_broadcast_flag_victim.py
-        tcp_broadcast_flag_pass_victim.py
-        (copy 1).py backups (ignored)
-      vinny2/
-        Desktop/flag.txt
-
-What this does:
-- Installs required packages (scapy, nmap, netcat-openbsd, tcpdump, wireshark, etc.)
-- Creates/updates users: virgil1, vinny2
-- Locks down default 'ubuntu' user BEFORE enabling SSH password auth (prevents ubuntu:password)
-- Enables SSH password auth (optional toggle)
-- Copies Victim2/<user>/* into /home/<user>/
-- Starts BOTH broadcasters (the *non-copy* scripts) in the background (no terminal hog)
-  logging to:
-    /home/virgil1/icmp_broadcast.log
-    /home/virgil1/tcp_broadcast.log
-"""
-
 import os
 import sys
+import tarfile
 import shutil
 import subprocess
+import tempfile
 from pathlib import Path
 
-# =========================
-# CONFIG
-# =========================
+TAR_FILE = "Bully2.tar.gz"
+EXTRACT_ROOT_DIRNAME = "Bully2"
+
 USER_CREDENTIALS = {
-    "virgil1": "123213123",   # change if you want
-    "vinny2": "vin4theWIN!",  # change if you want
+    "becky1": "b3ki-b33n-b@@@d",
+    "betty2": "123123123"
 }
 
-# Run broadcasters automatically
-RUN_ICMP_BROADCASTER = True
-RUN_TCP_BROADCASTER  = True
+BULLY_USER = "becky1"
+BULLY_SCRIPT = f"/home/{BULLY_USER}/tcp_udp_icmp_cyberbully.py"
+CONF_PATH = f"/home/{BULLY_USER}/.cyberbully.conf"
+LOG_PATH = f"/home/{BULLY_USER}/.cyberbully.log"
+PID_PATH = f"/home/{BULLY_USER}/.cyberbully.pid"
 
-# Enable password auth for SSH (we still deny ubuntu + allowlist only our users)
-ENABLE_SSH_PASSWORD_AUTH = True
+def run(cmd, check=True, shell=False):
+    return subprocess.run(cmd, check=check, shell=shell)
 
-# Packages (netcat-openbsd + nmap are needed for your banner-verified host discovery)
-APT_PACKAGES = [
-    "python3-scapy",
-    "tcpdump",
-    "wireshark",
-    "nmap",
-    "netcat-openbsd",
-    "openssh-server",
-]
-
-# Paths (relative to this deploy script location)
-SCRIPT_DIR = Path(__file__).resolve().parent
-VICTIM_DIR = SCRIPT_DIR / "Victim2"
-
-# The scripts to run (NOT the copy backups)
-ICMP_SCRIPT_DEST = "/home/virgil1/icmp_broadcast_flag_victim.py"
-TCP_SCRIPT_DEST  = "/home/virgil1/tcp_broadcast_flag_pass_victim.py"
-
-ICMP_LOG_PATH = "/home/virgil1/icmp_broadcast.log"
-TCP_LOG_PATH  = "/home/virgil1/tcp_broadcast.log"
-
-
-# =========================
-# Helpers
-# =========================
-def run(cmd, check=True, capture=False, shell=False, env=None):
-    if capture:
-        return subprocess.run(cmd, check=check, text=True, capture_output=True, shell=shell, env=env)
-    return subprocess.run(cmd, check=check, shell=shell, env=env)
-
-def ensure_root():
-    if os.geteuid() != 0:
-        print("[!] Please run with sudo: sudo python3 deploy-victim2.py")
-        sys.exit(1)
-
-def user_exists(user: str) -> bool:
-    r = run(["bash", "-lc", f"id -u {user} >/dev/null 2>&1"], check=False)
+def user_exists(username: str) -> bool:
+    r = subprocess.run(["id", "-u", username], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     return r.returncode == 0
 
-def install_dependencies():
-    print("[+] Installing required packages...")
-    env = os.environ.copy()
-    env["DEBIAN_FRONTEND"] = "noninteractive"
-    run(["apt-get", "update"], env=env)
-    run(["apt-get", "install", "-y", "--allow-change-held-packages", *APT_PACKAGES], env=env)
-    print("[+] Dependencies installed successfully!")
+def install_dependencies_and_enable_ssh():
+    print("[+] Installing required packages and enabling SSH...")
+    packages = ["python3-scapy", "tcpdump", "iftop", "nmap", "openssh-server"]
+    run(["sudo", "apt-get", "update"])
+    run(["sudo", "apt-get", "install", "-y"] + packages)
 
-def create_or_update_users():
-    for user, password in USER_CREDENTIALS.items():
-        if user_exists(user):
-            print(f"[+] User exists: {user} (updating password + sudoers rule)")
+    # Enable/start SSH (service name on kali is typically "ssh")
+    run(["sudo", "systemctl", "enable", "--now", "ssh"], check=False)
+    run(["sudo", "systemctl", "restart", "ssh"], check=False)
+
+    print("[+] Dependencies installed; SSH enabled.")
+
+def secure_kali_account():
+    print("\n[!] Step 1: Set a NEW password for the 'kaliu' account.")
+    print("[!] Students should NOT know this password.\n")
+
+    # Interactive prompt
+    run(["sudo", "passwd", "kali"])
+
+    # If this box came from a cloud image, kali might have NOPASSWD in /etc/sudoers.d
+    # We'll try to convert any kali NOPASSWD entries to PASSWD safely.
+    print("[+] Checking for passwordless sudo entries for kali...")
+    try:
+        grep = subprocess.run(
+            ["sudo", "grep", "-R", "-n", r"kali.*NOPASSWD", "/etc/sudoers.d"],
+            capture_output=True,
+            text=True,
+            check=False
+        )
+        if grep.returncode == 0 and grep.stdout.strip():
+            print("[!] Found potential NOPASSWD sudo entries for kali. Converting to PASSWD...")
+            # For each hit, replace NOPASSWD: with PASSWD:
+            for line in grep.stdout.strip().splitlines():
+                file_path = line.split(":", 1)[0]
+                # backup once per file
+                run(["sudo", "cp", "-a", file_path, f"{file_path}.bak"], check=False)
+                run(["sudo", "sed", "-i", "s/NOPASSWD:/PASSWD:/g", file_path], check=False)
+            print("[+] Converted kali NOPASSWD entries (backups saved as *.bak).")
         else:
-            print(f"[+] Creating user: {user}")
-            run(["useradd", "-m", "-s", "/bin/bash", user])
+            print("[+] No kali NOPASSWD sudo entries found (good).")
+    except Exception:
+        print("[!] Could not scan /etc/sudoers.d for NOPASSWD entries (continuing).")
 
-        run(["bash", "-lc", f"echo '{user}:{password}' | chpasswd"])
+def extract_tar_to_temp(script_dir: Path) -> Path:
+    tar_path = script_dir / TAR_FILE
+    if not tar_path.exists():
+        print(f"[!] ERROR: {TAR_FILE} not found in {script_dir}")
+        sys.exit(1)
 
-        # tcpdump sudo NOPASSWD (kept consistent with your earlier approach)
-        sudoers_path = Path(f"/etc/sudoers.d/{user}")
-        sudoers_path.write_text(f"{user} ALL=(ALL) NOPASSWD: /usr/sbin/tcpdump\n")
-        run(["chmod", "440", str(sudoers_path)])
+    tmpdir = Path(tempfile.mkdtemp(prefix="bully2_extract_"))
+    print(f"[+] Extracting {tar_path} to {tmpdir} ...")
+
+    with tarfile.open(tar_path, "r:gz") as tar:
+        tar.extractall(tmpdir)
+
+    extracted_root = tmpdir / EXTRACT_ROOT_DIRNAME
+    if not extracted_root.is_dir():
+        print(f"[!] ERROR: Expected '{EXTRACT_ROOT_DIRNAME}/' inside tar, but not found.")
+        print("[!] Ensure tar contains Bully2/becky1/... and Bully2/betty2/...")
+        sys.exit(1)
+
+    print("[+] Extraction complete.")
+    return extracted_root
+
+def create_users_no_sudo():
+    print("[+] Creating users (NO sudo for students)...")
+    for user, password in USER_CREDENTIALS.items():
+        if not user_exists(user):
+            run(["sudo", "useradd", "-m", "-s", "/bin/bash", user])
+        # set password
+        run(f"echo '{user}:{password}' | sudo chpasswd", shell=True)
+
+        # ensure they are not sudoers
+        run(["sudo", "deluser", user, "sudo"], check=False)
+        run(["sudo", "rm", "-f", f"/etc/sudoers.d/{user}"], check=False)
+
+    print("[+] Users ready.")
 
 def setup_ssh_dirs():
-    print("[+] Ensuring .ssh directories exist...")
+    print("[+] Setting up SSH directories...")
     for user in USER_CREDENTIALS.keys():
         ssh_dir = Path(f"/home/{user}/.ssh")
-        ssh_dir.mkdir(parents=True, exist_ok=True)
-        run(["chmod", "700", str(ssh_dir)])
-        ak = ssh_dir / "authorized_keys"
-        ak.touch(exist_ok=True)
-        run(["chmod", "600", str(ak)])
-        run(["chown", "-R", f"{user}:{user}", str(ssh_dir)])
+        run(["sudo", "mkdir", "-p", str(ssh_dir)])
+        run(["sudo", "chmod", "700", str(ssh_dir)])
+        run(["sudo", "touch", str(ssh_dir / "authorized_keys")])
+        run(["sudo", "chmod", "600", str(ssh_dir / "authorized_keys")])
+        run(["sudo", "chown", "-R", f"{user}:{user}", str(ssh_dir)])
+    print("[+] SSH dirs set.")
 
-def lock_down_ubuntu_before_password_auth():
-    """
-    Prevent ubuntu default password logins before enabling PasswordAuthentication.
-    """
-    if user_exists("ubuntu"):
-        print("[+] Locking default 'ubuntu' account password...")
-        run(["passwd", "-l", "ubuntu"], check=False)
-
-    allow_users = " ".join(USER_CREDENTIALS.keys())
-    sshd_config = "/etc/ssh/sshd_config"
-
-    print("[+] Updating sshd_config: DenyUsers ubuntu + AllowUsers our users...")
-
-    run(["bash", "-lc",
-         r"grep -qE '^\s*DenyUsers\s+.*\bubuntu\b' /etc/ssh/sshd_config || "
-         r"echo 'DenyUsers ubuntu' >> /etc/ssh/sshd_config"
-    ], check=False)
-
-    run(["bash", "-lc",
-         rf"if grep -qE '^\s*AllowUsers\s+' {sshd_config}; then "
-         rf"  sed -i 's/^\s*AllowUsers\s\+.*/AllowUsers {allow_users}/' {sshd_config}; "
-         rf"else "
-         rf"  echo 'AllowUsers {allow_users}' >> {sshd_config}; "
-         rf"fi"
-    ], check=False)
-
-def configure_ssh_password_authentication():
-    if not ENABLE_SSH_PASSWORD_AUTH:
-        print("[=] ENABLE_SSH_PASSWORD_AUTH=False, leaving PasswordAuthentication unchanged.")
-        return
-
-    print("[+] Enabling SSH password authentication (PasswordAuthentication yes)...")
-    run(["bash", "-lc",
-         r"if grep -qE '^\s*#?\s*PasswordAuthentication\s+' /etc/ssh/sshd_config; then "
-         r"  sed -i 's/^\s*#\?\s*PasswordAuthentication\s\+.*/PasswordAuthentication yes/' /etc/ssh/sshd_config; "
-         r"else "
-         r"  echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config; "
-         r"fi"
-    ], check=False)
-
-    run(["systemctl", "restart", "ssh"])
-    print("[+] SSH restarted.")
-
-def distribute_files():
-    """
-    Copy Victim2/<user>/* -> /home/<user>/
-    Ignores your "(copy 1)" scripts automatically because we only run the non-copy names.
-    """
-    if not VICTIM_DIR.exists():
-        raise RuntimeError(f"Victim2 directory not found: {VICTIM_DIR}")
-
+def distribute_files(extracted_root: Path):
+    print("[+] Distributing extracted files into home directories...")
     for user in USER_CREDENTIALS.keys():
-        src = VICTIM_DIR / user
+        src = extracted_root / user
         dst = Path(f"/home/{user}")
 
         if not src.exists():
-            print(f"[!] Missing source directory for {user}: {src}")
-            continue
-        if not dst.exists():
-            print(f"[!] Missing destination directory for {user}: {dst}")
+            print(f"[!] WARNING: Missing content for {user} at {src}")
             continue
 
-        print(f"[+] Copying files for {user}: {src} -> {dst}")
         for item in src.iterdir():
-            target = dst / item.name
+            dst_item = dst / item.name
             if item.is_dir():
-                shutil.copytree(item, target, dirs_exist_ok=True)
+                shutil.copytree(item, dst_item, dirs_exist_ok=True)
             else:
-                shutil.copy2(item, target)
+                shutil.copy2(item, dst_item)
 
-        run(["chown", "-R", f"{user}:{user}", str(dst)])
+        run(["sudo", "chown", "-R", f"{user}:{user}", str(dst)])
 
-def start_background(script_path: str, log_path: str):
-    sp = Path(script_path)
-    if not sp.exists():
-        raise RuntimeError(f"Broadcaster script not found: {script_path}")
+    print("[+] Files copied.")
 
-    print(f"[+] Starting broadcaster in background: {script_path}")
-    Path(log_path).parent.mkdir(parents=True, exist_ok=True)
+def prompt_for_victim_ip() -> str:
+    ip = input("\n[?] Step 2: Enter the VICTIM IP address for the cyberbully broadcaster: ").strip()
+    if not ip:
+        print("[!] ERROR: victim IP cannot be blank.")
+        sys.exit(1)
+    return ip
 
-    logf = open(log_path, "a", buffering=1)
-    subprocess.Popen(
-        ["python3", script_path],
-        stdout=logf,
-        stderr=logf,
-        start_new_session=True,
-        cwd=str(sp.parent)
-    )
-    print(f"[+] Logging to: {log_path}")
+def write_config(victim_ip: str):
+    print(f"[+] Writing config to {CONF_PATH} ...")
+    conf_text = f"""# Cyberbully traffic generator config
+victim_ip={victim_ip}
+tcp_port=31337
+udp_port=31337
+interval=2
+message=you dont belong here
+"""
+    tmp = Path(tempfile.mkstemp(prefix="cyberbully_conf_", text=True)[1])
+    tmp.write_text(conf_text, encoding="utf-8")
+
+    run(["sudo", "mv", str(tmp), CONF_PATH])
+    run(["sudo", "chown", f"{BULLY_USER}:{BULLY_USER}", CONF_PATH])
+    run(["sudo", "chmod", "600", CONF_PATH])
+
+def start_broadcaster_background():
+    print("[+] Starting broadcaster in background (NOT systemd)...")
+    # Stop previous instance if PID file exists and process is alive
+    stop_cmd = f"""
+if [ -f "{PID_PATH}" ]; then
+  pid=$(cat "{PID_PATH}" 2>/dev/null || true)
+  if [ -n "$pid" ] && kill -0 "$pid" 2>/dev/null; then
+    kill "$pid" 2>/dev/null || true
+    sleep 1
+  fi
+  rm -f "{PID_PATH}"
+fi
+"""
+    run(["sudo", "bash", "-lc", stop_cmd], check=False)
+
+    # Start new instance as becky1; log + pidfile owned by becky1
+    start_cmd = f"""
+nohup /usr/bin/python3 "{BULLY_SCRIPT}" --config "{CONF_PATH}" >> "{LOG_PATH}" 2>&1 &
+echo $! > "{PID_PATH}"
+"""
+    run(["sudo", "-u", BULLY_USER, "bash", "-lc", start_cmd], check=True)
+
+    # lock down log/pid permissions
+    run(["sudo", "chown", f"{BULLY_USER}:{BULLY_USER}", LOG_PATH, PID_PATH], check=False)
+    run(["sudo", "chmod", "600", PID_PATH], check=False)
+    run(["sudo", "chmod", "644", LOG_PATH], check=False)
+
+    print(f"[+] Broadcaster running. PID file: {PID_PATH}")
+    print(f"[+] Log file: {LOG_PATH}")
+
+def remove_repo_self_destruct():
+    # Determine repo root: .../ppsCTF/challenges/cyberbully/deploy-bully2.py -> parents[2] == ppsCTF
+    script_path = Path(__file__).resolve()
+    repo_root = script_path.parents[2]  # cyberbully -> challenges -> ppsCTF
+    print(f"[+] Removing repo directory to prevent answer leakage: {repo_root}")
+
+    # Move out of repo before deleting
+    os.chdir("/")
+
+    # Use sudo rm -rf (safer than shutil when permissions vary)
+    run(["sudo", "rm", "-rf", str(repo_root)], check=False)
 
 def main():
-    ensure_root()
+    script_dir = Path(__file__).resolve().parent
 
-    install_dependencies()
-    create_or_update_users()
+    install_dependencies_and_enable_ssh()
+    secure_kali_account()
 
-    # SECURITY ORDER MATTERS
-    lock_down_ubuntu_before_password_auth()
-    configure_ssh_password_authentication()
-
+    extracted_root = extract_tar_to_temp(script_dir)
+    create_users_no_sudo()
     setup_ssh_dirs()
-    distribute_files()
+    distribute_files(extracted_root)
 
-    # Start broadcasters (non-copy scripts only)
-    if RUN_ICMP_BROADCASTER:
-        start_background(ICMP_SCRIPT_DEST, ICMP_LOG_PATH)
-    else:
-        print("[=] RUN_ICMP_BROADCASTER=False (not starting ICMP)")
+    victim_ip = prompt_for_victim_ip()
+    write_config(victim_ip)
+    start_broadcaster_background()
 
-    if RUN_TCP_BROADCASTER:
-        start_background(TCP_SCRIPT_DEST, TCP_LOG_PATH)
-    else:
-        print("[=] RUN_TCP_BROADCASTER=False (not starting TCP)")
+    # Clean temp extraction dir
+    try:
+        shutil.rmtree(extracted_root.parent, ignore_errors=True)
+    except Exception:
+        pass
 
-    print("[✅] Victim2 setup complete!")
-    print(f"    - Users: {', '.join(USER_CREDENTIALS.keys())}")
-    print(f"    - ICMP log: {ICMP_LOG_PATH}")
-    print(f"    - TCP  log: {TCP_LOG_PATH}")
-    print("    - Backup scripts '(copy 1)' are present but NOT used.")
+    remove_repo_self_destruct()
+
+    print("\n[✅] Bully2 deployed.")
+    print("\nUseful commands:")
+    print(f"  Tail bully log:   sudo tail -f {LOG_PATH}")
+    print(f"  Check PID:        sudo cat {PID_PATH}")
+    print(f"  Stop bully:       sudo kill $(cat {PID_PATH})")
+    print(f"  Change IP live:   sudo nano {CONF_PATH}   (script reloads automatically)")
+    print(f"  Restart bully:    sudo kill $(cat {PID_PATH}) && sudo -u {BULLY_USER} nohup python3 {BULLY_SCRIPT} --config {CONF_PATH} >> {LOG_PATH} 2>&1 &")
 
 if __name__ == "__main__":
-    try:
-        main()
-    except Exception as e:
-        print(f"[!] ERROR: {e}")
-        sys.exit(1)
+    main()
