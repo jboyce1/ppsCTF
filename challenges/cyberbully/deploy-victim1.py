@@ -4,17 +4,6 @@ deploy-victim1.py
 
 Goal: From a fresh VM, you run:
   git clone https://github.com/jboyce1/ppsCTF.git && cd ppsCTF/challenges/cyberbully/ && sudo python3 deploy-victim1.py
-
-…and it will:
-  1) install required dependencies (including netcat-openbsd + nmap for banner-verified scanning)
-  2) extract Victim1.tar.gz (assumed to be in this same directory)
-  3) create users + set passwords (idempotent)
-  4) lock down default 'ubuntu' account BEFORE enabling SSH password auth
-  5) enable SSH password auth (if desired)
-  6) distribute files into /home/<user>/
-  7) optionally start BOTH broadcaster scripts in the background (no terminal hog)
-     - logs to /home/vera1/icmp_broadcast.log and /home/vera1/tcp_broadcast.log
-
 Notes:
 - This assumes Victim1.tar.gz contains:
     Victim1/
@@ -23,244 +12,208 @@ Notes:
       victoria2/...
 - Broadcaster scripts should already include your port-22 SSH banner live-host discovery + 5-minute rescan logic.
 """
-
 import os
 import subprocess
 import tarfile
 import shutil
-import sys
 from pathlib import Path
 
-# =========================
-# CONFIG
-# =========================
-TAR_FILE = "Victim1.tar.gz"                      # must be in same dir as this script
-SCRIPT_DIR = Path(__file__).resolve().parent
-EXTRACT_PATH = SCRIPT_DIR                        # extract into the challenge dir (so Victim1/ appears here)
+# Configuration
+TAR_FILE = "Victim1.tar.gz"          # Assumed to be in the same directory as the script
+EXTRACT_PATH = os.getcwd()           # Extract in the current directory
+EXTRACT_ROOT_DIRNAME = "Victim1"
 
 USER_CREDENTIALS = {
     "vera1": "123213123",
     "victoria2": "V1ct0ry!"
 }
 
-# Toggle running broadcasters automatically
-RUN_ICMP_BROADCASTER = True
-RUN_TCP_BROADCASTER = True
+UBUNTU_USER = "ubuntu"
+DEFAULT_REPO_PATH = f"/home/{UBUNTU_USER}/ppsCTF"
 
-# Where the broadcaster scripts should end up after distribute_files()
-ICMP_SCRIPT_PATH = "/home/vera1/icmp_broadcast_flag_victim.py"
-TCP_SCRIPT_PATH  = "/home/vera1/tcp_broadcast_flag_pass_victim.py"
 
-ICMP_LOG_PATH = "/home/vera1/icmp_broadcast.log"
-TCP_LOG_PATH  = "/home/vera1/tcp_broadcast.log"
+def run(cmd, check=True, shell=False):
+    return subprocess.run(cmd, check=check, shell=shell)
 
-# Packages: include netcat-openbsd + nmap so the broadcaster scripts' banner verification always works.
-APT_PACKAGES = [
-    "python3-scapy",
-    "tcpdump",
-    "wireshark",
-    "nmap",
-    "netcat-openbsd",
-    "openssh-server",
-]
 
-# If you want password auth enabled, leave True.
-# If you only want password auth for your created users (and not ubuntu), we allowlist users and deny ubuntu below.
-ENABLE_SSH_PASSWORD_AUTH = True
+# ----------------------------
+# Step 0: Secure ubuntu account (before SSH changes)
+# ----------------------------
+def secure_ubuntu_account():
+    print("\n[!] Step 1: Set a NEW password for the 'ubuntu' account.")
+    print("[!] Students should NOT know this password.\n")
+    run(["sudo", "passwd", UBUNTU_USER], check=True)
 
-# =========================
-# Helpers
-# =========================
-def run(cmd, check=True, capture=False, shell=False, env=None):
-    if capture:
-        return subprocess.run(cmd, check=check, text=True, capture_output=True, shell=shell, env=env)
-    return subprocess.run(cmd, check=check, shell=shell, env=env)
+    # If ubuntu has passwordless sudo entries in /etc/sudoers.d, convert NOPASSWD -> PASSWD (best effort)
+    print("[+] Checking for passwordless sudo entries for ubuntu...")
+    grep = subprocess.run(
+        ["sudo", "grep", "-R", "-n", r"\bubuntu\b.*NOPASSWD", "/etc/sudoers.d"],
+        capture_output=True,
+        text=True
+    )
+    if grep.returncode == 0 and grep.stdout.strip():
+        print("[!] Found NOPASSWD entries for ubuntu. Converting to PASSWD (with backups)...")
+        for line in grep.stdout.strip().splitlines():
+            file_path = line.split(":", 1)[0]
+            run(["sudo", "cp", "-a", file_path, f"{file_path}.bak"], check=False)
+            run(["sudo", "sed", "-i", "s/NOPASSWD:/PASSWD:/g", file_path], check=False)
+        print("[+] Converted ubuntu NOPASSWD entries.")
+    else:
+        print("[+] No ubuntu NOPASSWD sudo entries found (good).")
 
-def ensure_root():
-    if os.geteuid() != 0:
-        print("[!] Please run with sudo: sudo python3 deploy-victim1.py")
-        sys.exit(1)
 
+# ----------------------------
+# Install dependencies
+# ----------------------------
 def install_dependencies():
     print("[+] Installing required packages...")
-    env = os.environ.copy()
-    env["DEBIAN_FRONTEND"] = "noninteractive"
-    run(["apt-get", "update"], env=env)
-    run(["apt-get", "install", "-y", "--allow-change-held-packages", *APT_PACKAGES], env=env)
+    packages = ["python3-scapy", "tcpdump", "wireshark", "openssh-server"]
+    run(["sudo", "apt-get", "update"], check=True)
+    run(["sudo", "apt-get", "install", "-y"] + packages, check=True)
     print("[+] Dependencies installed successfully!")
 
+
+# ----------------------------
+# Extract tar
+# ----------------------------
 def extract_tar():
-    tar_path = SCRIPT_DIR / TAR_FILE
-    print(f"[+] Extracting {tar_path} -> {EXTRACT_PATH} ...")
-    if tar_path.exists():
-        with tarfile.open(tar_path, "r:gz") as tar:
-            tar.extractall(str(EXTRACT_PATH))
+    print(f"[+] Extracting {TAR_FILE}...")
+    if os.path.exists(TAR_FILE):
+        with tarfile.open(TAR_FILE, "r:gz") as tar:
+            tar.extractall(EXTRACT_PATH)
         print("[+] Extraction complete!")
     else:
-        print(f"[!] ERROR: {tar_path} not found!")
-        sys.exit(1)
+        print(f"[!] ERROR: {TAR_FILE} not found!")
+        raise SystemExit(1)
 
-def user_exists(user: str) -> bool:
-    r = run(["bash", "-lc", f"id -u {user} >/dev/null 2>&1"], check=False)
-    return r.returncode == 0
 
-def create_or_update_users():
+# ----------------------------
+# Create users and set passwords
+# ----------------------------
+def create_users():
     for user, password in USER_CREDENTIALS.items():
-        if user_exists(user):
-            print(f"[+] User exists: {user} (updating password + sudoers rule)")
-        else:
-            print(f"[+] Creating user: {user}")
-            run(["useradd", "-m", "-s", "/bin/bash", user])
+        print(f"[+] Creating user: {user}")
+        # useradd will fail if user exists; we allow that by check=False then ensure passwd is set
+        run(["sudo", "useradd", "-m", "-s", "/bin/bash", user], check=False)
+        run(f"echo '{user}:{password}' | sudo chpasswd", shell=True, check=True)
 
-        # set password
-        run(["bash", "-lc", f"echo '{user}:{password}' | chpasswd"])
+        # Allow tcpdump only (no full sudo). NOTE: tcpdump path is typically /usr/sbin/tcpdump on Ubuntu.
+        sudoers_path = f"/etc/sudoers.d/{user}"
+        sudoers_line = f"{user} ALL=(ALL) NOPASSWD: /usr/sbin/tcpdump\n"
+        tmp = "/tmp/tcpdump_sudoers.tmp"
+        with open(tmp, "w") as f:
+            f.write(sudoers_line)
+        run(["sudo", "mv", tmp, sudoers_path], check=True)
+        run(["sudo", "chmod", "440", sudoers_path], check=True)
 
-        # Grant sudo privileges for tcpdump to both users (idempotent)
-        sudoers_path = Path(f"/etc/sudoers.d/{user}")
-        sudoers_content = f"{user} ALL=(ALL) NOPASSWD: /usr/sbin/tcpdump\n"
-        sudoers_path.write_text(sudoers_content)
-        run(["chmod", "440", str(sudoers_path)])
 
-def setup_ssh_dirs():
-    print("[+] Ensuring .ssh directories exist (safe scaffolding)...")
-    for user in USER_CREDENTIALS.keys():
-        ssh_dir = Path(f"/home/{user}/.ssh")
-        ssh_dir.mkdir(parents=True, exist_ok=True)
-        run(["chmod", "700", str(ssh_dir)])
-        ak = ssh_dir / "authorized_keys"
-        ak.touch(exist_ok=True)
-        run(["chmod", "600", str(ak)])
-        run(["chown", "-R", f"{user}:{user}", str(ssh_dir)])
-
-def lock_down_ubuntu_before_password_auth():
-    """
-    Critical: prevent "ubuntu:password" (or any default ubuntu password) from being usable.
-    Do this BEFORE enabling PasswordAuthentication and restarting ssh.
-    """
-    if user_exists("ubuntu"):
-        print("[+] Locking default 'ubuntu' account password...")
-        run(["passwd", "-l", "ubuntu"], check=False)
-
-    # Hard deny ubuntu over SSH, and allow only our users.
-    allow_users = " ".join(USER_CREDENTIALS.keys())
-    sshd_config = "/etc/ssh/sshd_config"
-
-    print("[+] Updating sshd_config: DenyUsers ubuntu + AllowUsers <our users> ...")
-
-    # Ensure DenyUsers ubuntu exists
-    run(["bash", "-lc",
-         r"grep -qE '^\s*DenyUsers\s+.*\bubuntu\b' /etc/ssh/sshd_config || "
-         r"echo 'DenyUsers ubuntu' >> /etc/ssh/sshd_config"
-    ], check=False)
-
-    # Set/replace AllowUsers line
-    run(["bash", "-lc",
-         rf"if grep -qE '^\s*AllowUsers\s+' {sshd_config}; then "
-         rf"  sed -i 's/^\s*AllowUsers\s\+.*/AllowUsers {allow_users}/' {sshd_config}; "
-         rf"else "
-         rf"  echo 'AllowUsers {allow_users}' >> {sshd_config}; "
-         rf"fi"
-    ], check=False)
-
+# ----------------------------
+# Enable password authentication for SSH
+# ----------------------------
 def configure_ssh_password_authentication():
-    if not ENABLE_SSH_PASSWORD_AUTH:
-        print("[=] ENABLE_SSH_PASSWORD_AUTH=False, leaving sshd_config unchanged for PasswordAuthentication.")
-        return
+    print("[+] Enabling SSH password authentication...")
+    run([
+        "sudo", "sed", "-i",
+        r's/^\s*#\?\s*PasswordAuthentication\s\+.*/PasswordAuthentication yes/',
+        "/etc/ssh/sshd_config"
+    ], check=True)
 
-    print("[+] Enabling SSH password authentication (PasswordAuthentication yes)...")
-    # Replace existing line or add if missing (idempotent)
-    run(["bash", "-lc",
-         r"if grep -qE '^\s*#?\s*PasswordAuthentication\s+' /etc/ssh/sshd_config; then "
-         r"  sed -i 's/^\s*#\?\s*PasswordAuthentication\s\+.*/PasswordAuthentication yes/' /etc/ssh/sshd_config; "
-         r"else "
-         r"  echo 'PasswordAuthentication yes' >> /etc/ssh/sshd_config; "
-         r"fi"
-    ], check=False)
+    # Ensure SSH is enabled and restarted
+    run(["sudo", "systemctl", "enable", "--now", "ssh"], check=False)
+    run(["sudo", "systemctl", "restart", "ssh"], check=True)
 
-    run(["systemctl", "restart", "ssh"])
-    print("[+] SSH password authentication enabled and SSH service restarted.")
+    print("[+] SSH password authentication enabled and SSH restarted.")
 
-def distribute_files():
-    """
-    Copy extracted Victim1/<user>/* into /home/<user>/
-    """
-    base_extracted_path = EXTRACT_PATH / "Victim1"
-    if not base_extracted_path.exists():
-        raise RuntimeError(f"Expected extracted folder not found: {base_extracted_path}")
 
+# ----------------------------
+# Setup SSH dirs (optional, but keeps your structure consistent)
+# ----------------------------
+def setup_ssh():
+    print("[+] Configuring SSH directories for all users...")
     for user in USER_CREDENTIALS.keys():
-        user_path = base_extracted_path / user
-        dest_path = Path(f"/home/{user}")
+        ssh_dir = f"/home/{user}/.ssh"
+        run(["sudo", "mkdir", "-p", ssh_dir], check=True)
+        run(["sudo", "chmod", "700", ssh_dir], check=True)
+        run(["sudo", "touch", f"{ssh_dir}/authorized_keys"], check=True)
+        run(["sudo", "chmod", "600", f"{ssh_dir}/authorized_keys"], check=True)
+        run(["sudo", "chown", "-R", f"{user}:{user}", ssh_dir], check=True)
 
-        if user_path.exists() and dest_path.exists():
-            print(f"[+] Copying files for {user}...")
-            for item in user_path.iterdir():
-                target = dest_path / item.name
-                if item.is_dir():
-                    shutil.copytree(item, target, dirs_exist_ok=True)
-                else:
-                    shutil.copy2(item, target)
-            run(["chown", "-R", f"{user}:{user}", str(dest_path)])
-            print(f"[+] Files copied for {user}")
-        else:
-            print(f"[!] Skipping {user}: source or destination missing ({user_path} -> {dest_path})")
 
-def start_background(script_path: str, log_path: str):
+# ----------------------------
+# Distribute extracted files
+# ----------------------------
+def distribute_files():
+    base_extracted_path = os.path.join(EXTRACT_PATH, EXTRACT_ROOT_DIRNAME)
+    for user in USER_CREDENTIALS.keys():
+        user_path = os.path.join(base_extracted_path, user)
+        if os.path.exists(user_path):
+            dest_path = f"/home/{user}"
+            if os.path.exists(dest_path):
+                print(f"[+] Copying files for {user}...")
+                for item in os.listdir(user_path):
+                    item_path = os.path.join(user_path, item)
+                    if os.path.isdir(item_path):
+                        shutil.copytree(item_path, os.path.join(dest_path, item), dirs_exist_ok=True)
+                    else:
+                        shutil.copy(item_path, os.path.join(dest_path, item))
+                run(["sudo", "chown", "-R", f"{user}:{user}", dest_path], check=False)
+                print(f"[+] Files copied for {user}")
+
+
+# ----------------------------
+# Permanently delete ppsCTF from ubuntu user's home
+# ----------------------------
+def delete_repo_from_ubuntu_home():
     """
-    Run a script detached so it doesn't hog a terminal.
-    Uses start_new_session=True so it survives terminal logout.
+    Deletes /home/ubuntu/ppsCTF (default). If that doesn't exist,
+    attempts to infer repo root based on this script path.
     """
-    sp = Path(script_path)
-    if not sp.exists():
-        raise RuntimeError(f"Broadcaster script not found: {script_path}")
+    candidates = []
 
-    print(f"[+] Starting broadcaster: {script_path}")
-    os.makedirs(str(Path(log_path).parent), exist_ok=True)
+    # Most common path when using your one-liner from /home/ubuntu
+    candidates.append(Path(DEFAULT_REPO_PATH))
 
-    logf = open(log_path, "a", buffering=1)
-    subprocess.Popen(
-        ["python3", script_path],
-        stdout=logf,
-        stderr=logf,
-        start_new_session=True,
-        cwd=str(Path(script_path).parent)
-    )
-    print(f"[+] Logging to: {log_path}")
+    # Fallback: infer repo root from script location: .../ppsCTF/challenges/.../deploy.py
+    script_path = Path(__file__).resolve()
+    for parent in script_path.parents:
+        if parent.name == "ppsCTF":
+            candidates.append(parent)
+            break
 
+    for p in candidates:
+        try:
+            if p.exists() and p.is_dir():
+                print(f"[+] Deleting repo directory permanently: {p}")
+                os.chdir("/")  # avoid deleting current working dir
+                run(["sudo", "rm", "-rf", str(p)], check=False)
+                print("[+] Repo deleted.")
+                return
+        except Exception:
+            continue
+
+    print("[!] Repo directory not found to delete (skipping).")
+
+
+# ----------------------------
+# Main
+# ----------------------------
 def main():
-    ensure_root()
+    # 1) Password change first (before SSH changes)
+    secure_ubuntu_account()
 
+    # 2) Now do installs + deploy
     install_dependencies()
     extract_tar()
-    create_or_update_users()
-
-    # SECURITY ORDER MATTERS:
-    # lock down ubuntu BEFORE enabling password auth
-    lock_down_ubuntu_before_password_auth()
-
+    create_users()
     configure_ssh_password_authentication()
-    setup_ssh_dirs()
+    setup_ssh()
     distribute_files()
 
-    # Start broadcasters (optional toggles)
-    if RUN_ICMP_BROADCASTER:
-        start_background(ICMP_SCRIPT_PATH, ICMP_LOG_PATH)
-    else:
-        print("[=] RUN_ICMP_BROADCASTER=False (not starting ICMP)")
+    # 3) Remove repo (answer hygiene)
+    delete_repo_from_ubuntu_home()
 
-    if RUN_TCP_BROADCASTER:
-        start_background(TCP_SCRIPT_PATH, TCP_LOG_PATH)
-    else:
-        print("[=] RUN_TCP_BROADCASTER=False (not starting TCP)")
+    print("[✅] Victim1 setup complete! Ready for CTF deployment.")
 
-    print("[✅] Victim1 setup complete!")
-    print(f"    - Users: {', '.join(USER_CREDENTIALS.keys())}")
-    print(f"    - ICMP log: {ICMP_LOG_PATH}")
-    print(f"    - TCP  log: {TCP_LOG_PATH}")
 
 if __name__ == "__main__":
-    try:
-        main()
-    except Exception as e:
-        print(f"[!] ERROR: {e}")
-        sys.exit(1)
+    main()
