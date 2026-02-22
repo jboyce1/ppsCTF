@@ -21,16 +21,15 @@ USER_CREDENTIALS = {
 
 KALI_USER = "kali"
 
-# Scripts live in /home/brenda2 after distribution (per your tree)
 BRENDA_HOME = "/home/brenda2"
 BEKAH_HOME = "/home/bekah1"
 
 BULLY_SCRIPT = f"{BRENDA_HOME}/tcp_udp_icmp_cyberbully.py"
-TCP_MONITOR = f"{BRENDA_HOME}/tcp_monitor.py"
-MEM_MONITOR = f"{BRENDA_HOME}/memory_monitor.py"
+TCP_MONITOR  = f"{BRENDA_HOME}/tcp_monitor.py"
+MEM_MONITOR  = f"{BRENDA_HOME}/memory_monitor.py"
 
 # Victim2 IP config file (one line with IP)
-VICTIM_CONF_BEKAH = f"{BEKAH_HOME}/.victim2.conf"
+# IMPORTANT: bully runs as root now, but we still keep config in brenda2's home
 VICTIM_CONF_BRENDA = f"{BRENDA_HOME}/.victim2.conf"
 
 # Background run state
@@ -89,6 +88,7 @@ def wait_for_apt(timeout_sec=600):
 def apt_install(packages):
     env = os.environ.copy()
     env["DEBIAN_FRONTEND"] = "noninteractive"
+
     wait_for_apt()
     run(["sudo", "apt-get", "update"], check=True, env=env)
 
@@ -104,7 +104,6 @@ def secure_kali_password_first():
     print("\n[!] Step 1: Set a NEW password for the 'kali' account (students should NOT know it).")
     run(["sudo", "passwd", KALI_USER], check=True)
 
-    # best-effort: convert any kali NOPASSWD in /etc/sudoers.d
     print("[+] Checking for passwordless sudo entries for kali...")
     grep = subprocess.run(
         ["sudo", "grep", "-R", "-n", r"\bkali\b.*NOPASSWD", "/etc/sudoers.d"],
@@ -132,20 +131,17 @@ def install_deps_enable_ssh_restrict_users():
     ]
     apt_install(packages)
 
-    # Enable/start ssh
     run(["sudo", "systemctl", "enable", "--now", "ssh"], check=False)
 
-    # Restrict SSH to ONLY bekah1 (prevents brenda2 and others)
-    # We'll add/update AllowUsers line (idempotent-ish).
+    # Restrict SSH to ONLY bekah1
     sshd = "/etc/ssh/sshd_config"
     run(["sudo", "cp", "-a", sshd, f"{sshd}.bak"], check=False)
-
-    # Remove existing AllowUsers lines then add ours at end
     run(["sudo", "sed", "-i", r"/^\s*AllowUsers\s\+/d", sshd], check=False)
     run(["sudo", "bash", "-lc", f"echo 'AllowUsers bekah1' | sudo tee -a {sshd} >/dev/null"], check=False)
-
-    # Ensure password auth yes (students will ssh with bekah1 password)
     run(["sudo", "sed", "-i", r"s/^\s*#\?\s*PasswordAuthentication\s\+.*/PasswordAuthentication yes/", sshd], check=False)
+
+    # Recommended: disable root SSH just in case
+    run(["sudo", "sed", "-i", r"s/^\s*#\?\s*PermitRootLogin\s\+.*/PermitRootLogin no/", sshd], check=False)
 
     run(["sudo", "systemctl", "restart", "ssh"], check=True)
     print("[+] SSH enabled and restricted to: bekah1")
@@ -176,19 +172,19 @@ def create_users():
             run(["sudo", "useradd", "-m", "-s", "/bin/bash", user], check=True)
         run(f"echo '{user}:{password}' | sudo chpasswd", shell=True, check=True)
 
-    # Make sure neither is sudo
+    # Remove sudo privileges if any
     for user in USER_CREDENTIALS.keys():
         run(["sudo", "deluser", user, "sudo"], check=False)
         run(["sudo", "rm", "-f", f"/etc/sudoers.d/{user}"], check=False)
 
-    # Lock brenda2 out of logins (but allow background processes)
+    # Prevent brenda2 interactive logins
     run(["sudo", "usermod", "-s", "/usr/sbin/nologin", "brenda2"], check=False)
     run(["sudo", "passwd", "-l", "brenda2"], check=False)
 
     print("[+] Users ready. brenda2 login disabled.")
 
 def setup_ssh_dirs():
-    print("[+] Creating SSH dirs for bekah1 (brenda2 login is disabled)...")
+    print("[+] Creating SSH dirs for bekah1...")
     user = "bekah1"
     ssh_dir = Path(f"/home/{user}/.ssh")
     run(["sudo", "mkdir", "-p", str(ssh_dir)], check=True)
@@ -215,7 +211,7 @@ def distribute_files(extracted_root: Path):
 
         run(["sudo", "chown", "-R", f"{user}:{user}", str(dst)], check=False)
 
-    # Remove bekah's .storage if present (avoid easy ls -a discovery bait)
+    # OPTIONAL: remove bekah Desktop .storage if present (you can remove this if you still want it)
     storage = Path(f"{BEKAH_HOME}/Desktop/.storage")
     if storage.exists():
         run(["sudo", "rm", "-rf", str(storage)], check=False)
@@ -230,19 +226,20 @@ def prompt_for_victim2_ip() -> str:
     return ip
 
 def write_victim_conf(victim_ip: str):
-    for path, owner in [(VICTIM_CONF_BEKAH, "bekah1"), (VICTIM_CONF_BRENDA, "brenda2")]:
-        tmp = Path(tempfile.mkstemp(prefix="victim2_", text=True)[1])
-        tmp.write_text(victim_ip + "\n", encoding="utf-8")
-        run(["sudo", "mv", str(tmp), path], check=True)
-        run(["sudo", "chown", f"{owner}:{owner}", path], check=False)
-        run(["sudo", "chmod", "600", path], check=False)
+    tmp = Path(tempfile.mkstemp(prefix="victim2_", text=True)[1])
+    tmp.write_text(victim_ip + "\n", encoding="utf-8")
+
+    run(["sudo", "mv", str(tmp), VICTIM_CONF_BRENDA], check=True)
+    run(["sudo", "chown", "brenda2:brenda2", VICTIM_CONF_BRENDA], check=False)
+    # readable by root (for bully) and brenda2 (for monitors). no need for bekah1.
+    run(["sudo", "chmod", "600", VICTIM_CONF_BRENDA], check=False)
 
 def ensure_state_dir():
     run(["sudo", "mkdir", "-p", STATE_DIR], check=True)
     run(["sudo", "chown", "-R", "brenda2:brenda2", STATE_DIR], check=False)
     run(["sudo", "chmod", "700", STATE_DIR], check=False)
 
-def start_bg_as_brenda(script_path: str, pid_path: str, log_path: str):
+def stop_if_running(pid_path: str):
     stop_cmd = f"""
 if [ -f "{pid_path}" ]; then
   pid="$(cat "{pid_path}" 2>/dev/null || true)"
@@ -255,40 +252,57 @@ fi
 """
     run(["sudo", "bash", "-lc", stop_cmd], check=False)
 
+def start_bg_as_user(username: str, script_path: str, pid_path: str, log_path: str):
+    stop_if_running(pid_path)
     start_cmd = f"""
 set -e
 nohup /usr/bin/python3 "{script_path}" >> "{log_path}" 2>&1 &
 echo $! > "{pid_path}"
 """
-    run(["sudo", "-u", "brenda2", "bash", "-lc", start_cmd], check=True)
+    run(["sudo", "-u", username, "bash", "-lc", start_cmd], check=True)
+    run(["sudo", "chown", f"{username}:{username}", pid_path, log_path], check=False)
+    run(["sudo", "chmod", "600", pid_path], check=False)
+    run(["sudo", "chmod", "644", log_path], check=False)
 
+def start_bg_as_root(script_path: str, pid_path: str, log_path: str):
+    stop_if_running(pid_path)
+    start_cmd = f"""
+set -e
+nohup /usr/bin/python3 "{script_path}" >> "{log_path}" 2>&1 &
+echo $! > "{pid_path}"
+"""
+    run(["sudo", "bash", "-lc", start_cmd], check=True)
+    # keep state owned by brenda2 so you can manage it easily
     run(["sudo", "chown", "brenda2:brenda2", pid_path, log_path], check=False)
     run(["sudo", "chmod", "600", pid_path], check=False)
     run(["sudo", "chmod", "644", log_path], check=False)
 
 def start_all():
-    print("[+] Starting bully + monitors as brenda2 (background, not systemd)...")
+    print("[+] Starting bully + monitors (background, not systemd)...")
     ensure_state_dir()
 
-    # Basic sanity checks
+    # Sanity checks
     for p in [BULLY_SCRIPT, TCP_MONITOR, MEM_MONITOR]:
         if not Path(p).exists():
             print(f"[!] ERROR: missing expected script: {p}")
             sys.exit(1)
 
-    start_bg_as_brenda(BULLY_SCRIPT, PID_BULLY, LOG_BULLY)
-    start_bg_as_brenda(TCP_MONITOR,  PID_TCP,   LOG_TCP)
-    start_bg_as_brenda(MEM_MONITOR,  PID_MEM,   LOG_MEM)
+    # IMPORTANT:
+    # - bully runs as root (Scapy/raw sockets)
+    # - monitors run as brenda2 (no SSH access)
+    start_bg_as_root(BULLY_SCRIPT, PID_BULLY, LOG_BULLY)
+    start_bg_as_user("brenda2", TCP_MONITOR, PID_TCP, LOG_TCP)
+    start_bg_as_user("brenda2", MEM_MONITOR, PID_MEM, LOG_MEM)
 
     print("[+] Running:")
-    print(f"    cyberbully: {PID_BULLY} -> {LOG_BULLY}")
-    print(f"    tcp_monitor: {PID_TCP} -> {LOG_TCP}")
-    print(f"    mem_monitor: {PID_MEM} -> {LOG_MEM}")
+    print(f"    cyberbully (root): {PID_BULLY} -> {LOG_BULLY}")
+    print(f"    tcp_monitor:       {PID_TCP} -> {LOG_TCP}")
+    print(f"    mem_monitor:       {PID_MEM} -> {LOG_MEM}")
 
 def remove_repo_self_destruct():
-    # .../ppsCTF/challenges/cyberbully/deploy-bully3.py -> parents[2] == ppsCTF
+    # deploy-bully3.py is in: .../ppsCTF/challenges/cyberbully/
     script_path = Path(__file__).resolve()
-    repo_root = script_path.parents[2]
+    repo_root = script_path.parents[2]  # cyberbully -> challenges -> ppsCTF
     print(f"[+] Removing repo directory permanently: {repo_root}")
     os.chdir("/")
     run(["sudo", "rm", "-rf", str(repo_root)], check=False)
@@ -309,7 +323,7 @@ def main():
 
     start_all()
 
-    # cleanup extraction
+    # cleanup extraction tempdir
     try:
         shutil.rmtree(extracted_root.parent, ignore_errors=True)
     except Exception:
@@ -320,12 +334,11 @@ def main():
     print("\n[✅] Bully3 deployed.\n")
     print("Student access:")
     print("  SSH allowed ONLY for: bekah1")
-    print("\nUseful admin commands:")
-    print(f"  Tail bully log:      sudo tail -f {LOG_BULLY}")
-    print(f"  Tail tcp log:        sudo tail -f {LOG_TCP}")
-    print(f"  Tail mem log:        sudo tail -f {LOG_MEM}")
-    print(f"  Stop all:            sudo kill $(cat {PID_BULLY}) $(cat {PID_TCP}) $(cat {PID_MEM})")
-    print(f"  Change victim2 IP:   sudo nano {VICTIM_CONF_BRENDA}  (one-line IP)")
+    print("\nQuick checks:")
+    print(f"  Bully log:  sudo tail -n 50 {LOG_BULLY}")
+    print(f"  PIDs:       sudo ls -l {STATE_DIR}/*.pid")
+    print("\nStop all:")
+    print(f"  sudo kill $(cat {PID_BULLY}) $(cat {PID_TCP}) $(cat {PID_MEM})")
 
 if __name__ == "__main__":
     main()
