@@ -1,0 +1,21 @@
+start 4 ubuntu vms:
+1. box 1:
+  create a new user using new_rand_user.py
+    passwords in the users.txt file
+  create a broadcaster using the icmp_broadcast.py of the initial box with the username and password as the message
+
+2. box 2
+  create a new user toggle configurations
+  send password/username via icmp to box 1
+  add wireshark_monitor.py to desktop
+
+3. box 3
+    create new user toggle configurations
+    send relevant info to box 2 with basic tcp
+
+4. box 4
+    create new user toggle configurations
+    send relevant info to box 3 with basic udp
+    student should run wireshark_monitor.py with their signature as the popup
+
+start more vms as needed
