@@ -1,4 +1,4 @@
-start 4 ubuntu vms:
+start 5 ubuntu vms:
 1. box 1:
   create a new user using new_rand_user.py
     passwords in the users.txt file
@@ -13,9 +13,18 @@ start 4 ubuntu vms:
     create new user toggle configurations
     send relevant info to box 2 with basic tcp
 
-4. box 4
+4a. box 4
     create new user toggle configurations
     send relevant info to box 3 with basic udp
     student should run wireshark_monitor.py with their signature as the popup
 
-start more vms as needed
+5. box 5
+    get ip and set up new user with ssh on port 22
+    get username/passworld/ip address to put into ppsCTFsuggesionbox
+
+4b.
+    sudo apt update && pip3 install --user pyinstaller paramiko
+    #change username/password/IP in ppsCTFsuggestions
+    pyinstaller --onefile --name ppsCTFsuggestionbox ppsCTFsuggestionbox_easy.py
+
+Add more VMs if needed
