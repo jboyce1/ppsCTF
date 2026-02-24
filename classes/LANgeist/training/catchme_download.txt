@@ -1,1 +1,5 @@
-wget 
+start 5 vms
+open instructions in box to continue setup
+
+wget -O- https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/LANgeist/training/catchme.tar.gz | tar -xz
+
