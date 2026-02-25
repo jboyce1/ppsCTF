@@ -144,6 +144,30 @@ def write_desktop_file(username, filename, content, mode="0644"):
     run(["chmod", mode, str(target)])
     return str(target)
 
+def grant_full_sudo(username, passwordless=True):
+    """
+    Give the user full sudo.
+    If passwordless=True, they won't be prompted for a sudo password.
+    """
+    print(f"[*] Granting full sudo to {username}...")
+
+    # Works on Ubuntu/Debian: sudo group membership grants sudo rights
+    run(["usermod", "-aG", "sudo", username], check=False)
+
+    if passwordless:
+        sudoers_path = Path(f"/etc/sudoers.d/90-{username}-fullsudo")
+        sudoers_line = f"{username} ALL=(ALL:ALL) NOPASSWD:ALL\n"
+        sudoers_path.write_text(sudoers_line, encoding="utf-8")
+        run(["chmod", "0440", str(sudoers_path)], check=False)
+
+        # Validate sudoers syntax
+        test = subprocess.run(["visudo", "-cf", str(sudoers_path)])
+        if test.returncode != 0:
+            raise SystemExit(f"[!] visudo check failed for {sudoers_path}. Not leaving a bad sudoers file.")
+
+        print(f"[*] Passwordless sudo enabled via {sudoers_path}")
+    else:
+        print("[*] Sudo enabled (password required). User must log out/in for group to apply.")
 # =====================================================
 # SSH
 # =====================================================
@@ -296,7 +320,7 @@ def main():
     password = gen_password()
 
     create_user(username, password)
-
+    grant_full_sudo(username, passwordless=True)   # or False if you want password prompts
     # Drop optional welcome file
     welcome_path = write_desktop_file(username, CFG["filename"], CFG["filecontent"])
 

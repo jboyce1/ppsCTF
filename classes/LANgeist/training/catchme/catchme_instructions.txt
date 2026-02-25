@@ -1,13 +1,16 @@
 start 5 ubuntu vms:
+warning: tcp should only be used on the first one as port 22 is not caputred on fifo pipes and non-22 are not open by default on cyber.org range. Must open persistant nc listener on another port and adjust tcp_interval.py to use.
+
 1. box 1:
   create a new user using new_rand_user.py
     passwords in the users.txt file
-  create a broadcaster using the icmp_broadcast.py of the initial box with the username and password as the message
+  create a broadcaster using the tcp_broadcast.py of the initial box with the username and password as the message
 
 2. box 2
   create a new user toggle configurations
   send password/username via icmp to box 1
   add wireshark_monitor.py to desktop
+  
 
 3. box 3
     create new user toggle configurations
