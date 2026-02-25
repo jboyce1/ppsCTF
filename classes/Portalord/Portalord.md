@@ -19,12 +19,26 @@ title: Portalord
 # 1 using remote ssh
 1. using remote ssh to connect back to a students localhost and get around ufw rules set up in the environment.
 
+
+Set up the ufw wirewalls to block all traffic to port 22
 <div class="scroll-box">
 sudo ufw reset
-sudo ufw allow 23
 sudo ufw deny 22
 sudo ufw enable
 </div>   
+
+Create a user that can only access telnet specific files
+#### `cd /home/inetd.conf`
+#### `sudo adduser teluser`
+
+### On the attacker-box
+Install telnet server if needed:
+<div class="scroll-box">
+sudo apt install openbsd-inetd telnetd -y
+</div>   
+
+now telnet into the ssh-closed-box
+#### `telnet x.x.x.x`
 
 # 2 portbinding
 
