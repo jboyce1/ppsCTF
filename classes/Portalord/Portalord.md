@@ -106,9 +106,34 @@ What you are doing is connecting to your local port 2222, which has an open ssh 
 
 go and find your flag
 
-# 2 portbinding
+# Part 2: Localhost ladders and Jumps 
+Local port forwarding
 
-2. using setting up portbinding from localhost to ssh devices eg. ssh ubuntu@10.15.15.10 > localhost:20000 localhost:20000 ssh ubuntu@10.15.15.11 >localhost:20001
+using setting up portbinding from localhost to allows you to create tunnels ssh devices eg. ssh ubuntu@10.15.15.10 > localhost:20000 localhost:20000 ssh ubuntu@10.15.15.11 >localhost:20001
+
+Step 1: Set up the environment that you will be laddering (at least two, so you will need a partner on the cyber.org range)
+ubuntu 1: deny
+
+sudo ufw deny from kali.1.ip.addr
+sudo ufw deny from kali.2.ip.addr
+sudo ufw enable
+
+sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
+
+ubuntu 2: allow
+sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
+
+kali 1: ladder
+ssh -N -L 2223:localhost:22 ubuntu@al.lo.w.ip
+- binds
+- now ssh -p 2223 ubuntu@localhost #first step of the ladder
+- ssh -N -L 2224:localhost:2223 ubuntu@de.ny.i.p
+
+  
+kali 2: jump
+
+Step 2:
+telnet to 
 
 # 3 wireshark
 3. combining mkfifo wireshark capture to remote capture from chain ssh localhost:20001 "sudo tcpdump [flags]" /capturefifo
