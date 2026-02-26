@@ -100,7 +100,7 @@ If it appears to "hang" you have an open connection
 
 Now from a differnt terminal on you kali localhost
 <div class="scroll-box">
-ssh -p2222 ubuntu@ssh.closed.box.ip
+ssh -p2222 ubuntu@localhost
 </div>  
 What you are doing is connecting to your local port 2222, which has an open ssh session from the remote device. You are using that port 2222 to ssh to port 22 on the remote device which is only blocked at the firewall and not on the local machine. 
 
