@@ -1,4 +1,4 @@
----
+  ---
 layout: default
 title: Portalord
 ---
@@ -88,7 +88,7 @@ sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/s
 
 Now telnet into the ssh-closed-box
 <div class="scroll-box">
-telnet x.x.x.x`
+telnet x.x.x.x
 </div>  
 Now bind a local high port to local 22:
 <div class="scroll-box">
@@ -100,7 +100,7 @@ If it appears to "hang" you have an open connection
 
 Now from a differnt terminal on you kali localhost
 <div class="scroll-box">
-ssh -p2222 ubuntu@localhost
+ssh -p 2222 ubuntu@localhost
 </div>  
 What you are doing is connecting to your local port 2222, which has an open ssh session from the remote device. You are using that port 2222 to ssh to port 22 on the remote device which is only blocked at the firewall and not on the local machine. 
 
@@ -109,31 +109,52 @@ go and find your flag
 # Part 2: Localhost ladders and Jumps 
 Local port forwarding
 
+In this situation, you are going to access a box that is only accessible from another box.
+
 using setting up portbinding from localhost to allows you to create tunnels ssh devices eg. ssh ubuntu@10.15.15.10 > localhost:20000 localhost:20000 ssh ubuntu@10.15.15.11 >localhost:20001
 
 Step 1: Set up the environment that you will be laddering (at least two, so you will need a partner on the cyber.org range)
-ubuntu 1: deny
 
-sudo ufw deny from kali.1.ip.addr
-sudo ufw deny from kali.2.ip.addr
+ubuntu 1: deny from ip
+<div class="scroll-box">
+sudo ufw default allow incoming #ensures only the IPs we DENY are blocked
+sudo ufw deny from kali.1.ip.addr to any
+sudo ufw deny from kali.2.ip.addr to any
 sudo ufw enable
-
 sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
+</div>
 
 ubuntu 2: allow
+<div class="scroll-box">
 sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
+</div>  
 
 kali 1: ladder
+<div class="scroll-box">
 ssh -N -L 2223:localhost:22 ubuntu@al.lo.w.ip
-- binds
+</div>
+
 - now ssh -p 2223 ubuntu@localhost #first step of the ladder
-- ssh -N -L 2224:localhost:2223 ubuntu@de.ny.i.p
+<div class="scroll-box">
+ssh -N -p 2223 -L 2224:de.ny.ip.addr:22 ubuntu@localhost
+</div>
+this window will hang- that is success.
 
-  
+open a new terminal
+<div class="scroll-box">
+ssh -p 2224 ubuntu@localhost
+</div> 
+
 kali 2: jump
+<div class="scroll-box">
+ssh -J ubuntu@allowedIP ubuntu@blockedIP
+</div>
+<div class="scroll-box">
+scp -J ubuntu@allowedIP ubuntu@blockedIP:/directory/file.txt /directory/to/local
+</div> 
 
-Step 2:
-telnet to 
+this is great for a single jump, but does not chain back, cannot be combined with reverse ssh tunnels and cannot use proxychains
+
 
 # 3 wireshark
 3. combining mkfifo wireshark capture to remote capture from chain ssh localhost:20001 "sudo tcpdump [flags]" /capturefifo
