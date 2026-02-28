@@ -153,8 +153,9 @@ scp -J ubuntu@allowedIP ubuntu@blockedIP:/directory/file.txt /directory/to/local
 This is great for a single jump, but does not chain back, cannot be combined with reverse ssh tunnels and cannot use proxychains
 
 
-# 3 wireshark
-combining mkfifo wireshark capture to remote capture from chain ssh localhost:20001 "sudo tcpdump [flags]" /capturefifo
+# 3 Remote wireshark capture through a ladder tunnel
+Combining mkfifo wireshark capture to remote capture from chain we will be able to monitor traffic on a device that we do not have direct access to.
+
 
 Ubuntu 1: deny from attack box IP
 <div class="scroll-box">
@@ -189,7 +190,6 @@ ssh -N -L 3301:localhost:22 ubuntu@al.lo.w.ip
 - for the the local port you pick does not matter, I try to keep them organized in a way I can remember (i.e. 33301 is the first box 33302 is the second... etc)
 - it's good to always test your jumps by attempting to ssh -p xxxx user@localhost for each step.
 
-
 Next make your ladder 'jump'
 <div class="scroll-box">
 ssh -N -p 3301 -L 3302:de.ny.ip.addr:22 ubuntu@localhost
@@ -197,8 +197,50 @@ ssh -N -p 3301 -L 3302:de.ny.ip.addr:22 ubuntu@localhost
 
 ssh -p 3302 ubuntu@localhost “sudo tcpdump -s 0 -U -n -w - -i ens5 not port 22” > ~/Desktop/rc/capture_pipe
 
-# 4a rsakey gen
-4a. using an rsa keygen to allow for access to device (rsa-keygen) 
+from your kali, ping the ip address to see if you are indeed capturing the its local traffic.
+
+# 4a Using trusted relationships with ssh-keygen to pivot in a network
+Using an ssh-keygen to allow for access to device  
+
+Ubuntu 2: this is the target device
+We need to temporatily enable ssh password auth so we can transfer the access key
+<div class="scroll-box">
+sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
+</div>
+
+Ubuntu 1: this is the pivot device that will have access via ssh-key
+<div class="scroll-box">
+ssh-keygen -b 4096
+</div>
+- this default saves to the /home/ubuntu/.ssh/id_rsa press enter
+- leave the passphrase blank for now by pressing enter
+
+Check to see that the keys were created
+<div class="scroll-box">
+ls ~/.ssh/
+</div>
+- you should see authorized_keys, id_rsa (your private key), and id_rsa.pub (your public key)
+
+Share your key with the target Ubuntu 2
+ssh-copy-id -i ~/.ssh/id_rsa.pub ubuntu@ubuntu2ip
+
+Ubuntu 2: now turn off password authentication
+<div class="scroll-box">
+sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication no/' /etc/ssh/sshd_config && sudo systemctl restart ssh
+</div>
+
+Kali 1: 
+pivot
+ssh into Ubuntu 1 and then ssh into Ubuntu 2
+
+copy the key
+ssh into Ubuntu 1 and scp the rsa_id from ~/.ssh/ into your local kali 
+cd ~/
+scp ubuntu@ubuntu1ip:~/.ssh
+
+turn on the scp 
+
+now be sure that you can access the ubuntu@passauthno from ubuntu@passauthyes
 
 4b. sharing the private key with teammates so they can also get into the device rapidly (this is both effective teamwork on the range and shows the dangers of sharing a private key) 
 
