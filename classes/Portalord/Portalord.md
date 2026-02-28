@@ -130,8 +130,8 @@ kali 1: ladder method
 <div class="scroll-box">
 ssh -N -L 2223:localhost:22 ubuntu@al.lo.w.ip
 </div>
-
-- now ssh -p 2223 ubuntu@localhost #first step of the ladder
+- this ties your local loopback ip address port 2223 to your ubuntu@allowip port 22
+- test the first step of the "ladder" with ssh -p 2223 ubuntu@localhost
 <div class="scroll-box">
 ssh -N -p 2223 -L 2224:de.ny.ip.addr:22 ubuntu@localhost
 </div>
@@ -154,7 +154,48 @@ This is great for a single jump, but does not chain back, cannot be combined wit
 
 
 # 3 wireshark
-3. combining mkfifo wireshark capture to remote capture from chain ssh localhost:20001 "sudo tcpdump [flags]" /capturefifo
+combining mkfifo wireshark capture to remote capture from chain ssh localhost:20001 "sudo tcpdump [flags]" /capturefifo
+
+Ubuntu 1: deny from attack box IP
+<div class="scroll-box">
+sudo ufw default allow incoming
+sudo ufw deny from kali.1.ip.addr to any
+sudo ufw deny from kali.2.ip.addr to any
+sudo ufw enable
+sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
+</div>
+
+Ubuntu 2: allow from attack box IP
+<div class="scroll-box">
+sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
+</div>
+
+Kali 1: attack box
+<div class="scroll-box">
+Step 1) make your fifo pipe and remote capture
+mkdir -p ~/Desktop/rc/
+mkfifo ~/Desktop/rc/capture_pipe
+</div>
+
+Step 2) Starting Wireshark with -k and -i options
+<div class="scroll-box">
+sudo wireshark -k -i ~/Desktop/rc/tunnel_capture
+</div>
+
+Step 3) Make a ladder to your remote capture tunnel
+<div class="scroll-box">
+ssh -N -L 3301:localhost:22 ubuntu@al.lo.w.ip
+</div>  
+- for the the local port you pick does not matter, I try to keep them organized in a way I can remember (i.e. 33301 is the first box 33302 is the second... etc)
+- it's good to always test your jumps by attempting to ssh -p xxxx user@localhost for each step.
+
+
+Next make your ladder 'jump'
+<div class="scroll-box">
+ssh -N -p 3301 -L 3302:de.ny.ip.addr:22 ubuntu@localhost
+</div> 
+
+ssh -p 3302 ubuntu@localhost “sudo tcpdump -s 0 -U -n -w - -i ens5 not port 22” > ~/Desktop/rc/capture_pipe
 
 # 4a rsakey gen
 4a. using an rsa keygen to allow for access to device (rsa-keygen) 
