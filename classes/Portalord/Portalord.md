@@ -1,13 +1,13 @@
-  ---
+---
 layout: default
 title: Portalord
 ---
 
 # Portalord    
 
-**Focus**: Multi-plexing
+**Focus**: Multi-plexing and tunneling
 
-**Skill**: Remote ssh, key-exchange, localhost chaining
+**Skill**: Reverse ssh, key-exchange, localhost chaining
 
 **Activity**: Develop pathways to machines inaccesible from your host machine  
 
@@ -16,7 +16,7 @@ title: Portalord
 </div>
 
 ---
-# Part 1: Remote ssh by binding highport to blocked port
+# Part 1: Reverse ssh by binding highport to blocked port
 Use remote ssh to connect back to a localhost and get around ufw rules set up in the environment. This is helpful when firewall rules do not allow access to port 22 from the outside.
 
 
@@ -106,30 +106,27 @@ What you are doing is connecting to your local port 2222, which has an open ssh 
 
 go and find your flag
 
-# Part 2: Localhost ladders and Jumps 
-Local port forwarding
+# Part 2: Localhost ladders and Jumps
 
-In this situation, you are going to access a box that is only accessible from another box.
-
-using setting up portbinding from localhost to allows you to create tunnels ssh devices eg. ssh ubuntu@10.15.15.10 > localhost:20000 localhost:20000 ssh ubuntu@10.15.15.11 >localhost:20001
+In this situation, you are going to access a box that is only accessible from another box. Setting up portbinding from localhost to allows you to create tunnels. This could be due to your ip being specifically banned, the protocols you need to use are blocked, or the box you are on is just a 'jumpbox' into another network that you do not have access to. The Jump option is fast and the Ladder option is more versitile... pick your poison. 
 
 Step 1: Set up the environment that you will be laddering (at least two, so you will need a partner on the cyber.org range)
 
-ubuntu 1: deny from ip
+ubuntu 1: deny from attack box ip
 <div class="scroll-box">
-sudo ufw default allow incoming #ensures only the IPs we DENY are blocked
+sudo ufw default allow incoming
 sudo ufw deny from kali.1.ip.addr to any
 sudo ufw deny from kali.2.ip.addr to any
 sudo ufw enable
 sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
 </div>
 
-ubuntu 2: allow
+ubuntu 2: allow from attack box ip
 <div class="scroll-box">
 sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
 </div>  
 
-kali 1: ladder
+kali 1: ladder method
 <div class="scroll-box">
 ssh -N -L 2223:localhost:22 ubuntu@al.lo.w.ip
 </div>
@@ -145,7 +142,7 @@ open a new terminal
 ssh -p 2224 ubuntu@localhost
 </div> 
 
-kali 2: jump
+kali 2: jump method
 <div class="scroll-box">
 ssh -J ubuntu@allowedIP ubuntu@blockedIP
 </div>
@@ -153,7 +150,7 @@ ssh -J ubuntu@allowedIP ubuntu@blockedIP
 scp -J ubuntu@allowedIP ubuntu@blockedIP:/directory/file.txt /directory/to/local
 </div> 
 
-this is great for a single jump, but does not chain back, cannot be combined with reverse ssh tunnels and cannot use proxychains
+This is great for a single jump, but does not chain back, cannot be combined with reverse ssh tunnels and cannot use proxychains
 
 
 # 3 wireshark
