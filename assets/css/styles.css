@@ -121,9 +121,9 @@ a:hover {
     .terminal {
         background-color: #0c0c0c;              /* True terminal black */
         color: #d4d4d4;                         /* Neutral terminal text */
-        padding: 16px;
-        margin: 15px 0;
-        border-radius: 6px;
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
         border: 1px solid #333;
         font-family: Consolas, "Courier New", monospace;
         font-size: 14px;
