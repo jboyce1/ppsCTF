@@ -153,7 +153,7 @@ scp -J ubuntu@allowedIP ubuntu@blockedIP:/directory/file.txt /directory/to/local
 This is great for a single jump, but does not chain back, cannot be combined with reverse ssh tunnels and cannot use proxychains
 
 
-# 3 Remote wireshark capture through a ladder tunnel
+# Part 3: Remote wireshark capture through a ladder tunnel
 Combining mkfifo wireshark capture to remote capture from chain we will be able to monitor traffic on a device that we do not have direct access to.
 
 
@@ -199,7 +199,7 @@ ssh -p 3302 ubuntu@localhost “sudo tcpdump -s 0 -U -n -w - -i ens5 not port 22
 
 from your kali, ping the ip address to see if you are indeed capturing the its local traffic.
 
-# 4a Using trusted relationships with ssh-keygen to pivot in a network
+# Part 4a: Exploiting trusted relationships with ssh-keygen
 
 Using an ssh-keygen to allow for access to device  
 
