@@ -250,9 +250,17 @@ now be sure that you can access the ubuntu@passauthno from ubuntu@passauthyes
 
 https://youtu.be/vTfQjZIX1vw
 
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uemcs2H9uMw?si=F20xyvQccYlW7MAi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
 # Part 4b: Putting a public key on a target box
 
 https://youtu.be/Ip_7YqQa4BU
+
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uemcs2H9uMw?si=F20xyvQccYlW7MAi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
 
 5. using a device to "pivot" from with an rsa.pub key on other device w/o password eg- ssh ubuntu@10.15.15.10 ubuntu@cyber_range $ ssh ubuntu@10.15.15.16 5b. tunneling all the way to an end of a chain and placing your rsa_pub key in the appropriate place to gain direct access 
 
