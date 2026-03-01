@@ -200,6 +200,7 @@ ssh -p 3302 ubuntu@localhost “sudo tcpdump -s 0 -U -n -w - -i ens5 not port 22
 from your kali, ping the ip address to see if you are indeed capturing the its local traffic.
 
 # 4a Using trusted relationships with ssh-keygen to pivot in a network
+
 Using an ssh-keygen to allow for access to device  
 
 Ubuntu 2: this is the target device
@@ -249,8 +250,7 @@ now be sure that you can access the ubuntu@passauthno from ubuntu@passauthyes
 
 https://youtu.be/vTfQjZIX1vw
 
-4b. sharing the private key with teammates so they can also get into the device rapidly (this is both effective teamwork on the range and shows the dangers of sharing a private key) 
-
+# Part 4b: Putting a public key on a target box
 
 https://youtu.be/Ip_7YqQa4BU
 
