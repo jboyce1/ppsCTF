@@ -22,7 +22,7 @@ Use remote ssh to connect back to a localhost and get around ufw rules set up in
 
 ### On the ssh-closed-box (ubuntu)
 Set this up with the script for practice
-<div class="scroll-box">
+<div class="terminal">
 curl -sSL https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/Portalord/training/telnet_only_restricted_user_gen.py -o teluser_setup.py && sudo python3 teluser_setup.py
 </div> 
 
