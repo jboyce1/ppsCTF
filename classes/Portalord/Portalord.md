@@ -255,22 +255,19 @@ turn on the scp
 
 now be sure that you can access the ubuntu@passauthno from ubuntu@passauthyes
 
-https://youtu.be/vTfQjZIX1vw
 
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/vTfQjZIX1vw?si=WgX79sN9Av1Wstrk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
+https://youtu.be/vTfQjZIX1vw
 
 # Part 4b: Putting a public key on a target box
-
-https://youtu.be/Ip_7YqQa4BU
+Once you are inside of a box you can put your rsa_id.pub into the authorized_keys file. You can either do this using the ssh-copy-id command, as we did in part 4a or by echoing your command into their authorized_keys file. In this video we will also remove a users ssh access by deleting part of their key in the authorized_keys file. 
 
 <div style="text-align: center;">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/uemcs2H9uMw?si=F20xyvQccYlW7MAi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/Ip_7YqQa4BU?si=ZGNzYY9iyA7--_iI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
+https://youtu.be/Ip_7YqQa4BU
 
-5. using a device to "pivot" from with an rsa.pub key on other device w/o password eg- ssh ubuntu@10.15.15.10 ubuntu@cyber_range $ ssh ubuntu@10.15.15.16 5b. tunneling all the way to an end of a chain and placing your rsa_pub key in the appropriate place to gain direct access 
 
-6. getting access to the rsa_key on a device you are ssh in and copying it to your device to have their level of accesses.
-7.
-8. 7. using proxychains4 to use local tools on remote networks.
+7. using proxychains4 to use local tools on remote networks.
