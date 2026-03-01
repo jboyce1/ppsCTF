@@ -21,7 +21,14 @@ Use remote ssh to connect back to a localhost and get around ufw rules set up in
 
 
 ### On the ssh-closed-box (ubuntu)
-Set up the ufw wirewalls to block all traffic to port 22
+Set this up with the script for practice
+<div class="scroll-box">
+curl -sSL https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/Portalord/training/telnet_only_restricted_user_gen.py -o teluser_setup.py && sudo python3 teluser_setup.py
+</div> 
+
+Or set it up manually. You'll learn more but it takes more time:
+
+Set up the ufw (Uncomplicate FireWall) firewalls to block all traffic to port 22
 <div class="scroll-box">
 sudo ufw deny 22
 sudo ufw allow 23
