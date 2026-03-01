@@ -210,6 +210,11 @@ sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/s
 
 Ubuntu 1: this is the pivot device that will have access via ssh-key
 <div class="scroll-box">
+sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
+</div>
+- this will stay on so we can move into this device
+
+<div class="scroll-box">
 ssh-keygen -b 4096
 </div>
 - this default saves to the /home/ubuntu/.ssh/id_rsa press enter
@@ -242,7 +247,12 @@ turn on the scp
 
 now be sure that you can access the ubuntu@passauthno from ubuntu@passauthyes
 
+https://youtu.be/vTfQjZIX1vw
+
 4b. sharing the private key with teammates so they can also get into the device rapidly (this is both effective teamwork on the range and shows the dangers of sharing a private key) 
+
+
+https://youtu.be/Ip_7YqQa4BU
 
 5. using a device to "pivot" from with an rsa.pub key on other device w/o password eg- ssh ubuntu@10.15.15.10 ubuntu@cyber_range $ ssh ubuntu@10.15.15.16 5b. tunneling all the way to an end of a chain and placing your rsa_pub key in the appropriate place to gain direct access 
 
