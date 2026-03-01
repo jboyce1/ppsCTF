@@ -118,7 +118,22 @@ a:hover {
         display: block;
     }
     
-
+    .terminal {
+        background-color: #0c0c0c;              /* True terminal black */
+        color: #d4d4d4;                         /* Neutral terminal text */
+        padding: 16px;
+        margin: 15px 0;
+        border-radius: 6px;
+        border: 1px solid #333;
+        font-family: Consolas, "Courier New", monospace;
+        font-size: 14px;
+        line-height: 1.4;
+        overflow-x: auto;
+        max-width: 100%;
+        white-space: pre-wrap;
+        word-break: break-word;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
 /* Mobile Styles */
 @media screen and (max-width: 768px) {
     /* Hide left-side TOC navigation */
