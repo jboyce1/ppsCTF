@@ -8,6 +8,8 @@ import shutil
 import subprocess
 from getpass import getpass
 
+#run with: curl -sSL https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/Portalord/training/telnet_only_restricted_user_gen.py -o teluser_setup.py && sudo python3 teluser_setup.py
+
 FLAG_PREFIX = "pps{1x?_H1ghb@ll_"  # keep theme
 
 
@@ -67,17 +69,17 @@ def write_flag_to_desktop(flag: str) -> str:
 
 
 def set_sshd_password_auth():
-    # Turn on PasswordAuthentication yes (even if SSH port is blocked)
+    # This matches exactly like your working terminal command
     run([
         "sudo", "sed", "-i",
-        r"s/^#\?\s*PasswordAuthentication\s+.*/PasswordAuthentication yes/",
+        r"s/^#\?PasswordAuthentication .*/PasswordAuthentication yes/",
         "/etc/ssh/sshd_config"
     ])
-    # Validate config if sshd exists, then restart ssh/sshd whichever is present
+
     if shutil.which("sshd"):
         run(["sudo", "sshd", "-t"], check=True)
-    # restart service (ubuntu often uses "ssh")
-    # don't crash if one name doesn't exist
+
+    # Restart whichever unit exists
     run(["sudo", "systemctl", "restart", "ssh"], check=False)
     run(["sudo", "systemctl", "restart", "sshd"], check=False)
 
