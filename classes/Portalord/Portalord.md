@@ -259,6 +259,7 @@ now be sure that you can access the ubuntu@passauthno from ubuntu@passauthyes
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/vTfQjZIX1vw?si=WgX79sN9Av1Wstrk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
+
 https://youtu.be/vTfQjZIX1vw
 
 # Part 4b: Putting a public key on a target box
@@ -267,6 +268,7 @@ Once you are inside of a box you can put your rsa_id.pub into the authorized_key
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Ip_7YqQa4BU?si=ZGNzYY9iyA7--_iI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
+
 https://youtu.be/Ip_7YqQa4BU
 
 
