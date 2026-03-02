@@ -1,9 +1,10 @@
-Set up the first box that is allow for all and drops instructions on the desktop
 
+curl -sSL https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/Portalord/training/climb_the_ladder/ladder_builder.py -o ladder_builder.py && sudo python3 ladder_builder.py
 
+Set up the first box that is allow for all and drops instructions on the desktop: option 1
+Set up the next box that only allows telnet from the IP of the first box and icmp broadcasts
+Set up the next box that allows ssh from the IP of the previous box and broadcasts in icmp
+Set up the next box that only allows telnet access and broadcasts in udp
+Set up the next box that allows for ssh and broadcasts in udp
 
-Set up the next box that only allows telnet from the IP of the first box
-
-
-
-Set up the next box that only allows telnet from the IP of the previous box (forces reverse ssh)
+or just get creative and take notes.
