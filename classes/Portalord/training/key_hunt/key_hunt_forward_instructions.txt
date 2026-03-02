@@ -1,0 +1,17 @@
+
+set up box1 with password auth on
+open 'next node'(box2) and turn password auth on
+run script to the 'next node'(box 2)
+
+login to box3 and turn password auth on
+login to box2 and run script to box3
+turn off password auth for box2
+
+login to box4 and turn on password auth
+login to box3 and run sctipt to box4
+turn off password auth for box3
+
+login to box6 and turn on password auth
+login to box5 and run script to box6
+broadcast udp stream of box5 rsa_id key to box4
+broadcast udp steam of id_rsa to box4
