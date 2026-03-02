@@ -1,1 +1,9 @@
-Step 1: initial box
+Set up the first box that is allow for all and drops instructions on the desktop
+
+
+
+Set up the next box that only allows telnet from the IP of the first box
+
+
+
+Set up the next box that only allows telnet from the IP of the previous box (forces reverse ssh)
