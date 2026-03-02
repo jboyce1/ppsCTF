@@ -49,7 +49,7 @@ title: Home
 
 **3/17 Tuesday 7-9pm Teams Meeting**: [SIEMstress](./classes/SIEMstress/SIEMstress)
 
-**3/19 Thursday 7-9pm Teams Meeting**: [Cyberus](./classes/Cyberus/Cyberus)
+**3/19 Thursday 7-9pm Teams Meeting**: [Cyberus](./classes/cyberus/cyberus)
 
 **3/24 Tuesday 7-9pm Teams Meeting**: Mini-Challenge
 
