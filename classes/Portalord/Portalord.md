@@ -235,7 +235,9 @@ ls ~/.ssh/
 - you should see authorized_keys, id_rsa (your private key), and id_rsa.pub (your public key)
 
 Share your key with the target Ubuntu 2
+<div class="terminal">
 ssh-copy-id -i ~/.ssh/id_rsa.pub ubuntu@ubuntu2ip
+</div> 
 
 Ubuntu 2: now turn off password authentication
 <div class="terminal">
