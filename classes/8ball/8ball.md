@@ -155,7 +155,9 @@ To whisper love and revolution free.
 Pre-steps: Must have an image with a zipped file embedded    
 Step 1)  Open a terminal and navigate to the folder that your image with an embedded zip file is in    
 Step 2) unzip the file    
-#### `unzip imagefile.jpg`        
+<div class="terminal">
+unzip imagefile.jpg
+</div>
       
 Step 3) Inspect/read the message    
 Try it now:    
@@ -176,13 +178,17 @@ open terminal from the directory you want to be in (get to folder, right click a
 OR    
 open terminal ( Ctrl + Alt + t) and ls cd your way to the directory    
       
-Step 2) Create and edit the text document    
-#### `nano secretmessage.txt`    
+Step 2) Create and edit the text document
+<div class="terminal">
+nano secretmessage.txt 
+</div>
 type your message    
 save your message (ctrl+x, then Y then ENTER)    
     
 Step 3) zip the directory    
-#### `zip -e secret.zip secretmessage.txt`    
+<div class="terminal">
+zip -e secret.zip secretmessage.txt
+</div>
 type your password (only use 3-4 lowercase letters if you want to try to crack it later)    
     
 <div style="text-align: center;">
@@ -190,14 +196,19 @@ type your password (only use 3-4 lowercase letters if you want to try to crack i
 </div>   
     
 Step 4) Remove old directory    
-#### `rm secretmessage.txt -rf`    
+<div class="terminal">
+rm secretmessage.txt -rf
+</div>
      
 Step 5) Concatenate the zipped file with the image    
-#### `cat image.jpg secret.zip > newimagename.jpg`    
+<div class="terminal">
+cat image.jpg secret.zip > newimagename.jpg
+</div>
     
 Step 6) Delete the old zipped file    
-#### `rm secret.zip`     
-    
+<div class="terminal">
+rm secret.zip    
+</div>
 Try it now:    
 Create a secretmessage.txt inside the 8 ball image    
 Use the following in your text    
@@ -232,23 +243,33 @@ ls and cd to the directory
     
 Step 2) Separate the jpg file from the zip file     
 All zip files typically start with the same code, so you can search for the code using the following command:    
-#### `grep -aobP ‘\x50\x4B\x03\x04’ imagefile.jpg`    
+<div class="terminal">
+grep -aobP ‘\x50\x4B\x03\x04’ imagefile.jpg
+</div>
 
 - the byte pattern \x50\x4B\x03\x04 corresponds to the magic number that marks the start of a ZIP file entry (more specifically, a local file header in a ZIP archive).    
  - 0x50 0x48 0x03 0x04 (in ASCII: PK\x03\x04)
  - "PK" are the initials of Phil Katz, the creator of the ZIP format.
     
 Step 3) Use dd to separate the file based on the number of bits identified before the .zip file started (replace imagefile.jpg with the actual image file).    
-#### `dd if=imagefile.jpg of=newzipfile.zip bs=1 skip=#numberfromlastcommand#`    
+<div class="terminal">
+dd if=imagefile.jpg of=newzipfile.zip bs=1 skip=#numberfromlastcommand#
+</div>
     
 Step 4) now use zip2john to get the hash of the password protected file and turn it into a text file    
-#### `zip2john newzipfile.zip > crackme.txt`    
+<div class="terminal">
+zip2john newzipfile.zip > crackme.txt
+</div>
     
 Step 5) Use John the Ripper to crack the password based on its hash    
-#### `john crackme.txt`    
+<div class="terminal">
+john crackme.txt
+</div>
     
 OR if you have a wordlist (in the same directory as your crackme.txt):    
-#### `john --wordlist=your_wordlist.txt crackme.txt`    
+<div class="terminal">
+john --wordlist=your_wordlist.txt crackme.txt
+</div>
 
 <div style="text-align: center;">
   <img src="{{ 'classes/8ball/images/zip2john-secretzip-screenshot.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
@@ -266,18 +287,22 @@ Decrypt the 8ball-e.jpg you just created
     
 Pre steps:    
 install steghide (not needed on cyber.org range)    
-sudo apt update    
-sudo apt-get -y install steghide    
-Read about the tool    
+<div class="terminal">
+sudo apt update && sudo apt-get -y install steghide
+</div>
+
+Read about the tool 
+<div class="terminal">
 man steghide    
-    
+</div>
+
 Step 1) Create (or identify) something to hide in the directory of your image    
-#### `nano “message to hide.txt”`    
+<div class="terminal"> nano “message to hide.txt” </div>  
 enter your secret message to be hidden    
 save your message (ctrl+x, then Y then ENTER)    
     
 Step 2) Embed your message inside of the HardaTack1.jpg    
-#### `steghide embed -ef messagetohide.txt -cf HardaTack1.jpg`    
+<div class="terminal"> steghide embed -ef messagetohide.txt -cf HardaTack1.jpg </div>    
     
 password: hardattack    
 reenter: hardattack    
