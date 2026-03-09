@@ -18,15 +18,20 @@ title: 8ball
 ---
 play a game while I yap:    
     
-#### `sudo apt install bastet`     
-#### `bastet`    
-    
-#### `sudo apt install ninvaders`    
-#### `ninvaders`    
-    
-#### `sudo apt install bsdgames`    
-#### `man atc`    
-#### `atc`    
+<div class="terminal">
+sudo apt install bastet && bastet
+</div>
+
+
+<div class="terminal">    
+sudo apt install ninvaders && ninvaders   
+</div> 
+
+<div class="terminal">    
+sudo apt install bsdgames`    
+man atc   
+atc
+</div> 
 
 Specific Skills:    
 - Use zip to hide data inside of images    
@@ -68,28 +73,42 @@ OR
 open terminal ( Ctrl + Alt + t) and ls cd your way to the directory        
     
 Step 2) Create and edit the text document    
-#### `nano secretmessage.txt`    
+
+<div class="terminal">    
+nano secretmessage.txt
+</div> 
     
 type your message    
 save your message (ctrl+x, then Y then ENTER)    
     
 Step 3) Create a directory    
-#### `mkdir secretdirectory`    
+<div class="terminal">    
+mkdir secretdirectory
+</div>
     
-Step 4) Move the message to the directory    
-#### `mv secretmessage.txt secretdirectory`        
-    
+Step 4) Move the message to the directory 
+<div class="terminal">  
+mv secretmessage.txt secretdirectory       
+</div>
+
 Step 5) zip the directory    
-#### `zip -r secret.zip secretdirectory`        
+<div class="terminal">
+zip -r secret.zip secretdirectory
+</div>
     
 Step 6) Remove old directory    
-#### `rm secretdirectory -rf`        
+<div class="terminal">
+rm secretdirectory -rf
+</div>
     
 Step 7) Concatenate the zipped file with the image    
-#### `cat image.jpg secret.zip > definatlyjustapicture.jpg`        
-  
+<div class="terminal">
+cat image.jpg secret.zip > definatlyjustapicture.jpg        
+</div>
 Step 8) Delete the old zipped file    
-#### `rm secret.zip`         
+<div class="terminal">
+rm secret.zip
+</div>
 
 <div style="text-align: center;">
   <img src="{{ 'classes/8ball/images/2244832679-zip-to-hide-1.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
@@ -104,8 +123,9 @@ Call the this message 8ballpoem.jpg
 </div>    
     
 The secretmessage.txt message inside the secretdirectory should contain (no quotes):    
-    
-"In whispers veiled by silence's soft shroud,     
+
+<div class="scroll-box">  
+In whispers veiled by silence's soft shroud,     
 Lies steganography's secretive art.     
 Its missives swathed in the commonplace crowd,     
 Concealing truth within its cunning heart.      
@@ -121,7 +141,8 @@ Invisible as footsteps on the grass,
 Yet telling tales the stars could not enable.    
 
 O steganography, thou art the key     
-To whisper love and revolution free."    
+To whisper love and revolution free.
+</div>
     
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/4plMNYqKfxg?si=llHYgSudetIFF21b" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
