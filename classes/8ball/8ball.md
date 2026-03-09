@@ -124,7 +124,7 @@ Call the this message 8ballpoem.jpg
     
 The secretmessage.txt message inside the secretdirectory should contain (no quotes):    
 
-<div class="scroll-box" style="text-align: center;>
+<div style="text-align: center;">
 
 In whispers veiled by silence's soft shroud,     
 Lies steganography's secretive art.     
