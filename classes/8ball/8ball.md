@@ -74,41 +74,27 @@ open terminal ( Ctrl + Alt + t) and ls cd your way to the directory
     
 Step 2) Create and edit the text document    
 
-<div class="terminal">    
-nano secretmessage.txt
-</div> 
+<div class="terminal"> nano secretmessage.txt </div> 
     
 type your message    
 save your message (ctrl+x, then Y then ENTER)    
     
 Step 3) Create a directory    
-<div class="terminal">    
-mkdir secretdirectory
-</div>
+<div class="terminal"> mkdir secretdirectory </div>
     
 Step 4) Move the message to the directory 
-<div class="terminal">  
-mv secretmessage.txt secretdirectory       
-</div>
+<div class="terminal"> mv secretmessage.txt secretdirectory </div>
 
 Step 5) zip the directory    
-<div class="terminal">
-zip -r secret.zip secretdirectory
-</div>
+<div class="terminal"> zip -r secret.zip secretdirectory </div>
     
 Step 6) Remove old directory    
-<div class="terminal">
-rm secretdirectory -rf
-</div>
+<div class="terminal"> rm secretdirectory -rf </div>
     
 Step 7) Concatenate the zipped file with the image    
-<div class="terminal">
-cat image.jpg secret.zip > definatlyjustapicture.jpg        
-</div>
+<div class="terminal"> cat image.jpg secret.zip > definatlyjustapicture.jpg </div>
 Step 8) Delete the old zipped file    
-<div class="terminal">
-rm secret.zip
-</div>
+<div class="terminal"> rm secret.zip </div>
 
 <div style="text-align: center;">
   <img src="{{ 'classes/8ball/images/2244832679-zip-to-hide-1.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
@@ -125,23 +111,27 @@ Call the this message 8ballpoem.jpg
 The secretmessage.txt message inside the secretdirectory should contain (no quotes):    
 
 
-In whispers veiled by silence's soft shroud,     
-Lies steganography's secretive art.     
-Its missives swathed in the commonplace crowd,     
-Concealing truth within its cunning heart.      
+<div style="text-align: center;">
 
-No brutish force, nor prying eye discerns     
-The silent speech that silent ink imparts.     
-Within a text, the hidden message burns,     
-A dance of shadows on perceptive hearts.     
+In whispers veiled by silence’s soft shroud,
+Lies steganography’s secretive art.
+Its missives swathed in the commonplace crowd,
+Concealing truth within its cunning heart.
 
-So too do lovers’ glances subtly pass,     
-A ciphered look, a touch beneath the table.     
-Invisible as footsteps on the grass,     
-Yet telling tales the stars could not enable.    
+No brutish force, nor prying eye discerns
+The silent speech that silent ink imparts.
+Within a text, the hidden message burns,
+A dance of shadows on perceptive hearts.
 
-O steganography, thou art the key     
+So too do lovers’ glances subtly pass,
+A ciphered look, a touch beneath the table.
+Invisible as footsteps on the grass,
+Yet telling tales the stars could not enable.
+
+O steganography, thou art the key
 To whisper love and revolution free.
+
+</div>
 
     
 <div style="text-align: center;">
@@ -154,9 +144,7 @@ To whisper love and revolution free.
 Pre-steps: Must have an image with a zipped file embedded    
 Step 1)  Open a terminal and navigate to the folder that your image with an embedded zip file is in    
 Step 2) unzip the file    
-<div class="terminal">
-unzip imagefile.jpg
-</div>
+<div class="terminal"> unzip imagefile.jpg </div>
       
 Step 3) Inspect/read the message    
 Try it now:    
@@ -178,16 +166,12 @@ OR
 open terminal ( Ctrl + Alt + t) and ls cd your way to the directory    
       
 Step 2) Create and edit the text document
-<div class="terminal">
-nano secretmessage.txt 
-</div>
+<div class="terminal"> nano secretmessage.txt  </div>
 type your message    
 save your message (ctrl+x, then Y then ENTER)    
     
 Step 3) zip the directory    
-<div class="terminal">
-zip -e secret.zip secretmessage.txt
-</div>
+<div class="terminal"> zip -e secret.zip secretmessage.txt </div>
 type your password (only use 3-4 lowercase letters if you want to try to crack it later)    
     
 <div style="text-align: center;">
@@ -195,19 +179,13 @@ type your password (only use 3-4 lowercase letters if you want to try to crack i
 </div>   
     
 Step 4) Remove old directory    
-<div class="terminal">
-rm secretmessage.txt -rf
-</div>
+<div class="terminal"> rm secretmessage.txt -rf </div>
      
 Step 5) Concatenate the zipped file with the image    
-<div class="terminal">
-cat image.jpg secret.zip > newimagename.jpg
-</div>
+<div class="terminal"> cat image.jpg secret.zip > newimagename.jpg </div>
     
 Step 6) Delete the old zipped file    
-<div class="terminal">
-rm secret.zip    
-</div>
+<div class="terminal"> rm secret.zip    </div>
 Try it now:    
 Create a secretmessage.txt inside the 8 ball image    
 Use the following in your text    
@@ -242,33 +220,23 @@ ls and cd to the directory
     
 Step 2) Separate the jpg file from the zip file     
 All zip files typically start with the same code, so you can search for the code using the following command:    
-<div class="terminal">
-grep -aobP ‘\x50\x4B\x03\x04’ imagefile.jpg
-</div>
+<div class="terminal"> grep -aobP ‘\x50\x4B\x03\x04’ imagefile.jpg </div>
 
 - the byte pattern \x50\x4B\x03\x04 corresponds to the magic number that marks the start of a ZIP file entry (more specifically, a local file header in a ZIP archive).    
  - 0x50 0x48 0x03 0x04 (in ASCII: PK\x03\x04)
  - "PK" are the initials of Phil Katz, the creator of the ZIP format.
     
 Step 3) Use dd to separate the file based on the number of bits identified before the .zip file started (replace imagefile.jpg with the actual image file).    
-<div class="terminal">
-dd if=imagefile.jpg of=newzipfile.zip bs=1 skip=#numberfromlastcommand#
-</div>
+<div class="terminal"> dd if=imagefile.jpg of=newzipfile.zip bs=1 skip=#numberfromlastcommand# </div>
     
 Step 4) now use zip2john to get the hash of the password protected file and turn it into a text file    
-<div class="terminal">
-zip2john newzipfile.zip > crackme.txt
-</div>
+<div class="terminal"> zip2john newzipfile.zip > crackme.txt </div>
     
 Step 5) Use John the Ripper to crack the password based on its hash    
-<div class="terminal">
-john crackme.txt
-</div>
+<div class="terminal"> john crackme.txt </div>
     
 OR if you have a wordlist (in the same directory as your crackme.txt):    
-<div class="terminal">
-john --wordlist=your_wordlist.txt crackme.txt
-</div>
+<div class="terminal"> john --wordlist=your_wordlist.txt crackme.txt </div>
 
 <div style="text-align: center;">
   <img src="{{ 'classes/8ball/images/zip2john-secretzip-screenshot.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
@@ -286,14 +254,10 @@ Decrypt the 8ball-e.jpg you just created
     
 Pre steps:    
 install steghide (not needed on cyber.org range)    
-<div class="terminal">
-sudo apt update && sudo apt-get -y install steghide
-</div>
+<div class="terminal"> sudo apt update && sudo apt-get -y install steghide </div>
 
 Read about the tool 
-<div class="terminal">
-man steghide    
-</div>
+<div class="terminal"> man steghide </div>
 
 Step 1) Create (or identify) something to hide in the directory of your image    
 <div class="terminal"> nano “message to hide.txt” </div>  
@@ -307,7 +271,7 @@ password: hardattack
 reenter: hardattack    
     
 Step 3) Remove old message    
-#### `rm messagetohide.txt`    
+<div class="terminal"> rm messagetohide.txt </div>    
     
 Try it now:    
 Use the image to the right to create a steghide image  
@@ -355,12 +319,11 @@ Its legacy, in fossil beds, does lie.
 # Part 6a: use stegcracker and stegseek to crack steghide passphrases
 
 Step 1) Install stegcracker    
-#### `sudo apt update`    
-#### `sudo apt-get –y install stegcracker`    
+<div class="terminal"> sudo apt update && sudo apt-get –y install stegcracker </div>   
     
 Step 2) Update permission to run as executable    
 Either use terminal:    
-#### `sudo chmod +x /bin/stegcracker`        
+<div class="terminal"> sudo chmod +x /bin/stegcracker </div>       
 Or go to the permission of the file in /bin    
 Go to the permissions tab and allow this to run as a program    
 
@@ -374,12 +337,12 @@ Go to the permissions tab and allow this to run as a program
 
 Step 3) Move your password list to the directory with the image in it    
 SteggyWordList.txt    
-#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/ad7bff0d928c0427b1ed1d642f3273955afe4761/classes/8ball/SteggyWordList.txt`
+<div class="terminal"> wget https://raw.githubusercontent.com/jboyce1/ppsCTF/ad7bff0d928c0427b1ed1d642f3273955afe4761/classes/8ball/SteggyWordList.txt </div>
     
 Step 4) Open a terminal from the directory with both your image and 
 password list    
 Run the stegcracker    
-#### `stegcracker imagefile.jpg wordlist.txt`    
+<div class="terminal"> stegcracker imagefile.jpg wordlist.txt </div>    
     
 <div style="text-align: center;">
   <img src="{{ 'classes/8ball/images/Stegcracker3-SteggyWordlist-screenshot.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
@@ -403,7 +366,7 @@ This will not give you the data, but it will tell you if the image contains a hi
 </div>  
 
 Now crack the password using the password list:
-#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/ad7bff0d928c0427b1ed1d642f3273955afe4761/classes/8ball/SteggyWordList.txt`
+<div class="terminal"> wget https://raw.githubusercontent.com/jboyce1/ppsCTF/ad7bff0d928c0427b1ed1d642f3273955afe4761/classes/8ball/SteggyWordList.txt </div>
     
 <div style="text-align: center;">
   <img src="{{ 'classes/8ball/images/stegseek1-crack.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
@@ -431,27 +394,27 @@ Step 7) zip them all, unencrypted into the image of your mascot (step 1 from ton
   <img src="{{ 'classes/8ball/PracticeandExplore/ThisManLooksLikeARabbitHole.jpeg' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
 </div>    
     
-#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/ThisManLooksLikeARabbitHole.jpeg`   
+<div class="terminal"> wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/ThisManLooksLikeARabbitHole.jpeg </div>  
     
 Interesting Read:    
-#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/InterestingRead_OpenWithFireFox.pdf`    
+<div class="terminal"> wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/InterestingRead_OpenWithFireFox.pdf </div>   
     
 <div style="text-align: center;">
   <img src="{{ 'classes/8ball/PracticeandExplore/LookAtThisGuy.jpg' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
 </div>    
   
-#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/LookAtThisGuy.jpg`    
+<div class="terminal"> wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/LookAtThisGuy.jpg </div>    
 
 <div style="text-align: center;">
   <img src="{{ 'classes/8ball/PracticeandExplore/StrappingYoungLad.jpg' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
 </div>    
   
-#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/StrappingYoungLad.jpg`  
+<div class="terminal"> wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/StrappingYoungLad.jpg </div> 
     
  <div style="text-align: center;">
   <img src="{{ 'classes/8ball/PracticeandExplore/Puthoff_Harold.jpg' | relative_url }}" alt="" style="max-width: 50%; height: auto;">
 </div>    
     
-#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/Puthoff_Harold.jpg`    
+<div class="terminal"> wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/8ball/PracticeandExplore/Puthoff_Harold.jpg </div>    
 
     
