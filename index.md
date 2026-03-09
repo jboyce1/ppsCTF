@@ -39,11 +39,11 @@ title: Home
 
 **3/3 Tuesday 7-9pm Teams Meeting**: [Portalord](./classes/Portalord/Portalord)
 
-**3/5 Thursday 7-9pm Teams Meeting**: [8ball](./classes/8ball/8ball)
+**3/5 Thursday 7-9pm Teams Meeting**: Cancelled
 
-**3/10 Tuesday 7-9pm Teams Meeting**: Mini-Challenge
+**3/10 Tuesday 7-9pm Teams Meeting**: [8ball](./classes/8ball/8ball)
 
-**3/12 Thursday 7-9pm Teams Meeting**: Mini-Challenge Review
+**3/12 Thursday 7-9pm Teams Meeting**: Mini-Challenge
 
 **3/14 Saturday 12-2pm at Carnegie Main Library Teen Space**: Lockpicking
 
@@ -62,8 +62,6 @@ title: Home
 **4/8 Wednesday 9am-2pm Greenway**: Tournament Day 1 (Rounds 1–2)
 
 **4/9 Thursday 9am-2pm Greenway**: Tournament Day 2 (Rounds 3–4)
-
-**4/10 Friday 9am-2pm Greenway**: Tournament Day 3 (Rounds 5–6)
 
 **4/15 Wednesday 9am-2pm Greenway**: Final Bracket A (Championship Path)
 
