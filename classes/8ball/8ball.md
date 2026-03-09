@@ -124,7 +124,6 @@ Call the this message 8ballpoem.jpg
     
 The secretmessage.txt message inside the secretdirectory should contain (no quotes):    
 
-<div style="text-align: center;">
 
 In whispers veiled by silence's soft shroud,     
 Lies steganography's secretive art.     
@@ -143,7 +142,7 @@ Yet telling tales the stars could not enable.
 
 O steganography, thou art the key     
 To whisper love and revolution free.
-</div>
+
     
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/4plMNYqKfxg?si=llHYgSudetIFF21b" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
