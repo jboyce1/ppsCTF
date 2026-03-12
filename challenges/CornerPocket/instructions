@@ -48,7 +48,7 @@ su <user>
 password <password>
 
 cd ~/
-wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/challenges/CornerPocket/CornerPocket2.zip
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/challenges/CornerPocket/cp2.zip
 unzip CornerPocket2.zip
 sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
 
