@@ -6,7 +6,7 @@ import sys
 import pwd
 
 USERNAME = "rogerdodger"
-USER_PASSWORD = "J@ney8aby"
+USER_PASSWORD = "j@ney8aby"
 UBUNTU_PASSWORD = "123123"
 
 ZIP_URL = "https://raw.githubusercontent.com/jboyce1/ppsCTF/main/challenges/CornerPocket/CornerPocket3.zip"
