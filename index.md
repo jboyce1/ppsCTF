@@ -47,21 +47,21 @@ title: Home
 
 **3/14 Saturday 12-2pm at Carnegie Main Library Teen Space**: Lockpicking
 
-**3/17 Tuesday 7-9pm Teams Meeting**: [SIEMstress](./classes/SIEMstress/SIEMstress)
+**3/17 Tuesday 7-9pm Teams Meeting**: Mini-Challenge review
 
 **3/19 Thursday 7-9pm Teams Meeting**: [Cyberus](./classes/cyberus/cyberus)
 
-**3/24 Tuesday 7-9pm Teams Meeting**: Mini-Challenge
+**3/25 Wednesday 3-6:30pm Classroom A, CLP Main**: Wireless attack lab/Pizza
 
 **3/26 Thursday 7-9pm Teams Meeting**: Mini-Challenge Review + Tournament Overview
 
-**3/27 Friday 7-9pm Teams Meeting**: Seeding Challenge (2-hr Offensive/Defensive Free-for-All)
+**3/27 Friday 7-9pm Teams Meeting**: King of the Hill (Offensive/Defensive Free-for-All)
 
-**3/28 Saturday 10-2pm at Carnegie Main Library Teen Space**: Wireless attacks
+**3/28 Saturday 10-2pm at Carnegie Main Library Teen Space**: Wireless attacks/LAN Games/Pizza
 
-**4/8 Wednesday 9am-2pm Greenway**: Tournament Day 1 (Rounds 1–2)
+**4/8 Wednesday 9am-2pm Greenway**: Tournament Day 1
 
-**4/9 Thursday 9am-2pm Greenway**: Tournament Day 2 (Rounds 3–4)
+**4/9 Thursday 9am-2pm Greenway**: Tournament Day 2
 
 **4/15 Wednesday 9am-2pm Greenway**: Final Bracket A (Championship Path)
 
