@@ -99,6 +99,7 @@ find your ip address and delete the line (or change it so they chase their tail)
 ## Add a new user, add the user to the sudoer file and establish ssh connection
 
 <div class="terminal"> adduser <username> </div>
+  
 <div class="terminal"> sudo usermod -aG sudo <username> </div>
 
 ## Add telnet services and establish a telnet connection
