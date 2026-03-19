@@ -15,6 +15,348 @@ title: Cyberus
 
 ---
 
+# System Control (PRIMARY OBJECTIVE)
+
+**Goal**: Own the box, remove others, and maintain access
+
+Winning is not about flooding the network — it is about:
+- finding other players
+- removing their access
+- securing your own persistence
+- controlling the system over time
+
+---
+
+# Recon (Find the Enemy First)
+
+## Identify your system
+
+<div class="terminal"> ip addr </div>
+<div class="terminal"> hostname -I </div>
+
+---
+
+## Find routes and gateway
+
+<div class="terminal"> ip r </div>
+
+---
+
+## View active network connections
+
+<div class="terminal"> ss -tulpn </div>
+<div class="terminal"> netstat -tulpn </div>
+
+**What to look for**
+- Unknown listening services
+- Suspicious ports
+- Reverse shells
+
+---
+
+## View live traffic
+
+<div class="terminal"> sudo tcpdump -i &lt;interface&gt; </div>
+<div class="terminal"> sudo iftop -i &lt;interface&gt; </div>
+
+**What to look for**
+- Repeated connections from same IP
+- Strange outbound traffic
+
+---
+
+## Who is logged in?
+
+<div class="terminal"> who </div>
+<div class="terminal"> w </div>
+<div class="terminal"> last </div>
+
+**What to look for**
+- Unknown users
+- Multiple sessions
+
+---
+
+## Find open files and network usage
+
+<div class="terminal"> sudo lsof -i </div>
+
+---
+
+# Process Hunting & Removal
+
+## View running processes
+
+<div class="terminal"> ps aux </div>
+<div class="terminal"> top </div>
+
+**What to look for**
+- Unknown scripts
+- Reverse shells (bash, nc, python)
+- High CPU usage
+
+---
+
+## Kill malicious processes
+
+<div class="terminal"> sudo kill -9 &lt;pid&gt; </div>
+<div class="terminal"> sudo pkill -f &lt;process_name&gt; </div>
+
+**Tip**
+- Attackers often restart processes → combine with persistence removal
+
+---
+
+# SSH Control (Critical)
+
+## Check active sessions
+
+<div class="terminal"> who </div>
+
+---
+
+## Kill user sessions
+
+<div class="terminal"> sudo pkill -u &lt;username&gt; </div>
+
+---
+
+## Secure SSH access
+
+Authorized keys location:
+
+<div class="terminal"> ~/.ssh/authorized_keys </div>
+
+System-wide keys:
+
+<div class="terminal"> /home/*/.ssh/authorized_keys </div>
+
+---
+
+## Remove attacker access
+- Delete unknown keys
+- Remove unknown users
+
+---
+
+## Add your own key
+
+<div class="terminal"> nano ~/.ssh/authorized_keys </div>
+
+Paste your public key.
+
+---
+
+# User Control
+
+## List users
+
+<div class="terminal"> cut -d: -f1 /etc/passwd </div>
+
+---
+
+## Add your own user
+
+<div class="terminal"> sudo adduser cyberus </div>
+
+---
+
+## Change passwords
+
+<div class="terminal"> sudo passwd &lt;username&gt; </div>
+
+---
+
+## Remove attacker users
+
+<div class="terminal"> sudo userdel -r &lt;username&gt; </div>
+
+---
+
+# Firewall Control (UFW)
+
+## Enable firewall
+
+<div class="terminal"> sudo ufw enable </div>
+
+---
+
+## Allow your IP
+
+<div class="terminal"> sudo ufw allow from &lt;your_ip&gt; </div>
+
+---
+
+## Block attacker IP
+
+<div class="terminal"> sudo ufw deny from &lt;attacker_ip&gt; </div>
+
+---
+
+## View rules
+
+<div class="terminal"> sudo ufw status numbered </div>
+
+---
+
+## Remove rule
+
+<div class="terminal"> sudo ufw delete &lt;rule_number&gt; </div>
+
+---
+
+# Telnet Deployment (Backdoor Access)
+
+## Install telnet server
+
+<div class="terminal"> sudo apt install -y telnetd </div>
+
+---
+
+## Start service
+
+<div class="terminal"> sudo systemctl start inetd </div>
+
+---
+
+## Verify
+
+<div class="terminal"> ss -tulpn | grep 23 </div>
+
+---
+
+**Why this matters**
+- Gives alternate access if SSH is blocked
+- Can be used as persistence
+
+---
+
+# Persistence (Stay on the Box)
+
+Attackers WILL come back unless you remove persistence.
+
+---
+
+## Cron Jobs (Scheduled Backdoors)
+
+### View cron jobs
+
+<div class="terminal"> crontab -l </div>
+
+System-wide:
+
+<div class="terminal"> ls /etc/cron* </div>
+
+---
+
+### Remove malicious cron
+
+<div class="terminal"> crontab -r </div>
+
+Or edit:
+
+<div class="terminal"> crontab -e </div>
+
+---
+
+### Create persistence
+
+Example (runs every minute):
+
+<div class="terminal"> crontab -e </div>
+
+Add:
+<pre>
+* * * * * /path/to/script.sh
+</pre>
+
+---
+
+## Systemd Services (Stronger Persistence)
+
+### List services
+
+<div class="terminal"> systemctl list-units --type=service </div>
+
+---
+
+### Find suspicious services
+
+Look for:
+- unknown names
+- scripts running from /tmp or home directories
+
+---
+
+### Stop and disable service
+
+<div class="terminal"> sudo systemctl stop &lt;service&gt; </div>
+<div class="terminal"> sudo systemctl disable &lt;service&gt; </div>
+
+---
+
+### Create your own service
+
+Create file:
+
+<div class="terminal"> sudo nano /etc/systemd/system/cyberus.service </div>
+
+Example:
+<pre>
+[Unit]
+Description=Cyberus Persistence
+
+[Service]
+ExecStart=/bin/bash /home/user/script.sh
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+</pre>
+
+Enable:
+
+<div class="terminal"> sudo systemctl daemon-reexec </div>
+<div class="terminal"> sudo systemctl enable cyberus </div>
+<div class="terminal"> sudo systemctl start cyberus </div>
+
+---
+
+# Quick Attack / Harassment Tools (SECONDARY)
+
+These do NOT win the box, but can disrupt others.
+
+---
+
+## hping3 (Target specific systems)
+
+<div class="terminal"> sudo hping3 -S -p 22 &lt;target_ip&gt; </div>
+
+---
+
+## ICMP Flood (basic pressure)
+
+<div class="terminal"> sudo ping -f &lt;target_ip&gt; </div>
+
+---
+
+## Observe impact
+
+Use:
+
+<div class="terminal"> iftop </div>
+<div class="terminal"> tcpdump </div>
+
+---
+
+**Important**
+- These slow systems down
+- They do NOT replace system control
+- Use them to distract while taking control
+
+---
+---
+
 # Denial of Service
 
 ## ICMP Flood
