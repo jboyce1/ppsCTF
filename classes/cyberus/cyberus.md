@@ -100,7 +100,7 @@ find your ip address and delete the line (or change it so they chase their tail)
 
 <div class="terminal"> adduser -username- </div>
   
-<div class="terminal"> sudo usermod -aG sudo <username> </div>
+<div class="terminal"> sudo usermod -aG sudo -username- </div>
 
 ## Add telnet services and establish a telnet connection
 
