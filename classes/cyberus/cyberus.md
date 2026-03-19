@@ -59,25 +59,56 @@ or:
 
 **What to look for**
 - Repeated connections from same IP
-- Strange outbound traffic
+- c2 outbound traffic (ssh telnet traffic)
 
 ---
 
-## Who is logged in?
+## Who is logged in and from where?
 
 <div class="terminal"> who </div>
 <div class="terminal"> w </div>
 <div class="terminal"> last </div>
 
+<div style="text-align: center;">
+  <img src="{{ 'classes/cyberus/images/who_w_last.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+
 **What to look for**
 - Unknown users
 - Multiple sessions
 
+<div class="terminal"> tail /var/log/auth.log </div>
+
+or open a terminal and monitor the file live
+
+<div class="terminal"> sudo tail -f /var/log/auth.log </div>
+
+or cover your tracks with: 
+
+<div class="terminal"> sudo nano /var/log/auth.log </div>
+
+find your ip address and delete the line (or change it so they chase their tail)
+
+<div style="text-align: center;">
+  <img src="{{ 'classes/cyberus/images/authlog.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+
 ---
+# Establish Persistence 
 
-## Find open files and network usage
+## Add a new user, add the user to the sudoer file and establish ssh connection
 
-<div class="terminal"> sudo lsof -i </div>
+<div class="terminal"> adduser <username> </div>
+<div class="terminal"> sudo usermod -aG sudo <username> </div>
+
+## Add telnet services and establish a telnet connection
+
+<div class="terminal"> sudo apt update && sudo apt install telnetd -y && sudo apt install openbsd-inetd -y </div>
+
+<div class="terminal"> sudo apt update && sudo apt install telnet -y </div>
+
+use Portalord to establish a reverse ssh tunnel
+
 
 ---
 
@@ -86,6 +117,19 @@ or:
 ## View running processes
 
 <div class="terminal"> ps aux </div>
+notice the PID is the second column:
+<div style="text-align: center;">
+  <img src="{{ 'classes/cyberus/images/psaux.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+or look for specific processes
+
+<div class="terminal"> ps aux | grep -E 'ssh|tel'</div>
+
+<div style="text-align: center;">
+  <img src="{{ 'classes/cyberus/images/psaux_grepE.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+
+
 <div class="terminal"> top </div>
 
 **What to look for**
@@ -98,6 +142,11 @@ or:
 ## Kill malicious processes
 
 <div class="terminal"> sudo kill -9 &lt;pid&gt; </div>
+<div style="text-align: center;">
+  <img src="{{ 'classes/cyberus/images/kill-9.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+  <img src="{{ 'classes/cyberus/images/connectionclosed.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+
 <div class="terminal"> sudo pkill -f &lt;process_name&gt; </div>
 
 **Tip**
@@ -105,18 +154,47 @@ or:
 
 ---
 
-# SSH Control (Critical)
+# SSH Control
 
 ## Check active sessions
 
 <div class="terminal"> who </div>
 
----
+identify the user that is not your IP
 
-## Kill user sessions
+<div style="text-align: center;">
+  <img src="{{ 'classes/cyberus/images/whopsaux.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+
+kill the process assocaiated with that session
+<div class="terminal"> sudo kill -9 &lt;PID&gt; </div>
+Goodnight ubuntu@pts/2: process 3583
+
+<div style="text-align: center;">
+  <img src="{{ 'classes/cyberus/images/sshclosed.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
+
+
+## Kill user sessions (if you are using another user on the sudoer file)
 
 <div class="terminal"> sudo pkill -u &lt;username&gt; </div>
 
+---
+
+## Add your ssh key to the target
+on your kali: 
+<div class="terminal"> ssh-keygen -t rsa -b 2048</div>
+<div class="terminal"> cat ~/.ssh/id_rsa.pub</div>
+
+on the target system:
+
+<div class="terminal"> sudo nano ~/.ssh/authorized_keys </div>
+
+Paste your public key.
+
+<div style="text-align: center;">
+  <img src="{{ 'classes/cyberus/images/sshkeypaste.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
 ---
 
 ## Secure SSH access
@@ -133,15 +211,7 @@ System-wide keys:
 
 ## Remove attacker access
 - Delete unknown keys
-- Remove unknown users
-
----
-
-## Add your own key
-
-<div class="terminal"> nano ~/.ssh/authorized_keys </div>
-
-Paste your public key.
+- Remove unknown users (Careful not to remove cyber.org range users
 
 ---
 
@@ -149,13 +219,11 @@ Paste your public key.
 
 ## List users
 
+<div class="terminal"> cat /etc/passwd </div>
+
+or just list usernames
+
 <div class="terminal"> cut -d: -f1 /etc/passwd </div>
-
----
-
-## Add your own user
-
-<div class="terminal"> sudo adduser cyberus </div>
 
 ---
 
@@ -173,25 +241,20 @@ Paste your public key.
 
 # Firewall Control (UFW)
 
-## Enable firewall
-
+Enable firewall
+<div class="terminal"> ssudo ufw default allow incoming </div>
 <div class="terminal"> sudo ufw enable </div>
 
----
 
-## Allow your IP
+Allow your IP
 
 <div class="terminal"> sudo ufw allow from &lt;your_ip&gt; </div>
 
----
-
-## Block attacker IP
+Block attacker IP
 
 <div class="terminal"> sudo ufw deny from &lt;attacker_ip&gt; </div>
 
----
-
-## View rules
+View rules
 
 <div class="terminal"> sudo ufw status numbered </div>
 
@@ -203,31 +266,6 @@ Paste your public key.
 
 ---
 
-# Telnet Deployment (Backdoor Access)
-
-## Install telnet server
-
-<div class="terminal"> sudo apt install -y telnetd </div>
-
----
-
-## Start service
-
-<div class="terminal"> sudo systemctl start inetd </div>
-
----
-
-## Verify
-
-<div class="terminal"> ss -tulpn | grep 23 </div>
-
----
-
-**Why this matters**
-- Gives alternate access if SSH is blocked
-- Can be used as persistence
-
----
 
 # Persistence (Stay on the Box)
 
@@ -353,6 +391,22 @@ Use:
 - Use them to distract while taking control
 
 ---
+
+## Find open files and network usage
+
+<div class="terminal"> sudo lsof -i </div>
+
+This lists:
+
+Processes using network connections
+
+Which ports they’re using
+
+Who owns them
+Due to network configurations, this does not work on the cyber.org range:
+<div style="text-align: center;">
+  <img src="{{ 'classes/cyberus/images/lsof-i.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
+</div>
 ---
 
 # Denial of Service
@@ -686,6 +740,75 @@ Watch packets:
 - Routes
 - Traffic patterns
 - Packet details
+
+# grep quick commands
+
+# Grep Cheat Sheet (Cyberus)
+
+### Use grep to quickly find attackers, services, and suspicious activity.
+
+---
+
+Basic Search
+
+<div class="terminal"> grep "text" file </div>
+
+
+Multiple Keywords
+
+<div class="terminal"> grep -E 'sshd|telnet|nc|bash' file </div>
+
+
+Ignore Case
+
+<div class="terminal"> grep -i "failed" /var/log/auth.log </div>
+
+
+Show Line Numbers
+<div class="terminal"> grep -n "Accepted" /var/log/auth.log </div>
+
+### Common Log Hunting
+
+Find logins
+<div class="terminal"> sudo grep "Accepted" /var/log/auth.log </div>
+
+Find failed attempts
+<div class="terminal"> sudo grep "Failed" /var/log/auth.log </div>
+
+Find attacker IPs
+<div class="terminal"> sudo grep -E 'Accepted|Failed' /var/log/auth.log </div>
+
+
+### Process Hunting
+
+Find suspicious processes
+<div class="terminal"> ps aux | grep -E 'nc|bash|python|ssh' </div>
+
+Remove grep from results
+<div class="terminal"> ps aux | grep -E 'nc|bash|python|ssh' | grep -v grep </div>
+
+### Network Hunting
+
+Find services
+<div class="terminal"> sudo lsof -i | grep -E 'LISTEN|ESTABLISHED' </div>
+
+Look for backdoors
+<div class="terminal"> sudo lsof -i | grep -E 'nc|bash|python' </div>
+
+Real-Time Log Monitoring
+
+<div class="terminal"> sudo tail -f /var/log/auth.log | grep -E 'Accepted|Failed' </div>
+
+---
+
+## Key Idea
+
+- grep helps you **filter noise**
+- combine it with:
+  - logs → find attackers
+  - ps → find processes
+  - lsof → find connections
+
 
 ---
 
