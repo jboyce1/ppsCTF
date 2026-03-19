@@ -133,7 +133,8 @@ now on your kali machine, open a listener on the highportexit
 <div style="text-align: center;">
   <img src="{{ 'classes/cyberus/images/heard.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
 </div>
-* * * * * echo "ssh-rsa AAAA...attackerkey" &gt;&gt; /home/ubuntu/.ssh/authorized_keys
+<div class="terminal">* * * * * echo "ssh-rsa AAAA...attackerkey" &gt;&gt; /home/ubuntu/.ssh/authorized_keys</div>
+
 ---
 
 # Process Hunting & Removal
