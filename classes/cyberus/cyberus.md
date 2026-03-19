@@ -7,15 +7,12 @@ title: Cyberus
 
 **Skill**: Disconnect or degrade hostile systems
 
-**Activity**: Identify attackers and remove them from the network
+**Activity**: Identify attackers and remove them from the systems and network
 
 <div style="text-align: center;">
   <img src="{{ 'classes/cyberus/images/cyberus1.png' | relative_url }}" alt="Cyberus Logo" style="max-width: 80%; height: auto;">
 </div>
 
----
-
-# System Control (PRIMARY OBJECTIVE)
 
 **Goal**: Own the box, remove others, and maintain access
 
@@ -27,22 +24,20 @@ Winning is not about flooding the network — it is about:
 
 ---
 
-# Recon (Find the Enemy First)
+# Recon
+
+Once you get into a system, you should see if you are alone in the system
 
 ## Identify your system
 
-<div class="terminal"> ip addr </div>
+<div class="terminal"> ip a </div>
 <div class="terminal"> hostname -I </div>
 
----
-
-## Find routes and gateway
+Find routes and gateway
 
 <div class="terminal"> ip r </div>
 
----
-
-## View active network connections
+View active network connections
 
 <div class="terminal"> ss -tulpn </div>
 <div class="terminal"> netstat -tulpn </div>
@@ -52,10 +47,13 @@ Winning is not about flooding the network — it is about:
 - Suspicious ports
 - Reverse shells
 
----
+View live traffic:
 
-## View live traffic
+<div class="terminal"> sudo wireshark </div>
 
+start a capture > go to 'statistics' > 'conversations' > 'ip4'
+
+or: 
 <div class="terminal"> sudo tcpdump -i &lt;interface&gt; </div>
 <div class="terminal"> sudo iftop -i &lt;interface&gt; </div>
 
