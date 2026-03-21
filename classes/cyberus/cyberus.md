@@ -87,7 +87,7 @@ or cover your tracks with:
 
 <div class="terminal"> sudo nano /var/log/auth.log </div>
 
-find your ip address and delete the line (or change it so they chase their tail)
+find your ip address and delete the line (or change it)
 
 <div style="text-align: center;">
   <img src="{{ 'classes/cyberus/images/authlog.png' | relative_url }}" alt="" style="max-width: 80%; height: auto;">
