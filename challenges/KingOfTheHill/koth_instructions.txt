@@ -1,5 +1,10 @@
 box1:
+curl -sSL https://raw.githubusercontent.com/jboyce1/ppsCTF/main/challenges/KingOfTheHill/koth_box1.py -o cyberus1_setup.py && sudo python3 cyberus1_setup.py
+
 
 box2:
+curl -sSL https://raw.githubusercontent.com/jboyce1/ppsCTF/main/challenges/KingOfTheHill/koth_box2.py -o cyberus2_setup.py && sudo python3 cyberus2_setup.py
+
 
 box3:
+curl -sSL https://raw.githubusercontent.com/jboyce1/ppsCTF/main/challenges/KingOfTheHill/koth_box3.py -o cyberus3_setup.py && sudo python3 cyberus3_setup.py
