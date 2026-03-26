@@ -6,22 +6,28 @@ import pwd
 import random
 import shutil
 import subprocess
-from getpass import getpass
+import string
 
-#run with: curl -sSL https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/Portalord/training/telnet_only_restricted_user_gen.py -o cyberus_setup.py && sudo python3 cyberus_setup.py
+"""
+Run with:
 
-FLAG_PREFIX = "pps{koth3_"  # keep theme
+curl -sSL https://raw.githubusercontent.com/jboyce1/ppsCTF/main/challenges/KingOfTheHill/koth_box3.py -o cyberus3_setup.py && sudo python3 cyberus3_setup.py
+"""
+
+UBUNTU_PASS_LEN = 5
+FLAG_PREFIX = "pps{koth3_"
 
 
 def run(cmd, *, check=True, capture=False):
-    """
-    Run a command and raise a clean error if it fails.
-    """
     if isinstance(cmd, str):
-        raise ValueError("run() expects a list like ['sudo','ufw','status']")
+        raise ValueError("run() expects a list like ['sudo', 'ufw', 'status']")
     kwargs = {}
     if capture:
-        kwargs.update({"stdout": subprocess.PIPE, "stderr": subprocess.PIPE, "text": True})
+        kwargs.update({
+            "stdout": subprocess.PIPE,
+            "stderr": subprocess.PIPE,
+            "text": True
+        })
     p = subprocess.run(cmd, **kwargs)
     if check and p.returncode != 0:
         err = ""
@@ -31,18 +37,16 @@ def run(cmd, *, check=True, capture=False):
     return p
 
 
-def generate_flag() -> str:
+def generate_password(length):
+    chars = string.ascii_letters + string.digits
+    return ''.join(random.choice(chars) for _ in range(length))
+
+
+def generate_flag():
     salt_len = random.randint(5, 8)
     salt_alphabet = "abcdefghijklmnopqrstuvwxyz0123456789-+"
     salt = "".join(random.choice(salt_alphabet) for _ in range(salt_len))
     return f"{FLAG_PREFIX}{salt}}}"
-
-
-def safe_username(u: str) -> str:
-    u = u.strip()
-    if not re.fullmatch(r"[a-z_][a-z0-9_-]{0,30}", u):
-        raise ValueError("Username must match: [a-z_][a-z0-9_-]{0,30}")
-    return u
 
 
 def ensure_command_exists(cmd):
@@ -50,26 +54,15 @@ def ensure_command_exists(cmd):
         raise RuntimeError(f"Missing required command: {cmd}")
 
 
-def desktop_path_for_current_user() -> str:
-    # Put flag on Desktop of the user running the script (not root)
-    home = os.path.expanduser("~")
-    desktop = os.path.join(home, "Desktop")
-    os.makedirs(desktop, exist_ok=True)
-    return desktop
-
-
-def write_flag_to_desktop(flag: str) -> str:
-    desktop = desktop_path_for_current_user()
-    flag_path = os.path.join(desktop, "ssh_flag.txt")
-    with open(flag_path, "w", encoding="utf-8") as f:
-        f.write(flag + "\n")
-    # Lock down permissions: owner read/write only
-    os.chmod(flag_path, 0o600)
-    return flag_path
+def user_exists(username):
+    try:
+        pwd.getpwnam(username)
+        return True
+    except KeyError:
+        return False
 
 
 def set_sshd_password_auth():
-    # This matches exactly like your working terminal command
     run([
         "sudo", "sed", "-i",
         r"s/^#\?PasswordAuthentication .*/PasswordAuthentication yes/",
@@ -79,17 +72,14 @@ def set_sshd_password_auth():
     if shutil.which("sshd"):
         run(["sudo", "sshd", "-t"], check=True)
 
-    # Restart whichever unit exists
     run(["sudo", "systemctl", "restart", "ssh"], check=False)
     run(["sudo", "systemctl", "restart", "sshd"], check=False)
 
 
 def configure_ufw_for_telnet():
     ensure_command_exists("ufw")
-    # Deny SSH and allow telnet
-    run(["sudo", "ufw", "deny", "22"], check=False)    # check=False in case rule already exists
+    run(["sudo", "ufw", "deny", "22"], check=False)
     run(["sudo", "ufw", "allow", "23"], check=False)
-    # Force-enable without interactive prompt
     run(["sudo", "ufw", "--force", "enable"], check=True)
 
 
@@ -97,15 +87,11 @@ def install_telnet_services():
     ensure_command_exists("apt-get")
     run(["sudo", "apt-get", "update"], check=True)
     run(["sudo", "apt-get", "install", "-y", "telnetd", "openbsd-inetd"], check=True)
-    # Ensure inetd is enabled and running
     run(["sudo", "systemctl", "enable", "--now", "openbsd-inetd"], check=False)
     run(["sudo", "systemctl", "restart", "openbsd-inetd"], check=False)
 
 
-def create_restricted_shell_script() -> str:
-    """
-    Creates a simple restricted bash wrapper.
-    """
+def create_restricted_shell_script():
     path = "/usr/local/bin/telnet_shell.sh"
     contents = """#!/bin/bash
 echo "Limited access environment."
@@ -113,50 +99,62 @@ echo "You may only use a small set of commands."
 export PATH=/usr/bin:/bin
 exec /bin/bash --restricted
 """
-    # Write as root
     run(["sudo", "bash", "-c", f"cat > {path} <<'EOF'\n{contents}\nEOF"])
     run(["sudo", "chmod", "755", path])
     return path
 
 
-def user_exists(username: str) -> bool:
-    try:
-        pwd.getpwnam(username)
-        return True
-    except KeyError:
-        return False
-
-
-def create_user_noninteractive(username: str, password: str, shell_path: str):
+def create_user_noninteractive(username, password, shell_path):
     if user_exists(username):
-        # Update password + shell
         run(["sudo", "usermod", "-s", shell_path, username], check=False)
     else:
-        # Create user with home dir and set shell
         run(["sudo", "useradd", "-m", "-s", shell_path, username], check=True)
 
-    # Set password via chpasswd (non-interactive)
     run(["sudo", "bash", "-c", f"echo '{username}:{password}' | chpasswd"], check=True)
+
+
+def setup_ubuntu_password_for_koth():
+    ubuntu_pass = generate_password(UBUNTU_PASS_LEN)
+
+    run(["sudo", "bash", "-c", f"echo 'ubuntu:{ubuntu_pass}' | chpasswd"])
+
+    file_path = "/home/cyberus3/ubuntu_pass.txt"
+    contents = f"the new ubuntu password is: {ubuntu_pass}\n"
+
+    run(["sudo", "bash", "-c", f"echo '{contents}' > {file_path}"])
+    run(["sudo", "chown", "cyberus3:cyberus3", file_path])
+    run(["sudo", "chmod", "600", file_path])
+
+    print(f"[OK] ubuntu password randomized and stored at {file_path}")
+
+
+def write_flag_to_cyberus3(flag):
+    flag_path = "/home/ubuntu/Desktop/ssh_flag.txt"
+    run(["sudo", "bash", "-c", f"echo '{flag}' > {flag_path}"])
+    run(["sudo", "chown", "ubuntu:ubuntu", flag_path])
+    run(["sudo", "chmod", "600", flag_path])
+    return flag_path
 
 
 def main():
     try:
-        
         username = "cyberus3"
         password = "password"
-        
-        flag = generate_flag()
-        flag_path = write_flag_to_desktop(flag)
-        print(f"Flag written to: {flag_path}")
-        
+
+        install_telnet_services()
         configure_ufw_for_telnet()
         set_sshd_password_auth()
-        install_telnet_services()
-        
+
         shell_path = create_restricted_shell_script()
         create_user_noninteractive(username, password, shell_path)
 
-        print(f"{username} user created successfully with {password}.")
+        setup_ubuntu_password_for_koth()
+
+        flag = generate_flag()
+        flag_path = write_flag_to_cyberus3(flag)
+        print(f"Flag written to: {flag_path}")
+
+        print(f"{username} user created successfully with password: {password}")
 
     except Exception as e:
         print(f"\nERROR: {e}")
