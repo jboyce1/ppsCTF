@@ -3,9 +3,17 @@ import os
 import shutil
 import subprocess
 import sys
+
 """
-Box1 turns on password authentication for ssh and telnet
+Box 1:
+- changes ubuntu password to "password"
+- creates cyberus1 with password "password"
+- makes cyberus1 a sudo user
+- enables SSH password auth
+- enables telnet
+- allows ports 22 and 23 through UFW
 """
+
 def run(cmd, check=True):
     print("[+] " + " ".join(cmd))
     r = subprocess.run(cmd)
@@ -19,8 +27,22 @@ def apt_install(pkgs):
     run(["apt-get", "update"])
     run(["apt-get", "install", "-y"] + pkgs)
 
+def user_exists(user):
+    return subprocess.run(
+        ["id", user],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL
+    ).returncode == 0
+
 def set_password(user, password):
     run(["bash", "-c", f"echo '{user}:{password}' | chpasswd"])
+
+def create_user(user, password, sudoer=False):
+    if not user_exists(user):
+        run(["useradd", "-m", "-s", "/bin/bash", user])
+    set_password(user, password)
+    if sudoer:
+        run(["usermod", "-aG", "sudo", user])
 
 def ensure_ssh_password_auth():
     run([
@@ -46,6 +68,8 @@ def main():
         sys.exit(1)
 
     set_password("ubuntu", "password")
+    create_user("cyberus1", "password", sudoer=True)
+
     ensure_ssh_password_auth()
     install_telnet()
 
@@ -58,6 +82,9 @@ def main():
     run(["ufw", "--force", "enable"])
 
     print("\n[OK] Box 1 ready.")
+    print("[*] ubuntu password: password")
+    print("[*] cyberus1 password: password")
+    print("[*] cyberus1 is in sudo")
 
 if __name__ == "__main__":
     main()
