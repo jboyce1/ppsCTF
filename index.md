@@ -51,23 +51,27 @@ title: Home
 
 **3/19 Thursday 7-9pm Teams Meeting**: [Cyberus](./classes/cyberus/cyberus)
 
+**3/26 Thursday 7-9pm Teams Meeting**: King of the Hill (Offensive/Defensive Free-for-All)
+
 **3/25 Wednesday 3-6:30pm Classroom A, CLP Main**: Wireless attack lab/Pizza
 
-**3/26 Thursday 7-9pm Teams Meeting**: Mini-Challenge Review + Tournament Overview
+**3/26 Thursday 6:30-7pm Teams Meeting**: Forgers Advisory Committee 
 
-**3/27 Friday 7-9pm Teams Meeting**: King of the Hill (Offensive/Defensive Free-for-All)
+**3/26 Thursday 7-9pm Teams Meeting**: King of the Hill (Offensive/Defensive Free-for-All)
 
 **3/28 Saturday 10-2pm at Carnegie Main Library Teen Space**: Wireless attacks/LAN Games/Pizza
 
-**4/8 Wednesday 9am-2pm Greenway**: Tournament Day 1
+-- anticipated pps{CyberTacticsFest} tournament layout:
 
-**4/9 Thursday 9am-2pm Greenway**: Tournament Day 2
+**4/8 Wednesday 9am-2pm Greenway**: Round 1 Day 1 (Teams A, B, C)
 
-**4/15 Wednesday 9am-2pm Greenway**: Final Bracket A (Championship Path)
+**4/9 Thursday 9am-2pm Greenway**: Round 1 Day 2 (Teams C, D, F)
 
-**4/16 Thursday 9am-2pm Greenway**: Final Bracket B (Placement Path)
+**4/15 Wednesday 9am-2pm Greenway**: Round 2 Day 1 (3 highest scoring teams)
 
-**4/17 Friday 9am-2pm Greenway**: Finals & Awards Ceremony
+**4/16 Thursday 9am-2pm Greenway**: Round 2 Day 2  (3 lowest scoring teams)
+
+**4/17 Friday 9am-2pm Greenway**: Round 3 Finals (all teams) & Awards Ceremony
 
 Upcoming Events:
 - **May-June**: Western PA PicoCTF Regional Invitational Competition (Date TBD)
