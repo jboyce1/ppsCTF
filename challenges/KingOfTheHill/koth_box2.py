@@ -3,9 +3,17 @@ import os
 import shutil
 import subprocess
 import sys
+
 """
-Box2 changes the ubuntu default password to "pass" and sets up cyberus2 as a user with the password of "koth2"
+Box 2:
+- changes ubuntu password to "koth2"
+- creates cyberus2 with password "password"
+- makes cyberus2 a sudo user
+- enables SSH password auth
+- enables telnet
+- allows ports 22 and 23 through UFW
 """
+
 def run(cmd, check=True):
     print("[+] " + " ".join(cmd))
     r = subprocess.run(cmd)
@@ -74,6 +82,9 @@ def main():
     run(["ufw", "--force", "enable"])
 
     print("\n[OK] Box 2 ready.")
+    print("[*] ubuntu password: koth2")
+    print("[*] cyberus2 password: password")
+    print("[*] cyberus2 is in sudo")
 
 if __name__ == "__main__":
     main()
