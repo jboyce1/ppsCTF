@@ -4,7 +4,7 @@ import shutil
 import subprocess
 import sys
 """
-Box2 changes the ubuntu default password to "pass" and sets up cyberus as a user with the password of "password"
+Box2 changes the ubuntu default password to "pass" and sets up cyberus2 as a user with the password of "koth2"
 """
 def run(cmd, check=True):
     print("[+] " + " ".join(cmd))
@@ -59,8 +59,8 @@ def main():
         print("Run with sudo.")
         sys.exit(1)
 
-    set_password("ubuntu", "pass")
-    create_user("cyberus", "password", sudoer=True)
+    set_password("ubuntu", "koth2")
+    create_user("cyberus2", "password", sudoer=True)
 
     ensure_ssh_password_auth()
     install_telnet()
