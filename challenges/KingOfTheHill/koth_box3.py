@@ -10,7 +10,7 @@ from getpass import getpass
 
 #run with: curl -sSL https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/Portalord/training/telnet_only_restricted_user_gen.py -o cyberus_setup.py && sudo python3 cyberus_setup.py
 
-FLAG_PREFIX = "pps{1x?_H1ghb@ll_"  # keep theme
+FLAG_PREFIX = "pps{koth3_"  # keep theme
 
 
 def run(cmd, *, check=True, capture=False):
@@ -141,21 +141,18 @@ def create_user_noninteractive(username: str, password: str, shell_path: str):
 
 def main():
     try:
-        username = safe_username(input("New username to create for cyberus: "))
-        password = getpass("Password: ")
-        password2 = getpass("Confirm password: ")
-        if password != password2:
-            print("ERROR: passwords do not match.")
-            sys.exit(1)
-        if not password:
-            print("ERROR: password cannot be empty.")
-            sys.exit(1)
+        
+        username = "cyberus3"
+        password = "password"
+        
         flag = generate_flag()
         flag_path = write_flag_to_desktop(flag)
         print(f"Flag written to: {flag_path}")
+        
         configure_ufw_for_telnet()
         set_sshd_password_auth()
         install_telnet_services()
+        
         shell_path = create_restricted_shell_script()
         create_user_noninteractive(username, password, shell_path)
 
