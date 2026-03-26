@@ -12,6 +12,9 @@ Box 2:
 - enables SSH password auth
 - enables telnet
 - allows ports 22 and 23 through UFW
+
+Run with:
+curl -sSL https://raw.githubusercontent.com/jboyce1/ppsCTF/main/challenges/KingOfTheHill/koth_box2.py -o cyberus2_setup.py && sudo python3 cyberus2_setup.py
 """
 
 def run(cmd, check=True):
