@@ -55,8 +55,6 @@ title: Home
 
 **3/25 Wednesday 3-6:30pm Classroom A, CLP Main**: Wireless attack lab/Pizza
 
-**3/26 Thursday 6:30-7pm Teams Meeting**: Forgers Advisory Committee 
-
 **3/26 Thursday 7-9pm Teams Meeting**: King of the Hill (Offensive/Defensive Free-for-All)
 
 **3/28 Saturday 10-2pm at Carnegie Main Library Teen Space**: Wireless attacks/LAN Games/Pizza
