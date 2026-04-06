@@ -59,15 +59,23 @@ title: Home
 
 **3/28 Saturday 10-2pm at Carnegie Main Library Teen Space**: Wireless attacks/LAN Games/Pizza
 
--- anticipated pps{CyberTacticsFest} tournament layout:
+---
 
-**4/8 Wednesday 9am-2pm Greenway**: Round 1 Day 1 (Teams A, B, C)
+pps{CyberTacticsFest} tournament layout:
 
-**4/9 Thursday 9am-2pm Greenway**: Round 1 Day 2 (Teams C, D, F)
+-- Teams vs. Teams: Limited Interference
+
+**4/8 Wednesday 9am-2pm Greenway**: Round 1 Day 1 (Teams: Obama HS, ObamaField MS, Brashear)
+
+**4/9 Thursday 9am-2pm Greenway**: Round 1 Day 2 (Teams: SciTech, A.W. Beattie, AllderCAPAFaxEtt)
+
+-- Teams vs. Teams: Intentional Interference
+
+**4/13 Monday 9am-2pm Greenway**: Round 2 Day 2  (3 lowest scoring teams)
 
 **4/15 Wednesday 9am-2pm Greenway**: Round 2 Day 1 (3 highest scoring teams)
 
-**4/16 Thursday 9am-2pm Greenway**: Round 2 Day 2  (3 lowest scoring teams)
+-- Teams vs. Teams: Adversarial Interference
 
 **4/17 Friday 9am-2pm Greenway**: Round 3 Finals (all teams) & Awards Ceremony
 
