@@ -61,13 +61,15 @@ title: Home
 
 ---
 
-pps{CyberTacticsFest} tournament layout:
+**pps{CyberTacticsFest} tournament layout:**
+
 
 -- Teams vs. Teams: Limited Interference
 
-**4/8 Wednesday 9am-2pm Greenway**: Round 1 Day 1 (Teams: Obama HS, ObamaField MS, Brashear)
+**4/8 Wednesday 9am-2pm Greenway**: Round 1 Day 1 Obama HS, ObamaField MS, Brashear
 
-**4/9 Thursday 9am-2pm Greenway**: Round 1 Day 2 (Teams: SciTech, A.W. Beattie, AllderCAPAFaxEtt)
+**4/9 Thursday 9am-2pm Greenway**: Round 1 Day 2 SciTech, A.W. Beattie, AllderCAPAFaxEtt
+
 
 -- Teams vs. Teams: Intentional Interference
 
@@ -75,9 +77,11 @@ pps{CyberTacticsFest} tournament layout:
 
 **4/15 Wednesday 9am-2pm Greenway**: Round 2 Day 1 (3 highest scoring teams)
 
+
 -- Teams vs. Teams: Adversarial Interference
 
 **4/17 Friday 9am-2pm Greenway**: Round 3 Finals (all teams) & Awards Ceremony
+
 
 Upcoming Events:
 - **May-June**: Western PA PicoCTF Regional Invitational Competition (Date TBD)
