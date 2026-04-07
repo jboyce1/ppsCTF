@@ -73,9 +73,9 @@ title: Home
 
 -- Teams vs. Teams: Intentional Interference
 
-**4/13 Monday 9am-2pm Greenway**: Round 2 Day 2  (3 lowest scoring teams)
+**4/13 Monday 9am-2pm Greenway**: Round 2 Day 1  Brashear, A.W. Beattie, AllderCAPAFaxEtt
 
-**4/15 Wednesday 9am-2pm Greenway**: Round 2 Day 1 (3 highest scoring teams)
+**4/15 Wednesday 9am-2pm Greenway**: Round 2 Day 2 Obama HS, ObamaField MS, SciTech
 
 
 -- Teams vs. Teams: Adversarial Interference
