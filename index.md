@@ -3,233 +3,135 @@ layout: default
 title: 2026–27 Tentative Season
 ---
 
-# 2026–27 Tentative Competition Season
+**2026–27 Tentative Schedule — Dates may change based on school calendars, partner competitions, and team availability.**
 
-## Two tracks. Multiple entry points. One regional cybersecurity community.
+# pps{CyberTechniquesFest} — Fall 2026
 
-**Tentative Schedule — Dates may change based on school calendars, partner competitions, and team availability.**
+CyberTacticsForge-led instruction and CTF competition. Teams meet online Tuesday and Thursday evenings from 7–9 PM, with selected Saturday labs.
 
-CyberTacticsForge is supporting two distinct but overlapping development tracks. Students may move between them as their skills and interests develop.
+### Schedule of Events
 
-## CyberPatriot 19 — Team Interest
+**10/6 Tuesday 7–9 PM Teams Meeting**: Intro and overview, cyber.org range, team formation, outside resources, and picoCTF
 
-CyberTacticsForge will sponsor and coordinate interested teams for the 2026–27 CyberPatriot season. Robert Morris University student mentors will provide primary team coaching and technical support.
+**10/8 Thursday 7–9 PM Teams Meeting**: [SSHerlock](./classes/SSHerlock/SSHerlock)
 
-- **Express Interest in CyberPatriot:** Form coming soon (`CYBERPATRIOT_INTEREST_FORM_URL`)
-- [View the Official CyberPatriot Schedule](https://www.uscyberpatriot.org/competition/current-competition/competition-schedule)
+**10/13 Tuesday 7–9 PM Teams Meeting**: [HashHound](./classes/HashHound/HashHound)
 
-## CyLab Security Academy — CTF Interest
+**10/15 Thursday 7–9 PM Teams Meeting**: Mini-Challenge
 
-Students interested in additional CTF opportunities may express interest now. CyberTacticsForge plans to connect students with Carnegie Mellon University student mentors and local support as Academy competitions are announced.
+**10/17 Saturday Optional Hands-On Lab**: Environment setup, VM/network familiarity, and open challenge time
 
-- **Express Interest in CyLab Security Academy:** Form coming soon (`CYLAB_INTEREST_FORM_URL`)
-- [Visit CyLab Security Academy](https://www.cylabacademy.org/)
+**10/20 Tuesday 7–9 PM Teams Meeting**: Mini-Challenge Review
 
-# Two Development Tracks
+**10/22 Thursday 7–9 PM Teams Meeting**: [CyberCartographer](./classes/CyberCartographer/CyberCartographer)
 
-## CTF / Techniques Track
+**10/27 Tuesday 7–9 PM Teams Meeting**: [MsDisin](./classes/MsDisin/MsDisin)
 
-### pps{CyberTechniquesFest}
+**10/29 Thursday 7–9 PM Teams Meeting**: Mini-Challenge
 
-- CyberTacticsForge-led
-- Fall 2026
-- Instruction in specific cybersecurity techniques
-- Hands-on challenge environments
-- Network and host investigation
-- Enumeration and traffic analysis
-- Credential/password work
-- Web and service interaction
-- Defensive analysis
-- Capture-the-Flag competition
+**11/3 Tuesday**: No session — PPS Election Day / no school
 
-### CyLab Security Academy
+**11/5 Thursday 7–9 PM Teams Meeting**: Mini-Challenge Review
 
-- Optional continuing CTF opportunity
-- Competition dates announced by CyLab Security Academy
-- CMU student mentor support where available
-- CyberTacticsForge helps interested students connect but does not operate the Academy competitions
+**11/7 Saturday Optional Mini-CTF / Open Lab**
 
-## Operational / Force-on-Force Track
+**11/10 Tuesday 7–9 PM Teams Meeting**: [LANgeist](./classes/LANgeist/LANgeist)
 
-### CyberPatriot
+**11/12 Thursday 7–9 PM Teams Meeting**: [MALchemist](./classes/MALchemist/MALchemist)
 
-- Fall 2026 through January 2027
-- External competition supported and coordinated by CyberTacticsForge
-- Primarily coached by Robert Morris University student mentors
-- Focused on defensive system administration and hardening
+**11/17 Tuesday 7–9 PM Teams Meeting**: Mini-Challenge
 
-### pps{CyberTactics}
+**11/19 Thursday 7–9 PM Teams Meeting**: [Portalord](./classes/Portalord/Portalord)
 
-- CyberTacticsForge-led
-- Winter 2027
-- Live team-vs-team / force-on-force competition
-- System administration and network operations
-- Service uptime, firewalling, and segmentation
-- Monitoring, detection, and incident response
-- Authorized red-team operations
-- Team communication and tactical decision-making
+**11/21 Saturday Full-Environment Lab**: Multi-role practice and competition preparation
 
-**Students may move between tracks.** New participants may begin with pps{CyberTechniquesFest} and later join pps{CyberTactics}. Returning students may compete in CyberPatriot during the fall and join pps{CyberTactics} during the winter.
+**11/24–11/26 Thanksgiving Pause**: No required sessions
 
-# 2026–27 Master Tentative Schedule
+**12/1 Tuesday 7–9 PM Teams Meeting**: [8ball](./classes/8ball/8ball)
 
-All dates are **tentative and subject to change**. Regular instruction is scheduled for Tuesday and Thursday evenings from 7:00–9:00 PM, with selected Saturday labs and events.
+**12/3 Thursday 7–9 PM Teams Meeting**: [Cyberus](./classes/cyberus/cyberus) and tournament overview
 
-## October 2026 — Season Launch
+**12/5 Saturday Optional Open Range / Technical Check**
 
-- **Thursday, October 1 — CyberPatriot 19 Registration Deadline**
-  Teams must be organized and registered. This is an external administrative deadline.
+**12/7–12/9 pps{CyberTechniquesFest} Competition Window**: Exact team slots to be scheduled separately
 
-- **Tuesday, October 6, 7:00–9:00 PM — pps{CyberTechniquesFest} Kickoff**
-  Welcome, team formation, environment access, tools, expectations, and an introduction to both tracks.
+**12/15 Tuesday 7–9 PM Teams Meeting**: After Action Review, results, and recognition
 
-- **Wednesday, October 7–Tuesday, October 20 — CyberPatriot Practice Round**
-  External CyberPatriot practice window.
+**12/17 Thursday 7–9 PM Teams Meeting**: Fall closeout and pps{CyberTactics} interest
 
-- **Thursday, October 8, 7:00–9:00 PM — CyberTechniquesFest Training**
-- **Tuesday, October 13, 7:00–9:00 PM — CyberTechniquesFest Training**
-- **Thursday, October 15, 7:00–9:00 PM — CyberTechniquesFest Training**
+# CyberPatriot 19 — 2026–27
 
-- **Saturday, October 17 — Optional Hands-On Lab**
-  Environment setup, VM/network familiarity, and open challenge time.
+CyberPatriot is an external competition. CyberTacticsForge will sponsor and coordinate interested teams, with primary coaching and technical support from Robert Morris University student mentors.
 
-- **Tuesday, October 20, 7:00–9:00 PM — CyberTechniquesFest Training**
+- **10/1**: Registration deadline
+- **10/7–10/20**: Practice Round
+- **10/22–10/25**: Round 1
+- **10/30–1/19**: Training Round 2
+- **11/12–11/15**: Round 2
+- **12/10–12/13**: State Round
+- **1/21–1/23**: Semifinals for qualifying teams
+- **3/12–3/16**: National Finals if a supported team qualifies
 
-- **Thursday, October 22–Sunday, October 25 — CyberPatriot Round 1**
-  External competition round with RMU-supported coaching.
+[View the Official CyberPatriot Schedule](https://www.uscyberpatriot.org/competition/current-competition/competition-schedule)
 
-- **Thursday, October 22, 7:00–9:00 PM — CyberTechniquesFest Training**
-  Separate from CyberPatriot, with flexible attendance for students competing in that round.
+**Team interest form:** Coming soon
 
-- **Tuesday, October 27, 7:00–9:00 PM — CyberTechniquesFest Training**
-- **Thursday, October 29, 7:00–9:00 PM — CyberTechniquesFest Training**
+# pps{CyberTactics} — Winter 2027
 
-- **Friday, October 30–Tuesday, January 19 — CyberPatriot Training Round 2**
-  External CyberPatriot training window.
+CyberTacticsForge-led team-vs-team competition focused on operating and defending live systems and networks. Teams meet Tuesday and Thursday evenings from 7–9 PM, with Saturday build days and scrimmages.
 
-## November 2026 — Skill Building and Integration
+### Schedule of Events
 
-- **Tuesday, November 3 — No CyberTechniquesFest Session**
-  PPS Election Day / no school.
+**1/26 Tuesday 7–9 PM Teams Meeting**: Kickoff — operate the network
 
-- **Thursday, November 5, 7:00–9:00 PM — CyberTechniquesFest Training**
+**1/28 Thursday 7–9 PM Teams Meeting**: Operate the hosts
 
-- **Saturday, November 7 — Mini-CTF / Open Lab**
-  Optional short challenge set and time-pressure practice.
+**2/2 Tuesday 7–9 PM Teams Meeting**: Control the network
 
-- **Tuesday, November 10, 7:00–9:00 PM — CyberTechniquesFest Training**
+**2/4 Thursday 7–9 PM Teams Meeting**: See and respond
 
-- **Thursday, November 12–Sunday, November 15 — CyberPatriot Round 2**
-  External competition round with RMU-supported coaching.
+**2/6 Saturday**: CyberTactics Build Day
 
-- **Thursday, November 12, 7:00–9:00 PM — CyberTechniquesFest Training / Flexible Attendance**
-- **Tuesday, November 17, 7:00–9:00 PM — Integrated CyberTechniquesFest Challenges**
-- **Thursday, November 19, 7:00–9:00 PM — Integrated CyberTechniquesFest Challenges**
+**2/9 Tuesday 7–9 PM Teams Meeting**: Team build and service operations
 
-- **Saturday, November 21 — Full-Environment Lab**
-  Longer hands-on block, multi-role practice, and competition preparation.
+**2/11 Thursday 7–9 PM Teams Meeting**: Team build and attack-surface review
 
-- **Tuesday, November 24–Thursday, November 26 — Thanksgiving Pause**
-  No required CyberTacticsForge sessions.
+**2/13 Saturday**: Controlled Scrimmage #1
 
-## December 2026 — CyberTechniquesFest Competition and Closeout
+**2/16 Tuesday 7–9 PM Teams Meeting**: Scrimmage review and defensive restoration
 
-- **Tuesday, December 1, 7:00–9:00 PM — Competition Preparation / Final Rehearsal**
-- **Thursday, December 3, 7:00–9:00 PM — Competition Preparation / Final Rehearsal**
-- **Saturday, December 5 — Optional Open Range / Technical Check**
+**2/18 Thursday 7–9 PM Teams Meeting**: Red-team planning and defensive adaptation
 
-- **Monday, December 7–Wednesday, December 9 — pps{CyberTechniquesFest} Competition Window**
-  Main fall CyberTacticsForge competition. Exact team slots may be scheduled separately.
+**2/20 Saturday**: Scrimmage #2
 
-- **Thursday, December 10–Sunday, December 13 — CyberPatriot State Round**
-  External competition round with RMU-supported coaching.
+**2/23 Tuesday 7–9 PM Teams Meeting**: Operational improvement
 
-- **Tuesday, December 15, 7:00–9:00 PM — CyberTechniquesFest After Action Review**
-  Results, feedback, recognition, and lessons learned.
+**2/25 Thursday 7–9 PM Teams Meeting**: Tactics, communications, and resilience
 
-- **Thursday, December 17, 7:00–9:00 PM — Fall Season Closeout and pps{CyberTactics} Interest**
+**2/27 Saturday**: Full-range rehearsal
 
-- **Friday, December 18–Monday, January 25 — Winter Pause**
-  No regular CyberTacticsForge instruction. CyberPatriot teams may continue independently with RMU coaches.
+**3/2 Tuesday 7–9 PM Teams Meeting**: Final configuration and rules review
 
-## January 2027 — pps{CyberTactics} Begins
+**3/4 Thursday 7–9 PM Teams Meeting**: Final readiness
 
-pps{CyberTactics} is a separate, shorter operational season. It is not another CTF. Teams must operate systems and services while defending, detecting, responding, and conducting authorized offensive operations.
+**3/6 Saturday**: pps{CyberTactics} Force-on-Force Competition
 
-- **Thursday, January 21–Saturday, January 23 — CyberPatriot Semifinals**
-  External competition for qualifying teams only.
+**3/9 Tuesday 7–9 PM Teams Meeting**: After Action Review, recognition, and season close
 
-- **Tuesday, January 26, 7:00–9:00 PM — pps{CyberTactics} Kickoff: Operate the Network**
-  Team structure, topology, IP addressing, required services, scoring, uptime, change management, and operational responsibilities.
+# CyLab Security Academy — CTF Opportunities
 
-- **Thursday, January 28, 7:00–9:00 PM — Operate the Hosts**
-  Linux/Windows administration, users and permissions, processes and services, configuration, backups, and restoration.
+**Dates to be announced by CyLab Security Academy.**
 
-## February 2027 — Build, Operate, and Adapt
+Students interested in additional CTF competitions may participate when CyLab Security Academy announces its schedule. CyberTacticsForge will help connect interested students with Carnegie Mellon University student mentors and local support where available.
 
-- **Tuesday, February 2, 7:00–9:00 PM — Control the Network**
-  Routing, DNS/DHCP, firewall rules, segmentation, exposed services, and attack-surface management.
+[Visit CyLab Security Academy](https://www.cylabacademy.org/)
 
-- **Thursday, February 4, 7:00–9:00 PM — See and Respond**
-  Logging, monitoring, detection, triage, incident response, communication, and rules of engagement.
+**Student interest form:** Coming soon
 
-- **Saturday, February 6 — CyberTactics Build Day**
-- **Tuesday, February 9, 7:00–9:00 PM — Team Build / Service Operations**
-- **Thursday, February 11, 7:00–9:00 PM — Team Build / Attack Surface Review**
-- **Saturday, February 13 — Scrimmage #1: Controlled**
-- **Tuesday, February 16, 7:00–9:00 PM — Scrimmage AAR / Defensive Restoration**
-- **Thursday, February 18, 7:00–9:00 PM — Red-Team Planning / Defensive Adaptation**
-- **Saturday, February 20 — Scrimmage #2: Less Scripted**
-- **Tuesday, February 23, 7:00–9:00 PM — Fix What Broke / Operational Improvement**
-- **Thursday, February 25, 7:00–9:00 PM — Tactics, Communications, and Resilience**
-- **Saturday, February 27 — Full-Range Rehearsal**
+## A nod of respect to those who have helped this process
 
-## March 2027 — Force-on-Force Capstone
+Carnegie Mellon University's CTF community — supplying coaches and mentors
 
-- **Tuesday, March 2, 7:00–9:00 PM — Final Configuration / Rules Review**
-- **Thursday, March 4, 7:00–9:00 PM — Final Readiness**
+BlackGirlsHack — supplying coaches and mentors
 
-- **Saturday, March 6 — pps{CyberTactics} Force-on-Force Competition**
-  Teams operate and defend functional network services against live adversarial activity. Success reflects service availability, defense, detection, recovery, offensive execution, and team decision-making.
-
-- **Tuesday, March 9, 7:00–9:00 PM — CyberTactics AAR / Recognition / Season Close**
-
-- **Friday, March 12–Tuesday, March 16 — CyberPatriot National Finals**
-  External national competition, only if a supported team qualifies.
-
-## Spring 2027 — Optional CyLab Security Academy CTF Opportunities
-
-**Dates: To Be Announced by CyLab Security Academy**
-
-Students who want to continue developing CTF skills after pps{CyberTechniquesFest} may participate in CyLab Security Academy competitions when dates are announced. CyberTacticsForge will help connect interested students with Carnegie Mellon University student mentors and local support where available.
-
-Participation is optional and does not depend on pps{CyberTactics}. CyLab Security Academy operates and schedules its own competitions.
-
-- **Express Interest:** Form coming soon (`CYLAB_INTEREST_FORM_URL`)
-- [Visit CyLab Security Academy](https://www.cylabacademy.org/)
-
-# Which Track Is for Me?
-
-These are recommended pathways, not hard prerequisites.
-
-## I like solving technical puzzles and finding flags.
-
-Start with **pps{CyberTechniquesFest}** and consider **CyLab Security Academy**.
-
-## I like configuring systems, defending networks, and working on an operational team.
-
-Consider **CyberPatriot** and **pps{CyberTactics}**.
-
-## I am new and do not know yet.
-
-Start with **pps{CyberTechniquesFest}**. You can move between tracks as your interests and skills develop.
-
-## I have already competed for a year or two.
-
-Consider **CyberPatriot in the fall**, then return for **pps{CyberTactics}** and recruit teammates from the fall cohort.
-
-## A Nod of Respect to Those Who Help This Process
-
-- Carnegie Mellon University's CTF community — coaches and mentors
-- BlackGirlsHack — coaches and mentors
-- Robert Morris University students — CyberPatriot coaching and technical support
+Robert Morris University students — CyberPatriot coaching and technical support
