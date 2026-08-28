@@ -2,10 +2,27 @@
 layout: default
 title: 2026–27 Tentative Season
 ---
-
 **2026–27 Tentative Schedule — Dates may change based on school calendars, partner competitions, and team availability.**
 
-# pps{CyberTechniquesFest} — Fall 2026
+# CyberPatriot 19
+
+CyberPatriot is an external competition. CyberTacticsForge will sponsor and coordinate interested teams, with primary coaching and technical support from Robert Morris University student mentors.
+
+- **10/1**: Registration deadline
+- **10/7–10/20**: Practice Round
+- **10/22–10/25**: Round 1
+- **10/30–1/19**: Training Round 2
+- **11/12–11/15**: Round 2
+- **12/10–12/13**: State Round
+- **1/21–1/23**: Semifinals for qualifying teams
+- **3/12–3/16**: National Finals if a supported team qualifies
+
+[View the Official CyberPatriot Schedule](https://www.uscyberpatriot.org/competition/current-competition/competition-schedule)
+
+**Team interest form:** Coming soon
+
+---
+# pps{CyberTechniquesFest} Fall 26
 
 CyberTacticsForge-led instruction and CTF competition. Teams meet online Tuesday and Thursday evenings from 7–9 PM, with selected Saturday labs.
 
@@ -57,26 +74,11 @@ CyberTacticsForge-led instruction and CTF competition. Teams meet online Tuesday
 
 **12/15 Tuesday 7–9 PM Teams Meeting**: After Action Review, results, and recognition
 
-**12/17 Thursday 7–9 PM Teams Meeting**: Fall closeout and pps{CyberTactics} interest
+**12/17 Thursday 7–9 PM Teams Meeting**: Fall closeout and pps{CyberTacticsForce} interest
 
-# CyberPatriot 19 — 2026–27
+---
 
-CyberPatriot is an external competition. CyberTacticsForge will sponsor and coordinate interested teams, with primary coaching and technical support from Robert Morris University student mentors.
-
-- **10/1**: Registration deadline
-- **10/7–10/20**: Practice Round
-- **10/22–10/25**: Round 1
-- **10/30–1/19**: Training Round 2
-- **11/12–11/15**: Round 2
-- **12/10–12/13**: State Round
-- **1/21–1/23**: Semifinals for qualifying teams
-- **3/12–3/16**: National Finals if a supported team qualifies
-
-[View the Official CyberPatriot Schedule](https://www.uscyberpatriot.org/competition/current-competition/competition-schedule)
-
-**Team interest form:** Coming soon
-
-# pps{CyberTactics} — Winter 2027
+# pps{CyberTacticsForce} Winter 27
 
 CyberTacticsForge-led team-vs-team competition focused on operating and defending live systems and networks. Teams meet Tuesday and Thursday evenings from 7–9 PM, with Saturday build days and scrimmages.
 
@@ -114,11 +116,11 @@ CyberTacticsForge-led team-vs-team competition focused on operating and defendin
 
 **3/4 Thursday 7–9 PM Teams Meeting**: Final readiness
 
-**3/6 Saturday**: pps{CyberTactics} Force-on-Force Competition
+**3/6 Saturday**: pps{CyberTacticsForce} Force-on-Force Competition
 
 **3/9 Tuesday 7–9 PM Teams Meeting**: After Action Review, recognition, and season close
 
-# CyLab Security Academy — CTF Opportunities
+# CyLab Security Academy CTF Opportunities
 
 **Dates to be announced by CyLab Security Academy.**
 
