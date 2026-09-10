@@ -1,135 +1,88 @@
 ---
-layout: default
-title: 2026–27 Tentative Season
+layout: home
+title: pps{CyberTechniquesFest}
 ---
-**2026–27 Tentative Schedule — Dates may change based on school calendars, partner competitions, and team availability.**
+<section class="hero" aria-labelledby="welcome">
+  <p class="eyebrow">pps{CyberTechniquesFest} / Pittsburgh cybersecurity</p>
+  <h1 id="welcome">Learn the techniques.<br><span>Capture the flag.</span></h1>
+  <p class="intro">Explicit instruction. Real flags. A technical path from absolute beginner to expert, with the knowledge to understand how each technique works.</p>
+  <div class="actions"><a class="button" href="#classes">Start learning →</a><a class="text-link" href="#season">View the fall season ↓</a></div>
+  <p class="hero-vcr"><a href="#vcr">Earn evidence for your next opportunity →</a><br>The Verified Competency Record connects demonstrated skills to college, scholarship, and career applications.</p>
+  <div class="foundation"><strong>The foundation for every participant.</strong><span>Everyone participating in a Forge event is expected to know the basic techniques taught here. Begin with guided lessons, practice in the environment, and grow into more demanding flag hunts.</span></div>
+</section>
 
-# CyberPatriot 19
+<section id="path" aria-labelledby="path-title">
+  <div class="section-heading"><div><p class="eyebrow">Techniques Track / pps{CTF} → CyLab</p><h2 id="path-title">Start with the basics. Keep going.</h2></div><p>Absolute beginner → Expert</p></div>
+  <div class="learning-grid">
+    <article class="learning-step"><p class="eyebrow">01 / Learn</p><h3>Build your foundation.</h3><p>Work through explicit instruction in the classes below. Learn the tools, the technical background, and the basic techniques behind the flags.</p><a href="{{ '/classes/SSHerlock/SSHerlock' | relative_url }}">Start with SSHerlock →</a></article>
+    <article class="learning-step"><p class="eyebrow">02 / Practice</p><h3>Put it into action.</h3><p>Apply what you know to actual flags. Use mini-challenges, labs, and reviews to build confidence and connect techniques across the pps{CTF} environment.</p><a href="#season">Find a practice session →</a></article>
+    <article class="learning-step"><p class="eyebrow">03 / Advance</p><h3>Hunt further.</h3><p>Capture more flags in the environment, tackle harder problems, and progress toward expert challenges and national flag-hunting competitions.</p><a href="#beyond">Explore what comes next →</a></article>
+  </div>
+</section>
 
-CyberPatriot is an external competition. CyberTacticsForge will sponsor and coordinate interested teams, with primary coaching and technical support from Robert Morris University student mentors.
+<section id="vcr" class="vcr" aria-labelledby="vcr-title">
+  <div class="section-heading"><div><p class="eyebrow">VCR / Verified Competency Record</p><h2 id="vcr-title">Build skills. Leave with evidence.</h2></div></div>
+  <p class="vcr-lead">Turn what you demonstrate into something you can take forward: an evidence-backed record for college applications, scholarship consideration, and your résumé.</p>
+  <p>CyberTacticsForge manages the Verified Competency Record for events it hosts. Through participation, students can earn verified competencies by demonstrating what they can actually do inside a Forge environment. The VCR translates that observable activity into durable evidence of individual competency.</p>
+  <div class="vcr-benefits" aria-label="Ways to use your record">
+    <div><strong>College applications</strong><span>Show admissions readers specific skills and the work behind them.</span></div>
+    <div><strong>Scholarship opportunities</strong><span>Support applications with demonstrated ability, initiative, and growth.</span></div>
+    <div><strong>Résumés &amp; job applications</strong><span>Give employers concrete examples of what you have done and can explain.</span></div>
+  </div>
+  <div class="vcr-question"><span>The scoreboard answers <strong>“Who won?”</strong></span><span>The VCR answers <strong>“What can this person demonstrably do?”</strong></span></div>
+  <div class="vcr-layers">
+    <article><p class="eyebrow">01 / Technical competencies</p><h3>Show the skill.</h3><p>Find and analyze an artifact, harden a system, change a configuration, or restore a service. Flags and automated checks can provide evidence of specific accomplishments.</p></article>
+    <article><p class="eyebrow">02 / Operational competencies</p><h3>Show your judgment.</h3><p>Diagnose, prioritize, recover, and adapt as conditions change. Service availability, system state, and activity logs can capture work that a single flag cannot.</p></article>
+    <article><p class="eyebrow">03 / Professional evidence</p><h3>Explain your work.</h3><p>A GitHub write-up or after-action review (AAR) records what you encountered, what you did, and what you learned—especially during CyberTacticsEngagement.</p></article>
+  </div>
+  <details class="vcr-detail"><summary>How demonstrated work becomes a verified record</summary>
+    <div class="vcr-detail-body">
+      <p>Each challenge starts with an <strong>intent</strong>: the competency the participant should demonstrate. Evidence requirements follow that intent and the actual source environment.</p>
+      <ol class="vcr-flow" aria-label="Competency verification process"><li>Intent</li><li>Evidence sources</li><li>Validation</li><li>Competency record</li></ol>
+      <p>Flags can show discovery or analysis. State checks show whether a required change succeeded. Uptime shows whether a service stayed available. Telemetry and event logs show activity. A participant’s AAR adds explanation and reflection. Together, these can support one competency record; competition scoring remains separate.</p>
+      <div class="vcr-example">
+        <p class="eyebrow">Illustrative competency / Network service recovery</p>
+        <h3>Restore SSH while preserving firewall protection.</h3>
+        <p>Evidence could show that the participant diagnosed the outage, restored the service, allowed access from the management network, and preserved the restriction on public access. The record connects the demonstrated competency to its environment, supporting evidence, and verification.</p>
+      </div>
+      <p><strong>Your record reflects your contribution.</strong> Individual environments provide clearer attribution. In collaborative force-on-force events, team outcomes need evidence of the individual’s actions, supported by their own GitHub artifact or AAR. A team result alone cannot establish what each participant demonstrated.</p>
+    </div>
+  </details>
+  <p class="vcr-close">Participation creates the opportunity. Demonstrated competency gives you evidence to carry into your next application.</p>
+</section>
 
-- **10/1**: Registration deadline
-- **10/7–10/20**: Practice Round
-- **10/22–10/25**: Round 1
-- **10/30–1/19**: Training Round 2
-- **11/12–11/15**: Round 2
-- **12/10–12/13**: State Round
-- **1/21–1/23**: Semifinals for qualifying teams
-- **3/12–3/16**: National Finals if a supported team qualifies
+<section id="classes" aria-labelledby="classes-title">
+  <div class="section-heading"><div><p class="eyebrow">The technical foundation</p><h2 id="classes-title">Your class directory.</h2></div><p>Open a lesson and get to work.</p></div>
+  <div class="class-grid">
+    <a class="class-card" href="{{ '/classes/SSHerlock/SSHerlock' | relative_url }}"><span class="eyebrow">Network</span><strong>SSHerlock</strong><span>Open lesson →</span></a>
+    <a class="class-card" href="{{ '/classes/HashHound/HashHound' | relative_url }}"><span class="eyebrow">Host</span><strong>HashHound</strong><span>Open lesson →</span></a>
+    <a class="class-card" href="{{ '/classes/CyberCartographer/CyberCartographer' | relative_url }}"><span class="eyebrow">Network</span><strong>CyberCartographer</strong><span>Open lesson →</span></a>
+    <a class="class-card" href="{{ '/classes/MsDisin/MsDisin' | relative_url }}"><span class="eyebrow">Host</span><strong>MsDisin</strong><span>Open lesson →</span></a>
+    <a class="class-card" href="{{ '/classes/LANgeist/LANgeist' | relative_url }}"><span class="eyebrow">Network</span><strong>LANgeist</strong><span>Open lesson →</span></a>
+    <a class="class-card" href="{{ '/classes/MALchemist/MALchemist' | relative_url }}"><span class="eyebrow">Host</span><strong>MALchemist</strong><span>Open lesson →</span></a>
+    <a class="class-card" href="{{ '/classes/Portalord/Portalord' | relative_url }}"><span class="eyebrow">Network</span><strong>Portalord</strong><span>Open lesson →</span></a>
+    <a class="class-card" href="{{ '/classes/8ball/8ball' | relative_url }}"><span class="eyebrow">Host</span><strong>8ball</strong><span>Open lesson →</span></a>
+    <a class="class-card" href="{{ '/classes/cyberus/cyberus' | relative_url }}"><span class="eyebrow">Host</span><strong>Cyberus</strong><span>Open lesson →</span></a>
+  </div>
+</section>
 
-[View the Official CyberPatriot Schedule](https://www.uscyberpatriot.org/competition/current-competition/competition-schedule)
+<section id="season" aria-labelledby="season-title">
+  <div class="section-heading"><div><p class="eyebrow">Learn together / Compete together</p><h2 id="season-title">Fall 2026 season.</h2></div><p class="status">Tentative · Oct 20–Dec 23</p></div>
+  <p>Online Tuesday and Thursday evenings, 7–9 PM, with selected Saturday labs and a Wednesday closeout. Dates may change based on school calendars, partner competitions, and team availability.</p>
+  <details><summary><span>pps{CyberTechniquesFest} · Full schedule</span><span>Classes, labs, and competition</span></summary><div class="schedule" markdown="1">
+{% include schedule-technical.md %}
+  </div></details>
+</section>
 
-**Team interest form:** Coming soon
+<section id="beyond" aria-labelledby="beyond-title">
+  <div class="section-heading"><div><p class="eyebrow">Take Pittsburgh further</p><h2 id="beyond-title">Where the techniques can take you.</h2></div></div>
+  <div class="track-grid">
+    <article class="track technical"><p class="eyebrow">Keep hunting flags</p><h3>Go beyond the local range.</h3><p>Build toward national flag-hunting competitions, including opportunities through Carnegie Mellon University’s CyLab Security Academy. Bring Pittsburgh’s talent to a wider stage.</p><p class="destination"><strong>A possible career direction</strong>Bug bounty hunting and code-focused red teaming.</p><a class="text-link" href="https://www.cylabacademy.org/">Explore CyLab Security Academy ↗</a></article>
+    <article class="track operational"><p class="eyebrow">Put your foundation to work</p><h3>Ready for the Tactics Track?</h3><p>Use your technical competency in a live team environment. Follow the Tactics Track at ForgeOps: build defensive skills through CyberPatriot, then attack and defend in CyberTacticsEngagement as a Digital Operations Group.</p><a class="text-link" href="https://cybertacticsforge.org/programs/">Explore the Tactics Track at ForgeOps →</a></article>
+  </div>
+</section>
 
----
-# pps{CyberTechniquesFest} Fall 26
-
-CyberTacticsForge-led instruction and CTF competition. Teams meet online Tuesday and Thursday evenings from 7–9 PM, with selected Saturday labs. The season runs October 20–December 23, with the final review and closeout on Wednesday, December 23. Recruitment and college mentor onboarding continue before kickoff.
-
-### Schedule of Events
-
-**10/20 Tuesday 7–9 PM Teams Meeting**: Intro and overview, cyber.org range, team formation, outside resources, and picoCTF
-
-**10/22 Thursday 7–9 PM Teams Meeting**: [SSHerlock](./classes/SSHerlock/SSHerlock)
-
-**10/27 Tuesday 7–9 PM Teams Meeting**: [HashHound](./classes/HashHound/HashHound)
-
-**10/29 Thursday 7–9 PM Teams Meeting**: Mini-Challenge
-
-**10/31 Saturday Optional Hands-On Lab**: Environment setup, VM/network familiarity, and open challenge time
-
-**11/3 Tuesday**: No session — PPS Election Day / no school
-
-**11/5 Thursday 7–9 PM Teams Meeting**: Mini-Challenge Review
-
-**11/10 Tuesday 7–9 PM Teams Meeting**: [CyberCartographer](./classes/CyberCartographer/CyberCartographer)
-
-**11/12 Thursday 7–9 PM Teams Meeting**: [MsDisin](./classes/MsDisin/MsDisin)
-
-**11/17 Tuesday 7–9 PM Teams Meeting**: Mini-Challenge
-
-**11/19 Thursday 7–9 PM Teams Meeting**: Mini-Challenge Review
-
-**11/21 Saturday Optional Mini-CTF / Open Lab**
-
-**11/24–11/26 Thanksgiving Pause**: No required sessions
-
-**12/1 Tuesday 7–9 PM Teams Meeting**: [LANgeist](./classes/LANgeist/LANgeist)
-
-**12/3 Thursday 7–9 PM Teams Meeting**: [MALchemist](./classes/MALchemist/MALchemist)
-
-**12/8 Tuesday 7–9 PM Teams Meeting**: Mini-Challenge
-
-**12/10 Thursday 7–9 PM Teams Meeting**: [Portalord](./classes/Portalord/Portalord)
-
-**12/12 Saturday Full-Environment Lab**: Multi-role practice and competition preparation
-
-**12/15 Tuesday 7–9 PM Teams Meeting**: [8ball](./classes/8ball/8ball)
-
-**12/17 Thursday 7–9 PM Teams Meeting**: [Cyberus](./classes/cyberus/cyberus) and tournament overview
-
-**12/19 Saturday Optional Open Range / Technical Check**
-
-**12/21–12/23 pps{CyberTechniquesFest} Competition Window**: Exact team slots to be scheduled separately
-
-**12/23 Wednesday 7–9 PM Teams Meeting**: After Action Review, results, recognition, fall closeout, and pps{CyberTacticsForce} interest — following the final tournament slots
-
----
-
-# pps{CyberTacticsForce} Winter 27
-
-CyberTacticsForge-led team-vs-team competition focused on operating and defending live systems and networks. Teams meet Tuesday and Thursday evenings from 7–9 PM, with Saturday build days and scrimmages.
-
-### Schedule of Events
-
-**1/21 Thursday 7–9 PM Teams Meeting**: Kickoff — operate the network (after Keystone exams)
-
-**1/28 Thursday 7–9 PM Teams Meeting**: Operate the hosts
-
-**2/2 Tuesday 7–9 PM Teams Meeting**: Control the network
-
-**2/4 Thursday 7–9 PM Teams Meeting**: See and respond
-
-**2/6 Saturday**: CyberTactics Build Day
-
-**2/9 Tuesday 7–9 PM Teams Meeting**: Team build and service operations
-
-**2/11 Thursday 7–9 PM Teams Meeting**: Team build and attack-surface review
-
-**2/13 Saturday**: Controlled Scrimmage #1
-
-**2/16 Tuesday 7–9 PM Teams Meeting**: Scrimmage review and defensive restoration
-
-**2/18 Thursday 7–9 PM Teams Meeting**: Red-team planning and defensive adaptation
-
-**2/20 Saturday**: Scrimmage #2
-
-**2/23 Tuesday 7–9 PM Teams Meeting**: Operational improvement
-
-**2/25 Thursday 7–9 PM Teams Meeting**: Tactics, communications, and resilience
-
-**2/27 Saturday**: Full-range rehearsal
-
-**3/2 Tuesday 7–9 PM Teams Meeting**: Final configuration and rules review
-
-**3/4 Thursday 7–9 PM Teams Meeting**: Final readiness
-
-**3/6 Saturday**: pps{CyberTacticsForce} Force-on-Force Competition, followed by After Action Review, recognition, and season close
-
-# CyLab Security Academy CTF Opportunities
-
-**Dates to be announced by CyLab Security Academy.**
-
-Students interested in additional CTF competitions may participate when CyLab Security Academy announces its schedule. CyberTacticsForge will help connect interested students with Carnegie Mellon University student mentors and local support where available.
-
-[Visit CyLab Security Academy](https://www.cylabacademy.org/)
-
-**Student interest form:** Coming soon
-
-## A nod of respect to those who have helped this process
-
-Carnegie Mellon University's CTF community — supplying coaches and mentors
-
-BlackGirlsHack — supplying coaches and mentors
-
-Robert Morris University students — CyberPatriot coaching and technical support
+<section class="community" aria-labelledby="community-title">
+  <p class="eyebrow">Built with community</p><h2 id="community-title">Pittsburgh talent. Shared effort.</h2>
+  <p>With appreciation for Carnegie Mellon University’s CTF community and BlackGirlsHack for supplying coaches and mentors.</p>
+</section>
