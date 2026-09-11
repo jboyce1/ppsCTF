@@ -5,11 +5,26 @@ title: pps{CyberTechniquesFest}
 <section class="hero" aria-labelledby="welcome">
   <p class="eyebrow">pps{CyberTechniquesFest} / Pittsburgh cybersecurity</p>
   <h1 id="welcome">Learn the techniques.<br><span>Capture the flag.</span></h1>
+</section>
+<section id="season" class="participant-season" aria-labelledby="season-title">
+  <div id="next-session" class="next-session" aria-live="polite" aria-atomic="true">
+    <p class="eyebrow" id="next-status">Your next session</p>
+    <h2 id="next-title">Find your meeting below.</h2>
+    <p id="next-time">All times are Pittsburgh time (Eastern). The full schedule is always available.</p>
+    <div id="next-links" class="next-links"><a href="#season-title">View season schedule ↓</a></div>
+  </div>
+  <div class="section-heading"><div><h2 id="season-title">Fall 2026 schedule</h2></div><p>Tentative · All times Eastern</p></div>
+  <p class="schedule-note">Select a lesson’s resource link to get started. Dates may change; Saturday times and competition slots will be announced separately.</p>
+{% include schedule-technical.md %}
+</section>
+
+<section class="program-introduction" aria-label="About the program">
   <p class="intro">Explicit instruction. Real flags. A technical path from absolute beginner to expert, with the knowledge to understand how each technique works.</p>
   <div class="actions"><a class="button" href="#classes">Start learning →</a><a class="text-link" href="#season">View the fall season ↓</a></div>
   <p class="hero-vcr"><a href="#vcr">Earn evidence for your next opportunity →</a><br>The Verified Competency Record connects demonstrated skills to college, scholarship, and career applications.</p>
   <div class="foundation"><strong>The foundation for every participant.</strong><span>Everyone participating in a Forge event is expected to know the basic techniques taught here. Begin with guided lessons, practice in the environment, and grow into more demanding flag hunts.</span></div>
 </section>
+
 
 <section id="path" aria-labelledby="path-title">
   <div class="section-heading"><div><p class="eyebrow">Techniques Track / pps{CTF} → CyLab</p><h2 id="path-title">Start with the basics. Keep going.</h2></div><p>Absolute beginner → Expert</p></div>
@@ -66,13 +81,7 @@ title: pps{CyberTechniquesFest}
   </div>
 </section>
 
-<section id="season" aria-labelledby="season-title">
-  <div class="section-heading"><div><p class="eyebrow">Learn together / Compete together</p><h2 id="season-title">Fall 2026 season.</h2></div><p class="status">Tentative · Oct 20–Dec 23</p></div>
-  <p>Online Tuesday and Thursday evenings, 7–9 PM, with selected Saturday labs and a Wednesday closeout. Dates may change based on school calendars, partner competitions, and team availability.</p>
-  <details><summary><span>pps{CyberTechniquesFest} · Full schedule</span><span>Classes, labs, and competition</span></summary><div class="schedule" markdown="1">
-{% include schedule-technical.md %}
-  </div></details>
-</section>
+
 
 <section id="beyond" aria-labelledby="beyond-title">
   <div class="section-heading"><div><p class="eyebrow">Take Pittsburgh further</p><h2 id="beyond-title">Where the techniques can take you.</h2></div></div>

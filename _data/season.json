@@ -1,0 +1,300 @@
+[
+  {
+    "id": "session-10-20",
+    "title": "Intro and overview",
+    "description": "Intro and overview, cyber.org range, team formation, outside resources, and picoCTF",
+    "date": "Tue, Oct 20",
+    "time": "7\u20139 PM ET \u00b7 Teams",
+    "start": "2026-10-20T19:00:00-04:00",
+    "end": "2026-10-20T21:00:00-04:00",
+    "kind": "meeting",
+    "links": []
+  },
+  {
+    "id": "session-10-22",
+    "title": "SSHerlock",
+    "description": "",
+    "date": "Thu, Oct 22",
+    "time": "7\u20139 PM ET \u00b7 Teams",
+    "start": "2026-10-22T19:00:00-04:00",
+    "end": "2026-10-22T21:00:00-04:00",
+    "kind": "meeting",
+    "links": [
+      {
+        "label": "SSHerlock",
+        "url": "/classes/SSHerlock/SSHerlock"
+      }
+    ]
+  },
+  {
+    "id": "session-10-27",
+    "title": "HashHound",
+    "description": "",
+    "date": "Tue, Oct 27",
+    "time": "7\u20139 PM ET \u00b7 Teams",
+    "start": "2026-10-27T19:00:00-04:00",
+    "end": "2026-10-27T21:00:00-04:00",
+    "kind": "meeting",
+    "links": [
+      {
+        "label": "HashHound",
+        "url": "/classes/HashHound/HashHound"
+      }
+    ]
+  },
+  {
+    "id": "session-10-29",
+    "title": "Mini-Challenge",
+    "description": "",
+    "date": "Thu, Oct 29",
+    "time": "7\u20139 PM ET \u00b7 Teams",
+    "start": "2026-10-29T19:00:00-04:00",
+    "end": "2026-10-29T21:00:00-04:00",
+    "kind": "meeting",
+    "links": []
+  },
+  {
+    "id": "session-10-31",
+    "title": "Optional Hands-On Lab",
+    "description": "Environment setup, VM/network familiarity, and open challenge time",
+    "date": "Sat, Oct 31",
+    "time": "Time to be announced",
+    "start": "2026-10-31T00:00:00-04:00",
+    "end": "2026-11-01T00:00:00-04:00",
+    "kind": "event",
+    "links": []
+  },
+  {
+    "id": "session-11-03",
+    "title": "No session \u2014 Election Day",
+    "description": "PPS / no school",
+    "date": "Tue, Nov 3",
+    "time": "No meeting",
+    "start": "2026-11-03T00:00:00-05:00",
+    "end": "2026-11-04T00:00:00-05:00",
+    "kind": "break",
+    "links": []
+  },
+  {
+    "id": "session-11-05",
+    "title": "Mini-Challenge Review",
+    "description": "",
+    "date": "Thu, Nov 5",
+    "time": "7\u20139 PM ET \u00b7 Teams",
+    "start": "2026-11-05T19:00:00-05:00",
+    "end": "2026-11-05T21:00:00-05:00",
+    "kind": "meeting",
+    "links": []
+  },
+  {
+    "id": "session-11-10",
+    "title": "CyberCartographer",
+    "description": "",
+    "date": "Tue, Nov 10",
+    "time": "7\u20139 PM ET \u00b7 Teams",
+    "start": "2026-11-10T19:00:00-05:00",
+    "end": "2026-11-10T21:00:00-05:00",
+    "kind": "meeting",
+    "links": [
+      {
+        "label": "CyberCartographer",
+        "url": "/classes/CyberCartographer/CyberCartographer"
+      }
+    ]
+  },
+  {
+    "id": "session-11-12",
+    "title": "MsDisin",
+    "description": "",
+    "date": "Thu, Nov 12",
+    "time": "7\u20139 PM ET \u00b7 Teams",
+    "start": "2026-11-12T19:00:00-05:00",
+    "end": "2026-11-12T21:00:00-05:00",
+    "kind": "meeting",
+    "links": [
+      {
+        "label": "MsDisin",
+        "url": "/classes/MsDisin/MsDisin"
+      }
+    ]
+  },
+  {
+    "id": "session-11-17",
+    "title": "Mini-Challenge",
+    "description": "",
+    "date": "Tue, Nov 17",
+    "time": "7\u20139 PM ET \u00b7 Teams",
+    "start": "2026-11-17T19:00:00-05:00",
+    "end": "2026-11-17T21:00:00-05:00",
+    "kind": "meeting",
+    "links": []
+  },
+  {
+    "id": "session-11-19",
+    "title": "Mini-Challenge Review",
+    "description": "",
+    "date": "Thu, Nov 19",
+    "time": "7\u20139 PM ET \u00b7 Teams",
+    "start": "2026-11-19T19:00:00-05:00",
+    "end": "2026-11-19T21:00:00-05:00",
+    "kind": "meeting",
+    "links": []
+  },
+  {
+    "id": "session-11-21",
+    "title": "Optional Mini-CTF / Open Lab",
+    "description": "",
+    "date": "Sat, Nov 21",
+    "time": "Time to be announced",
+    "start": "2026-11-21T00:00:00-05:00",
+    "end": "2026-11-22T00:00:00-05:00",
+    "kind": "event",
+    "links": []
+  },
+  {
+    "id": "session-11-24",
+    "title": "Thanksgiving Pause",
+    "description": "No required sessions",
+    "date": "Tue, Nov 24\u2013Nov 26",
+    "time": "No meeting",
+    "start": "2026-11-24T00:00:00-05:00",
+    "end": "2026-11-27T00:00:00-05:00",
+    "kind": "break",
+    "links": []
+  },
+  {
+    "id": "session-12-01",
+    "title": "LANgeist",
+    "description": "",
+    "date": "Tue, Dec 1",
+    "time": "7\u20139 PM ET \u00b7 Teams",
+    "start": "2026-12-01T19:00:00-05:00",
+    "end": "2026-12-01T21:00:00-05:00",
+    "kind": "meeting",
+    "links": [
+      {
+        "label": "LANgeist",
+        "url": "/classes/LANgeist/LANgeist"
+      }
+    ]
+  },
+  {
+    "id": "session-12-03",
+    "title": "MALchemist",
+    "description": "",
+    "date": "Thu, Dec 3",
+    "time": "7\u20139 PM ET \u00b7 Teams",
+    "start": "2026-12-03T19:00:00-05:00",
+    "end": "2026-12-03T21:00:00-05:00",
+    "kind": "meeting",
+    "links": [
+      {
+        "label": "MALchemist",
+        "url": "/classes/MALchemist/MALchemist"
+      }
+    ]
+  },
+  {
+    "id": "session-12-08",
+    "title": "Mini-Challenge",
+    "description": "",
+    "date": "Tue, Dec 8",
+    "time": "7\u20139 PM ET \u00b7 Teams",
+    "start": "2026-12-08T19:00:00-05:00",
+    "end": "2026-12-08T21:00:00-05:00",
+    "kind": "meeting",
+    "links": []
+  },
+  {
+    "id": "session-12-10",
+    "title": "Portalord",
+    "description": "",
+    "date": "Thu, Dec 10",
+    "time": "7\u20139 PM ET \u00b7 Teams",
+    "start": "2026-12-10T19:00:00-05:00",
+    "end": "2026-12-10T21:00:00-05:00",
+    "kind": "meeting",
+    "links": [
+      {
+        "label": "Portalord",
+        "url": "/classes/Portalord/Portalord"
+      }
+    ]
+  },
+  {
+    "id": "session-12-12",
+    "title": "Full-Environment Lab",
+    "description": "Multi-role practice and competition preparation",
+    "date": "Sat, Dec 12",
+    "time": "Time to be announced",
+    "start": "2026-12-12T00:00:00-05:00",
+    "end": "2026-12-13T00:00:00-05:00",
+    "kind": "event",
+    "links": []
+  },
+  {
+    "id": "session-12-15",
+    "title": "8ball",
+    "description": "",
+    "date": "Tue, Dec 15",
+    "time": "7\u20139 PM ET \u00b7 Teams",
+    "start": "2026-12-15T19:00:00-05:00",
+    "end": "2026-12-15T21:00:00-05:00",
+    "kind": "meeting",
+    "links": [
+      {
+        "label": "8ball",
+        "url": "/classes/8ball/8ball"
+      }
+    ]
+  },
+  {
+    "id": "session-12-17",
+    "title": "Cyberus",
+    "description": "Tournament overview",
+    "date": "Thu, Dec 17",
+    "time": "7\u20139 PM ET \u00b7 Teams",
+    "start": "2026-12-17T19:00:00-05:00",
+    "end": "2026-12-17T21:00:00-05:00",
+    "kind": "meeting",
+    "links": [
+      {
+        "label": "Cyberus",
+        "url": "/classes/cyberus/cyberus"
+      }
+    ]
+  },
+  {
+    "id": "session-12-19",
+    "title": "Optional Open Range / Technical Check",
+    "description": "",
+    "date": "Sat, Dec 19",
+    "time": "Time to be announced",
+    "start": "2026-12-19T00:00:00-05:00",
+    "end": "2026-12-20T00:00:00-05:00",
+    "kind": "event",
+    "links": []
+  },
+  {
+    "id": "session-12-21",
+    "title": "pps{CyberTechniquesFest} Competition Window",
+    "description": "Exact team slots to be scheduled separately",
+    "date": "Mon, Dec 21\u2013Dec 23",
+    "time": "Team slots to be scheduled",
+    "start": "2026-12-21T00:00:00-05:00",
+    "end": "2026-12-24T00:00:00-05:00",
+    "kind": "window",
+    "links": []
+  },
+  {
+    "id": "session-12-23",
+    "title": "After Action Review & fall closeout",
+    "description": "After Action Review, results, recognition, fall closeout, and pps{CyberTacticsForce} interest \u2014 following the final tournament slots",
+    "date": "Wed, Dec 23",
+    "time": "7\u20139 PM ET \u00b7 Teams",
+    "start": "2026-12-23T19:00:00-05:00",
+    "end": "2026-12-23T21:00:00-05:00",
+    "kind": "meeting",
+    "links": []
+  }
+]
