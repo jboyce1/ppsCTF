@@ -14,7 +14,7 @@ title: pps{CyberTechniquesFest}
     <div id="next-links" class="next-links"><a href="#season-title">View season schedule ↓</a></div>
   </div>
   <div class="section-heading"><div><h2 id="season-title">Fall 2026 schedule</h2></div><p>Tentative · All times Eastern</p></div>
-  <p class="schedule-note">Select a lesson’s resource link to get started. Dates may change; Saturday times and competition slots will be announced separately.</p>
+  <p class="schedule-note">Select a lesson’s resource link to get started. October 31 is confirmed; other dates remain tentative. Competition slots will be announced separately.</p>
 {% include schedule-technical.md %}
 </section>
 
