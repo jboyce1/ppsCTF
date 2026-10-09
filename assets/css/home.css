@@ -36,3 +36,19 @@
 .event-page{max-width:780px;margin-bottom:60px}.event-page h1{margin-bottom:20px}.event-page .next-session{margin-top:26px}.event-page>p:not(.eyebrow){color:var(--muted)}.event-page .event-more{margin-top:28px;font-size:14px}
 
 .event-rsvp{margin-top:28px;padding-top:22px;border-top:1px solid var(--line)}.event-rsvp h2{font-size:24px;margin-bottom:10px}.event-rsvp p{color:var(--muted)}
+
+/* Desktop homepage navigation; narrower and zoomed views use the masthead. */
+.page-sidebar{display:none}
+@media(min-width:1280px){
+  .with-sidebars .foundation-header,.with-sidebars .site-header,.with-sidebars footer{width:min(1680px,calc(100% - 64px))}
+  .with-sidebars .site-header>nav{display:none}
+  .page-columns{width:min(1680px,calc(100% - 64px));margin:auto;display:grid;grid-template-columns:150px minmax(0,1fr) 200px;gap:24px;align-items:start}
+  .page-columns>main{width:100%;min-width:0;margin:0}
+  .page-sidebar{display:block;position:sticky;top:24px;margin-top:25px;padding-top:12px;max-height:calc(100vh - 48px);overflow-y:auto}
+  .sidebar-sections{border-right:1px solid var(--line);padding-right:16px}
+  .sidebar-lessons{border-left:1px solid var(--line);padding-left:16px}
+  .page-sidebar .eyebrow{font-size:10px;margin-bottom:14px}
+  .page-sidebar nav{display:flex;flex-direction:column;gap:5px}
+  .page-sidebar nav a{display:block;padding:7px 0;font-size:13px;line-height:1.5;overflow-wrap:anywhere}
+  .page-sidebar nav a:hover{color:var(--green)}
+}

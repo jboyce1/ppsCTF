@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="{{ '/assets/css/home.css' | relative_url }}">
   <script defer src="{{ '/assets/js/schedule.js' | relative_url }}"></script>
 </head>
-<body>
+<body{% if page.sidebars %} class="with-sidebars"{% endif %}>
   <a class="skip-link" href="#main">Skip to content</a>
   <div class="foundation-header">
     <a class="foundation-brand" href="https://cybertacticsforge.org/" aria-label="CyberTacticsForge home"><span class="brand-mark" aria-hidden="true">{<b> / </b>}</span><span>CyberTactics<span class="brand-forge">Forge</span><small>ENRICH / EXPLORE / EMPOWER</small></span></a>
@@ -22,7 +22,37 @@
       <a href="{{ '/' | relative_url }}#season">Schedule</a><a href="{{ '/' | relative_url }}#classes">Classes</a><a href="{{ '/' | relative_url }}#path">Learning path</a><a href="{{ '/' | relative_url }}#vcr">Your VCR</a><a href="https://cybertacticsforge.org/programs/">ForgeOps ↗</a>
     </nav>
   </header>
+  {% if page.sidebars %}
+  <div class="page-columns">
+    <aside class="page-sidebar sidebar-sections" aria-label="Site sections">
+      <p class="eyebrow">Explore pps{CTF}</p>
+      <nav aria-label="Section navigation">
+        <a href="#season">Schedule</a>
+        <a href="#classes">Classes</a>
+        <a href="#path">Learning path</a>
+        <a href="#vcr">Your VCR</a>
+        <a href="https://cybertacticsforge.org/programs/">ForgeOps ↗</a>
+      </nav>
+    </aside>
+  {% endif %}
   <main id="main">{{ content }}</main>
+  {% if page.sidebars %}
+    <aside class="page-sidebar sidebar-lessons" aria-label="Class directory">
+      <p class="eyebrow">pps{CTF}</p>
+      <nav aria-label="Lesson navigation">
+        <a href="{{ '/classes/SSHerlock/SSHerlock' | relative_url }}">SSHerlock (Network)</a>
+        <a href="{{ '/classes/HashHound/HashHound' | relative_url }}">HashHound (Host)</a>
+        <a href="{{ '/classes/CyberCartographer/CyberCartographer' | relative_url }}">CyberCartographer (Network)</a>
+        <a href="{{ '/classes/MsDisin/MsDisin' | relative_url }}">MsDisin (Host)</a>
+        <a href="{{ '/classes/LANgeist/LANgeist' | relative_url }}">LANgeist (Network)</a>
+        <a href="{{ '/classes/MALchemist/MALchemist' | relative_url }}">Malchemist (Host)</a>
+        <a href="{{ '/classes/Portalord/Portalord' | relative_url }}">Portalord (Network)</a>
+        <a href="{{ '/classes/8ball/8ball' | relative_url }}">8ball (Host)</a>
+        <a href="{{ '/classes/cyberus/cyberus' | relative_url }}">Cyberus (Host)</a>
+      </nav>
+    </aside>
+  </div>
+  {% endif %}
   <footer><span>pps{CTF} · Pittsburgh</span><a href="#main">Back to top ↑</a></footer>
 </body>
 </html>

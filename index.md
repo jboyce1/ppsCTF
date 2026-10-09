@@ -1,5 +1,6 @@
 ---
 layout: home
+sidebars: true
 title: pps{CyberTechniquesFest}
 ---
 <section class="hero" aria-labelledby="welcome">
