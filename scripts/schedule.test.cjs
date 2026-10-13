@@ -22,7 +22,8 @@ test('breaks are skipped and untimed events do not claim to be ongoing meetings'
   assert.equal(at('2026-10-22T12:00:00-04:00').event.id, 'session-10-27');
   assert.equal(at('2026-11-25T12:00:00-05:00').event.id, 'session-12-01');
   assert.equal(at('2026-10-31T12:00:00-04:00').status, 'Ongoing now');
-  assert.equal(at('2026-10-31T13:00:00-04:00').event.id, 'session-11-03');
+  assert.equal(at('2026-10-31T13:29:59-04:00').status, 'Ongoing now');
+  assert.equal(at('2026-10-31T13:30:00-04:00').event.id, 'session-11-03');
 });
 test('scheduled closeout takes precedence over the overlapping competition window', () => {
   assert.equal(at('2026-12-23T12:00:00-05:00').status, 'Competition window open');
