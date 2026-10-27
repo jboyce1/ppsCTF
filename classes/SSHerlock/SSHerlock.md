@@ -30,17 +30,6 @@ title: SSHerlock
     
 ---
 
-#### **Access pps{CyberTacticsFest} from cyber.org range VM**        
-[SSHerlock Github Page](https://jboyce1.github.io/ppsCTF/classes/SSHerlock/SSHerlock)    
-
-#### **To Copy and Paste into the Cyber.org Range:**  
-1. Press **Ctrl + Alt + Shift** to open the side window.  
-2. Paste this into the side window.  
-3. Press **Ctrl + Alt + Shift** again to close the side window.  
-4. Right-click and paste into the URL field at the top of your browser.
-   
----   
-
 # Part 1: SSH into Another Computer with a Known Password
 
 There is no flag-based challenge to complete this; however, it is good practice and will help you in follow-on challenges.  
@@ -62,24 +51,32 @@ Once the SSH server is configured, establish the connection and try the followin
 - **Create a new file** on your Ubuntu machine from your Kali machine. *(Usually just text files, sometimes CSV files as well.)*  
 
 - **Modify a text file** on your Ubuntu machine from your Kali machine using:  
-`nano filename.txt`
+
+<div class="scroll-box">
+nano filename.txt
+</div>
 
 - Try to download and install a program using the sudo apt-get command from your kali machine to your Ubuntu machine.
 
-- Try to run a program from on your Ubuntu machine from your kali machine. Try:    
-  - set display environment (the screen they are using)    
-   - `export DISPLAY=:1`
-  - Open firefox to a specific page:    
-   - `firefox -new-tab “https:www.picoctf.org”`
+- Try to run a program on your Ubuntu machine from your Kali machine. Try:
+Set the display environment (the screen they are using):
+
+<div class="scroll-box">
+export DISPLAY=:1
+</div>
+
+Open Firefox to a specific page:
+
+<div class="scroll-box">
+firefox -new-tab "https://cyber.org"
+</div>
 
 Try to change the system password from ‘ubuntu’ to something else.
-
 
 #### **Setting Up SSH on Target Server:**  
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/WT5G5rkebxQ?si=6jxLBtwDpSfh0OkX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
-
 
 #### **SSH into Target Machine:**  
 <div style="text-align: center;">
@@ -92,90 +89,130 @@ Try to change the system password from ‘ubuntu’ to something else.
 
 X11 (the X Window System) is a network-transparent graphics system that allows programs to run on one computer while displaying their graphical interface on another. When used over SSH with X11 forwarding, every window update, mouse movement, and keyboard event is sent across the network, making it much louder, slower, and more bandwidth-intensive than a simple text terminal. Because of this overhead, X11 is rarely the best default choice for remote work; experienced users rely on the terminal for speed and stealth, using X11 only when a graphical tool is truly necessary.
 
-For this, you will almost cerainly need to turn on X-11 forwarding and adjust the config file.
+On Ubuntu, turn on X11 forwarding and adjust the config file.
 
-Check to see if you have sudo priviledges to adjust the ssh_config file, you need to have sudo priviledge:
+On Ubuntu, check to see if you have sudo privileges to adjust the sshd_config file:
 
-`whoami`
+<div class="scroll-box">
+whoami
+</div>
 
--gives the output of what your device knows you as
+Gives the output of what your device knows you as.
 
-`sudo -l`
+<div class="scroll-box">
+sudo -l
+</div>
 
--gives the list of users with sudo permission.
+Lists the commands your user can run with sudo.
 
 <div style="text-align: center;">
   <img src="{{ 'classes/SSHerlock/whoami-sudo-l.png' | relative_url }}" alt="whoami and sudo-l" style="max-width: 80%; height: auto;">
 </div>
 
-If you have sudo premissions, turn x11 forwarding on:
+If you have sudo permissions, open the config file:
 
-`sudo nano /etc/ssh/sshd_config`
+<div class="scroll-box">
+sudo nano /etc/ssh/sshd_config
+</div>
 
-adjust the settings by taking 
+Set these options (remove the # at the start if needed):
 
-`X11Forwarding yes`
+<div class="scroll-box">
+X11Forwarding yes
+</div>
 
-`X11DisplayOffset 10`
+<div class="scroll-box">
+X11DisplayOffset 10
+</div>
 
-`X11UseLocalhost yes`
+<div class="scroll-box">
+X11UseLocalhost yes
+</div>
 
 <div style="text-align: center;">
   <img src="{{ 'classes/SSHerlock/config_x11_sshdconfig.png' | relative_url }}" alt="config_x11_sshdconfig" style="max-width: 80%; height: auto;">
 </div>
 
-Now save out and reset the sshd
+Now save out and restart SSH.
 
-ctrl+x, y
+Ctrl + X, Y, Enter
 
-`sudo systemctl restart ssh`
+<div class="scroll-box">
+sudo systemctl restart ssh
+</div>
 
-Open a new terminal and use an -X flag (capitalization matters) to get back into the target machine:
+On Kali, open a new terminal and use an -X flag (capitalization matters) to get back into the target machine:
 
-`ssh -X user@x.x.x.x`
+<div class="scroll-box">
+ssh -X user@x.x.x.x
+</div>
 
-Now, when you make commands that would normally show up in your users GUI, they show up in yours.
+Now, programs you run in the SSH session show up on Kali instead of the Ubuntu screen.
 
-`firefox -new-tab “https:www.picoctf.org”`
+<div class="scroll-box">
+firefox -new-tab "https://cyber.org"
+</div>
 
 or open the file structure by running the file manager that exists on the target machine:
 
-`nautilus`
+<div class="scroll-box">
+nautilus
+</div>
 
 Play around with this, try to copy & paste or open txt files or pictures. 
 ---
 
-# Part 3: Use a key bind to connect without the need for a password.
+# Part 3: Use SSH keys to connect without the need for a password.
 
 Use SSH keys instead of passwords to log into a remote machine.
 
-`ssh-keygen`
+On Kali, open a terminal and make your key pair:
 
-press enter to put your keys where the ssh will look for them
+<div class="scroll-box">
+ssh-keygen -t ed25519
+</div>
 
-This makes two keys
+Press enter to put your keys where SSH will look for them. Do not overwrite an existing key.
+A key passphrase is optional; it is separate from the Ubuntu password.
 
--Private key: ~/.ssh/id_rsa
+This makes two keys on Kali:
 
--Public key: ~/.ssh/id_rsa.pub
+- Private key: ~/.ssh/id_ed25519 (keep this on Kali)
+- Public key: ~/.ssh/id_ed25519.pub
 
-Next, copy your public key to the remote machines expected location for a public key
+Still on Kali, copy your public key to Ubuntu. Replace username and x.x.x.x with your Ubuntu username and IP:
 
-`ssh-copy-id username@x.x.x.x`
+<div class="scroll-box">
+ssh-copy-id username@x.x.x.x
+</div>
+
+Enter the Ubuntu account password when asked.
+
+Now try connecting from Kali:
+
+<div class="scroll-box">
+ssh username@x.x.x.x
+</div>
+
+You should not need the Ubuntu account password. If you set a key passphrase, you may still be asked for it.
 
 A couple of things to keep in mind:
 
-If the password of that machine changes, your key will allow you to bypass it
+If the Ubuntu account password changes, your key will still let you in.
 
-To see (or delete) authorized keys you can access them with
+On Ubuntu (or in your SSH session), you can see the public keys allowed into that account with:
 
-`cat ~/.ssh/authorized_keys`
+<div class="scroll-box">
+cat ~/.ssh/authorized_keys
+</div>
 
-or
+To remove a key, delete its line from this file:
 
-`nano ~/.ssh/authorized_keys`
+<div class="scroll-box">
+nano ~/.ssh/authorized_keys
+</div>
 
-Consider the offense and defense of this
+Consider the offense and defense of this.
 
 ---
 
@@ -191,32 +228,84 @@ Consider the offense and defense of this
 
 - **Pre-step 1:** Change Default Password (For Practice on Your Own)   
 On the **Ubuntu target machine**, open a terminal and type:  
-```bash
+
+<div class="scroll-box">
 sudo passwd root
-```    
+</div>
+
 - **Pre-step 2:** Turn on the password authentication for your Ubuntu Machine (see above)    
 - **Pre-step 3:** Create a new user with your student name on the ubuntu machine (e.g. jboyce1) and set the password to a password on the password list you are using
-- 
+
 #### **Kali - Attack Steps:**
 **Step 1:** Attempt to ssh the target machine to ensure that it has password authentication turned on (see setting up SSH server on target machine), after 3 failures the permission will be denied.  
 **Step 2:** Ensure you are in root for your Kali box by using the following command:  
-#### `sudo su`   
-Step 3: To open the Metaspoitconsole run the following command:    
-#### `msfconsole`    
+
+<div class="scroll-box">
+sudo su
+</div>
+
+Step 3: To open the Metasploit console run the following command:
+
+<div class="scroll-box">
+msfconsole
+</div>
+
 **Step 4:** Open the ssh login scanner    
- - 4a: Use the following command to see all the possibilities of the Metasploit console dealing with SSH:    
-`msf6 > search ssh`    
- - 4b:  `msf6 > use auxiliary/scanner/ssh/ssh_login`    
- - 4c:  `msf6 > show options`    
+4a: Use the following command to see all the possibilities of the Metasploit console dealing with SSH:
+
+<div class="scroll-box">
+search ssh
+</div>
+
+4b: Open the SSH login scanner.
+
+<div class="scroll-box">
+use auxiliary/scanner/ssh/ssh_login
+</div>
+
+4c: Show its options.
+
+<div class="scroll-box">
+show options
+</div>
+
 **Step 5:** Set the ssh_login tool to target the vulnerable machine:     
- - 5a `msf6 > set RHOSTS 192.168.XX.XX` (vulnerable machine address)     
- - 5b`msf6 > set PASS_FILE /home/kali/Desktop/passwords.txt` (path of the passwords text file)     
- - 5c `msf6 > set USER_FILE /home/kali/Desktop/usernames.txt` (path of the usernames text file)     
- - 5d `msf6 > set VERBOSE true` (it will show the exactly matched combination of username and password)    
+
+5a (vulnerable machine address)
+
+<div class="scroll-box">
+set RHOSTS 192.168.XX.XX
+</div>
+
+5b (path of the passwords text file)
+
+<div class="scroll-box">
+set PASS_FILE /home/kali/Desktop/passwords.txt
+</div>
+
+5c (path of the usernames text file)
+
+<div class="scroll-box">
+set USER_FILE /home/kali/Desktop/usernames.txt
+</div>
+
+5d (it will show the exactly matched combination of username and password)
+
+<div class="scroll-box">
+set VERBOSE true
+</div>
+
 **Step 6** Check all of your options to ensure they look the way you want    
-#### `msf6 > show options`    
+
+<div class="scroll-box">
+show options
+</div>
+
 **Step 7:** Run and get some coffee (this takes some time, because it is an online brute force!)        
-#### `msf6 > run`       
+
+<div class="scroll-box">
+run
+</div>
 
 ## **Challenges in Cyber.org (Must Be Set Up Ahead of Time)**  
 
@@ -228,15 +317,19 @@ Part 1:
 
 Part 2:
 
-One box, 3 users, 15 passwords that rotate every 5 minutes; your goal is to log into the box and set up an sshkey pair to maintain persistance as the passwords rotate.
+One box, 3 users, 15 passwords that rotate every 5 minutes; your goal is to log into the box and set up an SSH key pair to maintain persistence as the passwords rotate.
 
 to set up:
 
-`wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/SSHerlock/ssherlock_edwardian_rotator.py`
+<div class="scroll-box">
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/SSHerlock/ssherlock_edwardian_rotator.py
+</div>
 
 to see who has been using ssh to access the machine:
 
-`cat /var/log/auth.log | grep ssh2`
+<div class="scroll-box">
+cat /var/log/auth.log | grep ssh2
+</div>
 
 ## More Resources 
 
@@ -256,14 +349,16 @@ In order to complete this challenge, you will need to pull a file from the Ubunt
 
 📄 **[Setting up SCP](./SettingSecureCopyProtocol.pdf)**          
 
-**Step 1:** scp the ‘SCPhash.txt’ and the ‘JohnnyPasswordList.txt’ 'from the Teacher Ubuntu Machine to your kali desktop    
+**Step 1:** scp the ‘SCPhash.txt’ and the ‘JohnnyPasswordList.txt’ from the Teacher Ubuntu Machine to your kali desktop
 **Step 2:** Use john the ripper to crack the hash from the password text file
 - 2a Navigate to the desktop in your kali machine (or wherever you put the SCPhash.txt and JohnnyPassword list files). 
  - The SCPhash.txt is hashed with md5sum
 - 2b Use John the Ripper to extract the flag
- ```bash
-john -format=raw-md5 -wordlist:JohnnyPasswordList.txt SCPhash.txt
-```
+
+<div class="scroll-box">
+john --format=raw-md5 --wordlist=JohnnyPasswordList.txt SCPhash.txt
+</div>
+
 ### **Now You Try:**   
 
 - [SCPhash1](https://forms.office.com/Pages/ResponsePage.aspx?id=mhxxjxzsu023kLsMdxsdzM6J33C5yQRJgc1SHWy_64dUMjhJUVE0T1FBRDI1SFc5MDdVNVdBQVpNVC4u)  
@@ -280,21 +375,34 @@ john -format=raw-md5 -wordlist:JohnnyPasswordList.txt SCPhash.txt
 --- 
 # Part 6: scp files into a target computer
 
-
 ### SCP files into the opponent computers    
 This challenge will require you to send a file that only exists on your Kali box to an Ubuntu box.   
 **Step 1:** Start up both your Kali box and Ubuntu boxes (or use the class target box given during the live session) and use SSH to access the Ubuntu box.   
-ex. ssh ubuntu@10.15.43.43  
+Example:
+
+<div class="scroll-box">
+ssh ubuntu@10.15.43.43
+</div>
+
 **Step 2:** Use SSH to create a directory on an Ubuntu machine with your student username_SCPractice/ (e.g. stjboyce1_SCPractice) on the desktop of the Ubuntu box
-ex. `mkdir jboyce1`
+Example:
+
+<div class="scroll-box">
+mkdir jboyce1
+</div>
+
 **Step3:** Use SCP to push a picture from the stenography cyber.org lesson to the directory you created on the Ubuntu box 
 Generic: 
-```bash
-scp    </PathToFile/LocalFile> <remote_username>@<IPorHost>:<PathToLocation>
-```
+
+<div class="scroll-box">
+scp    &lt;/PathToFile/LocalFile&gt; &lt;remote_username&gt;@&lt;IPorHost&gt;:&lt;PathToLocation&gt;
+</div>
 
 Example:
-#### `scp /home/kali/CourseFiles/Cybersecurity/steganography-lab/image1.jpg ubuntu@10.15.8.29:/home/ubuntu/Desktop/jboyce1/`
+
+<div class="scroll-box">
+scp /home/kali/CourseFiles/Cybersecurity/steganography-lab/image1.jpg ubuntu@10.15.8.29:/home/ubuntu/Desktop/jboyce1/
+</div>
 
 ### **SCP File from Local to Remote**   
 
