@@ -221,8 +221,18 @@ Consider the offense and defense of this.
 #### Before You Start
 
 #### **Kali - Files Required:**  
-- Password list in a text file  
-- Username list in a text file  
+- [Password list](./ssherlock_pt4_pass.txt)
+- [Username list](./ssherlock_pt4_user.txt)
+
+On Kali, download both files to your Desktop:
+
+<div class="scroll-box">
+wget -P ~/Desktop https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/SSHerlock/ssherlock_pt4_pass.txt
+</div>
+
+<div class="scroll-box">
+wget -P ~/Desktop https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/SSHerlock/ssherlock_pt4_user.txt
+</div>
 
 #### **Ubuntu - Setup Steps:**  
 
@@ -280,13 +290,13 @@ set RHOSTS 192.168.XX.XX
 5b (path of the passwords text file)
 
 <div class="scroll-box">
-set PASS_FILE /home/kali/Desktop/passwords.txt
+set PASS_FILE /home/kali/Desktop/ssherlock_pt4_pass.txt
 </div>
 
 5c (path of the usernames text file)
 
 <div class="scroll-box">
-set USER_FILE /home/kali/Desktop/usernames.txt
+set USER_FILE /home/kali/Desktop/ssherlock_pt4_user.txt
 </div>
 
 5d (it will show the exactly matched combination of username and password)
