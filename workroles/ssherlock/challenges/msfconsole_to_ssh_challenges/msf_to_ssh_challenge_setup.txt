@@ -1,29 +1,37 @@
-Msfconsole to ssh instructor directions 
-from ubuntu mahcine: 
+Msfconsole to ssh instructor directions
 
-clone repo: 
-git clone https://github.com/jboyce1/ppsCTF.git 
+On the teacher Ubuntu VM:
 
- 
-Allow for password authentication on  the VMs  
-sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh 
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/SSHerlock/ssherlock_fixed_targets.py
+sudo python3 ssherlock_fixed_targets.py
 
- 
-Guest/Target 1 10.15.115.246 
-Username: HackproofHoudini 
-sudo adduser HackproofHoudini –force-badname 
-Password:  
-pps{M3ta5pl01tL0ve$$#} 
+This creates all 3 accounts on this VM and turns on SSH password authentication.
+Running it again resets their passwords. These passwords do not rotate.
 
-Guest/Target Guest2: 10.15.95.46 
-Username: MetaMischiefMaker 
-sudo adduser MetaMischiefMaker –force-badname 
-Password:  
-pps{M3tasploitL0v3s5$H} 
+For 3 separate Ubuntu VMs, run one command on each:
+sudo python3 ssherlock_fixed_targets.py --target 1
+sudo python3 ssherlock_fixed_targets.py --target 2
+sudo python3 ssherlock_fixed_targets.py --target 3
 
+Use the IP shown at the end. The old target IPs may have changed.
 
-Guest/Target Guest3; 10.15.33.43 
-Username: CipherSensei 
-sudo adduser CipherSensei  –force-badname 
-Password:  
-pps{M3t4sploitL0ve5S$#} 
+Guest/Target 1
+Username: HackproofHoudini
+Password: pps{M3ta5pl01tL0ve$$#}
+
+Guest/Target 2
+Username: MetaMischiefMaker
+Password: pps{M3tasploitL0v3s5$H}
+
+Guest/Target 3
+Username: CipherSensei
+Password: pps{M3t4sploitL0ve5S$#}
+
+On Kali, download the lists:
+
+wget -P ~/Desktop https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workroles/ssherlock/challenges/msfconsole_to_ssh_challenges/msfconsole_to_ssh_passwordlist.txt
+wget -P ~/Desktop https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workroles/ssherlock/challenges/msfconsole_to_ssh_challenges/msfconsole_to_ssh_userlist.txt
+
+Use these in msfconsole:
+set PASS_FILE /home/kali/Desktop/msfconsole_to_ssh_passwordlist.txt
+set USER_FILE /home/kali/Desktop/msfconsole_to_ssh_userlist.txt

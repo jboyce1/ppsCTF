@@ -221,17 +221,17 @@ Consider the offense and defense of this.
 #### Before You Start
 
 #### **Kali - Files Required:**  
-- [Password list](./ssherlock_pt4_pass.txt)
-- [Username list](./ssherlock_pt4_user.txt)
+- [Password list](https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workroles/ssherlock/challenges/msfconsole_to_ssh_challenges/msfconsole_to_ssh_passwordlist.txt)
+- [Username list](https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workroles/ssherlock/challenges/msfconsole_to_ssh_challenges/msfconsole_to_ssh_userlist.txt)
 
 On Kali, download both files to your Desktop:
 
 <div class="scroll-box">
-wget -P ~/Desktop https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/SSHerlock/ssherlock_pt4_pass.txt
+wget -P ~/Desktop https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workroles/ssherlock/challenges/msfconsole_to_ssh_challenges/msfconsole_to_ssh_passwordlist.txt
 </div>
 
 <div class="scroll-box">
-wget -P ~/Desktop https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/SSHerlock/ssherlock_pt4_user.txt
+wget -P ~/Desktop https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workroles/ssherlock/challenges/msfconsole_to_ssh_challenges/msfconsole_to_ssh_userlist.txt
 </div>
 
 #### **Ubuntu - Setup Steps:**  
@@ -290,13 +290,13 @@ set RHOSTS 192.168.XX.XX
 5b (path of the passwords text file)
 
 <div class="scroll-box">
-set PASS_FILE /home/kali/Desktop/ssherlock_pt4_pass.txt
+set PASS_FILE /home/kali/Desktop/msfconsole_to_ssh_passwordlist.txt
 </div>
 
 5c (path of the usernames text file)
 
 <div class="scroll-box">
-set USER_FILE /home/kali/Desktop/ssherlock_pt4_user.txt
+set USER_FILE /home/kali/Desktop/msfconsole_to_ssh_userlist.txt
 </div>
 
 5d (it will show the exactly matched combination of username and password)
@@ -321,6 +321,20 @@ run
 
 Part 1:
 
+On the teacher Ubuntu target, download and run:
+
+<div class="scroll-box">
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/SSHerlock/ssherlock_fixed_targets.py
+</div>
+
+<div class="scroll-box">
+sudo python3 ssherlock_fixed_targets.py
+</div>
+
+This creates all 3 accounts on one box and turns on SSH password authentication.
+For separate boxes, add --target 1, --target 2, or --target 3 when running the script on each box.
+Give students the target IP shown at the end.
+
 - [Guest/Target (1)](https://forms.office.com/Pages/ResponsePage.aspx?id=mhxxjxzsu023kLsMdxsdzM6J33C5yQRJgc1SHWy_64dUQ01ZQjZNWjdYNEhKVkM3RjczRzIzM1RUTS4u)  
 - [Guest/Target (2)](https://forms.office.com/Pages/ResponsePage.aspx?id=mhxxjxzsu023kLsMdxsdzM6J33C5yQRJgc1SHWy_64dUQVE5SVVUTVQ4RVc3VjdFOE1JWUgzOFVBRS4u)  
 - [Guest/Target (3)](https://forms.office.com/Pages/ResponsePage.aspx?id=mhxxjxzsu023kLsMdxsdzM6J33C5yQRJgc1SHWy_64dUOVQxMDUzRE9TR0Q4SjlKMVZVR1haSlg1RC4u)  
@@ -328,6 +342,32 @@ Part 1:
 Part 2:
 
 One box, 3 users, 15 passwords that rotate every 5 minutes; your goal is to log into the box and set up an SSH key pair to maintain persistence as the passwords rotate.
+
+Kali - Files Required:
+
+- [Password list](./ssherlock_pt4_pass.txt)
+- [Username list](./ssherlock_pt4_user.txt)
+
+On Kali, download both files to your Desktop:
+
+<div class="scroll-box">
+wget -P ~/Desktop https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/SSHerlock/ssherlock_pt4_pass.txt
+</div>
+
+<div class="scroll-box">
+wget -P ~/Desktop https://raw.githubusercontent.com/jboyce1/ppsCTF/main/classes/SSHerlock/ssherlock_pt4_user.txt
+</div>
+
+
+For this box, change the Metasploit file paths:
+
+<div class="scroll-box">
+set PASS_FILE /home/kali/Desktop/ssherlock_pt4_pass.txt
+</div>
+
+<div class="scroll-box">
+set USER_FILE /home/kali/Desktop/ssherlock_pt4_user.txt
+</div>
 
 to set up:
 
