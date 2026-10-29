@@ -1,5 +1,5 @@
 
-.main-content {line-height:1.7; padding:32px; box-sizing:border-box;}
+.main-content {font-family:system-ui,sans-serif; line-height:1.7; padding:32px; box-sizing:border-box;}
 .main-content h1 {line-height:1.25; scroll-margin-top:24px;}
 .main-content code {font-family:monospace; overflow-wrap:anywhere; color:#bde8ff;}
 .main-content iframe {max-width:100%;}
