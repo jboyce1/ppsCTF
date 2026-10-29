@@ -33,7 +33,7 @@
     "links": [
       {
         "label": "SSHerlock",
-        "url": "/classes/SSHerlock/SSHerlock"
+        "url": "/classes/SSHerlock/SSHerlock-move"
       }
     ]
   },
@@ -49,7 +49,7 @@
     "links": [
       {
         "label": "HashHound",
-        "url": "/classes/HashHound/HashHound"
+        "url": "/classes/HashHound/HashHound-move"
       }
     ]
   },
