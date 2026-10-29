@@ -1,0 +1,19 @@
+/* MOVE-only additions. Typography comes from the original styles.css. */
+.move-page .move-card {border:1px solid #466a92;border-radius:12px;background:#172434;padding:20px;margin:20px 0 28px;}
+.move-page .move-card dl {margin:0;}
+.move-page .move-card dt {font-weight:bold;color:#fff;margin-top:16px;}
+.move-page .move-card dt span {display:inline-block;text-align:center;min-width:24px;border-radius:4px;background:#99caff;color:#10243c;margin-right:8px;}
+.move-page .move-card dd {margin:8px 0 16px;overflow-wrap:anywhere;}
+.move-page .move-return {border-top:1px solid #375577;padding-top:16px;margin-bottom:0;}
+.move-page .move-help {background:#202020;border:1px solid #59616e;border-radius:8px;padding:18px;margin:24px 0;}
+.move-page .move-help summary {cursor:pointer;font-weight:bold;color:#c6dfff;}
+.move-page .move-help[open] summary {margin-bottom:24px;}
+.move-page iframe {max-width:100%;}
+.move-page .main-content pre {margin:0;padding:16px;background:#0c0c0c;overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere;}
+.move-page .main-content pre code {color:#e3e8ef;white-space:pre-wrap;}
+.move-page .command-block {margin:16px 0 24px;border:1px solid #49515d;border-radius:8px;overflow:hidden;background:#0c0c0c;}
+.move-page .command-bar {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 12px;background:#191919;border-bottom:1px solid #383838;color:#c8d2dd;}
+.move-page .command-copy {font:inherit;padding:5px 12px;border:1px solid #6585aa;border-radius:4px;background:#24384e;color:#eef6ff;cursor:pointer;}
+.move-page .command-copy:hover {background:#304d6d;}
+.move-page summary:focus-visible,.move-page .command-copy:focus-visible {outline:3px solid #99caff;outline-offset:3px;}
+@media(max-width:768px) {.move-page .move-card {padding:12px;} .move-page .move-help {padding:12px;}}
