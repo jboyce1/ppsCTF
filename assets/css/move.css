@@ -1,0 +1,29 @@
+
+.main-content {font-family:system-ui,sans-serif; line-height:1.7; padding:32px; box-sizing:border-box;}
+.main-content h1 {line-height:1.25; scroll-margin-top:24px;}
+.main-content code {font-family:monospace; overflow-wrap:anywhere; color:#bde8ff;}
+.main-content iframe {max-width:100%;}
+.move-card {border:1px solid #466a92;border-radius:16px;background:#172434;padding:24px;margin:20px 0 28px;}
+.move-card dl {margin:0;}
+.move-card dt {font-size:1.15rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:12px;margin-top:20px;}
+.move-card dt span {display:inline-grid;place-items:center;width:32px;height:32px;border-radius:8px;background:#99caff;color:#10243c;flex-shrink:0;}
+.move-card dd {margin:6px 0 0 44px;color:#e1eaf4;}
+.move-return {border-top:1px solid #375577;padding-top:16px;margin-bottom:0;font-size:.9rem;}
+.move-skill {color:#acc2ce;}
+.move-help {background:#202020;border:1px solid #59616e;border-radius:12px;padding:18px;margin:28px 0 56px;}
+.move-help summary {cursor:pointer;font-weight:650;color:#c6dfff;}
+.move-help[open] summary {margin-bottom:24px;}
+.main-content hr {border:0;border-top:1px solid #405670;margin:56px 0 32px;}
+a:focus-visible,summary:focus-visible {outline:3px solid #99caff;outline-offset:5px;}
+@media(max-width:1050px) {.main-content {margin-left:0;max-width:calc(100% - 220px);} #left-nav {display:none;}}
+@media(max-width:768px) {.main-content {width:100%;max-width:100%;margin:0;border-width:0;padding:20px;} .move-card {padding:18px;} .move-card dd {margin-left:0;} }
+
+.move-help summary {line-height:1.6;}
+.main-content pre {margin:14px 0 24px;padding:18px;background:#0c0c0c;border:1px solid #49515d;border-radius:8px;overflow-x:auto;white-space:pre-wrap;overflow-wrap:anywhere;}
+.main-content pre code {padding:0;background:transparent;color:#e3e8ef;font-size:.94rem;line-height:1.65;white-space:pre-wrap;}
+.command-block {margin:16px 0 24px;border:1px solid #49515d;border-radius:8px;overflow:hidden;background:#0c0c0c;}
+.command-bar {display:flex;align-items:center;justify-content:space-between;gap:16px;padding:7px 12px;background:#191919;border-bottom:1px solid #383838;color:#c8d2dd;font-family:monospace;font-size:.8rem;}
+.command-block pre {margin:0;border:0;border-radius:0;}
+.command-copy {font:inherit;padding:5px 12px;border:1px solid #6585aa;border-radius:4px;background:#24384e;color:#eef6ff;cursor:pointer;}
+.command-copy:hover {background:#304d6d;}
+.command-copy:focus-visible {outline:3px solid #99caff;outline-offset:2px;}
