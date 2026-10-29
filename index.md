@@ -30,7 +30,7 @@ title: pps{CyberTechniquesFest}
 <section id="path" aria-labelledby="path-title">
   <div class="section-heading"><div><p class="eyebrow">Techniques Track / pps{CTF} → CyLab</p><h2 id="path-title">Start with the basics. Keep going.</h2></div><p>Absolute beginner → Expert</p></div>
   <div class="learning-grid">
-    <article class="learning-step"><p class="eyebrow">01 / Learn</p><h3>Build your foundation.</h3><p>Work through explicit instruction in the classes below. Learn the tools, the technical background, and the basic techniques behind the flags.</p><a href="{{ '/classes/SSHerlock/SSHerlock-move' | relative_url }}">Start with SSHerlock →</a></article>
+    <article class="learning-step"><p class="eyebrow">01 / Learn</p><h3>Build your foundation.</h3><p>Work through explicit instruction in the classes below. Learn the tools, the technical background, and the basic techniques behind the flags.</p><a href="{{ '/classes/SSHerlock/SSHerlock' | relative_url }}">Start with SSHerlock →</a></article>
     <article class="learning-step"><p class="eyebrow">02 / Practice</p><h3>Put it into action.</h3><p>Apply what you know to actual flags. Use mini-challenges, labs, and reviews to build confidence and connect techniques across the pps{CTF} environment.</p><a href="#season">Find a practice session →</a></article>
     <article class="learning-step"><p class="eyebrow">03 / Advance</p><h3>Hunt further.</h3><p>Capture more flags in the environment, tackle harder problems, and progress toward expert challenges and national flag-hunting competitions.</p><a href="#beyond">Explore what comes next →</a></article>
   </div>
@@ -70,8 +70,8 @@ title: pps{CyberTechniquesFest}
 <section id="classes" aria-labelledby="classes-title">
   <div class="section-heading"><div><p class="eyebrow">The technical foundation</p><h2 id="classes-title">Your class directory.</h2></div><p>Open a lesson and get to work.</p></div>
   <div class="class-grid">
-    <a class="class-card" href="{{ '/classes/SSHerlock/SSHerlock-move' | relative_url }}"><span class="eyebrow">Network</span><strong>SSHerlock</strong><span>Open lesson →</span></a>
-    <a class="class-card" href="{{ '/classes/HashHound/HashHound-move' | relative_url }}"><span class="eyebrow">Host</span><strong>HashHound</strong><span>Open lesson →</span></a>
+    <a class="class-card" href="{{ '/classes/SSHerlock/SSHerlock' | relative_url }}"><span class="eyebrow">Network</span><strong>SSHerlock</strong><span>Open lesson →</span></a>
+    <a class="class-card" href="{{ '/classes/HashHound/HashHound' | relative_url }}"><span class="eyebrow">Host</span><strong>HashHound</strong><span>Open lesson →</span></a>
     <a class="class-card" href="{{ '/classes/CyberCartographer/CyberCartographer' | relative_url }}"><span class="eyebrow">Network</span><strong>CyberCartographer</strong><span>Open lesson →</span></a>
     <a class="class-card" href="{{ '/classes/MsDisin/MsDisin' | relative_url }}"><span class="eyebrow">Host</span><strong>MsDisin</strong><span>Open lesson →</span></a>
     <a class="class-card" href="{{ '/classes/LANgeist/LANgeist' | relative_url }}"><span class="eyebrow">Network</span><strong>LANgeist</strong><span>Open lesson →</span></a>
