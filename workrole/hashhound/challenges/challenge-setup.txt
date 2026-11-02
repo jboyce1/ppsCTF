@@ -1,0 +1,38 @@
+To set up the challenge: 
+
+from ubuntu mahcine:
+git clone https://github.com/jboyce1/ppsCTF.git
+
+navigate to the file in gui and 'copy to' the desktop for all hashhound challenges
+
+sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
+
+Have participants download or scp the Fun New Game practice ZIPs to their own devices.
+Extract the outer Fun New Game Practice.zip first if using the instructor bundle,
+then extract each individual practice ZIP. Follow its 1 README.txt.
+Students hash the five HTML files individually, then double-click only the match.
+The HTML files open offline in Firefox or Chrome; no shell execution or sudo is needed.
+Targets on the Hash Hound website and in the READMEs are generated together by
+python3 scripts/build_fun_new_game.py (run from the repository checkout).
+use terminal to extract the files
+can do one at a time or do:
+scp ubuntu@10.15.52.220:/home/Ubuntu/Desktop/*.zip ~/Desktop/
+
+For participants:
+unzip the folders individually 
+OR
+use terminal to extract the files:
+find . -name "*.zip" -exec unzip -o {} -d {}_extracted \;
+Explanation:
+  find . -name "*.zip": Finds all .zip files starting from the current directory (.).
+  -exec unzip -o {}: Executes the unzip command on each zip file found. The -o flag forces overwriting of existing files without prompting.
+  -d {}_extracted: Extracts the contents of each zip file into a folder named after the zip file, appending _extracted to the folder name.
+
+
+
+
+show how a log can be accessed and sanitized
+sudo cat /var/log/auth.log
+
+introduce cat /etc/passwd
+sudo cat /etc/shadow

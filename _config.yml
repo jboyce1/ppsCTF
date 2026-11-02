@@ -2,3 +2,6 @@ title: ppsCTF
 baseurl: "/ppsCTF"
 url: "https://jboyce1.github.io"
 theme: minima
+
+include:
+  - _legacy_workrole_redirects

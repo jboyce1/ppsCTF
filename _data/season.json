@@ -33,7 +33,7 @@
     "links": [
       {
         "label": "SSHerlock",
-        "url": "/classes/SSHerlock/SSHerlock-move"
+        "url": "/workrole/ssherlock/SSHerlock-move"
       }
     ]
   },
@@ -49,7 +49,7 @@
     "links": [
       {
         "label": "HashHound",
-        "url": "/classes/HashHound/HashHound-move"
+        "url": "/workrole/hashhound/HashHound-move"
       }
     ]
   },
@@ -103,7 +103,7 @@
     "links": [
       {
         "label": "CyberCartographer",
-        "url": "/classes/CyberCartographer/CyberCartographer"
+        "url": "/workrole/cybercartographer/CyberCartographer"
       }
     ]
   },
@@ -119,7 +119,7 @@
     "links": [
       {
         "label": "MsDisin",
-        "url": "/classes/MsDisin/MsDisin"
+        "url": "/workrole/msdisin/MsDisin"
       }
     ]
   },
@@ -195,7 +195,7 @@
     "links": [
       {
         "label": "LANgeist",
-        "url": "/classes/LANgeist/LANgeist"
+        "url": "/workrole/langeist/LANgeist"
       }
     ]
   },
@@ -211,7 +211,7 @@
     "links": [
       {
         "label": "MALchemist",
-        "url": "/classes/MALchemist/MALchemist"
+        "url": "/workrole/malchemist/MALchemist"
       }
     ]
   },
@@ -238,7 +238,7 @@
     "links": [
       {
         "label": "Portalord",
-        "url": "/classes/Portalord/Portalord"
+        "url": "/workrole/portalord/Portalord"
       }
     ]
   },
@@ -265,7 +265,7 @@
     "links": [
       {
         "label": "8ball",
-        "url": "/classes/8ball/8ball"
+        "url": "/workrole/8ball/8ball"
       }
     ]
   },
@@ -281,7 +281,7 @@
     "links": [
       {
         "label": "Cyberus",
-        "url": "/classes/cyberus/cyberus"
+        "url": "/workrole/cyberus/cyberus"
       }
     ]
   },

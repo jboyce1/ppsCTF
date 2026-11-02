@@ -1,0 +1,4 @@
+start 5 vms
+open instructions in box to continue setup
+
+wget -O- https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/langeist/challenges/catchme.tar.gz | tar -xz

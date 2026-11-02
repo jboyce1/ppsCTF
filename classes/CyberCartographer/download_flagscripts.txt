@@ -1,1 +1,0 @@
-git clone https://github.com/jboyce1/ppsCTF.git && cp -r ppsCTF/classes/CyberCartographer/flagscripts ./flagscripts && rm -rf ppsCTF
