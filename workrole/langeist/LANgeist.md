@@ -227,6 +227,8 @@ delete all filters
 From wireshark, go to File > Open > find/your/pcap.pcap    
     
 1. simplehttp.pcap: **Find the password that was submitted via http protocol**
+<span id="wget-httpsgithubcomjboyce1ppsctfrawmainclasseslangeistsimplehttppcap"></span>
+
 #### `wget https://github.com/jboyce1/ppsCTF/raw/main/workrole/langeist/challenges/simplehttp.pcap`
  - Hint: You can search for things in the search bar, protocols in particular
 submit PacketCAPture1 response here:    
@@ -236,6 +238,8 @@ submit PacketCAPture1 response here:
 
    
 2. SSH_10-15-17-162-to-10.15.2.-29.pcapng: Describe what happens in this PCAP  
+<span id="wget-httpsgithubcomjboyce1ppsctfrawmainclasseslangeistssh_10-15-17-162-to-10152-29pcapng"></span>
+
 #### `wget https://github.com/jboyce1/ppsCTF/raw/main/workrole/langeist/challenges/SSH_10-15-17-162-to-10.15.2.-29.pcapng`
 submit PacketCapture2 response here:    
   

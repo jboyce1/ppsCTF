@@ -56,6 +56,9 @@ To extract a `.zip` file, use:
 These practices use five HTML game files. Double-clicking one opens it in your
 web browser. First, use the terminal to find the file you should open.
 
+If you downloaded an earlier version, download it again and extract it in a new,
+empty folder before starting.
+
 1. Extract `hashhound_practice1.zip` in your file manager (right-click, then **Extract Here**).
 2. Open the extracted `1 Fun New Game (practice 1)` folder.
 3. Right-click an empty space in that folder and choose **Open Terminal Here**.

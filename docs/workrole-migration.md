@@ -31,7 +31,10 @@ have compatibility pages in
 `_legacy_workrole_redirects/`, explicitly included in `_config.yml`. They use
 the `redirect` layout to send visitors to the new page while retaining query
 strings and section fragments when JavaScript is available. Canonical links,
-a meta refresh, and a clickable fallback are provided.
+a meta refresh, and a clickable fallback are provided. All 485 pre-migration
+section IDs are retained, including compatibility anchors where a heading
+contained a download URL. The built-site checker enforces the saved inventory
+in `workrole-legacy-anchors.json`.
 
 These redirects cover GitHub Pages HTML pages. GitHub raw files, GitHub repository
 file links, and direct asset downloads cannot be redirected by Jekyll. Links in

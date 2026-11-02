@@ -98,6 +98,9 @@ their hashes. Record each filename and hash as you go.
 These practices use five HTML game files. Double-clicking one opens it in your
 web browser. First, use the terminal to find the file you should open.
 
+If you downloaded an earlier version, download it again and extract it in a new,
+empty folder before starting.
+
 1. Extract `hashhound_practice1.zip` in your file manager (right-click, then **Extract Here**).
 2. Open the extracted `1 Fun New Game (practice 1)` folder.
 3. Right-click an empty space in that folder and choose **Open Terminal Here**.
@@ -137,7 +140,7 @@ No programs need installing; the game works offline in your browser.
             r'(<dt><span>O</span> Objective</dt><dd>).*?(</dd>)',
             r'\1Manually calculate the MD5 of each of the five HTML files, compare with your practice target below, then double-click only the matching file.\2',
             move_text, count=1)
-        table = '| Practice | Target MD5 |\n| --- | --- |\n'
+        table = 'If you downloaded an earlier version, download it again and extract it in a new, empty folder before starting.\n\n| Practice | Target MD5 |\n| --- | --- |\n'
         table += ''.join(f'| {n} | `{target}` |\n' for n, target in enumerate(targets, 1))
         # Replace the visible target table, or add it before the first download.
         table_start = move_text.find('<!-- fun-new-game-targets -->')

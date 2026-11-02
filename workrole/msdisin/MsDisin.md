@@ -63,6 +63,8 @@ atc
 Start a Kali machine    
 **Step 1:**      
 Download the cat observations     
+<span id="wget-httpsgithubcomjboyce1ppsctfrawmainclassesmsdisincat_observationszip"></span>
+
 #### `wget https://github.com/jboyce1/ppsCTF/raw/main/workrole/msdisin/challenges/cat_observations.zip`
 Unzip the contents of the folder.    
 Open a terminal inside the cat_observations folder    
@@ -87,6 +89,8 @@ Explaination of flags:
 
 ### Try it now    
 use the dog_oberservations.zip to do the same thing  
+<span id="wget-httpsgithubcomjboyce1ppsctfrawmainclassesmsdisindog_observationszip"></span>
+
 #### `wget https://github.com/jboyce1/ppsCTF/raw/main/workrole/msdisin/challenges/dog_observations.zip`
 Write a synopsis of what you think is happening <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=mhxxjxzsu023kLsMdxsdzM6J33C5yQRJgc1SHWy_64dUOFYxN1JKSUExN09WVzY3VzE0WFU1VU1IUC4u" target="_blank">here</a>  
 
@@ -111,6 +115,8 @@ Write a synopsis of what you think is happening <a href="https://forms.office.co
 </div>  
 
 get the file:
+<span id="wget-httpsgithubcomjboyce1ppsctfrawmainclassesmsdisinthe_worlds_greatest_military_spies_and_secret_service_agentstxt"></span>
+
 #### `wget https://github.com/jboyce1/ppsCTF/raw/main/workrole/msdisin/challenges/The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`
 
 ### grep overview:     
@@ -223,8 +229,14 @@ Or add in awk capabilities to filter out small words
 #### `tr -cs 'A-Za-z' '\n' < input.txt | tr 'A-Z' 'a-z' | awk 'length($0) > 3' | sort | uniq -c | sort -nr | head -100`    
 
 Try to use what you have learned so far to get the flags in these files:
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingspy_traffic_historydbmsdis_practice1zip"></span>
+
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/msdis_practice1.zip`
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingspy_traffic_historydbmsdis_practice2zip"></span>
+
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/msdis_practice2.zip`
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingspy_traffic_historydbmsdis_practice3zip"></span>
+
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/msdis_practice3.zip`
     
 --- 
@@ -276,6 +288,8 @@ Quit out of the sqlite3
     
 Now you try it:
 Download the sample database
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingspy_traffic_historydb"></span>
+
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/spy_traffic_history.db`
 
 Query the most visited sites:    
@@ -294,6 +308,8 @@ Query the most visited sites:
 ### Identify and determine spikes in web traffic
 
 Download the sample database:
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingspykid_traffic_historydb"></span>
+
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/spykid_traffic_history.db`
     
 Open the database
@@ -370,13 +386,21 @@ Here we can see the url that was suspicous:
 
 ### Situation 1: use the sed-key to alter the contents of the file to reveal a researchable event:    
  - sed-key:    
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingsedsearchsed-keytxt"></span>
+
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/sedsearch/sed-key.txt`
  - file to alter:    
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingsedsearchthe_worlds_greatest_military_spies_and_secret_service_agentstxt"></span>
+
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/sedsearch/The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`
 now use sed -n -f <sed text here> "Name_of_text_to_Change_Here.txt" to reveal the event
     
 ### Situation 2: put the "altered words" in order, and use the first letter in each word to develop a code    
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingaltered_the_worlds_greatest_military_spies_and_secret_service_agentstxt"></span>
+
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/Altered_The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingreplaced_wordstxt"></span>
+
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/replaced_words.txt`
 
  - Command to extract top altered words:    
@@ -384,10 +408,14 @@ now use sed -n -f <sed text here> "Name_of_text_to_Change_Here.txt" to reveal th
 
     
 ### Situation 3: find the most visited site in the mrboyce_traffic_history.db    
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingmrboyce_traffic_historydb"></span>
+
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/mrboyce_traffic_history.db`
 
     
 ### Situation 4: find the a spike in the traffic to a site in spykid_traffic_history.db
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingspykid_traffic_historydb-1"></span>
+
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/spykid_traffic_history.db`
 <div style="text-align: center;">
   <img src="{{ 'workrole/msdisin/images/Ms_Disin Banner.jpg' | relative_url }}" alt="Ms_Disin Banner2" style="max-width: 80%; height: auto;">

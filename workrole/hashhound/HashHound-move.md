@@ -48,6 +48,8 @@ Tools for this Part: `md5sum` to identify the matching game.
 Use a Linux terminal (Kali on cyber.org works), `wget`, and `unzip`, plus the tools listed for this Part below. Download a practice ZIP below, extract it with `unzip filename.zip`, and open a terminal in the extracted challenge directory.
 
 <!-- fun-new-game-targets -->
+If you downloaded an earlier version, download it again and extract it in a new, empty folder before starting.
+
 | Practice | Target MD5 |
 | --- | --- |
 | 1 | `e96f22f4891f6751af7f9450557e4ffe` |
@@ -111,6 +113,9 @@ unzip filename.zip
 
 These practices use five HTML game files. Double-clicking one opens it in your
 web browser. First, use the terminal to find the file you should open.
+
+If you downloaded an earlier version, download it again and extract it in a new,
+empty folder before starting.
 
 1. Extract `hashhound_practice1.zip` in your file manager (right-click, then **Extract Here**).
 2. Open the extracted `1 Fun New Game (practice 1)` folder.

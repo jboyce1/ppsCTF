@@ -54,6 +54,8 @@ Run the program
 #### `./drawio-x86_64-29.3.6.AppImage` 
 
 In another terminal download the base image:
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassescybercartographercybertacticsfest_scenerio_basedrawio"></span>
+
 ####  `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/CyberTacticsFest_Scenerio_Base.drawio`
 
 ---
@@ -271,20 +273,28 @@ https://tryhackme.com/room/networkservices
 Step 1:    Start your ubuntu machine from the cyber.org range and open up some services      
     
 start telnet       
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassescybercartographerflagscriptsdeploy-telnet-23py"></span>
+
 #### `wget -O deploy-telnet-23.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/1_deploy-telnet-23.py`
 #### `sudo python3 deploy-telnet-23.py`    
     
 start an ftp server and place a file in it
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassescybercartographerflagscriptsftp-anon-loginpy"></span>
+
 #### `wget -O ftp-anon-login.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/4_ftp-anon-login.py`
 #### `sudo python3 ftp-anon-login.py`    
 #### `nano test.txt`
 #### `chmod 777 test.txt`
     
 start ssh on a highport    
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassescybercartographerflagscriptsssh-highport-generatorpy"></span>
+
 #### `wget -O ssh-highport-generator.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/6_ssh-highport-generator.py`
 #### `sudo python3 ssh-highport-generator.py`    
 
 start ftp on a highport    
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassescybercartographerflagscriptsftp-anon-highportpy"></span>
+
 #### `wget -O ftp-anon-highport.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/3_ftp-anon-highport.py`
 #### `sudo python3 ftp-anon-highport.py`    
 
