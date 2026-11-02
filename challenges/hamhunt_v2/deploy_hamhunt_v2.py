@@ -25,8 +25,12 @@ import urllib.request
 SCRIPT_DIR = Path(__file__).resolve().parent
 ASSETS = SCRIPT_DIR
 DOWNLOAD_URL = 'https://raw.githubusercontent.com/jboyce1/ppsCTF/main/challenges/hamhunt_v2'
+GUIDE_SHA256 = 'cec44283ab127d6a4e2bbc48e1ea4f749c28cb082e9ba3cddf12f8da545e7113'
 STATE = Path('/var/lib/hamhunt_v2')
 SSH_CONFIG = Path('/etc/ssh/sshd_config')
+SUDOERS = Path('/etc/sudoers')
+SUDO_BEGIN = '# BEGIN HAMHUNT V2 NO SUDO'
+SUDO_END = '# END HAMHUNT V2 NO SUDO'
 BEGIN = '# BEGIN HAMHUNT V2'
 END = '# END HAMHUNT V2'
 USERS = {'leroy': 'leroythehunt3r', 'mums_the_word': '0ink0INK!',
@@ -53,7 +57,7 @@ def prepare_assets():
     ASSETS.mkdir(mode=0o700, exist_ok=True)
     os.chmod(ASSETS, 0o700)
     expected = {user + '.zip': digest for user, digest in SHA256.items()}
-    expected['hamhunt_setup_guide.txt'] = None
+    expected['hamhunt_setup_guide.txt'] = GUIDE_SHA256
     for name, digest in expected.items():
         destination = ASSETS / name
         local = SCRIPT_DIR / name
@@ -69,7 +73,7 @@ def prepare_assets():
         try:
             with tempfile.NamedTemporaryFile(prefix='download-', dir=ASSETS, delete=False) as output:
                 temporary = Path(output.name)
-                with urllib.request.urlopen(DOWNLOAD_URL + '/' + name, timeout=60) as response:
+                with urllib.request.urlopen(DOWNLOAD_URL + '/' + name + '?sha256=' + digest, timeout=60) as response:
                     total = 0
                     while True:
                         chunk = response.read(1024 * 1024)
@@ -183,7 +187,7 @@ def preflight(reset):
         if not shutil.which(command):
             raise ValueError(f'Required target command is missing: {command}')
     run(['visudo', '-c'])
-    if run(['sudo', '-l', '-U', ADMIN], check=False).returncode != 0:
+    if run(['sudo', '-n', '-l', '-U', ADMIN, '-u', 'root', '--', '/usr/bin/id'], check=False).returncode != 0:
         raise ValueError('ubuntu has no effective sudo grant; repair administrator access first.')
     STATE.mkdir(parents=True, exist_ok=True)
     os.chmod(STATE, 0o700)
@@ -212,9 +216,6 @@ def install_accounts(stage, backup, reset):
         entry = pwd.getpwnam(user)
         if set(os.getgrouplist(user, entry.pw_gid)) != {entry.pw_gid}:
             raise ValueError(f'{user}: supplementary groups remain')
-        # Direct sudoers rules may exist from an older/custom deployment.
-        if run(['sudo', '-l', '-U', user], check=False).returncode == 0:
-            raise ValueError(f'{user} still has a direct sudoers grant. Remove it before continuing.')
         home = Path(entry.pw_dir)
         home.mkdir(mode=0o700, parents=True, exist_ok=True)
         os.chown(home, entry.pw_uid, entry.pw_gid)
@@ -235,9 +236,58 @@ def install_accounts(stage, backup, reset):
                 path = Path(parent) / name
                 os.chown(path, entry.pw_uid, entry.pw_gid)
                 os.chmod(path, 0o644)
+    configure_sudo(backup)
     # chpasswd sets lab passwords as root; adduser's password flags are not used.
     run(['chpasswd'], input=''.join(f'{user}:{password}\n' for user, password in USERS.items()))
     os.chmod('/home', 0o755)
+
+
+def sudoers_text(original):
+    """Place an explicit lab-account deny after existing local/included grants."""
+    if original.count(SUDO_BEGIN) != original.count(SUDO_END) or original.count(SUDO_BEGIN) > 1:
+        raise ValueError('Malformed existing Hamhunt sudoers block; inspect /etc/sudoers.')
+    text = re.sub(re.escape(SUDO_BEGIN) + r'.*?' + re.escape(SUDO_END) + r'\n?', '', original, flags=re.S)
+    rules = '\n'.join(f'{user} ALL=(ALL:ALL) !ALL' for user in USERS)
+    return text.rstrip() + '\n\n' + SUDO_BEGIN + '\n' + rules + '\n' + SUDO_END + '\n'
+
+
+def configure_sudo(backup):
+    """Preserve Ubuntu's admin grant, deny all sudo for students, and verify policy."""
+    original = SUDOERS.read_bytes()
+    metadata = SUDOERS.stat()
+    shutil.copy2(SUDOERS, backup / 'sudoers')
+    temporary = None
+    replaced = False
+    try:
+        with tempfile.NamedTemporaryFile(mode='w', prefix='.hamhunt-sudoers-',
+                                         dir=SUDOERS.parent, delete=False) as output:
+            temporary = Path(output.name)
+            output.write(sudoers_text(original.decode()))
+        os.chown(temporary, metadata.st_uid, metadata.st_gid)
+        os.chmod(temporary, stat.S_IMODE(metadata.st_mode))
+        run(['visudo', '-c', '-f', str(temporary)])
+        temporary.replace(SUDOERS)
+        replaced = True
+        run(['visudo', '-c'])
+        # A listing may succeed even when it contains only denials. Query a
+        # specific command's permission; -l never executes that command.
+        admin = run(['sudo', '-n', '-l', '-U', ADMIN, '-u', 'root', '--', '/usr/bin/id'], check=False)
+        if admin.returncode != 0:
+            raise ValueError('Ubuntu administrator sudo access was not preserved')
+        for user in USERS:
+            for run_as in ('root', ADMIN):
+                for command in ('/usr/bin/id', '/bin/sh', '/usr/bin/python3'):
+                    result = run(['sudo', '-n', '-l', '-U', user, '-u', run_as, '--', command], check=False)
+                    if result.returncode != 1:
+                        raise ValueError(f'{user}: could not confirm denial of sudo as {run_as}')
+        print('Sudo policy: Ubuntu retains administrator access; all three challenge accounts are denied.', flush=True)
+    except Exception:
+        if replaced:
+            SUDOERS.write_bytes(original)
+        raise
+    finally:
+        if temporary and temporary.exists():
+            temporary.unlink()
 
 
 def ssh_text(original):

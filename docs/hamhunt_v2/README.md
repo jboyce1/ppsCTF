@@ -8,7 +8,11 @@ transfer instructions, reset instructions, the teaching progression, a proposed
 
 The installer sets the Ubuntu administrator password to `hamhunt` after SSH
 configuration succeeds and prints it in the successful deployment summary.
-The three challenge accounts have no supplementary groups or sudo privileges.
+The three challenge accounts have no supplementary groups. A managed final
+sudoers block explicitly denies them sudo, including any inherited local grants,
+while preserving Ubuntu's administrator permission. Specific command-permission
+queries verify denials; a successful general policy listing is not treated as
+an unrestricted sudo grant.
 Download only `deploy_hamhunt_v2.py` and run it with sudo. It automatically
 creates a private cache, downloads the three ZIPs and guide, validates them,
 and deploys. It can also use adjacent local ZIPs for unpublished testing.
@@ -27,6 +31,12 @@ Validation completed locally:
   keys/history, group removal, password-setting order and summary output.
 - Simulated SSH validation failure restores the original configuration bytes.
 - Non-root deployment is rejected.
+- Real sudo policy evaluation in an isolated filesystem: an inherited ALL grant
+  initially permits Leroy; the managed final deny blocks all three challenge
+  accounts as root and Ubuntu while retaining Ubuntu's root access.
+- A denied account's general sudo listing can still exit zero; checks now query
+  specific command permissions instead. Shared rules are retained, not deleted.
+- Sudoers syntax, idempotence and preservation of administrator rules verified.
 - Script-only bootstrap downloads all four supporting files into a private cache;
   matching cached assets are reused and adjacent assets support unpublished tests.
 - A bad download fails its checksum and removes its temporary file before deployment.

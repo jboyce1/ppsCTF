@@ -40,9 +40,14 @@ WHAT DEPLOYMENT DOES
 * Installs openssh-server/sudo/passwd only if required target commands are missing.
 * Creates leroy, mums_the_word and callsign_hambone, without supplementary groups.
   Existing accounts require the explicit --reset option below.
-* Removes challenge users from sudo/admin and other supplementary groups, and
-  checks for direct sudoers grants. A remaining direct grant stops deployment
-  and must be removed by the instructor. The ubuntu account keeps its sudo group.
+* Removes challenge users from sudo/admin and other supplementary groups.
+  Appends a marked, account-specific !ALL block at the end of /etc/sudoers,
+  after existing included rules, to override inherited local sudo grants.
+  Backs up the old file, validates with visudo before/after installation, and
+  checks actual command permissions without executing those commands. Ubuntu
+  must retain root sudo access; the three challenge users must be denied both
+  root and Ubuntu impersonation. On policy-check failure it restores sudoers.
+  The ubuntu account keeps its sudo group. No shared range rules are deleted.
 * Places each account's Desktop directly in /home/ACCOUNT/Desktop. Home mode 700
   prevents other challenge accounts from reading it. /home remains listable so
   students can discover account names with ordinary file-navigation skills.
@@ -53,7 +58,7 @@ WHAT DEPLOYMENT DOES
   effective password/key settings, and enables/restarts the Ubuntu SSH service.
   It preserves other SSH settings; a conflicting earlier Match block stops the
   deployment. The original sshd_config is restored if SSH configuration fails.
-* Stores previous Desktops and SSH config backups under /var/lib/hamhunt_v2,
+* Stores previous Desktops, sudoers and SSH config backups under /var/lib/hamhunt_v2,
   readable only by root. Keeps the private deployment cache at mode 700.
 
 The installer uses useradd and root-run chpasswd, not interactive adduser, so
@@ -269,6 +274,17 @@ PLAYTEST CHECKLIST BEFORE A LIVE EVENT
 [ ] Fresh target IPs behave the same, and the range's team boundaries are clear.
 [ ] Any inherited score sheet accepts the exact flags above, or the proposed
     rubric has been chosen explicitly before the event.
+
+RECOVERING FROM THE EARLIER "DIRECT SUDOERS GRANT" STOP
+------------------------------------------------------
+Download the updated script again, then use the explicit reset option because
+Leroy may already have been created by the interrupted deployment:
+
+wget -O deploy_hamhunt_v2.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/challenges/hamhunt_v2/deploy_hamhunt_v2.py
+sudo python3 deploy_hamhunt_v2.py --reset
+
+Do not delete the sudo group or the range's shared sudoers rules manually.
+The updated installer applies a deny only to the three challenge accounts.
 
 A successful local --check is not a substitute for these live SSH/SCP checks.
 The original challenges/hamhunt package remains unchanged. Historical planning
