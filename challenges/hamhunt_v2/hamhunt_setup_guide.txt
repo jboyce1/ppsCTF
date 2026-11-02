@@ -1,0 +1,275 @@
+# ON EACH UBUNTU TARGET VM, AFTER THE V2 FILES HAVE BEEN PUBLISHED TO MAIN:
+wget -O deploy_hamhunt_v2.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/challenges/hamhunt_v2/deploy_hamhunt_v2.py
+sudo python3 deploy_hamhunt_v2.py
+
+HAMHUNT V2 -- INSTRUCTOR SETUP, PLAYTEST AND SCORING GUIDE
+========================================================
+This guide contains administrator credentials and answers. Give students only
+their assigned IP, the Leroy starting login, and the student instructions below.
+Use disposable Ubuntu target VMs, one unique IP per team, and a separate Kali
+workstation per team. All teams use the same accounts and discovery path.
+
+TEST THE UNPUBLISHED FILES WITHOUT PUSHING THE REPOSITORY
+------------------------------------------------------
+The wget command above and automatic downloads work after all five v2 files
+are published. You only download and run the Python script; it handles the rest.
+Before publishing, copy the local folder from your instructor workstation:
+
+scp -r challenges/hamhunt_v2 ubuntu@TARGET_IP:~/
+
+Then, on that Ubuntu target (replace TARGET_IP with its real address):
+
+cd ~/hamhunt_v2
+python3 deploy_hamhunt_v2.py --check
+sudo python3 deploy_hamhunt_v2.py
+
+Do not run the installer with sudo on your normal workstation. --check is read-only and can
+be run locally without sudo. The installer never clones or deletes a repository.
+
+WHAT DEPLOYMENT DOES
+--------------------
+* Creates /var/lib/hamhunt_v2/downloads with private permissions. Copies adjacent
+  validated ZIPs when available (unpublished testing), otherwise downloads the
+  three ZIPs and this guide itself. Reuses matching cached ZIPs on reset. The
+  script's original download directory is not modified or deleted.
+  The working guide will be at:
+  /var/lib/hamhunt_v2/downloads/hamhunt_setup_guide.txt
+* Checks the three ZIP checksums, safe paths and integrity before target changes.
+* Verifies all nine file-selection/hash-comparison puzzles have one result.
+* Verifies that the final puzzle flag actually decrypts the final message.
+* Installs openssh-server/sudo/passwd only if required target commands are missing.
+* Creates leroy, mums_the_word and callsign_hambone, without supplementary groups.
+  Existing accounts require the explicit --reset option below.
+* Removes challenge users from sudo/admin and other supplementary groups, and
+  checks for direct sudoers grants. A remaining direct grant stops deployment
+  and must be removed by the instructor. The ubuntu account keeps its sudo group.
+* Places each account's Desktop directly in /home/ACCOUNT/Desktop. Home mode 700
+  prevents other challenge accounts from reading it. /home remains listable so
+  students can discover account names with ordinary file-navigation skills.
+* Sets the known passwords below, including ubuntu = hamhunt. The Ubuntu
+  administrator password is changed after SSH configuration succeeds, and is
+  printed in the successful deployment summary. No interactive passwd step.
+* Adds a marked SSH Match block for the four lab accounts, validates syntax and
+  effective password/key settings, and enables/restarts the Ubuntu SSH service.
+  It preserves other SSH settings; a conflicting earlier Match block stops the
+  deployment. The original sshd_config is restored if SSH configuration fails.
+* Stores previous Desktops and SSH config backups under /var/lib/hamhunt_v2,
+  readable only by root. Keeps the private deployment cache at mode 700.
+
+The installer uses useradd and root-run chpasswd, not interactive adduser, so
+there is no --forcebadpassword option to supply. If a custom PAM policy rejects
+one of the fixed lab passwords, the script reports failure rather than silently
+claiming success. Review that target's policy before continuing.
+
+If any deployment command fails, some account/file changes may already have
+happened. Inspect the error, correct it and rerun with --reset. Use your VM
+console if SSH is unavailable. An incomplete run does not guarantee that the
+Ubuntu password has changed; a successful run prints its confirmed new value.
+
+INSTRUCTOR CREDENTIALS -- DO NOT HAND OUT ALL OF THESE
+----------------------------------------------------
+Administrator: ubuntu / hamhunt
+Starting account: leroy / leroythehunt3r
+Second account: mums_the_word / 0ink0INK!
+Third account: callsign_hambone / Her3piggyp1ggy
+
+All three story accounts are on the SAME assigned target IP. Their different
+names represent family accounts, rather than three additional machines.
+Students do not need sudo on the target for SSH, SCP, navigation or hashing.
+SSHerlock's administrator/X11 setup activities are not required for this event.
+Shared credentials do not enforce separation between team IPs: assign targets
+clearly and use the range's team/network isolation if separation is required.
+
+FIRST LIVE CHECK -- FROM KALI BEFORE STUDENTS START
+-------------------------------------------------
+Replace TARGET_IP; do not type the placeholder literally.
+
+ssh ubuntu@TARGET_IP
+# Confirm the new administrator password hamhunt works. Exit back to Kali.
+ssh leroy@TARGET_IP
+# Enter leroythehunt3r, then on the target:
+whoami
+pwd
+ls ~/Desktop
+cat ~/Desktop/flag.txt
+id
+sudo -l
+ls /home
+ls /home/mums_the_word/Desktop
+
+Expected: correct Desktop with flag/homework/personal, no sudo group/grants,
+and Permission denied for Mum's Desktop. sudo -l may prompt for Leroy's own
+password before denying access; do not enter the Ubuntu administrator password.
+
+Exit to Kali, then verify an actual download:
+
+scp leroy@TARGET_IP:Desktop/flag.txt ./leroy-home-flag.txt
+
+Do the same direct SSH checks as instructor for Mum and Brooks before beginning
+an end-to-end student playthrough. Confirm that no /home/ACCOUNT/ACCOUNT/Desktop
+nesting is present. Target SSH allow/deny rules, firewalls and range connectivity
+still need this real remote check; local asset checks cannot prove networking.
+
+RESET FOR THE NEXT PLAYTHROUGH
+-----------------------------
+On the target, while signed in as ubuntu:
+
+# From the folder containing the Python installer:
+sudo python3 deploy_hamhunt_v2.py --reset
+
+Reset ends active sessions/processes for the THREE CHALLENGE USERS, backs up
+and replaces their Desktops, removes their .ssh folders and shell histories,
+resets their passwords, removes supplementary groups again, and reapplies the
+Ubuntu password hamhunt. It does not delete/recreate entire homes or remove
+other student-created files elsewhere. Use a clean VM snapshot if you want a
+fully pristine target; previous sessions and installed changes outside the
+managed paths are not a complete operating-system reset.
+
+Reset does not remove copies downloaded to Kali or SSH keys stored on Kali.
+For a fair second playthrough, use a fresh local exercise folder and do not
+reuse last run's notes. If the target VM itself was rebuilt and its SSH host key
+changed, verify the new target identity and then remove only that old entry:
+
+ssh-keygen -R TARGET_IP
+
+Do not run that command merely because an ordinary challenge reset occurred;
+the installer preserves existing server host keys.
+
+STUDENT START AND DISCOVERY PATH
+--------------------------------
+Give students: assigned TARGET_IP and leroy / leroythehunt3r.
+
+1. SSH from Kali as Leroy. Find the home flag at ~/Desktop/flag.txt.
+2. Navigate homework and personal. Use SCP from a Kali terminal to copy files
+   for inspection. Remote files are on Ubuntu; copied files are now on Kali.
+3. In dig_for_flag, find the filename that is itself a pps{...} flag.
+4. Copy/open an image from SCPx2GeneratedImages as evidence of working SCP.
+   Some images are decoys; the scoring rubric below awards transfer evidence,
+   not a presumed flag in every image.
+5. Complete the five MD5 activities in the md folder:
+   - md5sum_file.txt: hash that entire file as supplied; use the last FIVE
+     CHARACTERS of its MD5, not the last five letters of the file's contents.
+     Do not edit the file before hashing it.
+   - md5sum_word.txt: hash the exact quoted string with no trailing newline
+     (echo -n), then use the last five characters of that hash.
+   - mdx3: find the exact target hash; use the full matching filename.
+     Start by calculating individual hashes manually, as in HashHound practice.
+   - mdx4: hash the larger candidate set and find the supplied partial hash.
+     Use find/md5sum and grep as taught, then submit the full filename.
+   - mdx5: compare candidate-file hashes with known_good_hashes.txt. Ignore the
+     readme and known-good list themselves and keep generated analysis/output
+     files OUTSIDE the candidate folder. Exactly ONE candidate is unmatched.
+6. Read Leroy's personal note. SCP mom_username_list.txt and
+   mom_password_list.txt to Kali. Use the SSH login scanner from SSHerlock
+   against the assigned target IP; log in as the discovered Mum account.
+7. On Mum, repeat the file, navigation, SCP and hash activities in Desktop/work.
+   Read personal/EmailDrafts.txt and retrieve brooks_old_passwords.txt. Discover
+   the likely third username with ls /home; use the password list against the
+   same assigned IP. Then SSH as Brooks.
+8. On Brooks, repeat the activities. Use the FULL final mdx5 flag as the password
+   for personal/messages.yaml.zip, and read messages.yaml. The v2 final ZIP works
+   with standard unzip; its password and story contents have been preserved.
+
+For each SSH scanner run on Kali, use auxiliary/scanner/ssh/ssh_login, set RHOSTS
+only to the assigned TARGET_IP, set USER_FILE and PASS_FILE to the copied local
+lists, check show options, then run. For Brooks, create a one-line local user
+list containing the username discovered in /home. These are authorized target
+VMs; the exercise does not ask students to scan unrelated machines.
+
+For mdx5, the candidate sets are:
+Leroy: needle_amongst_the_stars_*
+Mum: counting_sheep_is_one_thing_*
+Brooks: Incoming_message_from_space_*
+
+Example for Mum, from inside her copied mdx5 folder on Kali:
+
+find . -type f -name 'counting_sheep_is_one_thing_*' -exec md5sum {} \; > ../current_md5sums.txt
+cut -d ' ' -f 1 known_good_hashes.txt > ../known_hashes.txt
+cut -d ' ' -f 1 ../current_md5sums.txt > ../current_hashes.txt
+grep -F -x -v -f ../known_hashes.txt ../current_hashes.txt > ../unmatched_hashes.txt
+grep -F -f ../unmatched_hashes.txt ../current_md5sums.txt
+
+Substitute the candidate pattern above for the other accounts. All outputs are
+in the parent folder so they do not become extra candidate files.
+
+SCORING PROGRESSION -- PROPOSED 30-POINT PLAYTEST RUBRIC
+-----------------------------------------------------
+Use a separate score record per team; identical targets have identical answers.
+Award each item once. Keep the existing exact flag strings for compatibility.
+
+For EACH of Leroy, Mum and Brooks (8 points per account, 24 total):
+  1 point: Desktop home flag
+  1 point: dig_for_flag filename flag
+  1 point: demonstrated SCP transfer and local image/file inspection
+  1 point: MD5 of the supplied file
+  1 point: MD5 of the quoted string
+  1 point: mdx3 exact-hash match
+  1 point: mdx4 partial-hash match
+  1 point: mdx5 known-good comparison
+
+2 points: discover Mum's credentials and demonstrate SSH as Mum
+2 points: discover Brooks's credentials and demonstrate SSH as Brooks
+2 points: decrypt and explain the final message
+
+This gives a suggested order without a custom unlocking system. A team can read
+credential clues before solving every hash task. Do not require sudo as proof
+or award points for bypassing account permissions. SSH keys are an optional
+extension, not a prerequisite for finishing the event.
+
+INSTRUCTOR ANSWER CHECKS -- KEEP OFF THE STUDENT HANDOUT
+------------------------------------------------------
+Home flags:
+Leroy: pps{1x1_L3Royi5H0m3}
+Mum: pps{2x1_MumW@sHer3}
+Brooks: pps{3x1_YouFoundBr00ks}
+
+Navigation flags:
+Leroy: pps{1x1_fil3n@vigator_14}
+Mum: pps{2x1_fil3n@vigator_25}
+Brooks: pps{3x1_fil3n@vigator_32}
+
+File MD5 flags:
+Leroy: pps{1x1_md5=82c92}
+Mum: pps{2x1_md5=45555}
+Brooks: pps{3x1_md5=3a74d}
+
+String MD5 flags (the inherited 1x2 prefixes below are intentional for backward
+compatibility with the supplied instructions; do not silently replace them):
+Leroy: pps{1x2_sn0rt=1895b}
+Mum: pps{1x2_this-little-piggy-went-to-market=b36b6}
+Brooks: pps{1x2_PigsInHeavens=0d784}
+
+Exact-hash flags:
+Leroy: pps{1x3_md5_is_it_piggy_54}
+Mum: pps{2x3_md5_there_goes_piggy_74}
+Brooks: pps{3x3_md5_there_goes_piggy_78}
+
+Partial-hash flags:
+Leroy: pps{1x4_md5_needle_amongst_the_stars_9283}
+Mum: pps{2x4_md5_pigs_fly_past_star_7006}
+Brooks: pps{3x4_md5_HAMs_are_not_pigs_8823}
+
+Known-good comparison flags:
+Leroy: pps{1x5_md5_973}
+Mum: pps{2x5_md5_867}
+Brooks: pps{3x5_md5_862}
+The last flag above is also the final-message ZIP password.
+
+PLAYTEST CHECKLIST BEFORE A LIVE EVENT
+-------------------------------------
+[ ] All five files are together; installer downloads and validates the assets successfully.
+[ ] Ubuntu login with hamhunt works; the instructor can still use sudo.
+[ ] All three story accounts have working password SSH and no sudo grants.
+[ ] No challenge account can read another account's home directory.
+[ ] Files are directly on each user's Desktop, with correct ownership.
+[ ] A student can finish using only the starting login, story clues and lessons.
+[ ] All five hash activities per account give the answer checks above.
+[ ] SCP from Kali and final-message unzip both work in the actual range.
+[ ] A second run after --deploy --reset works, including removal of old SSH keys.
+[ ] Fresh target IPs behave the same, and the range's team boundaries are clear.
+[ ] Any inherited score sheet accepts the exact flags above, or the proposed
+    rubric has been chosen explicitly before the event.
+
+A successful local --check is not a substitute for these live SSH/SCP checks.
+The original challenges/hamhunt package remains unchanged. Historical planning
+notes and reference snapshots are archived in docs/hamhunt_v2/planning.
