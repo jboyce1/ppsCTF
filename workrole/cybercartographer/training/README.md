@@ -5,17 +5,29 @@ title: CyberCartographer training targets
 
 # CyberCartographer training targets
 
-Use these on the Ubuntu practice VMs assigned by the instructor. Each linked filename downloads that script. Save it in a folder, then right-click in that folder and open a terminal. Run only the script assigned to that machine.
+Use these on the Ubuntu practice VMs assigned by the instructor. Open the folder where you want to save the scripts, then right-click and open a terminal. Copy and paste the download command for the assigned script. Run only the script assigned to that machine.
 
-The links here use the local lesson site, so they work for reviewing these changes before a push. These scripts configure real services on the practice VM; they are not keepalive scripts.
+These scripts configure services on the practice VM; they are not keepalive scripts.
 
 ## SSH password setup
 
-[Open the password SSH instructions](flagscripts/0_allow_ssh_password.txt). Apply them to the VM used for normal SSH and to any high-port SSH VM where password authentication is required. Use the assigned account when checking authentication from Kali.
+Download the password SSH instructions:
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/flagscripts/0_allow_ssh_password.txt
+```
+
+Open the downloaded text file. Apply them to the VM used for normal SSH and to any high-port SSH VM where password authentication is required. Use the assigned account when checking authentication from Kali.
 
 ## Telnet on port 23
 
-[Download 1_deploy-telnet-23.py](flagscripts/1_deploy-telnet-23.py).
+Download the script:
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/flagscripts/1_deploy-telnet-23.py
+```
+
+Run it:
 
 ```bash
 sudo python3 1_deploy-telnet-23.py
@@ -23,7 +35,13 @@ sudo python3 1_deploy-telnet-23.py
 
 ## Anonymous FTP on port 21
 
-[Download 4_ftp-anon-login.py](flagscripts/4_ftp-anon-login.py).
+Download the script:
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/flagscripts/4_ftp-anon-login.py
+```
+
+Run it:
 
 ```bash
 sudo python3 4_ftp-anon-login.py
@@ -31,7 +49,13 @@ sudo python3 4_ftp-anon-login.py
 
 ## Anonymous FTP on a random high port
 
-[Download 3_ftp-anon-highport.py](flagscripts/3_ftp-anon-highport.py).
+Download the script:
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/flagscripts/3_ftp-anon-highport.py
+```
+
+Run it:
 
 ```bash
 sudo python3 3_ftp-anon-highport.py
@@ -39,7 +63,13 @@ sudo python3 3_ftp-anon-highport.py
 
 ## Anonymous FTP on a high port with a flag
 
-[Download 2_ftp-anon-highport-flag.py](flagscripts/2_ftp-anon-highport-flag.py).
+Download the script:
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/flagscripts/2_ftp-anon-highport-flag.py
+```
+
+Run it:
 
 ```bash
 sudo python3 2_ftp-anon-highport-flag.py
@@ -47,7 +77,13 @@ sudo python3 2_ftp-anon-highport-flag.py
 
 ## SSH on a random high port
 
-[Download 6_ssh-highport-generator.py](flagscripts/6_ssh-highport-generator.py).
+Download the script:
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/flagscripts/6_ssh-highport-generator.py
+```
+
+Run it:
 
 ```bash
 sudo python3 6_ssh-highport-generator.py
@@ -55,7 +91,13 @@ sudo python3 6_ssh-highport-generator.py
 
 ## SSH on a high port with a flag
 
-[Download 5_ssh-highport-generator-flag.py](flagscripts/5_ssh-highport-generator-flag.py).
+Download the script:
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/flagscripts/5_ssh-highport-generator-flag.py
+```
+
+Run it:
 
 ```bash
 sudo python3 5_ssh-highport-generator-flag.py
@@ -69,4 +111,9 @@ After setup, use Kali to discover the host and identify its service as described
 
 ## Current classroom targets
 
-[Download cyberorg_classroom_targets.txt](cyberorg_classroom_targets.txt). This file must be replaced from the current VM allocation before each live exercise. Its presence in the repository does not mean its addresses are still active.
+Download the current target list:
+
+```bash
+wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/cyberorg_classroom_targets.txt
+```
+ This file must be replaced from the current VM allocation before each live exercise. Its presence in the repository does not mean its addresses are still active.

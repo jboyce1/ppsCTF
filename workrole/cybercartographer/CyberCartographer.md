@@ -71,17 +71,21 @@ By the end of this part, everyone should be able to open draw.io and reach the t
 
 ## Part 1a: Install and launch draw.io
 
-On each teammate's Kali desktop:
+On each teammate's Kali desktop, open the folder where you want to keep draw.io. Right-click an empty area and choose **Open Terminal Here**. You can also use `cd` and `ls` to navigate there.
 
-1. [Download the draw.io AppImage](https://github.com/jgraph/drawio-desktop/releases/download/v29.3.6/drawio-x86_64-29.3.6.AppImage) using your browser.
-2. Open the folder containing the download. Right-click an empty area and choose **Open Terminal Here**.
-3. Allow the downloaded file to run:
+Download draw.io:
+
+```bash
+wget -L https://github.com/jgraph/drawio-desktop/releases/download/v29.3.6/drawio-x86_64-29.3.6.AppImage
+```
+
+Allow the downloaded file to run:
 
 ```bash
 chmod +x drawio-x86_64-29.3.6.AppImage
 ```
 
-4. Launch draw.io:
+Launch draw.io:
 
 ```bash
 ./drawio-x86_64-29.3.6.AppImage
@@ -89,12 +93,15 @@ chmod +x drawio-x86_64-29.3.6.AppImage
 
 ## Part 1b: Prepare the shared folder and template
 
-On the team's fileserver machine:
+On the team's fileserver machine, create a folder named `teamshare`. Open that folder, right-click an empty area, and choose **Open Terminal Here**. You can also use `cd` and `ls` to navigate there.
 
-1. Use the file manager to create a folder named `teamshare` in your home folder.
-2. [Download the base template]({{ 'workrole/cybercartographer/challenges/CyberTacticsFest_Scenerio_Base.drawio' | relative_url }}) into that folder.
-3. Rename the downloaded file `team-network-map.drawio`.
-4. Open the `teamshare` folder, right-click an empty area, and choose **Open Terminal Here**. You can also use `cd` to move between folders and `ls` to see their contents.
+Download the template into this folder:
+
+```bash
+wget -O team-network-map.drawio https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/CyberTacticsFest_Scenerio_Base.drawio
+```
+
+`-O team-network-map.drawio` saves the download with the filename your team will use.
 
 Find the server's IPv4 address:
 
@@ -233,7 +240,13 @@ nmap -n -sn 10.15.0.0/17 > hostsup_1549.txt
 
 The instructor will provide a fresh target list because the classroom VMs have changing addresses and may be on different subnets. For this exercise, write the subnet command you would use, then run the list-based version below in place of the broad subnet scan.
 
-[Download cyberorg_classroom_targets.txt]({{ 'workrole/cybercartographer/training/cyberorg_classroom_targets.txt' | relative_url }}) into your team's shared folder, or use the current copy supplied by your instructor. Use today's list; an older download may contain different machines.
+Open a terminal in your team's shared folder. Download the instructor's current target file:
+
+```bash
+wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/cyberorg_classroom_targets.txt
+```
+
+If the instructor supplies a newer copy through the team fileshare, use that copy instead. Use today's list; an older download may contain different machines.
 
 Open a terminal in the folder containing the file. Inspect it:
 
