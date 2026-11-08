@@ -5,3 +5,10 @@ theme: minima
 
 include:
   - _legacy_workrole_redirects
+
+exclude:
+  - AGENTS.md
+  - workrole/cybercartographer/setup/cyberorg_classroom_targets_dirty.txt
+  - workrole/cybercartographer/setup/cyberorg_classroom_targets.txt
+  - workrole/cybercartographer/setup/test_target_cleaner.py
+  - workrole/cybercartographer/cyberorg_classroom_targets_dirty.txt

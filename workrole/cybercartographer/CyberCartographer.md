@@ -18,7 +18,8 @@ title: CyberCartographer
 ## Here be Dragons
 
 ### Specific Skills
-- Use nmap to identify all hosts on the network
+- Identify your local subnet and its size; use nmap to discover responding classroom targets
+- Set up a team fileserver with Python and miniserve
 - Use nmap to create a text file of all open hosts
 - Use nmap to identify and isolate hosts with password authentication OpenSSH
 - Installing and using zenmap on the cyber.org range
@@ -42,225 +43,434 @@ Once vulnerabilities are identified, the Blue Team can leverage Zenmap's reporti
 
 ---
 
-# Part 1a: Setting up drawio on the cyber.org range 
-  
-Get to your Desktop of not already there
-#### `cd ~/Desktop`  
-Download the appimage of drawio from the github repo
-#### `wget -L https://github.com/jgraph/drawio-desktop/releases/download/v29.3.6/drawio-x86_64-29.3.6.AppImage`  
-Change the file to make it executeable (or right click, go to permissions and check the box to allow to run as program)
-#### `chmod +x drawio-x86_64-29.3.6.AppImage`
-Run the program
-#### `./drawio-x86_64-29.3.6.AppImage` 
-
-In another terminal download the base image:
+<!-- Preserve existing lesson bookmarks. -->
+<span id="cd-desktop"></span>
+<span id="cd-desktop-1"></span>
+<span id="cd-teamshare"></span>
+<span id="chmod-x-drawio-x86_64-2936appimage"></span>
+<span id="curl--o-httphost_ip8080scanxml"></span>
+<span id="drawio-x86_64-2936appimage"></span>
+<span id="httphost_ip8080"></span>
+<span id="ls"></span>
+<span id="ls-1"></span>
+<span id="ls-2"></span>
+<span id="ls-3"></span>
+<span id="mkdir-teamshare"></span>
+<span id="nmap--sc--sv--p-80443-10150016"></span>
+<span id="part-1a-setting-up-drawio-on-the-cyberorg-range"></span>
+<span id="part-1b-setting-up-a-simple-team-share--one-way-team-communication"></span>
+<span id="python3--m-httpserver-8080"></span>
+<span id="walkthrough"></span>
+<span id="wget--l-httpsgithubcomjgraphdrawio-desktopreleasesdownloadv2936drawio-x86_64-2936appimage"></span>
+<span id="wget-httphost_ip8080notestxt"></span>
 <span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassescybercartographercybertacticsfest_scenerio_basedrawio"></span>
 
-####  `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/CyberTacticsFest_Scenerio_Base.drawio`
+# Part 1: Set up draw.io and a shared team fileserver
+
+By the end of this part, everyone should be able to open draw.io and reach the team's shared folder. Choose one teammate's machine to host the share and keep that machine running throughout the activity.
+
+## Part 1a: Install and launch draw.io
+
+On each teammate's Kali desktop:
+
+1. [Download the draw.io AppImage](https://github.com/jgraph/drawio-desktop/releases/download/v29.3.6/drawio-x86_64-29.3.6.AppImage) using your browser.
+2. Open the folder containing the download. Right-click an empty area and choose **Open Terminal Here**.
+3. Allow the downloaded file to run:
+
+```bash
+chmod +x drawio-x86_64-29.3.6.AppImage
+```
+
+4. Launch draw.io:
+
+```bash
+./drawio-x86_64-29.3.6.AppImage
+```
+
+## Part 1b: Prepare the shared folder and template
+
+On the team's fileserver machine:
+
+1. Use the file manager to create a folder named `teamshare` in your home folder.
+2. [Download the base template]({{ 'workrole/cybercartographer/challenges/CyberTacticsFest_Scenerio_Base.drawio' | relative_url }}) into that folder.
+3. Rename the downloaded file `team-network-map.drawio`.
+4. Open the `teamshare` folder, right-click an empty area, and choose **Open Terminal Here**. You can also use `cd` to move between folders and `ls` to see their contents.
+
+Find the server's IPv4 address:
+
+```bash
+ip -br -4 addr
+```
+
+Use the address on the interface that reaches your teammates, without the `/prefix`. Do not use the loopback address `127.0.0.1`. Share the server IP and chosen port with your team. On the CYBER.ORG range, machines may be on different subnets; use the range IP that teammates can reach. If a teammate cannot connect, check the IP, port, server terminal, and range connectivity with your instructor.
+
+## Part 1c: Start a quick download share with Python
+
+Open a terminal in the `teamshare` folder. Start the download share:
+
+```bash
+python3 -m http.server 8080
+```
+
+Keep this terminal open. Teammates open `http://<host_ip>:8080` in their browsers, replacing `<host_ip>` with the server's reachable IP. Download `team-network-map.drawio` using **Save link as**, then open it in draw.io.
+
+Python's basic HTTP server lets teammates browse and download files; it does not provide browser uploads. Once everyone can download the template, press **Ctrl+C** in the server terminal to stop it before using the same port for miniserve.
+
+## Part 1d: Use miniserve for the shared team workspace
+
+On the fileserver machine, update the package list:
+
+```bash
+sudo apt update
+```
+
+When that finishes, install miniserve:
+
+```bash
+sudo apt install miniserve
+```
+
+Open a terminal in the `teamshare` folder. Start miniserve:
+
+```bash
+miniserve . -p 8080 --upload-files --mkdir
+```
+
+The general command is `miniserve . -p <port#> --upload-files --mkdir`. Replace `<port#>` with your team's port, such as `8080`; do not type the angle brackets. `.` shares the current folder, `-p` selects the port, `--upload-files` allows uploads, and `--mkdir` allows teammates to create folders in the browser.
+
+Everyone returns to `http://<host_ip>:8080`. Create a folder for scan results and have each teammate upload a small notes file to confirm that uploads and downloads work. Keep the server terminal open; **Ctrl+C** stops the share. If the port is already in use, stop the earlier server or choose another port and tell the team.
+
+Keep `team-network-map.drawio` in the shared space. Choose a map editor to download it, make changes in draw.io, and upload a newly named version such as `team-network-map-v2.drawio`. A fileserver does not provide live coediting or automatically save local draw.io changes back to the share. Use versioned names so teammates can identify the current map without overwriting one another's work.
+
+This share allows reachable users to download and upload files without signing in. Serve only the team activity folder on the classroom LAN or range network and stop the server when finished.
+
+**Part 1 checkpoint:** Every teammate can launch draw.io, reach the share, download the template, and upload a file through miniserve.
 
 ---
-# Part 1b: Setting up a simple team share > one way team communication
 
-Set up a host teamshare
+<!-- Preserve existing lesson bookmarks. -->
+<span id="arp--a"></span>
+<span id="ip-addr"></span>
+<span id="part-2-use-nmap-to-identify-all-hosts-on-the-network-and-output-a-file"></span>
+<span id="sudo-nmap--n--sn-defaultgatewayaddresssubnet--og----awk-upprint-2"></span>
+<span id="sudo-nmap--n--sn-defaultgatewayaddresssubnet--og----awk-upprint-2--hoststxt"></span>
+<span id="sudo-nmap--sn-10150117"></span>
+<span id="sudo-nmap--sn-10150117--hostsuptxt"></span>
 
-#### `mkdir ~/teamshare`
-#### `cd ~/teamshare`
-#### `python3 -m http.server 8080`
+# Part 2: Choose a discovery scan and save the results
 
-You can call your teamshare something more unique and put it on a different port.
+Everyone practices identifying the network from their own machine. You will need this on the competition LAN and when you enter another box. There is no separate turn-in for this part. Keep the discovery results in your team's fileshare for use in the map and later scans.
 
-Access the server (teammates only)
-#### `http://<host_ip>:8080`
+## Step 1: Read your addresses, routes, and neighbors
 
-At this point, the teammates can download with a right click and a "save link as" 
+Show your IPv4 address and prefix:
 
-OR
+```bash
+ip -br -4 addr
+```
 
-#### `wget http://<host_ip>:8080/notes.txt`
-#### `curl -O http://<host_ip>:8080/scan.xml`
+Find the interface you are using. What is its IP address? What prefix follows the `/`?
 
+Show your routes:
 
----
-# Part 2: Use nmap to identify all hosts on the network and output a file
+```bash
+ip -4 route
+```
 
-### **Walkthrough**
-Step 1) Determine the IP Address Range: To begin, find the range of IP addresses. Start by locating the default gateway, which is the lowest IP address on the network.  
-#### `arp -a`  
-Step 2) Calculate Subnet Size: Once you've found the lowest IP address, determine the number of IP addresses in the subnet. Identify the subnet mask (CIDR) using   
-#### `ip addr`    
-Look for the number of blocked bits in the subnet mask (e.g., /17, /24). This indicates the number of blocks in the subnet. Combine the first two components to scan the entire network.    
-#### `sudo nmap -sn 10.15.0.1/17`    
-Step 3) Generate a Text File of Open Hosts:    
-For convenience, create a text document containing all the hosts. Execute the following command:    
-#### `ls`  
-#### `cd Desktop`  
-#### `sudo nmap -sn 10.15.0.1/17 > hostsup.txt`    
-Step 4) Extract only IP Addresses: To obtain only the IP addresses, use the following command:    
-#### `sudo nmap -n -sn <default.gate.way.address/subnet> -oG - | awk '/Up$/{print $2}'`    
-To understand the command:      
- - -n: Turns off reverse name resolution for faster processing.      
- - -sn: Disables port scanning (equivalent to deprecated -sP).      
- - -oG -: Sends grepable output to stdout for piping.  
- - awk '/Up$/{print $2}': Selects lines ending with "Up" to capture online hosts' IP addresses. Prints the second whitespace-separated field, which is the IP address.  
-Step 5) And to turn this into a text file:  
-#### `sudo nmap -n -sn <default.gate.way.address/subnet> -oG - | awk '/Up$/{print $2}' > hosts.txt`   
+Find the connected network and its prefix. Find the default gateway after `default via`. A default route is a way out of your network; it does not mean every destination is part of your local subnet.
 
-<div style="text-align: center;">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/j-4UYbXKNVs?si=UsMmou5w9xgooYjM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-</div>
----  
+Show all routing tables:
 
-# Part 3: Use nmap to identify and isolate hosts with password authentication OpenSSH  
+```bash
+ip -4 route show table all
+```
 
-**Step 1) Use Text File of IP Addresses** Utilizing the lua scripting language and nmap scripting library with flags to see the scripts from terminal: 
-#### `cd /usr/share/nmap/scripts/`  
-#### `ls`  
-**Step 2) Identify Hosts with OpenSSH** We'll use nmap to scan for hosts with OpenSSH running on port 22. Here's the command breakdown:  
-#### `sudo nmap -p 22 --script ssh-auth-methods --script-args="ssh.user=*" <targetIP>`  
+Compare the local addresses and connected routes with the previous output. Which route describes the network you need to discover?
 
- Flags explained:  
--p 22: Specifies port 22, which is the default port for SSH.
---script ssh-auth-methods: Runs the SSH authentication methods script to determine the authentication methods supported by the SSH server.
---script-args="ssh.user=*": Specifies the username to be used for SSH authentication. The wildcard (*) indicates that any username can be used.    
+Show cached neighbors:
 
-**Step 2)** Using -iL Flag with Text File: To use the text file containing IP addresses, we'll employ the -iL flag.   
-#### `sudo nmap -p 22 --script ssh-auth-methods --script-args="ssh.user=*" -iL hosts.txt`    
--iL hosts.txt: Specifies the input file containing a list of IP addresses. Adjust the filename (hosts.txt) according to your text file's name.    
-    
-OpenSSH hunt (1)
-    
-  <div style="text-align: center;">
-<iframe width="560" height="315" src="https://www.youtube.com/embed/qb_wUWrZAo8?si=uf2W5RIsKQEXBDOz" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>  
-  </div>
-  
+```bash
+ip neigh
+```
 
----
+These are neighbors your machine has learned about, not a complete inventory. Repeat these checks when you move to another box; its network may differ.
 
-# Part 4: Identify and validate telnet services on the network
-    
-Install telnet on kali
-### `sudo apt update && sudo apt install telnet`
-- install the pacakage maintainer's version when asked
-    
-Use Nmap to Identify Hosts Running Telnet  
-We'll use **Nmap** to scan the network and identify hosts with **Telnet open on port 23**.  
-    
-#### `sudo nmap -p 23 --open <targetIP>`  
-    
-Flags explained:  
-- `-p 23`: Scans for Telnet services on port 23.  
-- `--open`: Only shows hosts with **port 23 open** to filter out unnecessary data.  
-    
-Scan a List of IPs for Telnet  
-To scan multiple hosts, use an input file containing **a list of IP addresses**:  
-    
-#### `sudo nmap -p 23 --open -iL hosts.txt`  
+## Step 2: Work out the network size
 
-Flags explained:  
-- `-iL hosts.txt`: Loads a file (`hosts.txt`) containing **multiple target IPs** for scanning.  
-    
-Log Into a Telnet Device to Validate Access  
-Once you've identified a host running Telnet, use the **telnet command** to connect:  
-#### `telnet <targetIP>`    
-If telnet is running on another port    
-#### `telnet <targetIP> <port#>`    
+**Total IPv4 addresses = 2^(32 − prefix length).** A `/17` contains 32,768 addresses; a `/16` contains 65,536. A larger address count does not mean that many computers are running.
 
-If authentication is required, **enter the username and password** when prompted.
+For example, a connected route for `10.15.0.0/17` covers `10.15.0.0` through `10.15.127.255`. A route for `10.15.0.0/16` covers `10.15.0.0` through `10.15.255.255`.
 
-Verify the Connection  
-After logging in, confirm the Telnet session is active by running:  
-#### `whoami`  
-#### `hostname`  
-#### `ls`  
-This validates **successful access** to the remote system.   
-    
-Exit the Telnet Session  
-To safely disconnect, type:  
-#### `exit`  
-    
-This closes the Telnet session and returns you to the **Kali terminal**.
-    
-  
----
-# Part 5: Identify and validate ftp services on the network
+Use your own output to choose the network and prefix. Explain to a teammate which line supports your choice.
 
-Install FTP Client on Kali    
-In termial type `ftp --version`, if anything comes up, skip the install.
-Ensure FTP client tools are installed before scanning:  
-#### `sudo apt update && sudo apt install ftp`  
+## Step 3: Write a scan for the scenario
 
-Use Nmap to Identify Hosts Running FTP  
-We'll use **Nmap** to scan the network and identify hosts with **FTP open on port 21**.  
+Write a host discovery command based on your routes. `-n` skips DNS lookups; `-sn` discovers hosts without scanning their ports.
 
-#### `sudo nmap -p 21 --open <targetIP>`  
-#### `sudo nmap -p 21 --open hosts.txt'    
+If the scenario and output identify `10.15.0.0/17`, a suitable command is:
 
-Flags explained:  
-- `-p 21`: Scans for FTP services on port 21.  
-- `--open`: Only shows hosts with **port 21 open** to filter out unnecessary data.  
+```bash
+nmap -n -sn 10.15.0.0/17
+```
 
-Scan a List of IPs for FTP  
-To scan **multiple hosts**, use an input file containing **a list of IP addresses**:  
+If they identify `10.15.0.0/16`, use that prefix instead. Choose based on the network you have been assigned, rather than copying the example's prefix.
 
-#### `sudo nmap -p 21 --open -iL hosts.txt`  
-`    
-Flags explained:  
-- `-iL hosts.txt`: Loads a file (`hosts.txt`) containing **multiple target IPs** for scanning.  
-#### `sudo nmap -p 21 --open <targetIPlow>-<targetIPhigh> | grep "Nmap scan report for" | awk '{print $5}'    
-Use Nmap to Check for Anonymous FTP Access  
-Nmap has a built-in script to test for **anonymous FTP login**:  
+Save the output so your team can use it later:
 
-#### `sudo nmap -p 21 --script ftp-anon <targetIP>`  
-#### `sudo nmap -p 21 --script ftp-anon -iL hosts.txt`  
-Flags explained:  
-- `--script ftp-anon`: Runs a script that checks if **anonymous login is allowed** on the FTP server.  
+```bash
+nmap -n -sn 10.15.0.0/17 > hostsup.txt
+```
 
-Use FTP Client to Manually Validate Access  
-Once you've identified an FTP server, connect to it:  
+`>` writes the output to a file in your current folder and replaces an existing file with that name. The results appear in the file instead of the terminal. Wait for the prompt to return, then open the file.
 
-#### `ftp <targetIP>`  
+To keep an earlier scan from the same day, use the time in the filename. For a scan at 15:49:
 
-Check if FTP is running on another port:  
-#### 'sudo nmap -p 21000-24000 --script ftp-anon -iL Hosts.txt -oN ftp_high_ports.txt'    
+```bash
+nmap -n -sn 10.15.0.0/17 > hostsup_1549.txt
+```
 
-To connect:    
-#### `ftp <targetIP> <port#>`    
+## Step 4: Use the current classroom list on CYBER.ORG
 
-When prompted for login:  
-- **Username:** `anonymous`  
-- **Password:** Press **Enter**  
+The instructor will provide a fresh target list because the classroom VMs have changing addresses and may be on different subnets. For this exercise, write the subnet command you would use, then run the list-based version below in place of the broad subnet scan.
 
-Verify Anonymous Access  
-Once connected, check if you can list and retrieve files:  
+[Download cyberorg_classroom_targets.txt]({{ 'workrole/cybercartographer/training/cyberorg_classroom_targets.txt' | relative_url }}) into your team's shared folder, or use the current copy supplied by your instructor. Use today's list; an older download may contain different machines.
 
-#### `ls`  
-#### `get <filename>`  
+Open a terminal in the folder containing the file. Inspect it:
 
-If the command succeeds, **anonymous FTP is enabled**.  
+```bash
+head cyberorg_classroom_targets.txt
+```
 
-Exit the FTP Session  
-To safely disconnect, type:  
-#### `bye`  
+Run discovery and save the results:
 
-This closes the FTP session and returns you to the **Kali terminal**.
+```bash
+nmap -n -sn -iL cyberorg_classroom_targets.txt > hostsup.txt
+```
 
-Scan high ports for ftp services
+`-iL` replaces the subnet target with addresses read from a file. You can use a time suffix here too, such as `hostsup_1549.txt`.
+
+## Step 5: Share the on-network device list
+
+Open the saved report and find the addresses reported as up. Put `hostsup.txt` (or your timed version) in the team fileshare and add a note or list labeled **On-network devices** to the draw.io map that points teammates to that report. On CYBER.ORG, this means responding classroom targets; it does not prove they all share a subnet.
+
+For the next parts, use a text editor to create `hosts.txt`: one responding IP per line, with no Nmap report text. Save it beside your scan files and share it with your team. `hostsup.txt` is the report; `hosts.txt` is the input list for later scans.
+
+A target in the instructor's list is not necessarily online. If targets disappear, tell the instructor; the VMs may need to be reopened and the list refreshed.
+
+You do not need to draw an individual computer for every discovery response. In Parts 3–6, add individual computers for hosts with password SSH, Telnet, or FTP, including services on high ports.
 
 ---
-# Part 6: Scan a range of high ports for services detected    
-If you know the port range you want to scan
-#### `sudo nmap -p 20000-24000 --open -sV 10.15.0.0/17`    
 
--p 20000-24000 → Scans only high ports 20000-24000.    
---open → Only show hosts with open ports.    
--sV → Service version detection to identify if FTP, SSH, or Telnet is running.    
-10.15.0.0/17 → Replace with your target subnet.    
+<!-- Preserve existing lesson bookmarks. -->
+<span id="cd-usrsharenmapscripts"></span>
+<span id="part-3-use-nmap-to-identify-and-isolate-hosts-with-password-authentication-openssh"></span>
+<span id="sudo-nmap--p-22---script-ssh-auth-methods---script-argssshuser--il-hoststxt"></span>
+<span id="sudo-nmap--p-22---script-ssh-auth-methods---script-argssshuser-targetip"></span>
 
-If you have a file of hosts.txt that you want to scan
-#### `sudo nmap -p 20000-24000 --open -sV -iL hosts.txt`    
-to save your results     
-#### `sudo nmap -p 20000-24000 --open -sV -iL hosts.txt -oN high_port_scan_results.txt`   
+# Part 3: Find SSH hosts that offer password authentication
+
+Open a terminal in the folder containing your team's `hosts.txt`.
+
+Scan SSH on port 22:
+
+```bash
+nmap -n -p 22 --open --script ssh-auth-methods --script-args="ssh.user=<username>" -iL hosts.txt -oN ssh_password_results.txt
+```
+
+Replace `<username>` with the classroom username supplied by the instructor. `ssh.user` is a username to test, not a wildcard search for users. Authentication methods can depend on the account.
+
+`-p 22` selects the usual SSH port. `--script ssh-auth-methods` asks which authentication methods the server offers. `-oN` saves the results while also showing them in the terminal.
+
+Look for `password` in the supported authentication methods. An open SSH port alone does not establish that password authentication is available.
+
+For each match, add a computer to the draw.io map, or update its existing shape. Label it with the IP, port, **SSH — password offered**, and the username tested. Share the scan report.
+
+Reference: [Nmap ssh-auth-methods](https://nmap.org/nsedoc/scripts/ssh-auth-methods.html).
+
 ---
+
+<!-- Preserve existing lesson bookmarks. -->
+<span id="exit"></span>
+<span id="hostname"></span>
+<span id="part-4-identify-and-validate-telnet-services-on-the-network"></span>
+<span id="sudo-apt-update--sudo-apt-install-telnet"></span>
+<span id="sudo-nmap--p-23---open--il-hoststxt"></span>
+<span id="sudo-nmap--p-23---open-targetip"></span>
+<span id="telnet-targetip"></span>
+<span id="telnet-targetip-port"></span>
+<span id="whoami"></span>
+
+# Part 4: Find and validate Telnet
+
+Scan for Telnet on its usual port:
+
+```bash
+nmap -n -p 23 --open -sV -iL hosts.txt -oN telnet_results.txt
+```
+
+`-sV` checks the service on the open port. For a host identified as Telnet, connect:
+
+```bash
+telnet <targetIP>
+```
+
+If the client is missing, update the package list:
+
+```bash
+sudo apt update
+```
+
+Then install it:
+
+```bash
+sudo apt install telnet
+```
+
+Use the assigned credentials if prompted. If you reach a shell, check the machine name:
+
+```bash
+hostname
+```
+
+Leave the shell when finished:
+
+```bash
+exit
+```
+
+Add or update the computer on the map with its IP, Telnet port, and what you confirmed: service detected, login prompt reached, or successful login. Share `telnet_results.txt`.
+
+---
+
+<!-- Preserve existing lesson bookmarks. -->
+<span id="bye"></span>
+<span id="ftp-targetip"></span>
+<span id="ftp-targetip-port"></span>
+<span id="get-filename"></span>
+<span id="nmap-script-ftp-anon--p-21-10150016"></span>
+<span id="part-5-identify-and-validate-ftp-services-on-the-network"></span>
+<span id="sudo-apt-update--sudo-apt-install-ftp"></span>
+<span id="sudo-nmap--p-21---open--il-hoststxt"></span>
+<span id="sudo-nmap--p-21---open-targetip"></span>
+<span id="sudo-nmap--p-21---script-ftp-anon--il-hoststxt"></span>
+<span id="sudo-nmap--p-21---script-ftp-anon-targetip"></span>
+<span id="sudo-nmap--p-21-open----grep-nmap-scan-report-for--awk-print-5"></span>
+<span id="sudo-nmap--p-21-open-hoststxt"></span>
+<span id="sudo-nmap--p-21000-24000-script-ftp-anon--il-hoststxt--on-ftp_high_portstxt"></span>
+
+# Part 5: Find and validate FTP
+
+Scan the usual FTP port and check anonymous access:
+
+```bash
+nmap -n -p 21 --open -sV --script ftp-anon -iL hosts.txt -oN ftp_results.txt
+```
+
+`--script ftp-anon` checks whether anonymous login is allowed. An FTP service is worth mapping even when it requires a login.
+
+Connect to one FTP host:
+
+```bash
+ftp <targetIP>
+```
+
+If the client is missing, update the package list:
+
+```bash
+sudo apt update
+```
+
+Then install it:
+
+```bash
+sudo apt install ftp
+```
+
+When anonymous login is offered, use `anonymous` as the username and press Enter for the password. Otherwise use assigned credentials.
+
+List the available files:
+
+```bash
+ls
+```
+
+Download a file you want to inspect:
+
+```bash
+get <filename>
+```
+
+Disconnect:
+
+```bash
+bye
+```
+
+Add or update the computer on the map with its IP, FTP port, and whether anonymous login or file retrieval worked. Share `ftp_results.txt`.
+
+---
+
+<!-- Preserve existing lesson bookmarks. -->
+<span id="nmap--p-20000-24000-open--sv-10150016"></span>
+<span id="part-6-scan-a-range-of-high-ports-for-services-detected"></span>
+<span id="sudo-nmap--p-20000-24000---open--sv--il-hoststxt"></span>
+<span id="sudo-nmap--p-20000-24000---open--sv--il-hoststxt--on-high_port_scan_resultstxt"></span>
+<span id="sudo-nmap--p-20000-24000---open--sv-10150017"></span>
+
+# Part 6: Find services on high ports
+
+The classroom generators choose ports between 21000 and 24000. Search the exercise's wider range for services:
+
+```bash
+nmap -n -p 20000-24000 --open -sV -iL hosts.txt -oN high_port_scan_results.txt
+```
+
+Use the service detection results rather than assuming a port number tells you the service. For a competition scenario, choose the port range based on that scenario.
+
+For SSH found on a high port, check authentication methods on that port:
+
+```bash
+nmap -n -sV -p <port#> --script ssh-auth-methods --script-args="ssh.user=<username>" <targetIP> -oN ssh_high_port_results.txt
+```
+
+Replace the port, username, and IP with your findings and assigned account. Look for `password` as in Part 3.
+
+For FTP found on a high port, check anonymous access:
+
+```bash
+nmap -n -sV -p <port#> --script ftp-anon <targetIP> -oN ftp_high_port_results.txt
+```
+
+Connect to validate FTP:
+
+```bash
+ftp <targetIP> <port#>
+```
+
+For Telnet found on a high port, connect:
+
+```bash
+telnet <targetIP> <port#>
+```
+
+Update the existing computer shape if you already mapped that IP. Otherwise add a computer for each host with password SSH, Telnet, or FTP. Label each service with its actual port and your evidence. Keep the on-network device report and service results in the fileshare, and upload the updated draw.io map.
+
+Your team should now have an on-network device list plus individual mapped computers for the services you found, on both normal and high ports.
+
+---
+<!-- Preserve existing lesson bookmarks. -->
+<span id="best-done-with-multiple-teammates-on-the-range"></span>
+<span id="chmod-777-testtxt"></span>
+<span id="nano-testtxt"></span>
+<span id="sudo-python3-deploy-telnet-23py"></span>
+<span id="sudo-python3-ftp-anon-highportpy"></span>
+<span id="sudo-python3-ftp-anon-loginpy"></span>
+<span id="sudo-python3-ssh-highport-generatorpy"></span>
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassescybercartographerflagscriptsdeploy-telnet-23py"></span>
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassescybercartographerflagscriptsftp-anon-highportpy"></span>
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassescybercartographerflagscriptsftp-anon-loginpy"></span>
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassescybercartographerflagscriptsssh-highport-generatorpy"></span>
+
 # Practice and explore
    
 ### [TryHackMe-Independent-nmap]({{ 'workrole/cybercartographer/challenges/TryHackMe-Independent-nmap.pdf' | relative_url }})
@@ -268,48 +478,22 @@ Or just do the whole room
 https://tryhackme.com/room/networkservices    
 
  
-### Find your own high ports    
-### Best done with multiple teammates on the range   
-Step 1:    Start your ubuntu machine from the cyber.org range and open up some services      
-    
-start telnet       
-<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassescybercartographerflagscriptsdeploy-telnet-23py"></span>
+### Find your own high ports
 
-#### `wget -O deploy-telnet-23.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/1_deploy-telnet-23.py`
-#### `sudo python3 deploy-telnet-23.py`    
-    
-start an ftp server and place a file in it
-<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassescybercartographerflagscriptsftp-anon-loginpy"></span>
+On Ubuntu practice VMs, use the [training service scripts]({{ '/workrole/cybercartographer/training/README.html' | relative_url }}) to set up targets. Download one script at a time into a folder, open a terminal there, and run the matching command from the guide. The instructor will assign machines and services.
 
-#### `wget -O ftp-anon-login.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/4_ftp-anon-login.py`
-#### `sudo python3 ftp-anon-login.py`    
-#### `nano test.txt`
-#### `chmod 777 test.txt`
-    
-start ssh on a highport    
-<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassescybercartographerflagscriptsssh-highport-generatorpy"></span>
-
-#### `wget -O ssh-highport-generator.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/6_ssh-highport-generator.py`
-#### `sudo python3 ssh-highport-generator.py`    
-
-start ftp on a highport    
-<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassescybercartographerflagscriptsftp-anon-highportpy"></span>
-
-#### `wget -O ftp-anon-highport.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/3_ftp-anon-highport.py`
-#### `sudo python3 ftp-anon-highport.py`    
-
-Step 2:    Start your kali machine from the cyber.org range try to find your open ports     
+Return to Kali and repeat discovery and service scanning. Add your findings to the shared map.
 
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/jxwBPS5FCdc?si=SbFmfsg7CaUZW0mQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
 ---
 # Other useful scans
-#### 'nmap -p 20000-24000 --open -sV 10.15.0.0/16'    
+#### 'nmap -p 20000-24000 --open -sV -iL hosts.txt'
 -p 20000-24000 → Scans only high ports 20000-24000.    
 --open → Only show hosts with open ports.    
 -sV → Service version detection to identify if FTP, SSH, or Telnet is running.    
-10.15.0.0/16 → Replace with your target subnet.    
+-iL hosts.txt → Scan the responding classroom hosts saved in Part 2.
 
 #### 'nmap -p 21,22,23 --open -sV -iL hosts.txt'  
 -p 21,22,23 → Scan for FTP, SSH, and Telnet.  
@@ -317,12 +501,12 @@ Step 2:    Start your kali machine from the cyber.org range try to find your ope
 -sV → Detect service versions.  
 -iL hosts.txt → Scan only IPs listed in hosts.txt.  
 
-#### 'nmap -sC -sV -p 80,443 10.15.0.0/16'  
+#### 'nmap -sC -sV -p 80,443 -iL hosts.txt'
 -sC → Runs default Nmap scripts.  
 -sV → Service version detection.  
 -p 80,443 → Scan for web servers on ports 80 (HTTP) and 443 (HTTPS).  
 
-#### 'nmap --script ftp-anon -p 21 10.15.0.0/16'  
+#### 'nmap --script ftp-anon -p 21 -iL hosts.txt'
 --script ftp-anon → Checks if anonymous FTP login is allowed.  
 -p 21 → Scan only FTP port.  
 
@@ -352,7 +536,4 @@ Step 2:    Start your kali machine from the cyber.org range try to find your ope
 -sU → Scan UDP ports.  
 -p 161 → Scan for SNMP services.  
 --script=snmp-info → Extract SNMP system details.  
--iL hosts.txt → Use a list of known hosts.  
-
-  
-mkfifo /Desktop/remotecaptures/remotepacketcapture1
+-iL hosts.txt → Use a list of known hosts.

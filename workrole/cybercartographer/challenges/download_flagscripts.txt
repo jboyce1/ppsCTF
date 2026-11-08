@@ -1,1 +1,2 @@
-git clone https://github.com/jboyce1/ppsCTF.git && cp -r ppsCTF/workrole/cybercartographer/challenges/flagscripts ./flagscripts && rm -rf ppsCTF
+Open the local CyberCartographer training/README.html page for individual script downloads and run commands.
+In a local checkout, see workrole/cybercartographer/training/README.md and training/flagscripts/.
