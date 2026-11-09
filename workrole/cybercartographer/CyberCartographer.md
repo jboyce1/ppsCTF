@@ -500,6 +500,155 @@ Return to Kali and repeat discovery and service scanning. Add your findings to t
 <div style="text-align: center;">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/jxwBPS5FCdc?si=SbFmfsg7CaUZW0mQ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 </div>
+
+## Repeat the activity with Zenmap
+
+Use Zenmap to repeat the discovery and service scans from Parts 2–6, then update the same team draw.io map. Keep using the fileshare and map versioning from Part 1. Zenmap supplies the scanning interface; draw.io remains your team's annotated map.
+
+### 1. Install and open Zenmap on Kali
+
+Install Zenmap from Kali's package repository:
+
+```bash
+sudo apt install zenmap
+```
+
+This is the installation command in the current [Kali tool documentation](https://www.kali.org/tools/nmap/#zenmap).
+
+Open the folder containing your team's scan files, right-click an empty area, and choose **Open Terminal Here**. Launch Zenmap from that terminal so relative input and output filenames refer to this folder:
+
+```bash
+zenmap
+```
+
+### 2. Set up the targets and Command field
+
+Use the address, route, and neighbor checks from Part 2 to choose the subnet command appropriate to your machine. Zenmap does not replace those terminal checks.
+
+On CYBER.ORG, download the current classroom list in the same terminal folder:
+
+```bash
+wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/cyberorg_classroom_targets.txt
+```
+
+In Zenmap, paste each scan below into **Command**, then click **Scan**. The command includes its targets, so you do not need to choose a preset profile or add targets separately. Typing a full command clears the selected profile. [Zenmap scanning guide](https://nmap.org/book/zenmap-scanning.html)
+
+The blocks labeled **Zenmap Command** go in that field. Blocks labeled **Terminal** run in your terminal. Zenmap runs Nmap directly: use Nmap output options rather than shell redirection (`>`) or pipelines in its Command field.
+
+### 3. Discover hosts and save hostsup.txt
+
+**Zenmap Command — CYBER.ORG classroom list:**
+
+```text
+nmap -n -sn -iL cyberorg_classroom_targets.txt -oN hostsup.txt
+```
+
+For the LAN scenario, the equivalent subnet command is below. Replace the example network and prefix with the choice supported by your routes; on CYBER.ORG use the classroom-list command above in place of this broad scan.
+
+**Zenmap Command — subnet example:**
+
+```text
+nmap -n -sn 10.15.0.0/17 -oN hostsup.txt
+```
+
+When the scan finishes, read **Nmap Output** for hosts reported as up. `-oN hostsup.txt` saves a readable discovery report while the output remains visible in Zenmap. To keep a timed version, replace the output filename with one such as `hostsup_1549.txt`. [Nmap output options](https://nmap.org/book/man-output.html)
+
+Keep that report in the team fileshare and reference it from **On-network devices** on the draw.io map.
+
+For the scans below, continue using `cyberorg_classroom_targets.txt` as the input address list. `hostsup.txt` contains a formatted scan report, not the address-only list expected by `-iL`. [Nmap target-file format](https://nmap.org/book/man-target-specification.html)
+
+### 4. Find password SSH, Telnet, and FTP
+
+Run these scans one at a time in the same Zenmap window.
+
+**Zenmap Command — SSH on port 22:**
+
+```text
+nmap -n -p 22 --open --script ssh-auth-methods -iL cyberorg_classroom_targets.txt -oN ssh_auth_method_results.txt
+```
+
+In **Nmap Output**, find `ssh-auth-methods` and look for `password` under its supported methods. This indicates an offered authentication method, not a successful login. [SSH authentication script](https://nmap.org/nsedoc/scripts/ssh-auth-methods.html)
+
+**Zenmap Command — Telnet on port 23:**
+
+```text
+nmap -n -p 23 --open -sV -iL cyberorg_classroom_targets.txt -oN telnet_results.txt
+```
+
+**Zenmap Command — FTP on port 21:**
+
+```text
+nmap -n -p 21 --open -sV --script ftp-anon -iL cyberorg_classroom_targets.txt -oN ftp_results.txt
+```
+
+For FTP, look for `Anonymous FTP login allowed` and any files shown by the script. It checks anonymous access and lists the server's root directory when permitted. [Anonymous FTP script](https://nmap.org/nsedoc/scripts/ftp-anon.html)
+
+Select an IP under **Hosts**, then use **Ports / Hosts** to review its ports and detected services. Select **Services** to review hosts grouped by service. Read authentication and FTP script details in **Nmap Output**. Add the matching computers, actual ports, and findings to draw.io. [Reading Zenmap results](https://nmap.org/book/zenmap-results.html)
+
+### 5. Find services on high ports
+
+**Zenmap Command — the same exercise range as Part 6:**
+
+```text
+nmap -n -p 20000-24000 --open -sV -iL cyberorg_classroom_targets.txt -oN high_port_scan_results.txt
+```
+
+Read the detected service names. For a high-port SSH service, replace the placeholders with the port, IP, and assigned username.
+
+**Zenmap Command — check SSH authentication:**
+
+```text
+nmap -n -sV -p <port#> --script ssh-auth-methods --script-args="ssh.user=<username>" <targetIP> -oN ssh_high_port_results.txt
+```
+
+For a high-port FTP service, replace the port and IP.
+
+**Zenmap Command — check anonymous FTP:**
+
+```text
+nmap -n -sV -p <port#> --script ftp-anon <targetIP> -oN ftp_high_port_results.txt
+```
+
+### 6. Validate access and collect flags
+
+Use the clients from Parts 4–6 to connect to the services Zenmap found. Replace the placeholders with your findings. For high-port SSH:
+
+**Terminal:**
+
+```bash
+ssh -p <port#> username@TARGET_IP
+```
+
+For FTP on a discovered port:
+
+**Terminal:**
+
+```bash
+ftp <targetIP> <port#>
+```
+
+Use the FTP login and file-listing/download steps from Part 5. For Telnet on a discovered port:
+
+**Terminal:**
+
+```bash
+telnet <targetIP> <port#>
+```
+
+Use the credentials and validation steps from the earlier parts. Record any flags you find on the corresponding draw.io computer, including SSH high-port, anonymous FTP high-port, or other flags placed for the exercise. Update existing computers rather than adding duplicate shapes for the same IP.
+
+### 7. Save, reopen, and share the results
+
+Zenmap combines scans run in one window into an inventory. Use **Scans** to review the individual runs and the selector in **Nmap Output** to read a particular report. [Scan inventories](https://nmap.org/book/zenmap-scanning.html)
+
+Choose **Scan → Save Scan** and select **Nmap XML format** to keep a scan you can reopen. Choose the scan you want when prompted. Give it a descriptive name such as `ssh_auth_method_results.xml`. The `.txt` reports remain useful for reading and sharing; XML preserves the results for reopening in Zenmap.
+
+To save the whole inventory, choose **Scan → Save All Scans to Directory** and select a new folder for those scans. Use **Scan → Open Scan** to reopen an XML file; choose **Open Scan in This Window** when you want to merge saved results into the current inventory. [Saving and loading scans](https://nmap.org/book/zenmap-saving.html)
+
+You can inspect **Topology**, but these scans do not request traceroute information. Without that information, the view does not establish paths between the discovered hosts. Keep the team's service labels, flags, and map updates in draw.io. [Zenmap topology](https://nmap.org/book/zenmap-topology.html)
+
+Put the saved reports and XML scans in the team fileshare and upload the updated version of the draw.io map.
+
 ---
 # Other useful scans
 #### 'nmap -p 20000-24000 --open -sV -iL hosts.txt'
