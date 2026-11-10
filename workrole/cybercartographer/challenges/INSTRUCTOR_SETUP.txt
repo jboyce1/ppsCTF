@@ -11,6 +11,8 @@
    cybercartographer folder. The flagscripts must also be published before
    running the VM downloads below.
 
+   To download the new listS
+wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cyberorg_classroom_targets.txt
 
 4. Select Ubuntu VMs
     SSH on port 22
