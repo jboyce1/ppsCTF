@@ -1,11 +1,11 @@
-"""Run with: python3 -m unittest discover -s workrole/cybercartographer/setup"""
+"""Run with: python3 -m unittest discover -s workrole/cybercartographer/challenges/setup"""
 import importlib.util
 from pathlib import Path
 import tempfile
 import unittest
 from unittest.mock import patch
 
-spec = importlib.util.spec_from_file_location('cleaner', Path(__file__).resolve().parent.parent / 'cyberorg_classroom_targets_cleaner.py')
+spec = importlib.util.spec_from_file_location('cleaner', Path(__file__).resolve().parents[2] / 'cyberorg_classroom_targets_cleaner.py')
 cleaner = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(cleaner)
 

@@ -7,7 +7,7 @@ import sys
 
 CLASS = Path(__file__).resolve().parent
 SOURCE = CLASS / 'cyberorg_classroom_targets_dirty.txt'
-OUTPUT = CLASS / 'training' / 'cyberorg_classroom_targets.txt'
+OUTPUT = CLASS / 'cyberorg_classroom_targets.txt'
 
 
 def extract_addresses(text):
@@ -35,7 +35,7 @@ def main():
         print(f'Could not clean target list: {error}', file=sys.stderr)
         return 1
     print(f'Saved {len(addresses)} unique IPv4 addresses to {OUTPUT.name}.')
-    print('Updated training/cyberorg_classroom_targets.txt. This does not check whether VMs are up.')
+    print('Updated cyberorg_classroom_targets.txt. This does not check whether VMs are up.')
     return 0
 
 

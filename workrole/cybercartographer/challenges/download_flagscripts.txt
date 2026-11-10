@@ -1,2 +1,0 @@
-Open the local CyberCartographer training/README.html page for individual script downloads and run commands.
-In a local checkout, see workrole/cybercartographer/training/README.md and training/flagscripts/.

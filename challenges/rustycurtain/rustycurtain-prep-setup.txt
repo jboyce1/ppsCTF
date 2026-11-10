@@ -5,21 +5,21 @@ Walk the students through the following from cybercartographer Practice and expl
 Step 1: Start your ubuntu machine from the cyber.org range and open up some services
 
 start telnet
-wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/flagscripts/1_deploy-telnet-23.py
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/1_deploy-telnet-23.py
 sudo python3 1_deploy-telnet-23.py
 
 start an ftp server and place a file in it
-wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/flagscripts/4_ftp-anon-login.py
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/4_ftp-anon-login.py
 sudo python3 4_ftp-anon-login.py
 nano test.txt
 chmod 777 test.txt
 
 start ssh on a highport
-wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/flagscripts/6_ssh-highport-generator.py
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/6_ssh-highport-generator.py
 sudo python3 6_ssh-highport-generator.py
 
 start ftp on a highport
-wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/flagscripts/3_ftp-anon-highport.py
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/3_ftp-anon-highport.py
 sudo python3 3_ftp-anon-highport.py
 
 Step 2: Start your kali machine from the cyber.org range try to find your open ports

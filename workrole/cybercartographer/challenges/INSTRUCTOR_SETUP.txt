@@ -1,0 +1,80 @@
+1. Launch all VMs in CYBER.ORG.
+
+2. Paste the VM inventory into cyberorg_classroom_targets_dirty.txt in the
+   cybercartographer folder on your local computer. Save the file.
+
+3. On your local computer, run each command separately.
+
+   python3 cyberorg_classroom_targets_cleaner.py
+
+   Review cyberorg_classroom_targets.txt and publish it from the
+   cybercartographer folder. The flagscripts must also be published before
+   running the VM downloads below.
+
+
+4. Select Ubuntu VMs
+    SSH on port 22
+    Telnet
+    FTP on port 21
+    high-port FTP,
+    high-port SSH. Use separate VMs for normal and high ports of each service.
+    Run the commands for each service on its selected VM, one command at a time.
+
+5. Enable SSH password authentication on the Ubuntu VM for port 22.
+
+sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
+
+6. Set up Telnet on port 23.
+
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/1_deploy-telnet-23.py
+
+sudo python3 1_deploy-telnet-23.py
+
+7. Set up anonymous FTP on port 21.
+
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/4_ftp-anon-login.py
+
+sudo python3 4_ftp-anon-login.py
+
+8. Set up high-port anonymous FTP. Choose one pair of commands.
+
+   With a flag
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/2_ftp-anon-highport-flag.py
+
+   Review the configuration at the top of 2_ftp-anon-highport-flag.py before running it.
+sudo python3 2_ftp-anon-highport-flag.py
+
+   Without a flag
+
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/3_ftp-anon-highport.py
+
+sudo python3 3_ftp-anon-highport.py
+
+   Record the port printed by the script.
+
+9. Set up high-port SSH. Choose one pair of commands.
+
+   With a flag
+
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/5_ssh-highport-generator-flag.py
+
+   Review the configuration at the top of 5_ssh-highport-generator-flag.py before running it.
+
+sudo python3 5_ssh-highport-generator-flag.py
+
+   Without a flag
+
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/6_ssh-highport-generator.py
+
+   After the download succeeds, run the script.
+
+sudo python3 6_ssh-highport-generator.py
+
+   Record the port printed by the script.
+
+   For password SSH on this VM, also run:
+sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
+
+10. Have students download the published target list in Kali.
+
+wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cyberorg_classroom_targets.txt

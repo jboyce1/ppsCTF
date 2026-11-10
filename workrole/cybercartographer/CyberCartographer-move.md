@@ -194,7 +194,7 @@ This share allows reachable users to download and upload files without signing i
 Current classroom targets:
 
 ```bash
-wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/cyberorg_classroom_targets.txt
+wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cyberorg_classroom_targets.txt
 ```
 
 <details class="move-help" markdown="1">
@@ -277,7 +277,7 @@ Boyce will provide a fresh target list because the classroom VMs have changing a
 Open a terminal in your team's shared folder. Download the current target file:
 
 ```bash
-wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/cyberorg_classroom_targets.txt
+wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cyberorg_classroom_targets.txt
 ```
 
 I'll try to keep the newest one updated on the github, but may just give it to you on an simple file share.
@@ -576,7 +576,7 @@ https://tryhackme.com/room/networkservices
  
 ### Find your own high ports
 
-On Ubuntu practice VMs, use the [training service scripts]({{ '/workrole/cybercartographer/training/README.html' | relative_url }}) to set up targets. Download one script at a time into a folder, open a terminal there, and run the matching command from the guide. The instructor will assign machines and services.
+On Ubuntu practice VMs, use the [training service scripts]({{ '/workrole/cybercartographer/challenges/README.html' | relative_url }}) to set up targets. Download one script at a time into a folder, open a terminal there, and run the matching command from the guide. The instructor will assign machines and services.
 
 Return to Kali and repeat discovery and service scanning. Add your findings to the shared map.
 
@@ -611,7 +611,7 @@ Use the address, route, and neighbor checks from Part 2 to choose the subnet com
 On CYBER.ORG, download the current classroom list in the same terminal folder:
 
 ```bash
-wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/cyberorg_classroom_targets.txt
+wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cyberorg_classroom_targets.txt
 ```
 
 In Zenmap, paste each scan below into **Command**, then click **Scan**. The command includes its targets, so you do not need to choose a preset profile or add targets separately. Typing a full command clears the selected profile. [Zenmap scanning guide](https://nmap.org/book/zenmap-scanning.html)

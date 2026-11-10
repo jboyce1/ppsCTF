@@ -14,7 +14,7 @@ These scripts configure services on the practice VM; they are not keepalive scri
 Download the password SSH instructions:
 
 ```bash
-wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/flagscripts/0_allow_ssh_password.txt
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/0_allow_ssh_password.txt
 ```
 
 Open the downloaded text file. Apply them to the VM used for normal SSH and to any high-port SSH VM where password authentication is required. Use the assigned account when checking authentication from Kali.
@@ -24,7 +24,7 @@ Open the downloaded text file. Apply them to the VM used for normal SSH and to a
 Download the script:
 
 ```bash
-wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/flagscripts/1_deploy-telnet-23.py
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/1_deploy-telnet-23.py
 ```
 
 Run it:
@@ -38,7 +38,7 @@ sudo python3 1_deploy-telnet-23.py
 Download the script:
 
 ```bash
-wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/flagscripts/4_ftp-anon-login.py
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/4_ftp-anon-login.py
 ```
 
 Run it:
@@ -52,7 +52,7 @@ sudo python3 4_ftp-anon-login.py
 Download the script:
 
 ```bash
-wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/flagscripts/3_ftp-anon-highport.py
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/3_ftp-anon-highport.py
 ```
 
 Run it:
@@ -66,7 +66,7 @@ sudo python3 3_ftp-anon-highport.py
 Download the script:
 
 ```bash
-wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/flagscripts/2_ftp-anon-highport-flag.py
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/2_ftp-anon-highport-flag.py
 ```
 
 Run it:
@@ -80,7 +80,7 @@ sudo python3 2_ftp-anon-highport-flag.py
 Download the script:
 
 ```bash
-wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/flagscripts/6_ssh-highport-generator.py
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/6_ssh-highport-generator.py
 ```
 
 Run it:
@@ -94,7 +94,7 @@ sudo python3 6_ssh-highport-generator.py
 Download the script:
 
 ```bash
-wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/flagscripts/5_ssh-highport-generator-flag.py
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/5_ssh-highport-generator-flag.py
 ```
 
 Run it:
@@ -114,6 +114,6 @@ After setup, use Kali to discover the host and identify its service as described
 Download the current target list:
 
 ```bash
-wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/training/cyberorg_classroom_targets.txt
+wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cyberorg_classroom_targets.txt
 ```
  This file must be replaced from the current VM allocation before each live exercise. Its presence in the repository does not mean its addresses are still active.
