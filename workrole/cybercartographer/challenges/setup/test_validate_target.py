@@ -154,6 +154,19 @@ class ValidatorTests(unittest.TestCase):
             result = validator.check_ftp('127.0.0.1', port, 'student', 'wrong', {'anonymous': True, 'user_login': True}, 2)
             self.assertTrue(any(status == 'FAIL' and 'user access' in detail for status, detail in result))
 
+    def test_unspecified_ftp_user_denial_is_informational(self):
+        with server(FTPHandler) as port:
+            result = validator.check_ftp('127.0.0.1', port, 'student', 'wrong', {}, 2)
+            self.assertFalse(any(status == 'FAIL' for status, _ in result))
+            self.assertTrue(any(status == 'INFO' and 'user access denied' in detail for status, detail in result))
+
+    def test_anonymous_only_plan_does_not_attempt_user_login(self):
+        with patch.object(validator, 'ftp_login', return_value=['Anonymous listing verified']) as login:
+            result = validator.check_ftp('127.0.0.1', 21, 'student', 'secret', {'anonymous': True, 'user_login': False}, 2)
+            self.assertEqual(login.call_count, 1)
+            self.assertEqual(login.call_args.args[2], 'anonymous')
+            self.assertTrue(all(status == 'PASS' for status, _ in result))
+
     def test_telnet_packet_boundary_negotiation(self):
         class Connection:
             def __init__(self):

@@ -21,7 +21,7 @@ import socket
 import sys
 import time
 
-VERSION = '2.0'
+VERSION = '2.1'
 DEFAULT_PORTS = '21,22,23,21000-24000'
 
 
@@ -262,6 +262,11 @@ def check_ftp(host, port, username, password, entry, timeout):
                 # A local account starts in its home, not /srv/ftp; do not expect the anonymous flag here.
                 details = ftp_login(host, port, username, password, {}, timeout)
                 results.extend(('PASS', detail) for detail in details)
+            except ftplib.error_perm as error:
+                if entry.get('user_login') is True:
+                    results.append(('FAIL', f'Expected FTP user access failed: {error}'))
+                else:
+                    results.append(('INFO', f'FTP user access denied: {error}; user login was not explicitly expected. Supply expectations.json to verify the intended login mode.'))
             except Exception as error:
                 results.append(('FAIL', f'FTP user access failed: {error}'))
     return results
