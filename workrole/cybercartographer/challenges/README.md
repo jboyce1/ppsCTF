@@ -11,7 +11,7 @@ These scripts configure services on the practice VM; they are not keepalive scri
 
 ## Combined setup menu (instructor)
 
-Publish `flagscripts/deploy-target.py` before using this download command. On the assigned Ubuntu or Kali target VM, open a terminal in your download folder and download the launcher:
+On the assigned Ubuntu or Kali target VM, open a terminal in your download folder and download the launcher:
 
 ```bash
 wget -O deploy-target.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/deploy-target.py
@@ -39,9 +39,67 @@ Enter option digits together: `136` sets up SSH on 22, FTP on 21, and Telnet on 
 
 High ports are chosen from 21000–24000. Choose one FTP option per run; SSH options 1 and 2 can run together. FTP login choices are `anonymous`, `user`, or `both`; FTP flags require `anonymous` or `both`. User login uses existing non-root VM accounts and their current passwords; the launcher does not create accounts or change passwords. Telnet flags appear in the connection banner before login.
 
-Record the final summary: it includes the VM addresses, ports, flags, failures, and backup location. A copy is saved as `target-summary.txt` in the printed backup folder. Anonymous FTP login, listing, and flag retrieval are checked locally; SSH/user logins and access from Kali still need classroom verification. The launcher does not change firewall rules.
+Installed packages are reused without reinstalling OpenSSH or running an update each time. When a required package is missing, the launcher updates package lists once and installs only the missing packages. Commands show progress, have time limits, and save their output. Setup failures are reported per service so the remaining services can still be checked. If SSH setup fails, the launcher attempts to restore the previous SSH configuration and unit state; inspect the report to confirm recovery.
 
-The launcher reuses existing SSH/FTP helper functions and downloads those helpers automatically if they are not beside it. Internet access and a systemd-based Ubuntu/Kali VM are required. Rerunning changes the selected service configuration; earlier flags and other listeners may remain. Keep the VM console available when changing SSH ports. Initial automated tests use mocked services; live Ubuntu/Kali verification is still required.
+The launcher prints a report directory in the folder where you ran it. Save that directory: `target-summary.txt` is the short report, `run.log` contains command output, `diagnostics.txt` includes service status, recent journals, listeners, and firewall rules, and `results.json` contains structured results. `backups` contains prior configurations. No login passwords are collected by the target launcher.
+
+To recheck without configuring services again, replace `<REPORT_FOLDER>` with the printed directory:
+
+```bash
+sudo python3 deploy-target.py --check <REPORT_FOLDER>/expectations.json
+```
+
+Local checks verify SSH/FTP greetings, anonymous FTP access or denial, FTP flag retrieval, and Telnet negotiation/login prompts and flags. They do not prove user login or network access; use the student-side validator below. Internet access is needed only for missing packages. A running systemd-based Ubuntu/Kali VM is required. Rerunning changes selected services; earlier flags and other listeners may remain. Keep the VM console available when changing SSH ports.
+
+## Validate the trial VM from Kali (instructor)
+
+On a separate Kali/Ubuntu machine with the same access students have, download the validator:
+
+```bash
+wget -O validate-target.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/validate-target.py
+```
+
+Run it and enter the target VM's IP when prompted:
+
+```bash
+python3 validate-target.py
+```
+
+Enter one existing non-root target account and password to test SSH, FTP user access when applicable, and Telnet. Press Enter at the username prompt to skip user logins; those checks are explicitly marked `SKIP`. Passwords are entered without echo and are not saved. The tool tests that supplied account once per applicable service; it does not guess passwords. SSH connections use a temporary un-pinned classroom host-key policy, print the fingerprint, and leave `known_hosts` unchanged.
+
+If SSH login is marked `SKIP` because Paramiko is missing, install this package on the validation machine, then run the validator again:
+
+```bash
+sudo apt-get install -y python3-paramiko
+```
+
+The default TCP connect scan covers 21, 22, 23, and 21000–24000. It identifies protocol greetings and attempts real access: FTP login/listing and flag download, SSH login/command execution, and Telnet negotiation/login/command execution. It saves `student-summary.txt` and `student-results.json` in the printed report directory. No root access or Nmap installation is required.
+
+For an exact comparison, copy `expectations.json` from the target report directory onto the validation machine using the classroom file-sharing workflow. Run:
+
+```bash
+python3 validate-target.py --expect expectations.json
+```
+
+Expected ports outside the default range are added automatically. Missing expected ports, wrong protocols, failed logins, and missing flags are failures. Unexpected open ports within the scan scope are warnings. Without the expectations file, the tool can check discovered services but cannot identify a service that should exist and is missing.
+
+For a full TCP inventory, including old listeners outside the classroom port range, run:
+
+```bash
+python3 validate-target.py --expect expectations.json --ports 1-65535
+```
+
+A full scan takes longer. Discovery defaults to a 0.7-second connection timeout per port; expected ports are retried with the longer protocol timeout. Increase `--connect-timeout` on a slow range. The scan does not test UDP or firewall changes. FTP passive data connections use TCP 30000–30020 on newly configured targets; a successful remote listing/download validates that data path. The scripts do not change firewall rules.
+
+Overall results are `PASS`, `FAIL`, or `INCOMPLETE`; missing credentials, unsupported protocols, unexpected listeners, or no expectations file prevent an overall `PASS`. Exit codes are 0, 1, and 2 respectively (130 for interruption). These are instructor troubleshooting tools, not replacements for the student Nmap exercises.
+
+For an independent Nmap view, replace `<TARGET_IP>` with the trial VM address:
+
+```bash
+nmap -n -Pn -sT -sV -p 21,22,23,21000-24000 --open -oN trial-vm-nmap.txt <TARGET_IP>
+```
+
+Nmap's [official options reference](https://nmap.org/book/man-briefoptions.html) explains TCP connect scans, service detection, port ranges, and saved output. For troubleshooting, share the target's `target-summary.txt`, `diagnostics.txt`, and `run.log`, plus the validator's `student-summary.txt`. Reports contain range addresses, account names, configuration, and challenge flags; share them with the instructor.
 
 ## SSH password setup
 

@@ -22,7 +22,7 @@ python3 cyberorg_classroom_targets_cleaner.py
    To download the published list in the range, run:
 wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cyberorg_classroom_targets.txt
 
-   COMBINED SETUP OPTION (after deploy-target.py is published)
+   COMBINED SETUP OPTION
    On an assigned Ubuntu/Kali VM, download the menu launcher:
 
 wget -O deploy-target.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/deploy-target.py
@@ -34,7 +34,32 @@ sudo python3 deploy-target.py
    Enter 136 for SSH 22 + FTP 21 + Telnet 23, or choose other digits from the menu.
    Choose the FTP login mode, confirm with y, and record the final port/flag summary.
    Use existing VM accounts for user logins. Verify access from Kali afterward.
+   Installed packages are reused; missing packages show bounded install progress.
+   Save the printed report folder: target-summary.txt, diagnostics.txt, and run.log.
    This menu is an alternative to the individual service setup steps below.
+
+   STUDENT-SIDE VALIDATION (on a separate Kali/Ubuntu machine)
+   Download the validator:
+
+wget -O validate-target.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/validate-target.py
+
+   Run it; enter the target IP and an existing VM account/password when prompted:
+
+python3 validate-target.py
+
+   For a comparison against intended services, copy expectations.json from the
+   target report folder onto the validation machine using the classroom fileshare.
+   Run the comparison:
+
+python3 validate-target.py --expect expectations.json
+
+   If SSH validation reports missing Paramiko, install it on the validation machine:
+
+sudo apt-get install -y python3-paramiko
+
+   Rerun the validator after installing it. Save student-summary.txt from its report
+   folder. FAIL means a check failed; INCOMPLETE means checks were skipped, no plan
+   was supplied, or an unexpected listener needs review. See README for full TCP scans.
 
 4. Select Ubuntu VMs
     SSH on port 22
