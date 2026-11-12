@@ -315,11 +315,7 @@ You should see one responding IP per line, with no headings, latency, or scan su
 Put the IP-only `hostsup.txt` (or your timed version) in the team fileshare and add a note or list labeled **On-network devices** to the draw.io map that points teammates to that list.
 
  
-Some later commands use the filename `hosts.txt`. Make a copy of the same IP-only list:
-
-```bash
-cp hostsup.txt hosts.txt
-```
+Use `hostsup.txt` directly for the scans in Parts 3–6. Keep `discovery.gnmap` as the original discovery report.
 
  You **could** go ahead and get fancy and write a python script that would continually scan and rescan the network and update the hostsup with a timestamp... but that might be a little much.
 
@@ -330,6 +326,21 @@ cp hostsup.txt hosts.txt
 
 
 </details>
+
+## Read scan progress and completion
+
+Keep `hostsup.txt` beside your scan files. It is the one-IP-per-line responding-host list from Part 2; use that same filename throughout the lesson. `cyberorg_classroom_targets.txt` is the instructor's assigned list, and `.gnmap`/service result files are reports, not input IP lists.
+
+The service scans below use these options:
+
+- `-Pn` scans the recently discovered IPs without repeating the host-discovery test.
+- `-v` shows discoveries as the scan runs; `--stats-every 5s` prints progress about every five seconds.
+- `--host-timeout 60s` limits work on each host in a standard-port scan. The wider high-port scan allows `5m` per host. These are **per-host limits**, not deadlines for the entire class list.
+- `--script-timeout 15s` limits each authentication/FTP script check where used.
+
+Wait for **Nmap done** before treating the report as finished. If Nmap reports **Skipping host ... due to host timeout**, a script times out, or you interrupt the scan, record **INCOMPLETE** for those checks and tell the instructor. A timed-out host is **not** evidence that its service is absent. An open port with missing authentication/FTP script output is **UNKNOWN**; do not interpret it as password authentication or anonymous login being disabled. No matching open ports in a completed scan means **no open ports found in this run**, not that the devices have no services. [Nmap timing](https://nmap.org/book/man-performance.html), [progress output](https://nmap.org/book/man-output.html)
+
+If you are still running an older silent command, press **Enter** in that terminal to show its status without starting another scan.
 
 # Part 3: Find SSH hosts that offer password authentication
 
@@ -350,12 +361,12 @@ Use your team’s target list and draw.io map from the earlier parts.
 <details class="move-help" markdown="1">
 <summary>Part 3 walkthrough</summary>
 
-Open a terminal in the folder containing your team's `hostsup.txt`. Whatever you are calling the file that contain all the potential hosts on the network is what you are lokoing for. 
+Open a terminal in the folder containing your team's `hostsup.txt` from Part 2.
 
 Scan SSH on port 22:
 
 ```bash
-nmap -n -p 22 --open --script ssh-auth-methods -iL hostsup.txt -oN ssh_auth_method_results.txt
+nmap -n -Pn -v --stats-every 5s --host-timeout 60s -p 22 --open --script-timeout 15s --script ssh-auth-methods -iL hostsup.txt -oN ssh_auth_method_results.txt
 ```
 
 
@@ -366,11 +377,13 @@ Look for `password` in the supported authentication methods. An open SSH port al
 For each match, add a computer to the draw.io map, or update its existing shape. Label it with the IP, port, **SSH — password offered**, and the username tested. Share the scan report.
 
 
-If you want to get **real fancy** go ahead and try to unpack this script:
+Optional: after the SSH scan finishes, extract IPs whose report offers password authentication:
 
 ```bash
-nmap -n -Pn -p 22 --open --script ssh-auth-methods -iL hostsup.txt | awk '/^Nmap scan report for / {ip=$NF} /^[|][ _\t]*password[ \t]*$/ {print ip}'
+awk '/^Nmap scan report for / {ip=$NF} /^[|][ _\t]*password[ \t]*$/ {print ip}' ssh_auth_method_results.txt > ssh_password_hosts.txt
 ```
+
+Open `ssh_password_hosts.txt` to inspect those matches. Continue using `hostsup.txt` as the main input list for the next parts.
 
 
 Reference: [Nmap ssh-auth-methods](https://nmap.org/nsedoc/scripts/ssh-auth-methods.html).
@@ -402,10 +415,18 @@ Use your team’s target list and draw.io map from the earlier parts.
 Scan for Telnet on its usual port:
 
 ```bash
-nmap -n -p 23 --open -sV -iL hosts.txt -oN telnet_results.txt
+nmap -n -Pn -v --stats-every 5s --host-timeout 60s -p 23 --open -iL hostsup.txt -oN telnet_results.txt
 ```
 
-`-sV` checks the service on the open port. For a host identified as Telnet, connect:
+This first scan finds open TCP port 23 without waiting for version detection. A `telnet` label based only on the port number is not proof of the service. For each reported IP, check its service:
+
+```bash
+nmap -n -Pn -v -sV --version-light -p 23 --stats-every 5s --host-timeout 60s <targetIP> -oN telnet_service_results.txt
+```
+
+Replace `<targetIP>` with one IP from `telnet_results.txt`. `--version-light` uses fewer service probes; an unidentified service still needs manual validation. If this check times out, mark service identification **INCOMPLETE**, not absent. Use a different result filename when checking another host to preserve earlier evidence.
+
+Connect to validate the Telnet service and assigned login:
 
 ```bash
 telnet <targetIP>
@@ -466,7 +487,7 @@ Use your team’s target list and draw.io map from the earlier parts.
 Scan the usual FTP port and check anonymous access:
 
 ```bash
-nmap -n -p 21 --open -sV --script ftp-anon -iL hosts.txt -oN ftp_results.txt
+nmap -n -Pn -v --stats-every 5s --host-timeout 60s -p 21 --open -sV --version-light --script-timeout 15s --script ftp-anon -iL hostsup.txt -oN ftp_results.txt
 ```
 
 `--script ftp-anon` checks whether anonymous login is allowed. An FTP service is worth mapping even when it requires a login.
@@ -541,15 +562,21 @@ Use your team’s target list and draw.io map from the earlier parts.
 The classroom generators choose ports between 21000 and 24000. Search the exercise's wider range for services:
 
 ```bash
-nmap -n -p 20000-24000 --open -sV -iL hosts.txt -oN high_port_scan_results.txt
+nmap -n -Pn -v --stats-every 5s --host-timeout 5m -p 20000-24000 --open -iL hostsup.txt -oN high_port_scan_results.txt
 ```
 
-Use the service detection results rather than assuming a port number tells you the service. For a competition scenario, choose the port range based on that scenario.
+This first scan finds open ports without waiting for service probes across the entire list. The displayed service names are port-number guesses. Identify each open port on one host before labeling it on the map:
+
+```bash
+nmap -n -Pn -v -sV --version-light -p <port#> --stats-every 5s --host-timeout 60s <targetIP> -oN high_port_service_results.txt
+```
+
+Replace the IP and port with one finding from `high_port_scan_results.txt`. Preserve each host's report under a different filename. An unknown service or a timeout needs follow-up, not an "absent" label. For a competition scenario, choose the port range based on that scenario.
 
 For SSH found on a high port, check authentication methods on that port:
 
 ```bash
-nmap -n -sV -p <port#> --script ssh-auth-methods --script-args="ssh.user=<username>" <targetIP> -oN ssh_high_port_results.txt
+nmap -n -Pn -v --stats-every 5s --host-timeout 60s -sV --version-light -p <port#> --script-timeout 15s --script ssh-auth-methods --script-args="ssh.user=<username>" <targetIP> -oN ssh_high_port_results.txt
 ```
 
 Replace the port, username, and IP with your findings and assigned account. Look for `password` as in Part 3.
@@ -564,7 +591,7 @@ ssh -p <port#> username@TARGET_IP
 For FTP found on a high port, check anonymous access:
 
 ```bash
-nmap -n -sV -p <port#> --script ftp-anon <targetIP> -oN ftp_high_port_results.txt
+nmap -n -Pn -v --stats-every 5s --host-timeout 60s -sV --version-light -p <port#> --script-timeout 15s --script ftp-anon <targetIP> -oN ftp_high_port_results.txt
 ```
 
 Connect to validate FTP:
@@ -643,7 +670,7 @@ The blocks labeled **Zenmap Command** go in that field. Blocks labeled **Termina
 **Zenmap Command — CYBER.ORG classroom list:**
 
 ```text
-nmap -n -sn -iL cyberorg_classroom_targets.txt -oN discovery-report.txt
+nmap -n -sn -iL cyberorg_classroom_targets.txt -oN discovery-report.txt -oG discovery.gnmap
 ```
 
 For the LAN scenario, the equivalent subnet command is below. Replace the example network and prefix with the choice supported by your routes; on CYBER.ORG use the classroom-list command above in place of this broad scan.
@@ -651,14 +678,26 @@ For the LAN scenario, the equivalent subnet command is below. Replace the exampl
 **Zenmap Command — subnet example:**
 
 ```text
-nmap -n -sn 10.15.0.0/17 -oN discovery-report.txt
+nmap -n -sn 10.15.0.0/17 -oN discovery-report.txt -oG discovery.gnmap
 ```
 
 When the scan finishes, read **Nmap Output** for hosts reported as up. `-oN discovery-report.txt` saves a readable discovery report while the output remains visible in Zenmap. To keep a timed version, replace the output filename with one such as `discovery-report_1549.txt`. [Nmap output options](https://nmap.org/book/man-output.html)
 
 Keep that report in the team fileshare and reference it from **On-network devices** on the draw.io map.
 
-For the scans below, continue using `cyberorg_classroom_targets.txt` as the input address list. `discovery-report.txt` contains a formatted scan report, not the address-only list expected by `-iL`. [Nmap target-file format](https://nmap.org/book/man-target-specification.html)
+**Terminal — after discovery finishes, refresh the same IP-only list used in Parts 3–6:**
+
+```bash
+awk '/Status: Up/ {print $2}' discovery.gnmap > hostsup.txt
+```
+
+**Terminal — inspect the list before scanning:**
+
+```bash
+cat hostsup.txt
+```
+
+The scans below use `hostsup.txt`. Never pass `discovery-report.txt` or another formatted report to `-iL`. Keep using the progress/completion rules from Part 3; they apply in Zenmap too. [Nmap target-file format](https://nmap.org/book/man-target-specification.html)
 
 ### 4. Find password SSH, Telnet, and FTP
 
@@ -667,7 +706,7 @@ Run these scans one at a time in the same Zenmap window.
 **Zenmap Command — SSH on port 22:**
 
 ```text
-nmap -n -p 22 --open --script ssh-auth-methods -iL cyberorg_classroom_targets.txt -oN ssh_auth_method_results.txt
+nmap -n -Pn -v --stats-every 5s --host-timeout 60s -p 22 --open --script-timeout 15s --script ssh-auth-methods -iL hostsup.txt -oN ssh_auth_method_results.txt
 ```
 
 In **Nmap Output**, find `ssh-auth-methods` and look for `password` under its supported methods. This indicates an offered authentication method, not a successful login. [SSH authentication script](https://nmap.org/nsedoc/scripts/ssh-auth-methods.html)
@@ -675,13 +714,23 @@ In **Nmap Output**, find `ssh-auth-methods` and look for `password` under its su
 **Zenmap Command — Telnet on port 23:**
 
 ```text
-nmap -n -p 23 --open -sV -iL cyberorg_classroom_targets.txt -oN telnet_results.txt
+nmap -n -Pn -v --stats-every 5s --host-timeout 60s -p 23 --open -iL hostsup.txt -oN telnet_results.txt
 ```
+
+The port-23 list scan finds open ports first. For each result, identify the service separately:
+
+**Zenmap Command — identify one port-23 service:**
+
+```text
+nmap -n -Pn -v -sV --version-light -p 23 --stats-every 5s --host-timeout 60s <targetIP> -oN telnet_service_results.txt
+```
+
+Replace `<targetIP>` with one reported IP. Then validate with the Telnet client from Part 4. A timed-out identification is incomplete.
 
 **Zenmap Command — FTP on port 21:**
 
 ```text
-nmap -n -p 21 --open -sV --script ftp-anon -iL cyberorg_classroom_targets.txt -oN ftp_results.txt
+nmap -n -Pn -v --stats-every 5s --host-timeout 60s -p 21 --open -sV --version-light --script-timeout 15s --script ftp-anon -iL hostsup.txt -oN ftp_results.txt
 ```
 
 For FTP, look for `Anonymous FTP login allowed` and any files shown by the script. It checks anonymous access and lists the server's root directory when permitted. [Anonymous FTP script](https://nmap.org/nsedoc/scripts/ftp-anon.html)
@@ -693,15 +742,23 @@ Select an IP under **Hosts**, then use **Ports / Hosts** to review its ports and
 **Zenmap Command — the same exercise range as Part 6:**
 
 ```text
-nmap -n -p 20000-24000 --open -sV -iL cyberorg_classroom_targets.txt -oN high_port_scan_results.txt
+nmap -n -Pn -v --stats-every 5s --host-timeout 5m -p 20000-24000 --open -iL hostsup.txt -oN high_port_scan_results.txt
 ```
 
-Read the detected service names. For a high-port SSH service, replace the placeholders with the port, IP, and assigned username.
+After the identification check below, use the detected service to choose the SSH or FTP check. Replace placeholders with the reported port, IP, and assigned username.
+
+The range scan finds open ports first. Identify each host/port separately before choosing an authentication check:
+
+**Zenmap Command — identify one high-port service:**
+
+```text
+nmap -n -Pn -v -sV --version-light -p <port#> --stats-every 5s --host-timeout 60s <targetIP> -oN high_port_service_results.txt
+```
 
 **Zenmap Command — check SSH authentication:**
 
 ```text
-nmap -n -sV -p <port#> --script ssh-auth-methods --script-args="ssh.user=<username>" <targetIP> -oN ssh_high_port_results.txt
+nmap -n -Pn -v --stats-every 5s --host-timeout 60s -sV --version-light -p <port#> --script-timeout 15s --script ssh-auth-methods --script-args="ssh.user=<username>" <targetIP> -oN ssh_high_port_results.txt
 ```
 
 For a high-port FTP service, replace the port and IP.
@@ -709,7 +766,7 @@ For a high-port FTP service, replace the port and IP.
 **Zenmap Command — check anonymous FTP:**
 
 ```text
-nmap -n -sV -p <port#> --script ftp-anon <targetIP> -oN ftp_high_port_results.txt
+nmap -n -Pn -v --stats-every 5s --host-timeout 60s -sV --version-light -p <port#> --script-timeout 15s --script ftp-anon <targetIP> -oN ftp_high_port_results.txt
 ```
 
 ### 6. Validate access and collect flags
@@ -754,51 +811,51 @@ Put the saved reports and XML scans in the team fileshare and upload the updated
 
 ---
 # Other useful scans
-#### 'nmap -p 20000-24000 --open -sV -iL hosts.txt'
+#### 'nmap -p 20000-24000 --open -sV -iL hostsup.txt'
 -p 20000-24000 → Scans only high ports 20000-24000.    
 --open → Only show hosts with open ports.    
 -sV → Service version detection to identify if FTP, SSH, or Telnet is running.    
--iL hosts.txt → Scan the responding classroom hosts saved in Part 2.
+-iL hostsup.txt → Scan the responding classroom hosts saved in Part 2.
 
-#### 'nmap -p 21,22,23 --open -sV -iL hosts.txt'  
+#### 'nmap -p 21,22,23 --open -sV -iL hostsup.txt'
 -p 21,22,23 → Scan for FTP, SSH, and Telnet.  
 --open → Only show hosts where a service is running.  
 -sV → Detect service versions.  
--iL hosts.txt → Scan only IPs listed in hosts.txt.  
+-iL hostsup.txt → Scan only IPs listed in hostsup.txt.<br>
 
-#### 'nmap -sC -sV -p 80,443 -iL hosts.txt'
+#### 'nmap -sC -sV -p 80,443 -iL hostsup.txt'
 -sC → Runs default Nmap scripts.  
 -sV → Service version detection.  
 -p 80,443 → Scan for web servers on ports 80 (HTTP) and 443 (HTTPS).  
 
-#### 'nmap --script ftp-anon -p 21 -iL hosts.txt'
+#### 'nmap --script ftp-anon -p 21 -iL hostsup.txt'
 --script ftp-anon → Checks if anonymous FTP login is allowed.  
 -p 21 → Scan only FTP port.  
 
-#### 'nmap --script ssh-auth-methods -p 22 --open -iL hosts.txt'  
+#### 'nmap --script ssh-auth-methods -p 22 --open -iL hostsup.txt'
 --script ssh-auth-methods → Checks available SSH authentication methods.  
 -p 22 → Scan SSH port.  
 --open → Only show hosts with open ports.  
--iL hosts.txt → Scan a list of known hosts.  
+-iL hostsup.txt → Scan a list of known hosts.<br>
 
-#### 'nmap -p- --open -T4 -sV -iL hosts.txt'  
+#### 'nmap -p- --open -T4 -sV -iL hostsup.txt'
 -p- → Scan **all** 65,535 ports.  
 --open → Show only hosts with open ports.  
 -T4 → Faster scan timing.  
 -sV → Service version detection.  
 
-#### 'nmap -p 135,137,445 --script smb-enum-shares -iL hosts.txt'  
+#### 'nmap -p 135,137,445 --script smb-enum-shares -iL hostsup.txt'
 -p 135,137,445 → Scan SMB ports.  
 --script smb-enum-shares → Enumerate SMB shares.  
--iL hosts.txt → Use a list of known hosts.  
+-iL hostsup.txt → Use a list of known hosts.<br>
 
-#### 'nmap -p 3389 --open --script rdp-enum-encryption -iL hosts.txt'  
+#### 'nmap -p 3389 --open --script rdp-enum-encryption -iL hostsup.txt'
 -p 3389 → Scan for Remote Desktop Protocol (RDP).  
 --script rdp-enum-encryption → Detect RDP security settings.  
--iL hosts.txt → Use a list of known hosts.  
+-iL hostsup.txt → Use a list of known hosts.<br>
 
-#### 'nmap -sU -p 161 --open --script=snmp-info -iL hosts.txt'  
+#### 'nmap -sU -p 161 --open --script=snmp-info -iL hostsup.txt'
 -sU → Scan UDP ports.  
 -p 161 → Scan for SNMP services.  
 --script=snmp-info → Extract SNMP system details.  
--iL hosts.txt → Use a list of known hosts.
+-iL hostsup.txt → Use a list of known hosts.

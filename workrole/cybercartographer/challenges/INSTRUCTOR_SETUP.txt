@@ -164,6 +164,24 @@ On KALI, scan all TCP ports using the copied plan (takes longer):
 
 python3 validate-target.py --expect expectations.json --ports 1-65535
 
+Student scans: filename and progress checks
+Use hostsup.txt for ALL student service scans. It contains responding IPs only.
+cyberorg_classroom_targets.txt is the assigned inventory; discovery.gnmap and
+service reports are scan output. Do not rename or copy the list to hosts.txt.
+The updated normal and MOVE lessons use progress output every five seconds,
+60-second per-host limits for standard ports, five minutes per host for the wider
+high-port scan, and 15-second script limits. These are not whole-class deadlines.
+Telnet/high-port scans find open ports first, then identify one service at a time.
+Wait for Nmap done. Timeouts/interrupted scans are INCOMPLETE; missing script
+output is UNKNOWN. Do not record either as "no services" or a successful check.
+
+Next live classroom check
+Repeat the updated student discovery and Telnet walkthrough against a fresh
+known-working target. Confirm hostsup.txt contains its IP, progress is visible,
+the open port is found, service identification finishes or reports a timeout,
+and the Telnet login succeeds. The exact cause of the earlier silent scan has
+not been established; these changes expose progress and bound per-host work.
+
 Anything else fails
 Save the TARGET's target-summary.txt, diagnostics.txt, and run.log, plus KALI's
 student-summary.txt. These show what failed. Do not repeatedly reinstall blindly.
