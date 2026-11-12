@@ -9,6 +9,8 @@ Use these on the Ubuntu practice VMs assigned by the instructor. Open the folder
 
 These scripts configure services on the practice VM; they are not keepalive scripts.
 
+For the complete classroom workflow, use the [instructor run sheet](INSTRUCTOR_SETUP.txt): refresh the class list, configure a target, copy its validation plan, verify from Kali, and give students the current list. It starts with recipe `148` (SSH 22, FTP 21 with flag, Telnet 23 with flag). The individual scripts below remain an alternative to the menu.
+
 ## Combined setup menu (instructor)
 
 On the assigned Ubuntu or Kali target VM, open a terminal in your download folder and download the launcher:
@@ -41,7 +43,7 @@ High ports are chosen from 21000–24000. Choose one FTP option per run; SSH opt
 
 Installed packages are reused without reinstalling OpenSSH or running an update each time. When a required package is missing, the launcher updates package lists once and installs only the missing packages. Commands show progress, have time limits, and save their output. Setup failures are reported per service so the remaining services can still be checked. If SSH setup fails, the launcher attempts to restore the previous SSH configuration and unit state; inspect the report to confirm recovery.
 
-The launcher ends with a compact inventory showing the VM IP addresses and each selected service, TCP port, login mode, local check result, and flag. Copy that terminal block to your classroom notes. It is also saved as `inventory.txt` and appended to `target-summary.txt`. Failed or untested services are marked explicitly; flags describe the selected configuration and require a passing check.
+The launcher ends with a compact inventory showing the VM IP addresses and each selected service, TCP port, login mode, local check result, and flag. Copy that terminal block to your classroom notes. It is also saved as `inventory.txt` and appended to `target-summary.txt`. Failed or untested services are marked explicitly; flags describe the selected configuration and require a passing check. Version 2.2 also prints a ready-to-copy `scp` command for Kali with the target IP, SSH port, invoking username, and report path filled in. This is saved in `validation-handoff.txt`; use the classroom fileshare if SSH or account access is unavailable.
 
 The launcher prints a report directory in the folder where you ran it. Save that directory: `target-summary.txt` is the short report, `run.log` contains command output, `diagnostics.txt` includes service status, recent journals, listeners, and firewall rules, and `results.json` contains structured results. `backups` contains prior configurations. No login passwords are collected by the target launcher.
 
@@ -77,7 +79,13 @@ sudo apt-get install -y python3-paramiko
 
 The default TCP connect scan covers 21, 22, 23, and 21000–24000. It identifies protocol greetings and attempts real access: FTP login/listing and flag download, SSH login/command execution, and Telnet negotiation/login/command execution. It saves `student-summary.txt` and `student-results.json` in the printed report directory. No root access or Nmap installation is required.
 
-For an exact comparison, copy `expectations.json` from the target report directory onto the validation machine using the classroom file-sharing workflow. Run:
+For an exact comparison, run the target's printed `scp` command on Kali, or copy `expectations.json` through the classroom fileshare. Continue only after the transfer succeeds. Confirm the copied file is in the same folder as the validator:
+
+```bash
+ls -l expectations.json
+```
+
+Then run:
 
 ```bash
 python3 validate-target.py --expect expectations.json

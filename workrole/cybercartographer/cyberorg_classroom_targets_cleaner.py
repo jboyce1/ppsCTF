@@ -4,10 +4,31 @@ import ipaddress
 from pathlib import Path
 import re
 import sys
+import webbrowser
 
 CLASS = Path(__file__).resolve().parent
 SOURCE = CLASS / 'cyberorg_classroom_targets_dirty.txt'
 OUTPUT = CLASS / 'cyberorg_classroom_targets.txt'
+EDIT_URL = 'https://github.com/jboyce1/ppsCTF/edit/main/workrole/cybercartographer/cyberorg_classroom_targets.txt'
+
+
+def prompt_publish():
+    try:
+        answer = input('Open GitHub to publish this list? [y/N] ').strip().lower()
+    except (EOFError, KeyboardInterrupt):
+        print('\nSaved locally; nothing published.')
+        return
+    if answer not in ('y', 'yes'):
+        print('Saved locally; nothing published.')
+        return
+    print(f'In VS Code, open {OUTPUT.name}, select all (Ctrl+A), and copy (Ctrl+C).')
+    print('In the GitHub file editor, replace the contents with your paste, then click Commit changes.')
+    print(f'GitHub editor: {EDIT_URL}')
+    try:
+        if not webbrowser.open(EDIT_URL):
+            print('Open the GitHub editor link above in your browser.')
+    except webbrowser.Error:
+        print('Open the GitHub editor link above in your browser.')
 
 
 def extract_addresses(text):
@@ -40,4 +61,7 @@ def main():
 
 
 if __name__ == '__main__':
-    raise SystemExit(main())
+    status = main()
+    if status == 0:
+        prompt_publish()
+    raise SystemExit(status)

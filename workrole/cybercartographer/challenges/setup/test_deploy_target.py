@@ -7,6 +7,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from types import SimpleNamespace
 from unittest.mock import Mock, patch
 
 spec = importlib.util.spec_from_file_location('deploy', Path(__file__).resolve().parents[1] / 'flagscripts/deploy-target.py')
@@ -15,6 +16,54 @@ spec.loader.exec_module(deploy)
 
 
 class DeployTests(unittest.TestCase):
+    def test_recipe_matrix_dispatches_correct_ports_modes_and_flags(self):
+        cases = [
+            (['148', '', 'y'], [22], (21, 'pps{1x3_ftp0rt#21}', 'anonymous'), [(23, 'pps{1x8_telnetp0rt#23}')]),
+            (['248', '', 'y'], [23344], (21, 'pps{1x3_ftp0rt#21}', 'anonymous'), [(23, 'pps{1x8_telnetp0rt#23}')]),
+            (['259', 'both', 'y', 'y'], [23344], (23345, 'pps{1x3_ftp0rt#23345}', 'both'), [(23346, 'pps{1x9_telnetp0rt#23346}')]),
+            (['136', 'both', 'y'], [22], (21, None, 'both'), [(23, None)]),
+            (['136', 'user', 'y'], [22], (21, None, 'user'), [(23, None)]),
+            (['128', 'y'], [22, 23344], None, [(23, 'pps{1x8_telnetp0rt#23}')]),
+        ]
+        for answers, ssh_ports, ftp_args, telnet_specs in cases:
+            with self.subTest(recipe=answers), tempfile.TemporaryDirectory() as folder:
+                root = Path(folder)
+                with patch('builtins.input', side_effect=answers), patch.object(deploy.os, 'geteuid', return_value=0), patch.object(deploy, 'acquire_lock', return_value=Mock()), patch.object(deploy, 'report_folder', return_value=root), patch.object(deploy, 'preflight'), patch.object(deploy, 'high_port', side_effect=[23344, 23345, 23346]), patch.object(deploy, 'configure_ssh', return_value=[]) as ssh, patch.object(deploy, 'configure_ftp', return_value=[]) as ftp, patch.object(deploy, 'configure_telnet', return_value=[]) as telnet, patch.object(deploy, 'check_local', side_effect=lambda entries: [dict(service=e['service'], port=e['port'], status='PASS', detail='test') for e in entries]), patch.object(deploy, 'diagnostics'), patch.object(deploy, 'machine_addresses', return_value=['10.15.1.144']), patch.object(deploy, 'hand_back'):
+                    self.assertEqual(deploy.main([]), 0)
+                self.assertEqual(ssh.call_args.args[0], ssh_ports)
+                if ftp_args:
+                    self.assertEqual(ftp.call_args.args[:3], ftp_args)
+                else:
+                    ftp.assert_not_called()
+                self.assertEqual(telnet.call_args.args[0], telnet_specs)
+                self.assertIn('10.15.1.144', (root / 'inventory.txt').read_text())
+                self.assertTrue((root / 'validation-handoff.txt').exists())
+
+    def test_handoff_fills_in_high_port_user_ip_and_path(self):
+        entries = [{'service': 'ssh', 'port': 23344}]
+        checks = [{'service': 'ssh', 'port': 23344, 'status': 'PASS'}]
+        with patch.dict(deploy.os.environ, {'SUDO_USER': 'ubuntu'}), patch.object(deploy.pwd, 'getpwnam', return_value=SimpleNamespace(pw_uid=1000)):
+            text = deploy.validation_handoff(entries, checks, ['10.15.1.144'], Path('/home/ubuntu/Desktop/report folder'))
+        command = next(line for line in text.splitlines() if line.startswith('scp '))
+        self.assertEqual(deploy.shlex.split(command), ['scp', '-P', '23344', 'ubuntu@10.15.1.144:/home/ubuntu/Desktop/report folder/expectations.json', './expectations.json'])
+        self.assertIn('python3 validate-target.py --expect expectations.json', text)
+
+    def test_handoff_prefers_standard_ssh_and_handles_ipv6(self):
+        entries = [{'service': 'ssh', 'port': p} for p in (23344, 22)]
+        checks = [dict(service='ssh', port=e['port'], status='PASS') for e in entries]
+        with patch.dict(deploy.os.environ, {'SUDO_USER': 'kali'}), patch.object(deploy.pwd, 'getpwnam', return_value=SimpleNamespace(pw_uid=1000)):
+            text = deploy.validation_handoff(entries, checks, ['2001:db8::1'], Path('/tmp/report'))
+        command = next(line for line in text.splitlines() if line.startswith('scp '))
+        self.assertEqual(deploy.shlex.split(command)[1:4], ['-P', '22', 'kali@[2001:db8::1]:/tmp/report/expectations.json'])
+
+    def test_handoff_uses_fileshare_when_ssh_failed_or_user_is_root(self):
+        entries = [{'service': 'ssh', 'port': 22}]
+        checks = [{'service': 'ssh', 'port': 22, 'status': 'FAIL'}]
+        self.assertIn('classroom fileshare', deploy.validation_handoff(entries, checks, ['10.15.1.144'], Path('/tmp/report')))
+        checks[0]['status'] = 'PASS'
+        with patch.dict(deploy.os.environ, {'SUDO_USER': 'root'}), patch.object(deploy.pwd, 'getpwnam', return_value=SimpleNamespace(pw_uid=0)):
+            self.assertIn('No invoking non-root username', deploy.validation_handoff(entries, checks, ['10.15.1.144'], Path('/tmp/report')))
+
     def test_inventory_has_ip_ports_access_and_all_flags(self):
         entries = [
             {'service': 'ssh', 'port': 23344, 'user_login': True},

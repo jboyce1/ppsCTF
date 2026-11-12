@@ -11,6 +11,20 @@ spec.loader.exec_module(cleaner)
 
 
 class CleanerTests(unittest.TestCase):
+    def test_publish_opens_editor_only_when_requested(self):
+        for answer, should_open in [('y', True), ('yes', True), ('', False), ('n', False)]:
+            with self.subTest(answer=answer), patch('builtins.input', return_value=answer), patch.object(cleaner.webbrowser, 'open') as browser:
+                cleaner.prompt_publish()
+                if should_open:
+                    browser.assert_called_once_with(cleaner.EDIT_URL)
+                else:
+                    browser.assert_not_called()
+
+    def test_publish_handles_closed_input(self):
+        with patch('builtins.input', side_effect=EOFError), patch.object(cleaner.webbrowser, 'open') as browser:
+            cleaner.prompt_publish()
+            browser.assert_not_called()
+
     def test_inventory_validation_and_order(self):
         pasted = 'Ubuntu: 10.15.4.2\nKali (10.15.0.9/17)\nhttp://10.15.4.2:8080\n999.1.2.3 10.15.4.2\nversion1.2.3.4 1.2.3.4.5'
         self.assertEqual(cleaner.extract_addresses(pasted), ['10.15.0.9', '10.15.4.2'])

@@ -1,67 +1,188 @@
-1. Launch all VMs in CYBER.ORG.
+CYBERCARTOGRAPHER — INSTRUCTOR RUN SHEET
+Run one command at a time. Finish each step before moving on.
+Keep this guide on your instructor computer; copy commands into the range VM.
 
-2. Copy the classroom VM inventory from CYBER.ORG; names, labels, and other page text are fine.
-   In VS Code, open cyberorg_classroom_targets_dirty.txt, replace everything (Ctrl+A, Ctrl+V), and save (Ctrl+S).
+A. INSTRUCTOR COMPUTER — REFRESH THE CLASS LIST
 
-3. In a terminal opened in the local cybercartographer folder, clean the inventory:
+1. Launch the assigned CYBER.ORG VMs. Open the classroom inventory.
+   Copy the inventory page text; extra names and labels are fine.
+
+2. In VS Code, open cyberorg_classroom_targets_dirty.txt in cybercartographer.
+   If the file is missing, create a text file with that exact name in this folder.
+   Replace its contents with the inventory (Ctrl+A, Ctrl+V), then save (Ctrl+S).
+
+3. In your local cybercartographer terminal, clean the list:
 
 python3 cyberorg_classroom_targets_cleaner.py
 
-   Check the saved address count. At "Open GitHub to publish this list? [y/N]", type y and press Enter.
-   Press Enter without typing y to keep the cleaned list local instead.
+   Check the saved address count before continuing.
 
-   In VS Code, open cyberorg_classroom_targets.txt, review it, then select all and copy (Ctrl+A, Ctrl+C).
-   In the GitHub file editor, select all existing file text and paste (Ctrl+A, Ctrl+V).
-   Click Commit changes, then confirm the commit to main in GitHub's dialog.
+4. At "Open GitHub to publish this list? [y/N]", type y and press Enter.
+   In VS Code, open cyberorg_classroom_targets.txt; select all and copy.
 
-   If the browser does not open, use:
+5. In the GitHub file editor, replace the old file text with the clean list.
+   Click Commit changes and confirm the commit to main.
+
+   If the editor did not open, use this on your instructor computer:
    https://github.com/jboyce1/ppsCTF/edit/main/workrole/cybercartographer/cyberorg_classroom_targets.txt
 
-   The flagscripts must also be published before running the VM downloads below.
+   The cleaned list contains assigned IPs; it does not prove the VMs are online.
 
-   To download the published list in the range, run:
-wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cyberorg_classroom_targets.txt
+B. TARGET VM — INSTALL THE TRAINING SERVICES
 
-   COMBINED SETUP OPTION
-   On an assigned Ubuntu/Kali VM, download the menu launcher:
+6. Open the assigned Ubuntu/Kali VM console. In the file manager, open Desktop,
+   then right-click an empty area and open a terminal there.
+
+7. Download the launcher (this replaces an older downloaded copy):
 
 wget -O deploy-target.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/deploy-target.py
 
-   Run it from the VM console:
+   Continue only after the download succeeds.
+
+8. Run the launcher:
 
 sudo python3 deploy-target.py
 
-   Enter 136 for SSH 22 + FTP 21 + Telnet 23, or choose other digits from the menu.
-   Choose the FTP login mode, confirm with y, and record the final port/flag summary.
-   Use existing VM accounts for user logins. Verify access from Kali afterward.
-   Installed packages are reused; missing packages show bounded install progress.
-   Save the printed report folder: target-summary.txt, diagnostics.txt, and run.log.
-   Copy the final inventory block into your notes: VM IP, services, ports, access,
-   check results, and flags. The same block is saved as inventory.txt.
-   This menu is an alternative to the individual service setup steps below.
+   Enter the VM account's password if sudo asks. Check that the title says v2.2.
 
-   STUDENT-SIDE VALIDATION (on a separate Kali/Ubuntu machine)
-   Download the validator:
+9. At Options, enter 148 for the first trial:
+   SSH 22 + anonymous FTP 21 with a file flag + Telnet 23 with a banner flag.
+
+   Other recipes (choose ONE recipe for a VM):
+   136 = SSH 22 + FTP 21 + Telnet 23, without new flags.
+   248 = high-port SSH + FTP 21 with flag + Telnet 23 with flag.
+   259 = high-port SSH + high-port FTP + high-port Telnet with flag.
+         For 259, answer y when asked whether to add an FTP flag.
+
+   Full menu:
+   1 SSH 22                 2 SSH high port
+   3 FTP 21                 4 FTP 21 with flag
+   5 FTP high port (asks about adding a flag)
+   6 Telnet 23              7 Telnet high port
+   8 Telnet 23 with flag    9 Telnet high port with flag
+
+10. At FTP login, press Enter for anonymous.
+    Use both only when you want anonymous AND existing VM-user FTP access.
+    Use user for user-only FTP without an anonymous flag.
+
+11. Review the printed plan. At "Apply to this VM? [y/N]", enter y.
+    Wait for the final inventory. Installed packages are reused; missing packages
+    show installation progress. Do not start a second setup while one is running.
+
+12. Read the final inventory: VM IP, service, TCP port, access mode, result, flag.
+    If any row says FAIL, SETUP FAILED, or NOT CHECKED, use the help section below.
+
+13. Copy the final inventory into your class notes. Save the report folder.
+    inventory.txt is the same table; validation-handoff.txt contains the next commands.
+
+    These are LOCAL checks. Now test from a separate Kali VM.
+    For a different recipe, use a fresh/reset target VM; rerunning can leave old
+    Telnet listeners and old flags. Do not assume rerunning removes earlier services.
+
+C. KALI VM — TEST WHAT STUDENTS CAN REACH
+
+14. On a separate Kali VM, open Desktop in the file manager.
+    Right-click an empty area and open a terminal there.
+
+15. Download the validator:
 
 wget -O validate-target.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/validate-target.py
 
-   Run it; enter the target IP and an existing VM account/password when prompted:
+    Continue only after the download succeeds.
 
-python3 validate-target.py
+16. From the TARGET's final "NEXT — ON KALI" block, copy the scp command for its
+    classroom IP. Run that command in the KALI terminal. It already includes the
+    target username, IP, SSH port, and expectations.json path.
 
-   For a comparison against intended services, copy expectations.json from the
-   target report folder onto the validation machine using the classroom fileshare.
-   Run the comparison:
+    If SSH asks about a new host key, confirm the target identity before accepting.
+    Enter the TARGET account's password. Wait for the copy to finish successfully.
+    If SCP is unavailable, copy expectations.json through the classroom fileshare.
+
+17. On Kali, confirm that the copied file is present:
+
+ls -l expectations.json
+
+    If the file is missing or the copy failed, STOP and repeat step 16.
+    Use the latest file from THIS target, not a plan left over from another VM.
+
+18. Run the comparison:
 
 python3 validate-target.py --expect expectations.json
 
-   If SSH validation reports missing Paramiko, install it on the validation machine:
+19. Enter the TARGET's classroom IP. Then enter the TARGET's existing non-root
+    username and password. The password is hidden and is not saved.
+
+20. Wait for OVERALL: PASS. Confirm the IP, ports, flags, and login checks match
+    your target notes. Save student-summary.txt from the printed report folder.
+
+    FAIL = a required check failed; use the help section.
+    INCOMPLETE = something was skipped, no plan was used, or an unexpected open
+    port needs review. Read those rows before treating the target as ready.
+
+D. STUDENT KALI — DOWNLOAD THE CURRENT CLASS LIST
+
+21. In the team's shared folder, open a terminal. Download the published list:
+
+wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cyberorg_classroom_targets.txt
+
+22. Inspect the first addresses:
+
+head cyberorg_classroom_targets.txt
+
+    Confirm these match the current class allocation. Continue with the student
+    CyberCartographer lesson. The validator above is the instructor's check tool.
+
+QUICK HELP — ONLY USE THE MATCHING FIX
+
+"No such file: expectations.json"
+Return to step 16 on Kali. The file starts on the TARGET, not on Kali.
+
+"SSH login needs python3-paramiko"
+On KALI, install the validator dependency:
 
 sudo apt-get install -y python3-paramiko
 
-   Rerun the validator after installing it. Save student-summary.txt from its report
-   folder. FAIL means a check failed; INCOMPLETE means checks were skipped, no plan
-   was supplied, or an unexpected listener needs review. See README for full TCP scans.
+Then repeat step 18. Do not skip login checks to get a passing result.
+
+"FTP server is anonymous only"
+Anonymous-only FTP is expected for the first trial. Make sure you used the latest
+expectations.json with --expect. If the plan requires both/user, inspect the target
+setup report rather than treating a rejected user login as a successful setup.
+
+Unexpected open ports / changing to another recipe
+Use a fresh/reset target for a clean trial. Older services may still be running.
+A launcher run configures selected services; it does not erase the VM's history.
+
+Recheck an existing target WITHOUT changing its high ports
+On the TARGET, run the following after replacing REPORT_FOLDER with the exact
+printed report directory (put quotes around the path if it contains spaces):
+
+sudo python3 deploy-target.py --check REPORT_FOLDER/expectations.json
+
+Broader check for old listeners
+On KALI, scan all TCP ports using the copied plan (takes longer):
+
+python3 validate-target.py --expect expectations.json --ports 1-65535
+
+Anything else fails
+Save the TARGET's target-summary.txt, diagnostics.txt, and run.log, plus KALI's
+student-summary.txt. These show what failed. Do not repeatedly reinstall blindly.
+
+CLASS NOTES — COPY THE FINAL INVENTORY FOR EACH TARGET
+Target IP:
+VM username (do not record the password here):
+SSH port:
+FTP port / anonymous, user, or both:
+FTP flag:
+Telnet port:
+Telnet flag:
+Student-side result:
+Report folder:
+
+LEGACY INDIVIDUAL SCRIPTS — OPTIONAL REFERENCE
+Use these INSTEAD OF the menu launcher, not as extra steps after it.
+The menu workflow above is complete. Existing per-service downloads follow.
+The flagscripts must be published before using the downloads.
 
 4. Select Ubuntu VMs
     SSH on port 22
@@ -73,7 +194,11 @@ sudo apt-get install -y python3-paramiko
 
 5. Enable SSH password authentication on the Ubuntu VM for port 22.
 
-sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
+sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+
+   After editing the setting, restart SSH:
+
+sudo systemctl restart ssh
 
 6. Set up Telnet on port 23.
 
@@ -124,7 +249,11 @@ sudo python3 6_ssh-highport-generator.py
    Record the port printed by the script.
 
    For password SSH on this VM, also run:
-sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config && sudo systemctl restart ssh
+sudo sed -i 's/^#\?PasswordAuthentication .*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+
+   After editing the setting, restart SSH:
+
+sudo systemctl restart ssh
 
 10. Have students download the published target list in Kali.
 

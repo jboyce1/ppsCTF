@@ -257,6 +257,27 @@ class ValidatorTests(unittest.TestCase):
             with self.assertRaises(paramiko.AuthenticationException):
                 validator.check_ssh('127.0.0.1', port, 'student', 'wrong', 3)
 
+            # Exercise the full student workflow against three real loopback services,
+            # using a plan shaped by the target launcher and the normal report writer.
+            with server(FTPHandler) as ftp_port, server(TelnetHandler) as telnet_port, tempfile.TemporaryDirectory() as folder:
+                target_spec = importlib.util.spec_from_file_location('target_plan', Path(__file__).resolve().parents[1] / 'flagscripts/deploy-target.py')
+                target = importlib.util.module_from_spec(target_spec)
+                target_spec.loader.exec_module(target)
+                entries = target.expected_services(['2', '4', '8'], [port], ftp_port, FTPHandler.flag, 'anonymous', [(telnet_port, 'pps{test_telnet}')])
+                root = Path(folder)
+                plan = root / 'expectations.json'
+                plan.write_text(json.dumps({'services': entries}))
+                with patch('builtins.input', return_value='student'), patch.object(validator.getpass, 'getpass', return_value='secret'):
+                    result = validator.main(['127.0.0.1', '--expect', str(plan), '--ports', f'{port},{ftp_port},{telnet_port}', '--output', str(root / 'report')])
+                self.assertEqual(result, 0)
+                summary = (root / 'report/student-summary.txt').read_text()
+                self.assertIn('OVERALL: PASS', summary)
+                self.assertIn('FTP flag download verified', summary)
+                self.assertIn('Telnet banner flag verified', summary)
+                self.assertIn('SSH password login and command execution verified', summary)
+                self.assertNotIn('secret', summary)
+
+
 
 if __name__ == '__main__':
     unittest.main()

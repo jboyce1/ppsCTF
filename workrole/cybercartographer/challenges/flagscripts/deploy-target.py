@@ -11,6 +11,7 @@ import fcntl
 import json
 import ipaddress
 import platform
+import pwd
 import selectors
 import shlex
 import signal
@@ -25,7 +26,7 @@ import subprocess
 import sys
 import time
 
-VERSION = '2.1'
+VERSION = '2.2'
 LOG = None
 APT_UPDATED = False
 OPTIONS = {
@@ -566,6 +567,34 @@ def inventory_summary(entries, checks, addresses, setup):
     return '\n'.join(lines) + '\n'
 
 
+def validation_handoff(entries, checks, addresses, folder):
+    passed = {(c['service'], c['port']) for c in checks if c['status'] == 'PASS'}
+    ssh_ports = [e['port'] for e in entries if e['service'] == 'ssh' and ('ssh', e['port']) in passed]
+    if not ssh_ports or not addresses:
+        return ('NEXT: Copy expectations.json from this report folder to Kali using the classroom fileshare.\n'
+                'A ready-to-copy SCP command needs a passing SSH check and a detected VM IP.\n')
+    username = os.environ.get('SUDO_USER', '')
+    try:
+        if not username or pwd.getpwnam(username).pw_uid == 0:
+            raise KeyError(username)
+    except KeyError:
+        return ('NEXT: Copy expectations.json from this report folder to Kali using the classroom fileshare.\n'
+                'No invoking non-root username was available for an SCP command.\n')
+    port = 22 if 22 in ssh_ports else ssh_ports[0]
+    lines = ['NEXT — ON KALI (in the folder containing validate-target.py):',
+             'Copy the command for the classroom IP below. Enter this target VM account password.',
+             'Accept the host key only if it matches the target you intend to access.']
+    for address in addresses:
+        host = f'[{address}]' if ':' in address else address
+        remote = f'{username}@{host}:{folder / "expectations.json"}'
+        lines.append(shlex.join(['scp', '-P', str(port), remote, './expectations.json']))
+    lines.extend(['After the copy succeeds, run:',
+                  'python3 validate-target.py --expect expectations.json',
+                  'Enter this target IP and its existing VM username/password when prompted.',
+                  'SCP credentials/access are not verified by the local check; use the classroom fileshare if needed.'])
+    return '\n'.join(lines) + '\n'
+
+
 def acquire_lock():
     lock = Path('/run/lock/cybercartographer-target.lock').open('a')
     try:
@@ -684,6 +713,8 @@ def main(argv=None):
         (folder / 'expectations.json').write_text(json.dumps(manifest, indent=2) + '\n')
         inventory = inventory_summary(entries, checks, addresses, summary)
         (folder / 'inventory.txt').write_text(inventory)
+        handoff = validation_handoff(entries, checks, addresses, folder)
+        (folder / 'validation-handoff.txt').write_text(handoff)
         report = {'version': VERSION, 'created_utc': started, 'failed': failed, 'addresses': addresses,
                   'setup': summary, 'checks': checks, 'services': entries}
         (folder / 'results.json').write_text(json.dumps(report, indent=2) + '\n')
@@ -694,7 +725,7 @@ def main(argv=None):
                       f'Report directory: {folder}',
                       'Share target-summary.txt, results.json, diagnostics.txt, and run.log for troubleshooting.',
                       'expectations.json can be copied to the instructor validation machine for comparison.'])
-        text = '\n'.join(lines) + '\n\n' + inventory
+        text = '\n'.join(lines) + '\n\n' + inventory + '\n' + handoff
         (folder / 'target-summary.txt').write_text(text)
         emit('\n' + text)
         LOG.close()
