@@ -189,6 +189,20 @@ This share allows reachable users to download and upload files without signing i
 
 **Part 1 checkpoint:** Every teammate can launch draw.io, reach the share, download the template, and upload a file through miniserve.
 
+## Instructor example: CCTC training maps
+
+Open this example to see how your instructor used draw.io during training. Look through its pages for ways to organize your team's map.
+
+<a href="{{ '/workrole/cybercartographer/cctc_network_maps.drawio' | relative_url }}" download>Download cctc_network_maps.drawio</a>
+
+From a range terminal, download the same file:
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cctc_network_maps.drawio
+```
+
+Open `cctc_network_maps.drawio` in draw.io to explore the example.
+
 ---
 
 <!-- Preserve existing lesson bookmarks. -->

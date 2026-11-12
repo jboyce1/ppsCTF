@@ -237,6 +237,20 @@ This share allows reachable users to download and upload files without signing i
 
 </details>
 
+## Instructor example: CCTC training maps
+
+Open this example to see how your instructor used draw.io during training. Look through its pages for ways to organize your team's map.
+
+<a href="{{ '/workrole/cybercartographer/cctc_network_maps.drawio' | relative_url }}" download>Download cctc_network_maps.drawio</a>
+
+From a range terminal, download the same file:
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cctc_network_maps.drawio
+```
+
+Open `cctc_network_maps.drawio` in draw.io to explore the example.
+
 # Part 2: Choose a discovery scan and save the results
 
 <section class="move-card" aria-label="Part 2 MOVE">
