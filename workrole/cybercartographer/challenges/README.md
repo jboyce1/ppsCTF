@@ -41,6 +41,8 @@ High ports are chosen from 21000–24000. Choose one FTP option per run; SSH opt
 
 Installed packages are reused without reinstalling OpenSSH or running an update each time. When a required package is missing, the launcher updates package lists once and installs only the missing packages. Commands show progress, have time limits, and save their output. Setup failures are reported per service so the remaining services can still be checked. If SSH setup fails, the launcher attempts to restore the previous SSH configuration and unit state; inspect the report to confirm recovery.
 
+The launcher ends with a compact inventory showing the VM IP addresses and each selected service, TCP port, login mode, local check result, and flag. Copy that terminal block to your classroom notes. It is also saved as `inventory.txt` and appended to `target-summary.txt`. Failed or untested services are marked explicitly; flags describe the selected configuration and require a passing check.
+
 The launcher prints a report directory in the folder where you ran it. Save that directory: `target-summary.txt` is the short report, `run.log` contains command output, `diagnostics.txt` includes service status, recent journals, listeners, and firewall rules, and `results.json` contains structured results. `backups` contains prior configurations. No login passwords are collected by the target launcher.
 
 To recheck without configuring services again, replace `<REPORT_FOLDER>` with the printed directory:

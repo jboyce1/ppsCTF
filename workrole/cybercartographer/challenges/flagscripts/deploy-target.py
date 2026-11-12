@@ -9,6 +9,7 @@ from datetime import datetime, timezone
 import ftplib
 import fcntl
 import json
+import ipaddress
 import platform
 import selectors
 import shlex
@@ -24,7 +25,7 @@ import subprocess
 import sys
 import time
 
-VERSION = '2.0'
+VERSION = '2.1'
 LOG = None
 APT_UPDATED = False
 OPTIONS = {
@@ -527,6 +528,44 @@ def check_local(entries):
     return results
 
 
+def machine_addresses():
+    try:
+        result = run('hostname', '-I', check=False, timeout=5)
+        if result.returncode:
+            return []
+        addresses = []
+        for value in result.stdout.split():
+            address = ipaddress.ip_address(value)
+            if not address.is_loopback and not address.is_link_local and value not in addresses:
+                addresses.append(value)
+        return addresses
+    except Exception:
+        return []
+
+
+def inventory_summary(entries, checks, addresses, setup):
+    checked = {(c['service'], c['port']): c['status'] for c in checks}
+    lines = ['=' * 78, 'CLASSROOM TARGET — SELECTED SERVICES',
+             'VM IP: ' + (', '.join(addresses) if addresses else 'UNKNOWN — check the VM network settings'),
+             'SERVICE  TCP PORT  ACCESS             LOCAL CHECK   FLAG', '-' * 78]
+    for entry in entries:
+        service, port = entry['service'], entry['port']
+        status = checked.get((service, port), 'NOT CHECKED')
+        if any(line.startswith(f'{service}: FAILED') for line in setup):
+            status = 'SETUP FAILED'
+        if service == 'ftp':
+            access = 'anon + VM user' if entry.get('anonymous') and entry.get('user_login') else 'anonymous' if entry.get('anonymous') else 'VM user'
+        else:
+            access = 'VM user/password'
+        lines.append(f"{service.upper():<8} {port:<9} {access:<18} {status:<13} {entry.get('flag') or '—'}")
+    lines.extend(['-' * 78,
+                  'Flags shown are the selected configuration; trust them only when the check passes.',
+                  'LOCAL PASS does not verify user passwords or access from Kali.',
+                  'If multiple IPs are listed, use the classroom range IP reachable from Kali.',
+                  '=' * 78])
+    return '\n'.join(lines) + '\n'
+
+
 def acquire_lock():
     lock = Path('/run/lock/cybercartographer-target.lock').open('a')
     try:
@@ -640,7 +679,12 @@ def main(argv=None):
         except Exception as error:
             summary.append(f'Diagnostics incomplete: {error}')
             failed = True
-        report = {'version': VERSION, 'created_utc': started, 'failed': failed,
+        addresses = machine_addresses()
+        manifest['addresses'] = addresses
+        (folder / 'expectations.json').write_text(json.dumps(manifest, indent=2) + '\n')
+        inventory = inventory_summary(entries, checks, addresses, summary)
+        (folder / 'inventory.txt').write_text(inventory)
+        report = {'version': VERSION, 'created_utc': started, 'failed': failed, 'addresses': addresses,
                   'setup': summary, 'checks': checks, 'services': entries}
         (folder / 'results.json').write_text(json.dumps(report, indent=2) + '\n')
         lines = [f'CyberCartographer {VERSION} target report', *summary]
@@ -650,7 +694,7 @@ def main(argv=None):
                       f'Report directory: {folder}',
                       'Share target-summary.txt, results.json, diagnostics.txt, and run.log for troubleshooting.',
                       'expectations.json can be copied to the instructor validation machine for comparison.'])
-        text = '\n'.join(lines) + '\n'
+        text = '\n'.join(lines) + '\n\n' + inventory
         (folder / 'target-summary.txt').write_text(text)
         emit('\n' + text)
         LOG.close()

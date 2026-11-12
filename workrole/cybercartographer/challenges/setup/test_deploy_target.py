@@ -15,6 +15,28 @@ spec.loader.exec_module(deploy)
 
 
 class DeployTests(unittest.TestCase):
+    def test_inventory_has_ip_ports_access_and_all_flags(self):
+        entries = [
+            {'service': 'ssh', 'port': 23344, 'user_login': True},
+            {'service': 'ftp', 'port': 21, 'anonymous': True, 'user_login': False, 'flag': 'pps{ftp_flag}'},
+            {'service': 'telnet', 'port': 23, 'flag': 'pps{telnet_flag}'},
+        ]
+        checks = [dict(service=e['service'], port=e['port'], status='PASS') for e in entries]
+        text = deploy.inventory_summary(entries, checks, ['10.15.1.144'], [])
+        for expected in ('10.15.1.144', '23344', '21', '23', 'anonymous', 'pps{ftp_flag}', 'pps{telnet_flag}'):
+            self.assertIn(expected, text)
+        rows = [line for line in text.splitlines() if line.startswith(('SSH ', 'FTP ', 'TELNET '))]
+        self.assertEqual(len(rows), 3)
+        self.assertTrue(all('PASS' in row for row in rows))
+
+    def test_inventory_does_not_claim_failed_setup_passed(self):
+        entries = [{'service': 'ssh', 'port': 22}]
+        checks = [{'service': 'ssh', 'port': 22, 'status': 'PASS'}]
+        text = deploy.inventory_summary(entries, checks, [], ['ssh: FAILED / INCOMPLETE — restart failed'])
+        self.assertIn('SETUP FAILED', text)
+        self.assertIn('UNKNOWN', text)
+        self.assertIn('NOT CHECKED', deploy.inventory_summary(entries, [], [], []))
+
     def test_combined_choices_and_conflicts(self):
         self.assertEqual(deploy.parse_choices('136'), ['1', '3', '6'])
         self.assertEqual(deploy.parse_choices('2, 5, 9, 2'), ['2', '5', '9'])

@@ -36,6 +36,8 @@ sudo python3 deploy-target.py
    Use existing VM accounts for user logins. Verify access from Kali afterward.
    Installed packages are reused; missing packages show bounded install progress.
    Save the printed report folder: target-summary.txt, diagnostics.txt, and run.log.
+   Copy the final inventory block into your notes: VM IP, services, ports, access,
+   check results, and flags. The same block is saved as inventory.txt.
    This menu is an alternative to the individual service setup steps below.
 
    STUDENT-SIDE VALIDATION (on a separate Kali/Ubuntu machine)
