@@ -225,7 +225,7 @@ If they identify `10.15.0.0/16`, use that prefix instead. Choose based on the ne
 Save the output so your team can use it later:
 
 ```bash
-nmap -n -sn 10.15.0.0/17 > hostsup.txt
+nmap -n -sn 10.15.0.0/17 > discovery-report.txt
 ```
 
 `>` writes the output to a file in your current folder and replaces an existing file with that name. The results appear in the file instead of the terminal. Wait for the prompt to return, then open the file.
@@ -233,7 +233,7 @@ nmap -n -sn 10.15.0.0/17 > hostsup.txt
 To keep an earlier scan from the same day, use the time in the filename. For a scan at 15:49:
 
 ```bash
-nmap -n -sn 10.15.0.0/17 > hostsup_1549.txt
+nmap -n -sn 10.15.0.0/17 > discovery-report_1549.txt
 ```
 
 ## Step 4: Use the current classroom list on CYBER.ORG
@@ -254,19 +254,39 @@ Open a terminal in the folder containing the file. Inspect it:
 head cyberorg_classroom_targets.txt
 ```
 
-Run discovery and save the results:
+Run discovery and save a parseable report. `-iL` reads the classroom targets; `-oG` saves Nmap's grepable output:
 
 ```bash
-nmap -n -sn -iL cyberorg_classroom_targets.txt > hostsup.txt
+nmap -n -sn -iL cyberorg_classroom_targets.txt -oG discovery.gnmap
 ```
 
-`-iL` replaces the subnet target with addresses read from a file. You can use a time suffix here too, such as `hostsup_1549.txt`.
+After the scan finishes, extract only the responding IP addresses:
+
+```bash
+awk '/Status: Up/ {print $2}' discovery.gnmap > hostsup.txt
+```
+
+`awk` selects lines marked `Status: Up` and prints their second field: the IP address. `>` saves that list, replacing an older `hostsup.txt`. [Nmap grepable output](https://nmap.org/book/output-formats-grepable-output.html)
+
+Display the saved list:
+
+```bash
+cat hostsup.txt
+```
+
+You should see one responding IP per line, with no headings, latency, or scan summary. This file can be used with `-iL` in later scans. To keep a timed copy, use a filename such as `hostsup_1549.txt` in the extraction command.
 
 ## Step 5: Share the on-network device list
 
-Open the saved report and find the addresses reported as up. Put `hostsup.txt` (or your timed version) in the team fileshare and add a note or list labeled **On-network devices** to the draw.io map that points teammates to that report. On CYBER.ORG, this means responding classroom targets; it does not prove they all share a subnet.
+Put the IP-only `hostsup.txt` (or your timed version) in the team fileshare and add a note or list labeled **On-network devices** to the draw.io map that points teammates to that list. On CYBER.ORG, this means responding classroom targets; it does not prove they all share a subnet.
 
-For the next parts, use a text editor to create `hosts.txt`: one responding IP per line, with no Nmap report text. Save it beside your scan files and share it with your team. `hostsup.txt` is the report; `hosts.txt` is the input list for later scans.
+The next parts use the filename `hosts.txt`. Copy the responding-IP list to that name:
+
+```bash
+cp hostsup.txt hosts.txt
+```
+
+Share `hosts.txt` with your team. Both files now contain one responding IP per line; `discovery.gnmap` is the original discovery report.
 
 A target in the instructor's list is not necessarily online. If targets disappear, tell the instructor; the VMs may need to be reopened and the list refreshed.
 
@@ -535,12 +555,12 @@ In Zenmap, paste each scan below into **Command**, then click **Scan**. The comm
 
 The blocks labeled **Zenmap Command** go in that field. Blocks labeled **Terminal** run in your terminal. Zenmap runs Nmap directly: use Nmap output options rather than shell redirection (`>`) or pipelines in its Command field.
 
-### 3. Discover hosts and save hostsup.txt
+### 3. Discover hosts and save discovery-report.txt
 
 **Zenmap Command — CYBER.ORG classroom list:**
 
 ```text
-nmap -n -sn -iL cyberorg_classroom_targets.txt -oN hostsup.txt
+nmap -n -sn -iL cyberorg_classroom_targets.txt -oN discovery-report.txt
 ```
 
 For the LAN scenario, the equivalent subnet command is below. Replace the example network and prefix with the choice supported by your routes; on CYBER.ORG use the classroom-list command above in place of this broad scan.
@@ -548,14 +568,14 @@ For the LAN scenario, the equivalent subnet command is below. Replace the exampl
 **Zenmap Command — subnet example:**
 
 ```text
-nmap -n -sn 10.15.0.0/17 -oN hostsup.txt
+nmap -n -sn 10.15.0.0/17 -oN discovery-report.txt
 ```
 
-When the scan finishes, read **Nmap Output** for hosts reported as up. `-oN hostsup.txt` saves a readable discovery report while the output remains visible in Zenmap. To keep a timed version, replace the output filename with one such as `hostsup_1549.txt`. [Nmap output options](https://nmap.org/book/man-output.html)
+When the scan finishes, read **Nmap Output** for hosts reported as up. `-oN discovery-report.txt` saves a readable discovery report while the output remains visible in Zenmap. To keep a timed version, replace the output filename with one such as `discovery-report_1549.txt`. [Nmap output options](https://nmap.org/book/man-output.html)
 
 Keep that report in the team fileshare and reference it from **On-network devices** on the draw.io map.
 
-For the scans below, continue using `cyberorg_classroom_targets.txt` as the input address list. `hostsup.txt` contains a formatted scan report, not the address-only list expected by `-iL`. [Nmap target-file format](https://nmap.org/book/man-target-specification.html)
+For the scans below, continue using `cyberorg_classroom_targets.txt` as the input address list. `discovery-report.txt` contains a formatted scan report, not the address-only list expected by `-iL`. [Nmap target-file format](https://nmap.org/book/man-target-specification.html)
 
 ### 4. Find password SSH, Telnet, and FTP
 
