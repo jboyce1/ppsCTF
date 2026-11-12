@@ -109,7 +109,7 @@
   },
   {
     "id": "session-11-12",
-    "title": "MsDisin",
+    "title": "CyberCartographer Redo",
     "description": "",
     "date": "Thu, Nov 12",
     "time": "7–9 PM ET · Virtual",
@@ -118,8 +118,8 @@
     "kind": "meeting",
     "links": [
       {
-        "label": "MsDisin",
-        "url": "/workrole/msdisin/MsDisin"
+        "label": "CyberCartographer",
+        "url": "/workrole/cybercartographer/CyberCartographer"
       }
     ]
   },
@@ -141,18 +141,23 @@
   },
   {
     "id": "session-11-17",
-    "title": "Mini-Challenge",
+    "title": "MsDisin",
     "description": "",
     "date": "Tue, Nov 17",
     "time": "7–9 PM ET · Virtual",
     "start": "2026-11-17T19:00:00-05:00",
     "end": "2026-11-17T21:00:00-05:00",
     "kind": "meeting",
-    "links": []
+    "links": [
+      {
+        "label": "MsDisin",
+        "url": "/workrole/msdisin/MsDisin"
+      }
+    ]
   },
   {
     "id": "session-11-19",
-    "title": "Mini-Challenge Review",
+    "title": "Mini-Challenge",
     "description": "",
     "date": "Thu, Nov 19",
     "time": "7–9 PM ET · Virtual",
@@ -174,11 +179,22 @@
   },
   {
     "id": "session-11-24",
+    "title": "Mini-Challenge Review",
+    "description": "",
+    "date": "Tue, Nov 24",
+    "time": "7–9 PM ET · Virtual",
+    "start": "2026-11-24T19:00:00-05:00",
+    "end": "2026-11-24T21:00:00-05:00",
+    "kind": "meeting",
+    "links": []
+  },
+  {
+    "id": "session-11-26",
     "title": "Thanksgiving Pause",
     "description": "No required sessions",
-    "date": "Tue, Nov 24–Nov 26",
+    "date": "Thu, Nov 26",
     "time": "No meeting",
-    "start": "2026-11-24T00:00:00-05:00",
+    "start": "2026-11-26T00:00:00-05:00",
     "end": "2026-11-27T00:00:00-05:00",
     "kind": "break",
     "links": []
