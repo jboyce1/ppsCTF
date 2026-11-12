@@ -1,18 +1,40 @@
 1. Launch all VMs in CYBER.ORG.
 
-2. Paste the VM inventory into cyberorg_classroom_targets_dirty.txt in the
-   cybercartographer folder on your local computer. Save the file.
+2. Copy the classroom VM inventory from CYBER.ORG; names, labels, and other page text are fine.
+   In VS Code, open cyberorg_classroom_targets_dirty.txt, replace everything (Ctrl+A, Ctrl+V), and save (Ctrl+S).
 
-3. On your local computer, run each command separately.
+3. In a terminal opened in the local cybercartographer folder, clean the inventory:
 
-   python3 cyberorg_classroom_targets_cleaner.py
+python3 cyberorg_classroom_targets_cleaner.py
 
-   Review cyberorg_classroom_targets.txt and publish it from the
-   cybercartographer folder. The flagscripts must also be published before
-   running the VM downloads below.
+   Check the saved address count. At "Open GitHub to publish this list? [y/N]", type y and press Enter.
+   Press Enter without typing y to keep the cleaned list local instead.
 
-   To download the new listS
+   In VS Code, open cyberorg_classroom_targets.txt, review it, then select all and copy (Ctrl+A, Ctrl+C).
+   In the GitHub file editor, select all existing file text and paste (Ctrl+A, Ctrl+V).
+   Click Commit changes, then confirm the commit to main in GitHub's dialog.
+
+   If the browser does not open, use:
+   https://github.com/jboyce1/ppsCTF/edit/main/workrole/cybercartographer/cyberorg_classroom_targets.txt
+
+   The flagscripts must also be published before running the VM downloads below.
+
+   To download the published list in the range, run:
 wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cyberorg_classroom_targets.txt
+
+   COMBINED SETUP OPTION (after deploy-target.py is published)
+   On an assigned Ubuntu/Kali VM, download the menu launcher:
+
+wget -O deploy-target.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/flagscripts/deploy-target.py
+
+   Run it from the VM console:
+
+sudo python3 deploy-target.py
+
+   Enter 136 for SSH 22 + FTP 21 + Telnet 23, or choose other digits from the menu.
+   Choose the FTP login mode, confirm with y, and record the final port/flag summary.
+   Use existing VM accounts for user logins. Verify access from Kali afterward.
+   This menu is an alternative to the individual service setup steps below.
 
 4. Select Ubuntu VMs
     SSH on port 22
