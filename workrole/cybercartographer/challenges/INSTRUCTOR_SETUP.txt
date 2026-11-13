@@ -35,7 +35,7 @@ B. TARGET VM — INSTALL THE TRAINING SERVICES
 
 7. Download the launcher (this replaces an older downloaded copy):
 
-wget -O deploy-target.py https://raw.githubusercontent.com/jboyce1/ppsCTF/a711d2821953a2a94f50f6526b3b7c461daad423/workrole/cybercartographer/challenges/flagscripts/deploy-target.py
+wget -O deploy-target.py https://raw.githubusercontent.com/jboyce1/ppsCTF/a602951e8944d8001fb9710ec4b0a4c85a5a6751/workrole/cybercartographer/challenges/flagscripts/deploy-target.py
 
    Continue only after the download succeeds.
 
