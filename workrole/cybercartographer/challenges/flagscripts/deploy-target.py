@@ -19,6 +19,8 @@ import traceback
 import os
 from pathlib import Path
 import random
+import secrets
+import string
 import re
 import shutil
 import socket
@@ -26,7 +28,7 @@ import subprocess
 import sys
 import time
 
-VERSION = '2.2'
+VERSION = '2.3'
 LOG = None
 APT_UPDATED = False
 OPTIONS = {
@@ -283,6 +285,17 @@ def apply_ssh(ports, backups):
         raise RuntimeError('SSH password authentication was not enabled.')
     return [f'SSH TCP {p}: LISTENING; password authentication enabled; use an existing VM account (login not tested).'
             for p in ports]
+
+
+def make_ftp_flag(port, directory=Path('/srv/ftp')):
+    if port != 21:
+        return f'pps{{1x3_ftp0rt#{port}}}'
+    for _ in range(100):
+        suffix = ''.join(secrets.choice(string.ascii_lowercase) for _ in range(4))
+        value = f'pps{{1x3_ftp0rt#21_{suffix}}}'
+        if not (directory / (value + '.txt')).exists():
+            return value
+    raise RuntimeError('Could not choose a fresh port-21 FTP flag; retry setup.')
 
 
 def configure_ftp(port, flag, mode, helper, backups):
@@ -655,7 +668,7 @@ def main(argv=None):
                 port = high_port(used) if choice in '79' else 23
                 flag = f'pps{{1x{choice}_telnetp0rt#{port}}}' if choice in '89' else None
                 telnet_specs.append((port, flag))
-        flag = f'pps{{1x3_ftp0rt#{ftp_port}}}' if ftp_flag else None
+        flag = make_ftp_flag(ftp_port) if ftp_flag else None
         entries = expected_services(choices, ssh_ports, ftp_port, flag, mode, telnet_specs)
         print('Planned: ' + ', '.join(f"{e['service']}:{e['port']}" for e in entries))
         print('Installed packages are reused. Password/plaintext services; keep the VM console open.')

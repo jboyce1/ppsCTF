@@ -665,6 +665,48 @@ Your team should now have an on-network device list plus individual mapped compu
 <span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassescybercartographerflagscriptsssh-highport-generatorpy"></span>
 
 # Practice and explore
+
+### Run your own practice target
+
+Use a fresh assigned Ubuntu practice VM to set up services you can discover from Kali. This practice copy creates no challenge files or banners. It does not remove files or services from earlier exercises.
+
+On **Ubuntu**, open your download folder in the file manager, then right-click and open a terminal there. Download the practice script; choose either equivalent form:
+
+**Short form:**
+
+```bash
+wget -O deploy-practice.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/practice/deploy-practice.py
+```
+
+**Long form — same result:**
+
+```bash
+wget --output-document=deploy-practice.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/practice/deploy-practice.py
+```
+
+| Short option | Long option | Meaning |
+| --- | --- | --- |
+| `-O FILE` | `--output-document=FILE` | Write the download to FILE. |
+
+After the download finishes, run it from the Ubuntu VM console:
+
+```bash
+sudo python3 deploy-practice.py
+```
+
+Enter `135` for standard SSH, FTP, and Telnet, or `246` for all three on random high ports. Choose the FTP login mode and confirm the setup when prompted. Use an existing VM account; the script does not create passwords.
+
+| Option | Service |
+| --- | --- |
+| 1 | SSH on 22 |
+| 2 | SSH on a random high port |
+| 3 | FTP on 21 |
+| 4 | FTP on a random high port |
+| 5 | Telnet on 23 |
+| 6 | Telnet on a random high port |
+
+Read and save the final IP/port summary. On **Kali**, repeat the discovery and service scans from Parts 2–6 against your assigned Ubuntu VM. Compare your scan results with the summary, then test the logins. Keep this practice setup on your assigned range VMs.
+
    
 ### [TryHackMe-Independent-nmap]({{ 'workrole/cybercartographer/challenges/TryHackMe-Independent-nmap.pdf' | relative_url }})
 Or just do the whole room    

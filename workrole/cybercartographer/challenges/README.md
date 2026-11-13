@@ -111,6 +111,12 @@ nmap -n -Pn -sT -sV -p 21,22,23,21000-24000 --open -oN trial-vm-nmap.txt <TARGET
 
 Nmap's [official options reference](https://nmap.org/book/man-briefoptions.html) explains TCP connect scans, service detection, port ranges, and saved output. For troubleshooting, share the target's `target-summary.txt`, `diagnostics.txt`, and `run.log`, plus the validator's `student-summary.txt`. Reports contain range addresses, account names, configuration, and challenge flags; share them with the instructor.
 
+## Student practice copy
+
+The [Practice and Explore section](../CyberCartographer.html#practice-and-explore) includes `practice/deploy-practice.py`, a standalone copy with no challenge-generation code. Its menu is 1/2 SSH standard/high, 3/4 FTP standard/high, and 5/6 Telnet standard/high. Use `135` for standard ports or `246` for high ports. Use fresh assigned practice VMs: neither launcher removes earlier exercise artifacts.
+
+Port-21 FTP flags in instructor launcher 2.3 include four random lowercase letters, for example `pps{1x3_ftp0rt#21_abcd}`. The file in `/srv/ftp` and the saved expectations/summary use that exact value. Existing filenames are excluded when choosing the new suffix. High-port FTP flags keep their existing format; older files are left in place.
+
 ## SSH password setup
 
 Download the password SSH instructions:

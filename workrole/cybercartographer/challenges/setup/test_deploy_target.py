@@ -16,10 +16,25 @@ spec.loader.exec_module(deploy)
 
 
 class DeployTests(unittest.TestCase):
+    def test_port21_flag_has_four_letters_and_avoids_existing_filename(self):
+        with tempfile.TemporaryDirectory() as folder:
+            directory = Path(folder)
+            (directory / 'pps{1x3_ftp0rt#21_abcd}.txt').write_text('previous flag')
+            with patch.object(deploy.secrets, 'choice', side_effect=list('abcdefgh')):
+                value = deploy.make_ftp_flag(21, directory)
+            self.assertEqual(value, 'pps{1x3_ftp0rt#21_efgh}')
+            self.assertEqual(deploy.make_ftp_flag(23345, directory), 'pps{1x3_ftp0rt#23345}')
+
+    def test_random_suffix_is_always_four_lowercase_letters(self):
+        with tempfile.TemporaryDirectory() as folder:
+            for _ in range(20):
+                value = deploy.make_ftp_flag(21, Path(folder))
+                self.assertRegex(value, r'^pps\{1x3_ftp0rt#21_[a-z]{4}\}$')
+
     def test_recipe_matrix_dispatches_correct_ports_modes_and_flags(self):
         cases = [
-            (['148', '', 'y'], [22], (21, 'pps{1x3_ftp0rt#21}', 'anonymous'), [(23, 'pps{1x8_telnetp0rt#23}')]),
-            (['248', '', 'y'], [23344], (21, 'pps{1x3_ftp0rt#21}', 'anonymous'), [(23, 'pps{1x8_telnetp0rt#23}')]),
+            (['148', '', 'y'], [22], (21, 'pps{1x3_ftp0rt#21_abcd}', 'anonymous'), [(23, 'pps{1x8_telnetp0rt#23}')]),
+            (['248', '', 'y'], [23344], (21, 'pps{1x3_ftp0rt#21_abcd}', 'anonymous'), [(23, 'pps{1x8_telnetp0rt#23}')]),
             (['259', 'both', 'y', 'y'], [23344], (23345, 'pps{1x3_ftp0rt#23345}', 'both'), [(23346, 'pps{1x9_telnetp0rt#23346}')]),
             (['136', 'both', 'y'], [22], (21, None, 'both'), [(23, None)]),
             (['136', 'user', 'y'], [22], (21, None, 'user'), [(23, None)]),
@@ -28,7 +43,8 @@ class DeployTests(unittest.TestCase):
         for answers, ssh_ports, ftp_args, telnet_specs in cases:
             with self.subTest(recipe=answers), tempfile.TemporaryDirectory() as folder:
                 root = Path(folder)
-                with patch('builtins.input', side_effect=answers), patch.object(deploy.os, 'geteuid', return_value=0), patch.object(deploy, 'acquire_lock', return_value=Mock()), patch.object(deploy, 'report_folder', return_value=root), patch.object(deploy, 'preflight'), patch.object(deploy, 'high_port', side_effect=[23344, 23345, 23346]), patch.object(deploy, 'configure_ssh', return_value=[]) as ssh, patch.object(deploy, 'configure_ftp', return_value=[]) as ftp, patch.object(deploy, 'configure_telnet', return_value=[]) as telnet, patch.object(deploy, 'check_local', side_effect=lambda entries: [dict(service=e['service'], port=e['port'], status='PASS', detail='test') for e in entries]), patch.object(deploy, 'diagnostics'), patch.object(deploy, 'machine_addresses', return_value=['10.15.1.144']), patch.object(deploy, 'hand_back'):
+                suffix_letters = iter('abcd')
+                with patch('builtins.input', side_effect=answers), patch.object(deploy.os, 'geteuid', return_value=0), patch.object(deploy, 'acquire_lock', return_value=Mock()), patch.object(deploy, 'report_folder', return_value=root), patch.object(deploy, 'preflight'), patch.object(deploy, 'high_port', side_effect=[23344, 23345, 23346]), patch.object(deploy.secrets, 'choice', side_effect=lambda alphabet: next(suffix_letters)), patch.object(deploy, 'configure_ssh', return_value=[]) as ssh, patch.object(deploy, 'configure_ftp', return_value=[]) as ftp, patch.object(deploy, 'configure_telnet', return_value=[]) as telnet, patch.object(deploy, 'check_local', side_effect=lambda entries: [dict(service=e['service'], port=e['port'], status='PASS', detail='test') for e in entries]), patch.object(deploy, 'diagnostics'), patch.object(deploy, 'machine_addresses', return_value=['10.15.1.144']), patch.object(deploy, 'hand_back'):
                     self.assertEqual(deploy.main([]), 0)
                 self.assertEqual(ssh.call_args.args[0], ssh_ports)
                 if ftp_args:
