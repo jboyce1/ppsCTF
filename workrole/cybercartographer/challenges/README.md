@@ -16,7 +16,7 @@ For the complete classroom workflow, use the [instructor run sheet](INSTRUCTOR_S
 On the assigned Ubuntu or Kali target VM, open a terminal in your download folder and download the launcher:
 
 ```bash
-wget -O deploy-target.py https://raw.githubusercontent.com/jboyce1/ppsCTF/26979c6b5f4ba58a16ac30ad64e49e7f6a291b5d/workrole/cybercartographer/challenges/flagscripts/deploy-target.py
+wget -O deploy-target.py https://raw.githubusercontent.com/jboyce1/ppsCTF/a711d2821953a2a94f50f6526b3b7c461daad423/workrole/cybercartographer/challenges/flagscripts/deploy-target.py
 ```
 
 Run it from the VM console:
