@@ -28,9 +28,10 @@ import subprocess
 import sys
 import time
 
-VERSION = '2.3'
+VERSION = '2.4'
 LOG = None
 APT_UPDATED = False
+DESKTOP_USER = None
 OPTIONS = {
     '1': 'SSH — port 22 (existing user/password)',
     '2': 'SSH — random high port (existing user/password)',
@@ -298,7 +299,36 @@ def make_ftp_flag(port, directory=Path('/srv/ftp')):
     raise RuntimeError('Could not choose a fresh port-21 FTP flag; retry setup.')
 
 
+def desktop_account():
+    username = DESKTOP_USER or os.environ.get('SUDO_USER')
+    if not username:
+        raise RuntimeError('Run with sudo from the VM user account, or add --desktop-user USERNAME, to choose the flag Desktop.')
+    try:
+        account = pwd.getpwnam(username)
+    except KeyError:
+        raise RuntimeError(f'Unknown Desktop user: {username}. Set --desktop-user to an existing VM account.') from None
+    if account.pw_uid == 0 or not Path(account.pw_dir).is_dir():
+        raise RuntimeError('The flag Desktop must belong to an existing non-root VM user with a home folder.')
+    return account
+
+
+def place_desktop_flag(flag, account):
+    desktop = Path(account.pw_dir) / 'Desktop'
+    created = not desktop.exists()
+    desktop.mkdir(mode=0o755, parents=True, exist_ok=True)
+    if created:
+        os.chown(desktop, account.pw_uid, account.pw_gid)
+    path = desktop / (flag + '.txt')
+    path.write_text(flag + '\n')
+    path.chmod(0o644)
+    os.chown(path, account.pw_uid, account.pw_gid)
+    if path.read_text() != flag + '\n':
+        raise RuntimeError('Desktop flag verification failed.')
+    return path
+
+
 def configure_ftp(port, flag, mode, helper, backups):
+    account = desktop_account() if flag else None
     ensure_packages(['vsftpd'])
     backup('/etc/vsftpd.conf', backups)
     # Same vsftpd settings as 3_ftp-anon-highport.py, without shell helpers.
@@ -323,6 +353,7 @@ def configure_ftp(port, flag, mode, helper, backups):
         flag_path = root / (flag + '.txt')
         flag_path.write_text(flag + '\n')
         flag_path.chmod(0o644)
+        desktop_path = place_desktop_flag(flag, account)
     run('systemctl', 'enable', 'vsftpd')
     run('systemctl', 'restart', 'vsftpd')
     wait_listener(port)
@@ -342,6 +373,7 @@ def configure_ftp(port, flag, mode, helper, backups):
         summary.append('FTP local-user login enabled; use an existing non-root VM account (login not tested).')
     if flag_path:
         summary.append(f'FTP flag: {flag}; file={flag_path}')
+        summary.append(f'Desktop flag copy: {desktop_path} (owned by {account.pw_name}).')
     return summary
 
 
@@ -572,6 +604,8 @@ def inventory_summary(entries, checks, addresses, setup):
         else:
             access = 'VM user/password'
         lines.append(f"{service.upper():<8} {port:<9} {access:<18} {status:<13} {entry.get('flag') or '—'}")
+    if any(e['service'] == 'ftp' and e.get('flag') for e in entries):
+        lines.append('Flag copies after successful FTP setup: VM user Desktop, plus /srv/ftp for anonymous FTP; exact path above.')
     lines.extend(['-' * 78,
                   'Flags shown are the selected configuration; trust them only when the check passes.',
                   'LOCAL PASS does not verify user passwords or access from Kali.',
@@ -619,11 +653,13 @@ def acquire_lock():
 
 
 def main(argv=None):
-    global LOG
+    global LOG, DESKTOP_USER
     parser = argparse.ArgumentParser(description='Set up and diagnose classroom services; no upgrades of installed packages.')
     parser.add_argument('--check', metavar='EXPECTATIONS_JSON', help='Read-only local recheck using a previous expectations.json')
     parser.add_argument('--output', help='New report directory (must not already exist)')
+    parser.add_argument('--desktop-user', help='VM user whose Desktop receives FTP flags (default: the user who ran sudo)')
     args = parser.parse_args(argv)
+    DESKTOP_USER = args.desktop_user
     if os.geteuid() != 0:
         print('Run with sudo python3 deploy-target.py')
         return 1

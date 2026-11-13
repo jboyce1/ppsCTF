@@ -43,7 +43,7 @@ wget -O deploy-target.py https://raw.githubusercontent.com/jboyce1/ppsCTF/a711d2
 
 sudo python3 deploy-target.py
 
-   Enter the VM account's password if sudo asks. Check that the title says v2.3.
+   Enter the VM account's password if sudo asks. Check that the title says v2.4.
 
 9. At Options, enter 148 for the first trial:
    SSH 22 + anonymous FTP 21 with a file flag + Telnet 23 with a banner flag.
@@ -66,6 +66,8 @@ sudo python3 deploy-target.py
     Use user for user-only FTP without an anonymous flag.
     Port-21 FTP flags include four random letters; record the exact printed value.
     Example: pps{1x3_ftp0rt#21_abcd}. Earlier files are left in place.
+    FTP flags are also copied to the account Desktop (usually /home/ubuntu/Desktop).
+    Students can find that same flag after SSH/Telnet login; anonymous FTP still works.
 
 11. Review the printed plan. At "Apply to this VM? [y/N]", enter y.
     Wait for the final inventory. Installed packages are reused; missing packages

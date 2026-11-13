@@ -16,6 +16,54 @@ spec.loader.exec_module(deploy)
 
 
 class DeployTests(unittest.TestCase):
+    def test_desktop_copy_has_flag_content_and_user_ownership(self):
+        with tempfile.TemporaryDirectory() as folder:
+            account = SimpleNamespace(pw_name='ubuntu', pw_dir=folder, pw_uid=1000, pw_gid=1000)
+            value = 'pps{1x3_ftp0rt#21_abcd}'
+            with patch.object(deploy.os, 'chown') as owner:
+                path = deploy.place_desktop_flag(value, account)
+            self.assertEqual(path, Path(folder) / 'Desktop' / (value + '.txt'))
+            self.assertEqual(path.read_text(), value + '\n')
+            self.assertEqual(path.stat().st_mode & 0o777, 0o644)
+            owner.assert_any_call(path, 1000, 1000)
+            self.assertTrue(any(call.args[0] == path.parent for call in owner.call_args_list))
+
+    def test_ftp_setup_writes_identical_desktop_and_anonymous_copies(self):
+        with tempfile.TemporaryDirectory() as folder:
+            home = Path(folder) / 'home'
+            home.mkdir()
+            ftp_root = Path(folder) / 'ftp'
+            account = SimpleNamespace(pw_name='ubuntu', pw_dir=str(home), pw_uid=1000, pw_gid=1000)
+            value = 'pps{1x3_ftp0rt#21_abcd}'
+            real_path = Path
+            def mapped(value):
+                return ftp_root if str(value) == '/srv/ftp' else real_path(value)
+            with patch.object(deploy, 'desktop_account', return_value=account), patch.object(deploy, 'Path', side_effect=mapped), patch.object(deploy, 'ensure_packages'), patch.object(deploy, 'backup'), patch.object(deploy, 'set_config'), patch.object(deploy, 'run'), patch.object(deploy, 'wait_listener'), patch.object(deploy.os, 'chown'), patch.object(deploy.ftplib, 'FTP') as client:
+                ftp = client.return_value.__enter__.return_value
+                ftp.nlst.return_value = [value + '.txt']
+                ftp.retrlines.side_effect = lambda command, callback: callback(value)
+                summary = deploy.configure_ftp(21, value, 'anonymous', None, Path(folder))
+            desktop = home / 'Desktop' / (value + '.txt')
+            self.assertEqual(desktop.read_bytes(), (ftp_root / (value + '.txt')).read_bytes())
+            self.assertTrue(any(str(desktop) in line for line in summary))
+
+    def test_desktop_account_defaults_to_invoking_user_and_rejects_root(self):
+        with tempfile.TemporaryDirectory() as folder:
+            account = SimpleNamespace(pw_name='kali', pw_dir=folder, pw_uid=1000, pw_gid=1000)
+            with patch.object(deploy, 'DESKTOP_USER', None), patch.dict(deploy.os.environ, {'SUDO_USER': 'kali'}), patch.object(deploy.pwd, 'getpwnam', return_value=account) as lookup:
+                self.assertEqual(deploy.desktop_account(), account)
+                lookup.assert_called_once_with('kali')
+                account.pw_uid = 0
+                with self.assertRaisesRegex(RuntimeError, 'non-root'):
+                    deploy.desktop_account()
+
+    def test_explicit_desktop_user_overrides_sudo_user(self):
+        with tempfile.TemporaryDirectory() as folder:
+            account = SimpleNamespace(pw_name='ubuntu', pw_dir=folder, pw_uid=1000, pw_gid=1000)
+            with patch.object(deploy, 'DESKTOP_USER', 'ubuntu'), patch.dict(deploy.os.environ, {'SUDO_USER': 'root'}), patch.object(deploy.pwd, 'getpwnam', return_value=account) as lookup:
+                deploy.desktop_account()
+                lookup.assert_called_once_with('ubuntu')
+
     def test_port21_flag_has_four_letters_and_avoids_existing_filename(self):
         with tempfile.TemporaryDirectory() as folder:
             directory = Path(folder)

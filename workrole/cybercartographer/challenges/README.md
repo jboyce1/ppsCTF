@@ -115,7 +115,7 @@ Nmap's [official options reference](https://nmap.org/book/man-briefoptions.html)
 
 The [Practice and Explore section](../CyberCartographer.html#practice-and-explore) includes `practice/deploy-practice.py`, a standalone copy with no challenge-generation code. Its menu is 1/2 SSH standard/high, 3/4 FTP standard/high, and 5/6 Telnet standard/high. Use `135` for standard ports or `246` for high ports. Use fresh assigned practice VMs: neither launcher removes earlier exercise artifacts.
 
-Port-21 FTP flags in instructor launcher 2.3 include four random lowercase letters, for example `pps{1x3_ftp0rt#21_abcd}`. The file in `/srv/ftp` and the saved expectations/summary use that exact value. Existing filenames are excluded when choosing the new suffix. High-port FTP flags keep their existing format; older files are left in place.
+Port-21 FTP flags in instructor launcher 2.3 include four random lowercase letters, for example `pps{1x3_ftp0rt#21_abcd}`. The file in `/srv/ftp`, its copy on the invoking VM user's `Desktop`, and the saved expectations/summary use that exact value. Instructor launcher 2.4 writes both copies for standard- and high-port FTP flags. The Desktop copy belongs to the account that ran `sudo` (for example, `/home/ubuntu/Desktop` or `/home/kali/Desktop`); its exact path is printed in the report. Anonymous FTP continues to serve its copy from `/srv/ftp`. When running directly as root, specify the intended account with `--desktop-user ubuntu` (or the actual VM username). Existing filenames are excluded when choosing the new suffix. High-port FTP flags keep their existing format; older files are left in place.
 
 ## SSH password setup
 
