@@ -1,0 +1,66 @@
+MANUAL FILE CARVING / dd
+
+Bash command templates. Replace CAPITALIZED placeholders.
+Offsets, lengths, and counts: decimal bytes, no commas.
+Contiguous files only. Validate candidate boundaries; retain hashes and offsets.
+Input: evidence.img. Outputs: separate files outside the source filesystem.
+
+COMMON COMMANDS
+sha256sum evidence.img
+xxd -g 1 -s START -l 32 evidence.img
+file recovered.png
+sha256sum recovered.png
+
+PNG
+Header: 89 50 4E 47 0D 0A 1A 0A
+IEND + CRC: 49 45 4E 44 AE 42 60 82
+LC_ALL=C grep -aobF $'\x89PNG' evidence.img
+LC_ALL=C grep -aobF 'IEND' evidence.img
+xxd -g 1 -s START -l 16 evidence.img
+xxd -g 1 -s IEND_OFFSET -l 8 evidence.img
+LENGTH = IEND_OFFSET + 8 - START
+dd if=evidence.img of=recovered.png bs=1 skip=START count=LENGTH
+
+JPEG
+Header candidate: FF D8 FF
+End marker: FF D9
+LC_ALL=C grep -aobF $'\xff\xd8\xff' evidence.img
+LC_ALL=C grep -aobF $'\xff\xd9' evidence.img
+xxd -g 1 -s START -l 32 evidence.img
+xxd -g 1 -s EOI_OFFSET -l 2 evidence.img
+LENGTH = EOI_OFFSET + 2 - START
+dd if=evidence.img of=recovered.jpg bs=1 skip=START count=LENGTH
+Embedded thumbnails: multiple header/end candidates; verify the outer JPEG.
+
+PDF
+Header: %PDF- (25 50 44 46 2D)
+End marker: %%EOF (25 25 45 4F 46)
+LC_ALL=C grep -aobF '%PDF-' evidence.img
+LC_ALL=C grep -aobF '%%EOF' evidence.img
+xxd -g 1 -s START -l 16 evidence.img
+xxd -g 1 -s EOF_OFFSET -l 16 evidence.img
+LENGTH = EOF_OFFSET + 5 + TRAILING_EOL_BYTES - START
+TRAILING_EOL_BYTES: 0 = none; 1 = LF or CR; 2 = CR LF.
+Incremental updates: select the final valid %%EOF belonging to this PDF.
+dd if=evidence.img of=recovered.pdf bs=1 skip=START count=LENGTH
+pdfinfo recovered.pdf
+
+ZIP / STANDARD SINGLE-DISK, NON-ZIP64
+First local-file header: 50 4B 03 04
+End-of-central-directory record (EOCD): 50 4B 05 06
+LC_ALL=C grep -aobF $'PK\x03\x04' evidence.img
+LC_ALL=C grep -aobF $'PK\x05\x06' evidence.img
+xxd -g 1 -s START -l 32 evidence.img
+xxd -g 1 -s EOCD_OFFSET -l 22 evidence.img
+COMMENT_FIELD_OFFSET = EOCD_OFFSET + 20
+xxd -g 1 -s COMMENT_FIELD_OFFSET -l 2 evidence.img
+COMMENT_LENGTH = first byte (decimal) + 256 * second byte (decimal)
+LENGTH = EOCD_OFFSET + 22 + COMMENT_LENGTH - START
+dd if=evidence.img of=recovered.zip bs=1 skip=START count=LENGTH
+unzip -t recovered.zip
+Multiple local-file headers per ZIP: START is the first member's header.
+Empty ZIPs start at EOCD. ZIP64, split archives, and self-extractors need other bounds.
+
+SOURCES
+PNG: https://www.w3.org/TR/png/
+ZIP: https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT

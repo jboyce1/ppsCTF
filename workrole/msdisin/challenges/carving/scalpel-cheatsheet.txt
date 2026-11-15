@@ -1,0 +1,50 @@
+FILE CARVING / SCALPEL 1.60
+
+Command/configuration templates. Replace CAPITALIZED placeholders.
+Input: evidence.img. Use a new output folder for each run.
+
+COMMANDS
+sudo apt install scalpel
+scalpel -h
+sha256sum evidence.img
+scalpel -c carving.conf -o recovered evidence.img
+scalpel -c carving.conf -s START_OFFSET -o recovered-offset evidence.img
+scalpel -p -c carving.conf -o preview evidence.img
+cat recovered/audit.txt
+file recovered/TYPE_FOLDER/FILE
+sha256sum recovered/TYPE_FOLDER/FILE
+sha256sum evidence.img
+
+CONFIGURATION / SAVE REQUIRED RULES IN carving.conf
+# extension  case-sensitive  maximum-bytes  header  footer  [search-direction]
+# Replace each maximum with a decimal byte count. Prefix unused rules with #.
+png y PNG_MAX_BYTES \x89PNG\x0d\x0a\x1a\x0a \x00\x00\x00\x00IEND\xae\x42\x60\x82
+jpg y JPEG_MAX_BYTES \xff\xd8\xff \xff\xd9
+pdf y PDF_MAX_BYTES %PDF- %%EOF REVERSE
+zip y ZIP_MAX_BYTES PK\x03\x04 PK\x05\x06????????????????\x00\x00
+
+MEASURED SIZE LIMITS
+PNG_MAX_BYTES >= IEND_OFFSET + 8 - START
+JPEG_MAX_BYTES >= EOI_OFFSET + 2 - START
+PDF_MAX_BYTES >= EOF_OFFSET + 5 - START
+ZIP_MAX_BYTES >= EOCD_OFFSET + 22 - START   (no archive comment)
+Multiple files of one type: use the largest validated length for that type.
+
+BOUNDARIES / LIMITS
+-s START_OFFSET: skip input bytes; scan the remaining input.
+Maximum-bytes: per recovered file; not runtime or total input scan length.
+REVERSE: last matching footer within the maximum; constrain the PDF size window.
+PDF rule stops at %%EOF; trailing newline bytes are excluded.
+ZIP rule: single-disk, non-ZIP64 archives with zero-length archive comment only.
+ZIP comments: use the measured dd method for an exact full archive.
+JPEG thumbnails, embedded files, fragmentation: inspect and validate results.
+Header/footer matches do not establish that a file was deleted.
+
+VALIDATE
+pdfinfo recovered/TYPE_FOLDER/FILE.pdf
+unzip -t recovered/TYPE_FOLDER/FILE.zip
+sha256sum manually-recovered.png recovered/TYPE_FOLDER/FILE.png
+
+SOURCES
+Scalpel: https://www.kali.org/tools/scalpel/
+Rules: https://github.com/sleuthkit/scalpel/blob/master/scalpel.conf

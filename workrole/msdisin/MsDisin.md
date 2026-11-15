@@ -445,6 +445,20 @@ was checked locally; the full CYBER.ORG walkthrough is awaiting this range test.
 For another attempt, use a new output folder name in step 6, such as `recovered2`.
 Real deleted files may be overwritten or fragmented, so recovery is not guaranteed.
 
+### File recovery command references
+
+**Manual carving with dd — PNG, JPEG, PDF, and ZIP:**
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/carving/dd-cheatsheet.txt
+```
+
+**Scalpel commands and configuration rules — PNG, JPEG, PDF, and ZIP:**
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/carving/scalpel-cheatsheet.txt
+```
+
 ### Next investigation: the City Point flash drive
 
 Recover missing historical photographs and investigate the proposed exhibition
