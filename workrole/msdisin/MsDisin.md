@@ -445,6 +445,14 @@ was checked locally; the full CYBER.ORG walkthrough is awaiting this range test.
 For another attempt, use a new output folder name in step 6, such as `recovered2`.
 Real deleted files may be overwritten or fragmented, so recovery is not guaranteed.
 
+### Next investigation: the City Point flash drive
+
+Recover missing historical photographs and investigate the proposed exhibition
+caption. Use PNG headers, IEND offsets, and your own byte-length calculations to
+recover the pictures manually with dd, then compare the results with Scalpel.
+
+[Open the City Point flash-drive investigation]({{ 'workrole/msdisin/Grant-flashdrive.html' | relative_url }})
+
 ---
 # Practice and Explore      
 
