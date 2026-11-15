@@ -1,31 +1,28 @@
 ---
 layout: default
-title: Ms. Disin — The City Point flash drive
+title: City Point — Digital forensic examination
 ---
 
-# The City Point flash drive
+# City Point: digital forensic examination
 
 A history exhibition has received a flash drive with a photograph said to show
 General Ulysses S. Grant at City Point with his soldiers. The accompanying story
 connects the photograph to his wartime headquarters. A curator wants your team
 to check that interpretation before putting it on display.
 
-The contributor says several reference scans were deleted before the drive was
-sent. Recover the missing material, compare it with the proposed exhibition
-photograph, and recommend a caption supported by the evidence.
+Your remit is to preserve the supplied image, examine its visible contents,
+recover deleted photographic material, and assess whether the photograph
+supports the proposed caption. Record the basis for your findings.
 
-**This is a fictional classroom investigation using real historical photographs.**
-The flash drive, contributor, exhibition, and deletion story are invented.
-
-## Receive and inspect the flash drive
+## Evidence intake and initial examination
 
 **Step 1:** In the file manager, create a folder named `city-point-case`. Open it,
 then right-click an empty area and open a terminal there. Keep this terminal in
 that folder throughout the investigation.
 
-**Step 2:** The manual investigation uses `grep`, `xxd`, `dd`, and `sha256sum`,
-the tools used in our successful CYBER.ORG PNG recovery test. Scalpel is an
-optional follow-up after you recover the pictures manually.
+**Step 2:** The manual investigation uses `grep`, `xxd`, `dd`, and `sha256sum`
+to locate, extract, and verify file content. Scalpel provides an optional
+comparison after manual recovery.
 
 **Step 3:** Download the flash-drive filesystem. Wait for Wget to report success.
 This is a 16 MiB ext2 filesystem image, not a complete operating system.
@@ -48,7 +45,9 @@ sha256sum grant-flashdrive.img
 ```
 
 **Step 6:** In the file manager, create an empty folder named `flashdrive` inside
-`city-point-case`.
+`city-point-case`. This is your mount point: an ordinary empty directory
+alongside `grant-flashdrive.img`. If the case folder is on your Desktop, its path
+is `~/Desktop/city-point-case/flashdrive`. Keep the terminal in `city-point-case`.
 
 **Step 7:** Attach the image to that folder. `-t ext2` selects the filesystem;
 `loop` mounts the image file, and `ro` makes it read-only.
@@ -57,22 +56,23 @@ sha256sum grant-flashdrive.img
 sudo mount -t ext2 -o loop,ro grant-flashdrive.img flashdrive
 ```
 
-**Step 8:** Inspect the visible file names. Which file types are present?
+**Step 8:** Inspect the visible file names. Record the file names and types in your examination notes.
 
 ```bash
 ls flashdrive
 ```
 
-**Step 9:** In the file manager, open `flashdrive`. Read `01_assignment.pdf`,
-`02_city_point_context.pdf`, and `03_catalog_reference.pdf`. Open
-`exhibition_photo.jpg`. All of these files remain on the drive; they were not
-deleted. The PDFs contain the context you need inside the range.
+**Step 9:** In the file manager, open `flashdrive`. Examine `Grant_City_Point.jpg`
+and the two newspaper PDFs: `western-democrat_1864-06-21_p2.pdf` and
+`western-democrat_1864-07-05_p2.pdf`. These are unaltered scans from *The Western
+Democrat*, Charlotte, North Carolina, preserved as downloaded from DigitalNC.
+They are Confederate-aligned contemporary reporting; distinguish reported claims
+from independently established facts.
 
-Before searching for missing files, record:
-
-- What does the proposed caption ask you to believe about the rider and soldiers?
-- Why would Grant being at City Point be historically significant?
-- Which visible details could you compare with other photographs?
+Record the photograph's caption, visible inscriptions, and features you can
+compare with other images. Note the newspapers' dates and relevant references
+to Grant, Petersburg, and City Point. The articles provide period context; they
+do not authenticate the photograph.
 
 **Step 10:** Close the viewer and any file-manager window inside `flashdrive`.
 Detach the filesystem. If it is busy, close the remaining window or terminal
@@ -82,7 +82,7 @@ inside it and repeat this step.
 sudo umount flashdrive
 ```
 
-## Find the missing photographs in the bytes
+## Locate file signatures
 
 A PNG begins with the eight bytes `89 50 4E 47 0D 0A 1A 0A`. Its last chunk
 contains `IEND`, followed by four CRC bytes. We will find those boundaries and
@@ -99,7 +99,8 @@ LC_ALL=C grep -aobF $'\x89PNG' grant-flashdrive.img
 ```
 
 Record the decimal number before each colon. Those are candidate **start offsets**,
-not lengths. The bytes after the colon may look like strange characters.
+not lengths. Nonprinting bytes after the colon may render as unfamiliar characters; the
+decimal offset is the value to retain.
 
 **Step 12:** Search for the IEND chunk type. Record each decimal offset.
 
@@ -118,10 +119,10 @@ to start, and `-l 16` displays sixteen bytes.
 xxd -g 1 -s START -l 16 grant-flashdrive.img
 ```
 
-The search used the first four signature bytes. Do all eight bytes match
-`89 50 4e 47 0d 0a 1a 0a`? The offsets on the left of xxd's display
+The search used the first four signature bytes. Confirm that the full eight-byte
+signature is `89 50 4e 47 0d 0a 1a 0a`. The offsets on the left of xxd's display
 are hexadecimal; the numbers printed by your grep searches are decimal.
-Keep your worksheet in decimal.
+Record offsets in decimal in your examination notes.
 
 **Step 14:** Inspect the IEND candidate after that header. Replace IEND_OFFSET
 with its decimal offset. `-l 8` reads the four letters and their four CRC bytes.
@@ -130,34 +131,28 @@ with its decimal offset. `-l 8` reads the four letters and their four CRC bytes.
 xxd -g 1 -s IEND_OFFSET -l 8 grant-flashdrive.img
 ```
 
-Check for `49 45 4e 44 ae 42 60 82`. For these prepared, contiguous classroom
-scans, pair each header with the first IEND after it, before the next header.
+Confirm `49 45 4e 44 ae 42 60 82`. For a contiguous PNG, an IEND after a valid
+header is a candidate boundary.
+Check that it precedes the next header and validate the extracted file.
 Inspect the remaining candidates with steps 13 and 14. Real files can have
 misleading matches or fragmented data, so this pairing shortcut is not a general
 guarantee. Reading the end of the entire filesystem image would not find the
 end of a particular picture inside it.
 
-## Calculate and recover
+## Determine boundaries and extract files
 
-**Step 15:** Fill in one row per candidate. Calculate each length yourself with
-paper or a calculator. The IEND offset points to the `I`. Add **eight** to include the four
-letters and the four following CRC bytes:
+**Step 15:** Record each candidate's start offset, IEND offset, and calculated
+length in your examination notes. Keep values in decimal. The IEND offset points
+to the `I`. Add **eight** to include the four letters and the four following CRC bytes:
 
 ```text
 length = IEND offset + 8 - start offset
 ```
 
 For an unrelated example, a start of 1,000 and an IEND at 3,460 give
-`3,460 + 8 - 1,000 = 2,468 bytes`. Do not use those example numbers for this image.
-
-| Candidate | Start offset (decimal) | IEND offset (decimal) | Calculated length in bytes |
-| --- | --- | --- | --- |
-| A | | | |
-| B | | | |
-| C | | | |
-
-Explain why using the IEND offset alone as the length would be wrong. Which
-candidate has the greatest length? Which has the lowest start offset?
+`3,460 + 8 - 1,000 = 2,468 bytes`. Use the offsets you observed in this image
+for your actual extraction. Record the largest calculated length and the lowest
+start offset for the later Scalpel comparison.
 
 **Step 16:** Recover candidate A manually. Replace START and LENGTH with your
 calculated decimal values, without commas. `if` is the input image; `of` is a new
@@ -170,10 +165,11 @@ dd if=grant-flashdrive.img of=candidate-A.png bs=1 skip=START count=LENGTH
 
 Check that dd's copied-byte count matches your calculated length.
 
-**Step 17:** Open `candidate-A.png` in the file manager. Does it display completely?
-Describe what you see. A picture viewer may tolerate a truncated file, so opening
-it alone does not prove the byte count was correct. Record its hash and ask your
-teacher to compare it with the original hash in the instructor key.
+**Step 17:** Open `candidate-A.png` in the file manager. Document its contents
+and any visible decoding errors or missing image areas. A picture viewer may tolerate a truncated file, so opening
+it alone does not prove the byte count was correct. Record its hash and compare it
+with the reference hash supplied for the examination, if available. Retain the
+hash in your case record so each recovered exhibit can be identified later.
 
 ```bash
 sha256sum candidate-A.png
@@ -204,10 +200,10 @@ Open the result, then record and verify its hash.
 sha256sum candidate-C.png
 ```
 
-You can now complete the case report below using your manually recovered pictures.
-Scalpel is a comparison, not a requirement for completing this investigation.
+The manual extractions are ready for analysis and reporting. The following
+Scalpel pass provides a second extraction method for comparison.
 
-## Optional: apply your measurements to Scalpel
+## Optional: corroborate extraction with Scalpel
 
 Scalpel's `-s` option skips a number of bytes before searching. Its configuration
 sets the **maximum length of each recovered file**. Neither value is a duration
@@ -220,18 +216,18 @@ it has no exact-byte-count option corresponding to dd's `count`.
 sudo apt install scalpel
 ```
 
-**Step 18b:** Download the unfinished configuration. Wait for Wget to report success.
+**Step 18b:** Download the PNG signature configuration template. Wait for Wget to report success.
 
 ```bash
 wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/grant-flashdrive/grant-png.conf
 ```
 
 **Step 19:** Open `grant-png.conf` in the file manager's text editor. Replace
-`MAX_BYTES` on the `png` rule with the **greatest length** from your worksheet,
+`MAX_BYTES` on the `png` rule with the **greatest length** from your examination notes,
 in decimal bytes without commas. Save the file. Leave the header and footer intact.
 
-Why must the maximum fit the largest candidate, rather than just candidate A?
-What might happen to a larger picture if you choose a smaller maximum?
+The maximum must accommodate the largest candidate. A smaller maximum may
+truncate a larger file or prevent complete recovery.
 
 **Step 20:** Read your saved rule. Check that it contains your calculated number
 instead of `MAX_BYTES`.
@@ -256,7 +252,7 @@ subfolder and record the hashes.
 sha256sum *.png
 ```
 
-Match all three Scalpel results to your manually recovered pictures by their hashes. Compare your worksheet
+Match the Scalpel results to the manual extractions by their hashes. Compare your examination notes
 with the audit log's offsets and lengths. If the numbers or hashes disagree,
 review the boundary calculations. For another Scalpel attempt, use a new output
 folder name, such as `recovered2`.
@@ -268,24 +264,25 @@ again. It should match the hash you recorded in step 5.
 sha256sum grant-flashdrive.img
 ```
 
-## Decide what the evidence supports
+## Report findings and limitations
 
 Reopen the drive read-only with step 7 if you need the visible PDFs and photograph
 again; detach it with step 10 when finished.
 
-Submit your worksheet and a short case report:
+Prepare a finding for the curator, supported by the recovered exhibits:
 
-- Match each recovered photograph to a reference record in the catalog PDF.
-  Describe the visual details that support each identification.
-- Identify which parts of the exhibition photograph appear in the recovered
-  photographs. Use specific features, not just a general resemblance.
-- Explain whether the exhibition picture records one scene at one moment.
-  Reconcile any conflicting dates, places, or descriptions.
-- Write a corrected display caption. Separate the date of a photographed scene
-  from the date of a later print or construction when the evidence supports that distinction.
-- State what you can and cannot conclude about the deletion. Recovery alone
-  does not establish a person's motive or make every caption accurate.
+- Identify the parts of the submitted photograph that also appear in recovered
+  images. Describe specific matching features and retain the corresponding hashes.
+- Assess whether the photograph records one scene at one moment. Distinguish
+  observations from interpretations, and reconcile conflicting inscriptions,
+  dates, or locations where the evidence allows.
+- Recommend a display caption supported by your findings. Distinguish a source
+  scene's date from a later print or construction date when you can establish them.
+- State the limits of the examination. Recovery does not establish who deleted
+  a file, when it was deleted, or why. A newspaper report does not independently
+  authenticate a photograph.
 
-The teacher has the original file hashes to check your results. These classroom
-images have been resized and re-encoded from archival reproductions; their hashes
-will differ from the Library of Congress downloads.
+Retain the source-image hash, extraction offsets and lengths, recovered-file
+hashes, and relevant audit output with your case record. The photographic files
+are resized archival reproductions; their hashes differ from the original archive
+files. The newspaper PDFs retain the archival download bytes.
