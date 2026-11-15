@@ -467,6 +467,18 @@ recover the pictures manually with dd, then compare the results with Scalpel.
 
 [Open the City Point flash-drive investigation]({{ 'workrole/msdisin/Grant-flashdrive.html' | relative_url }})
 
+### Independent investigations
+
+Examine the published material, recover deleted records, and report findings
+supported by the evidence. Each page provides its own downloadable evidence image;
+the collections contain PDFs and PNGs. These cases do not repeat the recovery walkthrough.
+
+- [Cottingley: the beck photographs]({{ 'workrole/msdisin/Cottingley-investigation.html' | relative_url }})
+- [The observatory dispatch]({{ 'workrole/msdisin/Lunar-dispatch-investigation.html' | relative_url }})
+- [The international press circuit]({{ 'workrole/msdisin/Press-circuit-investigation.html' | relative_url }})
+- [A disk and a laboratory]({{ 'workrole/msdisin/Disk-lead-investigation.html' | relative_url }}) — recovery case; non-graphic violent-crime records.
+- [The payload archive]({{ 'workrole/msdisin/Flight-records-investigation.html' | relative_url }}) — recovery case.
+
 ---
 # Practice and Explore      
 
