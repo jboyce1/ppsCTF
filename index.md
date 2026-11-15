@@ -73,7 +73,7 @@ title: pps{CyberTechniquesFest}
     <a class="class-card" href="{{ '/workrole/ssherlock/SSHerlock-move' | relative_url }}"><span class="eyebrow">Network</span><strong>SSHerlock</strong><span>Open lesson →</span></a>
     <a class="class-card" href="{{ '/workrole/hashhound/HashHound-move' | relative_url }}"><span class="eyebrow">Host</span><strong>HashHound</strong><span>Open lesson →</span></a>
     <a class="class-card" href="{{ '/workrole/cybercartographer/CyberCartographer' | relative_url }}"><span class="eyebrow">Network</span><strong>CyberCartographer</strong><span>Open lesson →</span></a>
-    <a class="class-card" href="{{ '/workrole/msdisin/MsDisin' | relative_url }}"><span class="eyebrow">Host</span><strong>MsDisin</strong><span>Open lesson →</span></a>
+    <a class="class-card" href="{{ '/workrole/msdisin/MsDisin-move' | relative_url }}"><span class="eyebrow">Host</span><strong>MsDisin</strong><span>Open lesson →</span></a>
     <a class="class-card" href="{{ '/workrole/langeist/LANgeist' | relative_url }}"><span class="eyebrow">Network</span><strong>LANgeist</strong><span>Open lesson →</span></a>
     <a class="class-card" href="{{ '/workrole/malchemist/MALchemist' | relative_url }}"><span class="eyebrow">Host</span><strong>MALchemist</strong><span>Open lesson →</span></a>
     <a class="class-card" href="{{ '/workrole/portalord/Portalord' | relative_url }}"><span class="eyebrow">Network</span><strong>Portalord</strong><span>Open lesson →</span></a>

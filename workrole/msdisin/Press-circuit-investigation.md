@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: move
 title: "The international press circuit"
 ---
 
@@ -9,9 +9,18 @@ A Soviet newspaper cartoon published in 1986 alleges a U.S. military origin for
 AIDS. A reproduction of the published cartoon is present in this press collection.
 The allegation is an artifact under examination, not health information.
 
-Recover deleted records and assess the relationship between the public message,
-its sources, and the campaign behind its circulation. Distinguish documentary
-evidence, contemporary assessments, and later historical analysis.
+<section class="move-card" aria-label="Press-circuit MOVE">
+<dl>
+<dt><span>M</span> Mission</dt><dd>Assess the sources behind the circulated military-origin allegation.</dd>
+<dt><span>O</span> Objective</dt><dd>Recover missing records and examine the relationship between the public message and its circulation.</dd>
+<dt><span>V</span> Verification</dt><dd>Display the recovered records and support a finding about the message&#x27;s sources and purpose.</dd>
+<dt><span>E</span> Explain / Elaborate</dt><dd>Which findings come from contemporary records, and which from later analysis?</dd>
+</dl>
+</section>
+
+## Tools
+
+`grep`, `xxd`, `dd`, `sha256sum`, Scalpel; gzip extraction, read-only ext4 access, and image/PDF viewers.
 
 ## Evidence collection
 

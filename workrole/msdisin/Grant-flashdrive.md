@@ -3,6 +3,8 @@ layout: default
 title: City Point — Digital forensic examination
 ---
 
+<p><a href="{{ '/workrole/msdisin/Grant-flashdrive-move' | relative_url }}">Open the MOVE edition</a>.</p>
+
 # City Point: digital forensic examination
 
 A history exhibition has received a flash drive with a photograph said to show

@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: move
 title: "The payload archive"
 ---
 
@@ -9,9 +9,20 @@ After Columbia was lost in 2003, investigators recovered scientific hardware
 from the debris. This collection contains public technical material about the
 mission; portions of its recovery record are no longer visible.
 
-Recover deleted files and establish which experiment and storage device the
-records describe, what information survived, and how the reported results were
-validated. This is a recovery investigation, not a hoax case.
+This is a recovery investigation, not a hoax case.
+
+<section class="move-card" aria-label="Flight-records MOVE">
+<dl>
+<dt><span>M</span> Mission</dt><dd>Establish what the scientific recovery record reports.</dd>
+<dt><span>O</span> Objective</dt><dd>Recover missing records and identify the experiment, device, and surviving information.</dd>
+<dt><span>V</span> Verification</dt><dd>Display the recovered records and support an answer about the recovered information and its validation.</dd>
+<dt><span>E</span> Explain / Elaborate</dt><dd>What does a published recovery record establish about the underlying data?</dd>
+</dl>
+</section>
+
+## Tools
+
+`grep`, `xxd`, `dd`, `sha256sum`, Scalpel; gzip extraction, read-only ext4 access, and image/PDF viewers.
 
 ## Evidence collection
 

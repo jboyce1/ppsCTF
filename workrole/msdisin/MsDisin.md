@@ -3,6 +3,8 @@ layout: default
 title: Ms. Disin
 ---
 
+<p><a href="{{ '/workrole/msdisin/MsDisin-move' | relative_url }}">Open the MOVE edition</a>.</p>
+
 # Ms. Disin   
 
 **Focus**: Text manipulation  

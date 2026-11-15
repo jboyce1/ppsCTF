@@ -1,0 +1,759 @@
+---
+layout: move
+title: Ms. Disin
+---
+
+<p><strong>MOVE edition.</strong> <a href="{{ '/workrole/msdisin/MsDisin' | relative_url }}">Open the original lesson</a>.</p>
+
+
+
+# Ms. Disin
+
+**Focus**: Text, database, and file evidence<br>
+**Skill**: Use grep, sed, awk, diff, xxd and sort to extract and manipulate text and data<br>
+**Activity**: Interpret source material and recover evidence<br>
+
+<div style="text-align: center;">
+  <img src="{{ 'workrole/msdisin/images/Ms_Disin Banner2.jpg' | relative_url }}" alt="Ms_Disin Banner2" style="max-width: 80%; height: auto;">
+</div>
+
+
+<details class="move-help" markdown="1">
+<summary>Role background and optional programs</summary>
+
+## Sometimes the world is a web of lies
+### Be a spider
+---
+
+**play a game while I yap**:<br>
+sudo apt install greed<br>
+greed<br>
+
+sudo apt install zangband<br>
+man atc<br>
+atc<br>
+
+### Specific Skills
+- Use cat to combine multiple text files and display their contents quickly
+- Use grep and find to locate specific patterns of text within files across different directories
+- Use sed to edit text files directly in the terminal
+- Combine awk and sed to extract and transform specific data from files
+- Use sort and uniq for sorting data and finding duplicates
+- Use diff to compare files
+- Use tail and head to view just the beginning or end of files
+- Use sqlite to query webbrowser history
+
+
+### Things to experiment with on the range:
+- Regex with grep: Mastering regular expressions to refine search criteria and pinpoint exact data sets.<br>
+- Stream editing with sed: Practice on-the-fly file content manipulations during competitive scenarios.<br>
+- Data manipulation with awk: Leverage awk's programming capabilities to analyze and report on data extracted during competitions.<br>
+
+
+### How this skill can be used:
+**Offensive Operations:**
+ - Data Extraction Tactics: Utilize combinations of grep, awk, and sed to extract sensitive information from opponent’s files, which could range from passwords to strategic plans.
+ - Script Manipulation: Through direct file editing using sed and cat, alter scripts or configurations in the enemy's network to disrupt their operations or misdirect their strategies.
+
+**Defensive Operations:**
+ - File Integrity Checks: Use grep and awk to monitor files for unauthorized changes that could indicate infiltration attempts.
+ - Rapid Response Editing: Employ sed to quickly revert any unauthorized changes or to patch vulnerabilities in script configurations during live competitions.
+
+</details>
+
+---
+
+# Part 1: Use cat to combine multiple text files and display their contents quickly
+
+<section class="move-card" aria-label="Part 1 MOVE">
+<dl>
+<dt><span>M</span> Mission</dt><dd>Understand what the observation records reveal.</dd>
+<dt><span>O</span> Objective</dt><dd>Develop a synopsis supported by the cat and dog accounts.</dd>
+<dt><span>V</span> Verification</dt><dd>A synopsis supported by passages from the supplied records.</dd>
+<dt><span>E</span> Explain / Elaborate</dt><dd>How does combining records change the account you can support?</dd>
+</dl>
+</section>
+
+## Tools and downloads
+
+`cat`, `find`; ZIP extraction.
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/cat_observations.zip
+```
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/dog_observations.zip
+```
+
+<details class="move-help" markdown="1">
+<summary>Part 1 walkthrough</summary>
+
+### “cat” the cat and “grep” the dog (because who names a cat?)
+
+<div style="text-align: center;">
+  <img src="{{ 'workrole/msdisin/images/msdisins_dog.webp' | relative_url }}" alt="Hash Hound Logo" style="max-width: 80%; height: auto;">
+</div>
+
+Start a Kali machine<br>
+**Step 1:**<br>
+Download the cat observations<br>
+<span id="wget-httpsgithubcomjboyce1ppsctfrawmainclassesmsdisincat_observationszip"></span>
+
+#### `wget https://github.com/jboyce1/ppsCTF/raw/main/workrole/msdisin/challenges/cat_observations.zip`
+Unzip the contents of the folder.<br>
+Open a terminal inside the cat_observations folder<br>
+use the cat command to read each passage<br>
+cat cat_1<br>
+(hint: use the up arrow key and backspace to quickly advance in the journal)<br>
+
+**Step 2:**<br>
+From  inside the cat_observations folder, open a terminal<br>
+To display all of the text in the files:<br>
+#### `find . -type f -exec cat {} +`
+To display all of the text in the files with their file names in order and get really fancy?:<br>
+#### `find . -type f -name "*" | sort | xargs cat`
+Explaination of flags:<br>
+ -  `find . -type f -name "*."`  Search for all files with an extension in the current directory (.) and its subdirectories.<br>
+ - `| sort` pipes the output to sort in order to list of filenames alphabetically.<br>
+ - `| xargs cat`  Pass the sorted list of filenames to the cat command to display their contents in order.<br>
+
+<div style="text-align: center;">
+  <img src="{{ 'workrole/msdisin/images/msdisins_cat.webp' | relative_url }}" alt="Hash Hound Logo" style="max-width: 80%; height: auto;">
+</div>
+
+### Try it now
+use the dog_oberservations.zip to do the same thing<br>
+<span id="wget-httpsgithubcomjboyce1ppsctfrawmainclassesmsdisindog_observationszip"></span>
+
+#### `wget https://github.com/jboyce1/ppsCTF/raw/main/workrole/msdisin/challenges/dog_observations.zip`
+Write a synopsis of what you think is happening <a href="https://forms.office.com/Pages/ResponsePage.aspx?id=mhxxjxzsu023kLsMdxsdzM6J33C5yQRJgc1SHWy_64dUOFYxN1JKSUExN09WVzY3VzE0WFU1VU1IUC4u" target="_blank">here</a><br>
+
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/jmTVwNt24Sk?si=6UXLuTWlRTuxneLB" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
+</details>
+
+---
+
+# Part 2: use cat and grep to find text in files and directories
+
+<section class="move-card" aria-label="Part 2 MOVE">
+<dl>
+<dt><span>M</span> Mission</dt><dd>Locate relevant evidence in a large text.</dd>
+<dt><span>O</span> Objective</dt><dd>Identify matching passages and their surrounding context in the supplied book.</dd>
+<dt><span>V</span> Verification</dt><dd>Display the relevant passages and identify the claim each supports.</dd>
+<dt><span>E</span> Explain / Elaborate</dt><dd>How do the search pattern and surrounding context affect your interpretation?</dd>
+</dl>
+</section>
+
+## Tools and downloads
+
+`cat`, `grep`.
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt
+```
+
+<details class="move-help" markdown="1">
+<summary>Part 2 walkthrough</summary>
+
+### Use grep to find specific instances of strings
+### Use grep and awk to find locations of strings within a text
+### Use sed to change all instances of a string to another string
+### Combine awk and sed to identify instances of a string and change them
+### Use grep and wc to count how many instances of a string are in a text
+### Use diff to determine the differences between two files
+### Use diff to determine the differences between two directories
+
+
+<div style="text-align: center;">
+  <img src="{{ 'workrole/msdisin/images/worldsgreatestspies_cover.jpg' | relative_url }}" alt="worldsgreatestspies_cover" style="max-width: 80%; height: auto;">
+</div>
+
+get the file:
+<span id="wget-httpsgithubcomjboyce1ppsctfrawmainclassesmsdisinthe_worlds_greatest_military_spies_and_secret_service_agentstxt"></span>
+
+#### `wget https://github.com/jboyce1/ppsCTF/raw/main/workrole/msdisin/challenges/The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`
+
+### grep overview:
+grep searches for items and returns the entire line that contains the item<br>
+
+To search non-case sensitive:<br>
+#### `grep -i  "napoleon" file.txt`
+
+To search recursively (all files) in directories:<br>
+#### `grep -r "Napoleon" /path/to/directory/
+
+To get the file names that contain an item:<br>
+#### `grep -l "Napoleon" *.txt`
+
+To include the file names that contain an item:<br>
+#### `grep -H "Napoleon" *.txt`
+
+To invert the search and search of lines that do not contain the item:<br>
+#### `grep -v "Napoleon" file.txt`
+
+To count the matches:<br>
+#### `grep -c "Napoleon" file.txt`
+
+To see the lines before and after, use -B and -A<br>
+#### `grep -B 2 "Napoleon" file.txt`
+#### `grep -A 2 "Napoleon" file.txt`
+
+To highlight matches in the text<br>
+#### `grep --color=auto "Napoleon" file.txt`
+
+</details>
+
+---
+
+# Part 3: use awk to perform complex searches
+
+<section class="move-card" aria-label="Part 3 MOVE">
+<dl>
+<dt><span>M</span> Mission</dt><dd>Answer questions and make targeted changes in source text.</dd>
+<dt><span>O</span> Objective</dt><dd>Resolve the who, when, where, and event questions; produce the requested name and date changes.</dd>
+<dt><span>V</span> Verification</dt><dd>Answers supported by source passages, and the requested edited passages.</dd>
+<dt><span>E</span> Explain / Elaborate</dt><dd>How did your matching criteria distinguish relevant evidence from unrelated text?</dd>
+</dl>
+</section>
+
+## Tools and downloads
+
+`grep`, `awk`, `sed`, `wc`.
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt
+```
+
+<details class="move-help" markdown="1">
+<summary>Part 3 walkthrough</summary>
+
+### awk overview:
+General pattern: awk 'pattern {action}' file<br>
+ - pattern: The condition you want to match (optional).<br>
+ - action: The operation to perform on the matched lines (optional).<br>
+- file: The file you're processing.<br>
+
+Use similar to grep
+#### `awk '/Prince of Spies/' The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`
+ - similar to grep
+
+Add conditional logical controls<br>
+#### `awk '/Belle Boyd/ && /1917/' The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`
+ - find lines containing "Belle Boyd" and  "1917"
+
+This is an example of more powerful application of awk
+#### `awk '/The Battle of/,/Confederate/ { if (index($0, "Belle Boyd") > 0) print $0 }' The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`
+ - `/The Battle of/,/Confederate/` is an awk range pattern. It tells awk to start processing lines when it encounters a line containing "The Battle of", and stop processing once it encounters a line containing "Confederate".
+So, awk will process all lines in between these two patterns.<br>
+ - `{ if (index($0, "Belle Boyd") > 0) print $0 }:`
+ - `$0`: This refers to the entire current line in awk.
+`index($0, "Belle Boyd")`: The `index()` function returns the position of the first occurrence of "Belle Boyd" in the current line. If "Belle Boyd" is found, it returns a position (a number greater than 0), otherwise it returns 0.
+ - `if (index($0, "Belle Boyd") > 0)`: This checks if "Belle Boyd" exists in the line (i.e., the position is greater than 0).
+print $0: If "Belle Boyd" is found, the entire line is printed.
+
+
+Find out who:
+Use grep to find the name of the person who was called the "Prince of Spies".<br>
+**`grep -i "Prince of Spies" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`**<br>
+
+When did:<br>
+Use grep to discover when the book "The World's Greatest Military Spies and Secret Service Agents" was first published.<br>
+**`grep -i "first impression" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`**<br>
+
+Where did:<br>
+Use grep and awk to find the location where "Belle Boyd" saved Stonewall Jackson.<br>
+**`grep -i "Belle Boyd" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt | awk '{print $0}'`**<br>
+
+What event:<br>
+Use grep to identify the event described as "the capture of Major André".<br>
+**`grep -i "Major André" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`**<br>
+
+Manipulate names:<br>
+Use sed to change all instances of "Napoleon" to "Roger Rabbit"<br>
+**`sed -i 's/Napoleon/Roger Rabbit/g' The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`**<br>
+
+Alter dates:<br>
+Use sed to change all instances of the year "1917" to "1947".<br>
+**`sed -i 's/1917/1947/g' The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`**<br>
+
+Combine awk and sed:<br>
+Use awk to find lines containing "King Philip" and then sed to change "King Philip" to "King Roger".<br>
+**`awk '/King Philip/' The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt | sed 's/King Philip/King Roger/g'`**<br>
+
+ Extracting sentences:<br>
+Use grep to extract sentences that mention "Confederate spy"<br>
+**`grep -i "Confederate spy" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`**<br>
+
+Count occurrences:<br>
+Use grep and wc to count how many times the word "secret" appears in the text.<br>
+**`grep -o -i "secret" The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt | wc -l`**
+
+</details>
+
+---
+
+# Part 4: use wc tr sort uniq to derive data from text strings
+
+<section class="move-card" aria-label="Part 4 MOVE">
+<dl>
+<dt><span>M</span> Mission</dt><dd>Identify patterns in text that are difficult to see by reading alone.</dd>
+<dt><span>O</span> Objective</dt><dd>Produce word-frequency findings and investigate the three supplied practice files.</dd>
+<dt><span>V</span> Verification</dt><dd>Display the frequency results and the findings from the practice files.</dd>
+<dt><span>E</span> Explain / Elaborate</dt><dd>How do capitalization, punctuation, and short words affect the result?</dd>
+</dl>
+</section>
+
+## Tools and downloads
+
+`wc`, `tr`, `sort`, `uniq`, `awk`, `head`; ZIP extraction.
+
+```bash
+wget -O input.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt
+```
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/msdis_practice1.zip
+```
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/msdis_practice2.zip
+```
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/msdis_practice3.zip
+```
+
+<details class="move-help" markdown="1">
+<summary>Part 4 walkthrough</summary>
+
+Here's how you can get the 100 most common words in a text file directly in the terminal:<br>
+#### `tr -cs 'A-Za-z' '\n' < input.txt | tr 'A-Z' 'a-z' | sort | uniq -c | sort -nr | head -100`
+
+Explanation of Each Command:<br>
+ - **`tr -cs 'A-Za-z' '\n'`**: This translates all sequences of characters that are not alphabets into newlines, effectively putting each word on a new line.<br>
+ - **`tr 'A-Z' 'a-z'`**: This converts all uppercase letters to lowercase.<br>
+ - **`sort`**: This sorts the words alphabetically, which is necessary for uniq to count all occurrences properly.<br>
+ - **`uniq -c`**: This counts the number of occurrences of each word. The words need to be sorted as uniq only matches consecutive duplicate lines.<br>
+ - **`sort -nr`**: This sorts the list numerically in reverse order, placing the most frequent words at the top.<br>
+ - **`head -100`**: This displays only the top 100 results.<br>
+
+Or add in awk capabilities to filter out small words<br>
+#### `tr -cs 'A-Za-z' '\n' < input.txt | tr 'A-Z' 'a-z' | awk 'length($0) > 3' | sort | uniq -c | sort -nr | head -100`
+
+Try to use what you have learned so far to get the flags in these files:
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingspy_traffic_historydbmsdis_practice1zip"></span>
+
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/msdis_practice1.zip`
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingspy_traffic_historydbmsdis_practice2zip"></span>
+
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/msdis_practice2.zip`
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingspy_traffic_historydbmsdis_practice3zip"></span>
+
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/msdis_practice3.zip`
+
+</details>
+
+---
+
+# Part 5: Use diff and xxd to compare files
+
+<section class="move-card" aria-label="Part 5 MOVE">
+<dl>
+<dt><span>M</span> Mission</dt><dd>Establish what changed between two files.</dd>
+<dt><span>O</span> Objective</dt><dd>Compare the original and modified text at the line and byte levels.</dd>
+<dt><span>V</span> Verification</dt><dd>Display the differences and identify the changed content.</dd>
+<dt><span>E</span> Explain / Elaborate</dt><dd>What does a text comparison reveal that a byte comparison presents differently?</dd>
+</dl>
+</section>
+
+## Tools and downloads
+
+`diff`, `xxd`.
+
+```bash
+wget -O original.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt
+```
+
+```bash
+wget -O modified.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents_modified.txt
+```
+
+<details class="move-help" markdown="1">
+<summary>Part 5 walkthrough</summary>
+
+Spot the Differences:<br>
+Use diff to extract what has changed in the two files line by line<br>
+**`diff -y original.txt modified.txt`**<br>
+or<br>
+**`diff -u original.txt modified.txt`**<br>
+or for directories:<br>
+**`diff -r original_directory modified_directory`**<br>
+
+Use xxd to determine the hexidecimal difference between files
+#### `xxd original.txt > original.hex`
+#### `xxd modified.txt > modified.hex`
+#### `diff -u original.hex modified.hex`
+
+<div style="text-align: center;">
+  <img src="{{ 'workrole/msdisin/images/xxd_screenshot.png' | relative_url }}" alt="worldsgreatestspies_cover" style="max-width: 80%; height: auto;">
+</div>
+
+</details>
+
+---
+
+# Part 6: Use sqlite to query web browser history
+
+<section class="move-card" aria-label="Part 6 MOVE">
+<dl>
+<dt><span>M</span> Mission</dt><dd>Interpret the activity recorded in browser-history databases.</dd>
+<dt><span>O</span> Objective</dt><dd>Identify frequently visited sites and periods of unusual activity.</dd>
+<dt><span>V</span> Verification</dt><dd>Display site rankings and time-based counts supporting your findings.</dd>
+<dt><span>E</span> Explain / Elaborate</dt><dd>What can visit counts establish, and what do they leave uncertain?</dd>
+</dl>
+</section>
+
+## Tools and downloads
+
+`sqlite3`.
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/spy_traffic_history.db
+```
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/spykid_traffic_history.db
+```
+
+<details class="move-help" markdown="1">
+<summary>Part 6 walkthrough</summary>
+
+### Determine the visited sites in the database
+Navigate the the directory with the .db file in it
+
+
+In terminal, open sqlite
+#### `sqlite3 whatever_the_traffic_database_is_called.db`
+
+Verify database is open and you are able to access the tables<br>
+#### `.tables`
+ - you should see something like browsing_history
+
+Inspect the stucture of the tables<br>
+#### `PRAGMA table_info(browsing_history);`
+  - commands will execute once they end with a semi-colon `;`
+
+
+Test a basic query from the browsing_history table<br>
+#### `SELECT * FROM browsing_history LIMIT 1000;`
+
+
+Quit out of the sqlite3<br>
+#### `.quit`
+
+
+Now you try it:
+Download the sample database
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingspy_traffic_historydb"></span>
+
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/spy_traffic_history.db`
+
+Query the most visited sites:<br>
+
+`SELECT url, COUNT(url) AS visit_count`<br>
+`FROM browsing_history`<br>
+`GROUP BY url`<br>
+`ORDER BY visit_count DESC`<br>
+`LIMIT 100;`<br>
+
+
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/uemcs2H9uMw?si=F20xyvQccYlW7MAi" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
+### Identify and determine spikes in web traffic
+
+Download the sample database:
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingspykid_traffic_historydb"></span>
+
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/spykid_traffic_history.db`
+
+Open the database
+#### `sqlite3 spykid_traffic_history.db`
+
+Look for spikes in activity that seem excessively high or low on a weekly basis:
+
+`SELECT strftime('%Y-%W', timestamp) AS week, COUNT(*) AS visit_count`
+`FROM browsing_history`
+`GROUP BY week`
+`ORDER BY week ASC;`
+
+Here the number 94 stands out:
+<div style="text-align: center;">
+  <img src="{{ 'workrole/msdisin/images/high_activity_in_method1.png' | relative_url }}" alt="worldsgreatestspies_cover" style="max-width: 80%; height: auto;">
+</div>
+
+
+Look find the average web traffic and the highest web traffic:
+
+`SELECT AVG(visit_count) AS avg_visits, MAX(visit_count) AS max_visits`<br>
+`FROM (`<br>
+    `SELECT strftime('%Y-%W', timestamp) AS week, COUNT(*) AS visit_count`<br>
+    `FROM browsing_history`<br>
+    `GROUP BY week`<br>
+`);`<br>
+
+Here we see the average of 37.03 with a max of 94
+<div style="text-align: center;">
+  <img src="{{ 'workrole/msdisin/images/screenshot-avg-visit-most-visit.png' | relative_url }}" alt="worldsgreatestspies_cover" style="max-width: 80%; height: auto;">
+</div>
+
+Find traffic that is above or below the average visits by a certain threshold
+
+`WITH weekly_traffic AS (`<br>
+    `SELECT strftime('%Y-%W', timestamp) AS week, COUNT(*) AS visit_count`<br>
+    `FROM browsing_history`<br>
+    `GROUP BY week`<br>
+`),`<br>
+`stats AS (`<br>
+    `SELECT AVG(visit_count) AS avg_visits FROM weekly_traffic`<br>
+`)`<br>
+`SELECT wt.week, wt.visit_count`<br>
+`FROM weekly_traffic wt, stats s`<br>
+`WHERE wt.visit_count > s.avg_visits * 1.5`<br>
+`ORDER BY wt.visit_count DESC;`<br>
+
+You can ajust the `WHERE wt.visit_count > s.avg_visits * 1.5` to define your own thresholds
+Here we see the week of high activity was 2025-00
+<div style="text-align: center;">
+  <img src="{{ 'workrole/msdisin/images/above_average_browser_activity.png' | relative_url }}" alt="worldsgreatestspies_cover" style="max-width: 80%; height: auto;">
+</div>
+
+Investigate specific weeks by getting a count of the sites visited during that week:
+
+`SELECT url, COUNT(*) AS visit_count`<br>
+`FROM browsing_history`<br>
+`WHERE strftime('%Y-%W', timestamp) = '2025-00'`<br>
+`GROUP BY url`<br>
+`ORDER BY visit_count DESC`<br>
+`LIMIT 5;`<br>
+
+Here we can see the url that was suspicous:
+<div style="text-align: center;">
+  <img src="{{ 'workrole/msdisin/images/investigate_week_by_traffic.png' | relative_url }}" alt="worldsgreatestspies_cover" style="max-width: 80%; height: auto;">
+</div>
+
+<div style="text-align: center;">
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_l9exLe5sG8?si=TA1FQflvVs8oHDW_" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
+</details>
+
+---
+
+# Part 7: Recover deleted files
+
+<section class="move-card" aria-label="Part 7 MOVE">
+<dl>
+<dt><span>M</span> Mission</dt><dd>Recover deleted evidence and assess what it supports.</dd>
+<dt><span>O</span> Objective</dt><dd>Recover missing files and assess the supplied evidence.</dd>
+<dt><span>V</span> Verification</dt><dd>Display a recovered image. For an investigation, support your answer with the recovered records.</dd>
+<dt><span>E</span> Explain / Elaborate</dt><dd>What survived deletion, and what remains unknown about the files or the claims?</dd>
+</dl>
+</section>
+
+## Tools and downloads
+
+`grep`, `xxd`, `dd`, `sha256sum`, Scalpel; gzip extraction and image/PDF viewers.
+
+Scalpel installation:
+
+```bash
+sudo apt install scalpel
+```
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/carving/deleted-picture.img.gz
+```
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/carving/scalpel-jpg.conf
+```
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/carving/dd-cheatsheet.txt
+```
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/carving/scalpel-cheatsheet.txt
+```
+
+<details class="move-help" markdown="1">
+<summary>Part 7 walkthrough</summary>
+
+**First range test:** recover one deleted picture with Scalpel. Deleting a file
+can leave its contents behind until that space is reused. Scalpel searches for
+file signatures to recover those contents. This small filesystem image already
+has a picture deleted from it.
+
+**Step 1:** In the file manager, create a folder named `deleted-picture-test`.
+Open it, then right-click an empty area and open a terminal there.
+
+**Step 2:** Install Scalpel. Wait for installation to finish.
+
+```bash
+sudo apt install scalpel
+```
+
+**Step 3:** Download the filesystem image. Wait for Wget to report success.
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/carving/deleted-picture.img.gz
+```
+
+**Step 4:** Decompress it. Wait for the prompt to return.
+
+```bash
+gunzip deleted-picture.img.gz
+```
+
+**Step 5:** Download the JPEG recovery configuration. Wait for Wget to report success.
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/carving/scalpel-jpg.conf
+```
+
+**Step 6:** Recover the picture. `-c` selects the configuration; `-o` names a new
+output folder. Recovered files are saved outside the source image.
+Wait for Scalpel to finish.
+
+```bash
+scalpel -c scalpel-jpg.conf -o recovered deleted-picture.img
+```
+
+**Step 7:** In the file manager, open `recovered`, then its JPEG subfolder.
+Open the recovered picture. You should see the cover of *The World's Greatest
+Military Spies and Secret Service Agents*. Scalpel gives it a generated filename.
+
+**Step 8:** Open a terminal in that JPEG subfolder. Check the recovered file's hash.
+
+```bash
+sha256sum *.jpg
+```
+
+The hash should be:
+
+```text
+36cf7df21d30068f2e75f04078a2ec2bcb6c37a3c0afb40ff34e82d7447e7614
+```
+
+A matching hash confirms recovery of the original picture's bytes. This first recovery example was confirmed working in CYBER.ORG.
+For another attempt, use a new output folder name in step 6, such as `recovered2`.
+Real deleted files may be overwritten or fragmented, so recovery is not guaranteed.
+
+</details>
+
+### Next investigation: the City Point flash drive
+
+Assess the proposed exhibition caption against recovered photographic evidence.
+
+[Open the City Point flash-drive investigation]({{ 'workrole/msdisin/Grant-flashdrive-move.html' | relative_url }})
+
+### Independent investigations
+
+Examine the published material, recover deleted records, and report findings
+supported by the evidence. Each page provides its own downloadable evidence image;
+the collections contain PDFs and PNGs. These cases do not repeat the recovery walkthrough.
+
+- [Cottingley: the beck photographs]({{ 'workrole/msdisin/Cottingley-investigation.html' | relative_url }})
+- [The observatory dispatch]({{ 'workrole/msdisin/Lunar-dispatch-investigation.html' | relative_url }})
+- [The international press circuit]({{ 'workrole/msdisin/Press-circuit-investigation.html' | relative_url }})
+- [A disk and a laboratory]({{ 'workrole/msdisin/Disk-lead-investigation.html' | relative_url }}) — recovery case; non-graphic violent-crime records.
+- [The payload archive]({{ 'workrole/msdisin/Flight-records-investigation.html' | relative_url }}) — recovery case.
+
+---
+
+# Practice and Explore
+
+<section class="move-card" aria-label="Practice MOVE">
+<dl>
+<dt><span>M</span> Mission</dt><dd>Interpret the supplied text and browser-history evidence.</dd>
+<dt><span>O</span> Objective</dt><dd>Identify the event and code in the text exercises, the most visited site, and a traffic spike.</dd>
+<dt><span>V</span> Verification</dt><dd>Show the identified event and code, and query results supporting the browser-history findings.</dd>
+<dt><span>E</span> Explain / Elaborate</dt><dd>Which source passages or counts support each answer?</dd>
+</dl>
+</section>
+
+## Tools and downloads
+
+`sed`, `grep`, `sort`, `uniq`, `sqlite3`.
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/sedsearch/sed-key.txt
+```
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/sedsearch/The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt
+```
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/Altered_The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt
+```
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/replaced_words.txt
+```
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/mrboyce_traffic_history.db
+```
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/spykid_traffic_history.db
+```
+
+<details class="move-help" markdown="1">
+<summary>Practice guidance</summary>
+
+### Situation 1: use the sed-key to alter the contents of the file to reveal a researchable event:
+ - sed-key:<br>
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingsedsearchsed-keytxt"></span>
+
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/sedsearch/sed-key.txt`
+ - file to alter:<br>
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingsedsearchthe_worlds_greatest_military_spies_and_secret_service_agentstxt"></span>
+
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/sedsearch/The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`
+now use sed -n -f <sed text here> "Name_of_text_to_Change_Here.txt" to reveal the event
+
+### Situation 2: put the "altered words" in order, and use the first letter in each word to develop a code
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingaltered_the_worlds_greatest_military_spies_and_secret_service_agentstxt"></span>
+
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/Altered_The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingreplaced_wordstxt"></span>
+
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/replaced_words.txt`
+
+ - Command to extract top altered words:<br>
+#### `grep -o -w -f replaced_words.txt Altered_The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt | sort | uniq -c | sort -nr`
+
+
+### Situation 3: find the most visited site in the mrboyce_traffic_history.db
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingmrboyce_traffic_historydb"></span>
+
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/mrboyce_traffic_history.db`
+
+
+### Situation 4: find the a spike in the traffic to a site in spykid_traffic_history.db
+<span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingspykid_traffic_historydb-1"></span>
+
+#### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/spykid_traffic_history.db`
+<div style="text-align: center;">
+  <img src="{{ 'workrole/msdisin/images/Ms_Disin Banner.jpg' | relative_url }}" alt="Ms_Disin Banner2" style="max-width: 80%; height: auto;">
+</div>
+
+</details>
