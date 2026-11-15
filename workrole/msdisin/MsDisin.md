@@ -382,6 +382,70 @@ Here we can see the url that was suspicous:
 </div>
 
 ---
+# Part 7: Recover deleted files
+
+**First range test:** recover one deleted picture with Scalpel. Deleting a file
+can leave its contents behind until that space is reused. Scalpel searches for
+file signatures to recover those contents. This small filesystem image already
+has a picture deleted from it.
+
+**Step 1:** In the file manager, create a folder named `deleted-picture-test`.
+Open it, then right-click an empty area and open a terminal there.
+
+**Step 2:** Install Scalpel. Wait for installation to finish.
+
+```bash
+sudo apt install scalpel
+```
+
+**Step 3:** Download the filesystem image. Wait for Wget to report success.
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/carving/deleted-picture.img.gz
+```
+
+**Step 4:** Decompress it. Wait for the prompt to return.
+
+```bash
+gunzip deleted-picture.img.gz
+```
+
+**Step 5:** Download the JPEG recovery configuration. Wait for Wget to report success.
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/carving/scalpel-jpg.conf
+```
+
+**Step 6:** Recover the picture. `-c` selects the configuration; `-o` names a new
+output folder. Recovered files are saved outside the source image.
+Wait for Scalpel to finish.
+
+```bash
+scalpel -c scalpel-jpg.conf -o recovered deleted-picture.img
+```
+
+**Step 7:** In the file manager, open `recovered`, then its JPEG subfolder.
+Open the recovered picture. You should see the cover of *The World's Greatest
+Military Spies and Secret Service Agents*. Scalpel gives it a generated filename.
+
+**Step 8:** Open a terminal in that JPEG subfolder. Check the recovered file's hash.
+
+```bash
+sha256sum *.jpg
+```
+
+The hash should be:
+
+```text
+36cf7df21d30068f2e75f04078a2ec2bcb6c37a3c0afb40ff34e82d7447e7614
+```
+
+A matching hash confirms recovery of the original picture's bytes. This example
+was checked locally; the full CYBER.ORG walkthrough is awaiting this range test.
+For another attempt, use a new output folder name in step 6, such as `recovered2`.
+Real deleted files may be overwritten or fragmented, so recovery is not guaranteed.
+
+---
 # Practice and Explore      
 
 ### Situation 1: use the sed-key to alter the contents of the file to reveal a researchable event:    
