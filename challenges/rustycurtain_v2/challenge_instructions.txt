@@ -40,6 +40,8 @@ Copy the inventory text, including the assigned VM addresses.
 1. Open this local file in VS Code:
 workrole/cybercartographer/cyberorg_classroom_targets_dirty.txt
 
+If it is missing, create a text file with that exact name in that folder.
+
 2. Replace its contents with the fresh inventory and save.
 
 3. In that cybercartographer folder, create the clean IP list:
