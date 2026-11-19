@@ -7,6 +7,8 @@ import sys
 import zipfile
 import shutil
 import logging
+import hashlib
+from pathlib import Path
 
 # -----------------------------------------------------------------------------
 # Logging Setup
@@ -18,19 +20,15 @@ logging.basicConfig(
 )
 
 # -----------------------------------------------------------------------------
-# Git Repo Constants
+# Box ZIPs beside this script
 # -----------------------------------------------------------------------------
-GITHUB_REPO_URL = "https://github.com/jboyce1/ppsCTF.git"
-
-# sudo often has no controlling terminal; getlogin() fails in that case.
-CURRENT_USER = os.environ.get('SUDO_USER') or getpass.getuser()
-LOCAL_REPO_PATH = f"/home/{CURRENT_USER}/ppsCTF"
+BOX_HASHES = {
+    "nikoli.zip": "6853f3ec5040cb89438f751abd0ea920033c9352197573f16514140761a76b93",
+    "yuri.zip": "082d30569fe382f320f2e9691819d0f71cfa29993c896781776a2cd05c7fb97b",
+}
 
 # Challenges folder containing the ZIP files
 CHALLENGES_DIR = os.path.dirname(os.path.abspath(__file__))
-
-NIKOLI_ZIP = os.path.join(CHALLENGES_DIR, "nikoli.zip")   # has ftp/ (somewhere)
-YURI_ZIP   = os.path.join(CHALLENGES_DIR, "yuri.zip")     # has Desktop/ & firefox/ (somewhere)
 
 # -----------------------------------------------------------------------------
 # User/Password Constants
@@ -70,18 +68,27 @@ def run_command(cmd, exit_on_fail=True):
     return proc.stdout
 
 # -----------------------------------------------------------------------------
-# Git Clone/Update
+# ZIP verification
 # -----------------------------------------------------------------------------
-def clone_or_update_repo():
-    """
-    Clone the GitHub repo if not present. Otherwise, pull the latest changes.
-    """
-    if not os.path.isdir(LOCAL_REPO_PATH):
-        logging.info(f"Cloning repository from {GITHUB_REPO_URL} to {LOCAL_REPO_PATH}...")
-        run_command(f"git clone {GITHUB_REPO_URL} {LOCAL_REPO_PATH}")
-    else:
-        logging.info(f"Repository already at {LOCAL_REPO_PATH}. Pulling latest changes...")
-        run_command(f"git -C {LOCAL_REPO_PATH} pull")
+def prepare_archives(script_dir):
+    """Stop before setup if a box ZIP is missing or differs from the tested ZIP."""
+    script_dir = Path(script_dir)
+    for filename, expected_hash in BOX_HASHES.items():
+        archive = script_dir / filename
+        if not archive.is_file():
+            raise RuntimeError(f'{filename}: missing from {script_dir}')
+        if hashlib.sha256(archive.read_bytes()).hexdigest() != expected_hash:
+            raise RuntimeError(f'{filename}: checksum mismatch')
+    return script_dir
+
+
+def prompt_set_root_password():
+    first = getpass.getpass('Enter NEW root password: ')
+    second = getpass.getpass('Confirm NEW root password: ')
+    if not first or first != second:
+        raise RuntimeError('Root passwords are empty or do not match')
+    subprocess.run(['chpasswd'], input=f'root:{first}\n', text=True, check=True)
+    logging.info('Root password updated.')
 
 # -----------------------------------------------------------------------------
 # User Management
@@ -304,17 +311,20 @@ def setup_ssh_on_random_port():
 # Main
 # -----------------------------------------------------------------------------
 def main():
+    if os.geteuid() != 0:
+        raise RuntimeError('Run this script with sudo.')
+    archive_folder = prepare_archives(CHALLENGES_DIR)
     # 1) Use the staged ZIPs beside this script; create users without sudo access.
     create_user(NIKOLI_USER, NIKOLI_PASS)
     create_user(YURI_USER, YURI_PASS)
 
     # 2) Set up FTP on random port, then extract nikoli.zip => /srv
     ftp_port = setup_ftp_on_random_port()
-    extract_nikoli_zip(NIKOLI_ZIP, "/srv/ftp")
+    extract_nikoli_zip(str(archive_folder / 'nikoli.zip'), "/srv/ftp")
 
     # 3) Set up SSH on random port, then extract yuri.zip => Desktop & firefox
     ssh_port = setup_ssh_on_random_port()
-    extract_yuri_zip(YURI_ZIP, YURI_USER)
+    extract_yuri_zip(str(archive_folder / 'yuri.zip'), YURI_USER)
 
     # 5) Final info
     logging.info("---------------------------------------------------")
@@ -323,6 +333,7 @@ def main():
     logging.info(f"SSH for user '{YURI_USER}' on high port {ssh_port} (pass: {YURI_PASS})")
     logging.info("Users 'nikoli' and 'yuri' have no sudo privileges.")
     logging.info("---------------------------------------------------")
+    prompt_set_root_password()
 
 if __name__ == "__main__":
     main()

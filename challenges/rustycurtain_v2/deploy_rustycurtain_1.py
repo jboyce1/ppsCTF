@@ -4,7 +4,7 @@ CTF RustyCurtain Deployer (FTP/Telnet/SSH) — clean, predictable, and testable.
 
 What it does:
 - Requires running as root (sudo).
-- Uses the five ZIPs beside this script, so a staged v2 copy can be tested.
+- Verifies the three ZIPs beside this script before setup.
 - Creates users: ivan, tanya, boris and sets passwords.
 - Extracts ivan.zip -> /srv/ftp (anonymous FTP drop)
          tanya.zip -> /home/tanya/Desktop
@@ -26,6 +26,7 @@ import logging
 import zipfile
 import shutil
 import getpass
+import hashlib
 from pathlib import Path
 
 # -----------------------------------------------------------------------------
@@ -40,7 +41,11 @@ logging.basicConfig(
 # -----------------------------------------------------------------------------
 # Config
 # -----------------------------------------------------------------------------
-GITHUB_REPO_URL = "https://github.com/jboyce1/ppsCTF.git"
+BOX_HASHES = {
+    "ivan.zip": "99b735014a69b2d50e0e2ab00ff5aa328b7734c0315f7019f6517687cc81c8bf",
+    "tanya.zip": "2f0799e2d211666b221ea7113e5d42c1e9237259e258e1d050d27ed82da562a5",
+    "boris.zip": "98460b330021da6de1b5763ecd84cb6459d3949ac5558a2327dffedb74eae4ba",
+}
 
 USERS = [
     {
@@ -94,13 +99,15 @@ def get_invoking_user_home():
     home = str(Path("~" + user).expanduser())
     return user, home
 
-def clone_or_pull_repo(local_repo_path: str):
-    if not os.path.isdir(local_repo_path):
-        logging.info("Cloning %s -> %s", GITHUB_REPO_URL, local_repo_path)
-        run_command(["git", "clone", GITHUB_REPO_URL, local_repo_path])
-    else:
-        logging.info("Repo exists at %s. Pulling latest...", local_repo_path)
-        run_command(["git", "-C", local_repo_path, "pull"])
+def prepare_archives(script_dir: Path) -> Path:
+    """Stop before setup if a box ZIP is missing or differs from the tested ZIP."""
+    for filename, expected_hash in BOX_HASHES.items():
+        archive = script_dir / filename
+        if not archive.is_file():
+            raise RuntimeError(f'{filename}: missing from {script_dir}')
+        if hashlib.sha256(archive.read_bytes()).hexdigest() != expected_hash:
+            raise RuntimeError(f'{filename}: checksum mismatch')
+    return script_dir
 
 def user_exists(username: str) -> bool:
     try:
@@ -309,13 +316,10 @@ def main():
     require_root()
 
     invoking_user, invoking_home = get_invoking_user_home()
-    challenges_path = str(Path(__file__).resolve().parent)
+    challenges_path = str(prepare_archives(Path(__file__).resolve().parent))
 
     logging.info("Invoking user: %s", invoking_user)
     logging.info("Challenge ZIP path: %s", challenges_path)
-
-    # 0) Prompt to rotate root password (local) and block root SSH regardless
-    prompt_set_root_password()
 
     # 1) Create/update users
     for u in USERS:
@@ -350,6 +354,7 @@ def main():
     logging.info("FTP: anonymous -> /srv/ftp")
     logging.info("Telnet: enabled on port 23 (use tanya creds)")
     logging.info("SSH: password auth enabled (use boris creds); root SSH disabled.")
+    prompt_set_root_password()
 
 if __name__ == "__main__":
     main()
