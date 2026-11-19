@@ -1,0 +1,67 @@
+s/battle doctrine/mutually assured destruction/p
+s/warfares/barriers/p
+s/leadership/unites/p
+s/warlords/atomic bomb/p
+s/hills beyond/Apollo landing/p
+s/this wise/that wall/p
+s/entirely/Moscow/p
+s/thoughtful/reform/p
+s/armories/force/p
+s/troopers/divisions/p
+s/general officers/statesman/p
+s/commanders/leaders/p
+s/enemies within/obstacle/p
+s/successfully/freedom/p
+s/embattled/mutually assured destruction/p
+s/tactical strategy/dead hand/p
+s/to the State/Mr. Gorbachev/p
+s/campaign plan/iron curtain/p
+s/siege doctrine/nuclear winter/p
+s/militarized/propaganda warfare/p
+s/chief officer/supreme leader/p
+s/war council/Kremlin security council/p
+s/warfront/cold war front/p
+s/neglected/tear down /p
+s/military engagements/arms race/p
+s/hostile actions/political subversion/p
+s/enemy states/warsaw pact nations/p
+s/conflict zone/iron curtain border/p
+s/mobilized/space race/p
+s/interventionist doctrine/containment strategy/p
+s/defensive posture/nuclear deterrence/p
+s/offensive maneuvers/regime destabilization/p
+s/covert operations/clandestine actions/p
+s/propaganda efforts/psychological operations/p
+s/restricted zones/checkpoint Charlie/p
+s/war games/espionage exercises/p
+s/special forces/KGB operatives/p
+s/reconnaissance mission/spy satellite launch/p
+s/battle formations/defensive missile arrays/p
+s/fortifications/berlin blockade/p
+s/strategic alliances/NATO vs. Warsaw Pact/p
+s/peacekeeping efforts/strategic deception/p
+s/tactical strategy/dead hand/p
+s/campaign plan/iron curtain/p
+s/siege doctrine/nuclear winter/p
+s/militarized/propaganda warfare/p
+s/chief officer/supreme leader/p
+s/war council/Kremlin security council/p
+s/warfront/cold war front/p
+s/military engagements/arms race/p
+s/hostile actions/political subversion/p
+s/enemy states/warsaw pact nations/p
+s/conflict zone/iron curtain border/p
+s/mobilized/space race/p
+s/interventionist doctrine/containment strategy/p
+s/defensive posture/nuclear deterrence/p
+s/offensive maneuvers/regime destabilization/p
+s/covert operations/clandestine actions/p
+s/propaganda efforts/psychological operations/p
+s/restricted zones/checkpoint Charlie/p
+s/war games/espionage exercises/p
+s/special forces/KGB operatives/p
+s/reconnaissance mission/spy satellite launch/p
+s/battle formations/defensive missile arrays/p
+s/fortifications/berlin blockade/p
+s/strategic alliances/NATO vs. Warsaw Pact/p
+s/peacekeeping efforts/strategic deception/p

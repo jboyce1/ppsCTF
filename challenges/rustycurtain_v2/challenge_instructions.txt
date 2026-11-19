@@ -1,0 +1,45 @@
+RUSTY CURTAIN V2 — QUICK SETUP
+
+Use two clean Ubuntu range VMs per team. Keep the old rustycurtain folder.
+Run one command at a time and check its result before the next.
+If ppsCTF already exists on a VM, use this instead of the clone command:
+sudo git -C ppsCTF pull --ff-only
+
+COMPUTER 1 — Ivan, Tanya, Boris
+
+1. Open a terminal in your home folder. Clone the published challenge files:
+sudo git clone https://github.com/jboyce1/ppsCTF.git
+
+2. Enter this challenge folder:
+cd ppsCTF/challenges/rustycurtain_v2
+
+3. Check that all five ZIPs match the tested copies. Stop if any line fails:
+sha256sum -c ZIP_SHA256SUMS.txt
+
+4. Deploy Computer 1. Set a new LOCAL root password when prompted:
+sudo python3 deploy_rustycurtain_1.py
+
+5. Record this VM's range IP.
+
+COMPUTER 2 — Nikoli, Yuri
+
+1. Open a terminal in your home folder. Clone the published challenge files:
+sudo git clone https://github.com/jboyce1/ppsCTF.git
+
+2. Enter this challenge folder:
+cd ppsCTF/challenges/rustycurtain_v2
+
+3. Check the ZIPs. Stop if any line fails:
+sha256sum -c ZIP_SHA256SUMS.txt
+
+4. Deploy Computer 2:
+sudo python3 deploy_rustycurtain_2.py
+
+5. Record this VM's range IP and the FTP and SSH high ports printed at the end.
+
+BEFORE STUDENTS START
+
+Refresh the classroom target list with the current VM IPs, then use
+RANGE_TEST.md on your instructor computer to test logins and flags from Kali.
+Keep the instructor answer keys on your computer, away from the range VMs.
+Use 7z x for the password-protected inner ZIPs.
