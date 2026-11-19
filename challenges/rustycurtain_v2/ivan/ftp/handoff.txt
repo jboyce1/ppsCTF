@@ -1,0 +1,4 @@
+Tanya relay account
+User: tanya
+Passphrase: L3tsG0
+Line: terminal 23 on the same host

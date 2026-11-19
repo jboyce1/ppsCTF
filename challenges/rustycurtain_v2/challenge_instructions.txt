@@ -1,45 +1,57 @@
 RUSTY CURTAIN V2 — QUICK SETUP
 
-Use two clean Ubuntu range VMs per team. Keep the old rustycurtain folder.
-Run one command at a time and check its result before the next.
-If ppsCTF already exists on a VM, use this instead of the clone command:
-sudo git -C ppsCTF pull --ff-only
+Use TWO CLEAN Ubuntu target VMs. Run these commands on EACH VM.
+Keep the repository under /root so students cannot read setup notes.
 
-COMPUTER 1 — Ivan, Tanya, Boris
+1. Open a terminal. Become root:
+sudo -i
 
-1. Open a terminal in your home folder. Clone the published challenge files:
-sudo git clone https://github.com/jboyce1/ppsCTF.git
+2. Download the challenge:
+git clone https://github.com/jboyce1/ppsCTF.git
 
-2. Enter this challenge folder:
-cd ppsCTF/challenges/rustycurtain_v2
+If /root/ppsCTF already exists, use this command instead:
+git -C /root/ppsCTF pull --ff-only
 
-3. Check that all five ZIPs match the tested copies. Stop if any line fails:
+3. Enter the challenge folder:
+cd /root/ppsCTF/challenges/rustycurtain_v2
+
+4. Check the ZIPs. All five lines must say OK:
 sha256sum -c ZIP_SHA256SUMS.txt
 
-4. Deploy Computer 1. Set a new LOCAL root password when prompted:
-sudo python3 deploy_rustycurtain_1.py
+COMPUTER 1 ONLY — Ivan, Tanya, Boris
 
-5. Record this VM's range IP.
+5. Deploy. Set a new LOCAL root password when prompted:
+python3 deploy_rustycurtain_1.py
 
-COMPUTER 2 — Nikoli, Yuri
+6. Write down this VM's range IP.
 
-1. Open a terminal in your home folder. Clone the published challenge files:
-sudo git clone https://github.com/jboyce1/ppsCTF.git
+COMPUTER 2 ONLY — Nikoli, Yuri
 
-2. Enter this challenge folder:
-cd ppsCTF/challenges/rustycurtain_v2
+5. Deploy:
+python3 deploy_rustycurtain_2.py
 
-3. Check the ZIPs. Stop if any line fails:
-sha256sum -c ZIP_SHA256SUMS.txt
-
-4. Deploy Computer 2:
-sudo python3 deploy_rustycurtain_2.py
-
-5. Record this VM's range IP and the FTP and SSH high ports printed at the end.
+6. Write down this VM's range IP and the printed FTP and SSH ports.
 
 BEFORE STUDENTS START
 
-Refresh the classroom target list with the current VM IPs, then use
-RANGE_TEST.md on your instructor computer to test logins and flags from Kali.
-Keep the instructor answer keys on your computer, away from the range VMs.
-Use 7z x for the password-protected inner ZIPs.
+On your INSTRUCTOR computer, open the CYBER.ORG classroom inventory.
+Copy the inventory text, including the assigned VM addresses.
+
+1. Open this local file in VS Code:
+workrole/cybercartographer/cyberorg_classroom_targets_dirty.txt
+
+2. Replace its contents with the fresh inventory and save.
+
+3. In that cybercartographer folder, create the clean IP list:
+python3 cyberorg_classroom_targets_cleaner.py
+
+4. At the publish prompt, type y. Paste the clean output into the GitHub
+editor it opens and commit it. Do this after the VM addresses are assigned.
+The output file is cyberorg_classroom_targets.txt.
+
+5. Give students this exact command for Kali:
+wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cyberorg_classroom_targets.txt
+
+Give students Computer 2's FTP and SSH ports too. From Kali, use
+RANGE_TEST.md and the private answer key to test access and flags.
+Leave the repository in /root. Keep instructor answer keys off the VMs.

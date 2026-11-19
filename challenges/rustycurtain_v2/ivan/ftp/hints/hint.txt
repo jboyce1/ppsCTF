@@ -1,2 +1,0 @@
-you must use telnet for the next layer of this box (same IP address, different user) 
-https://jboyce1.github.io/ppsCTF/classes/CyberCartographer/CyberCartographer

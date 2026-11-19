@@ -27,9 +27,7 @@ def verify(scalpel):
     with tempfile.TemporaryDirectory(prefix='ctf-recovery-check-') as tmp:
         tmp = Path(tmp)
         for box, entry in key.items():
-            place = 'ftp' if box in {'ivan', 'nikoli'} else 'Desktop'
-            folder = ROOT / box / place / 'recovery'
-            archive = folder / 'recovery.img.gz'
+            archive = ROOT / entry['artifact']
             packed = archive.read_bytes()
             assert digest(packed) == entry['archive_sha256'], box
             raw = gzip.decompress(packed)
@@ -42,7 +40,7 @@ def verify(scalpel):
                                      check=True, capture_output=True, text=True).stdout
             assert all(name not in listing for name in entry['deleted_jpeg_sha256']), box
             recovered = tmp / f'{box}-recovered'
-            subprocess.run([scalpel, '-c', str(folder / 'scalpel-jpg.conf'),
+            subprocess.run([scalpel, '-c', str(ROOT / 'instructor/scalpel-jpg.conf'),
                             '-o', str(recovered), str(image)], check=True, capture_output=True)
             pictures = list(recovered.rglob('*.jpg'))
             actual = sorted(digest(p.read_bytes()) for p in pictures)

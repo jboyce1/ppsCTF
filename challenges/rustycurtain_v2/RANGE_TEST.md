@@ -22,7 +22,7 @@ computer; they are excluded from GitHub.
    for the service checks to finish:
 
    ```bash
-   sudo python3 deploy_rustycurtain_1.py
+   python3 deploy_rustycurtain_1.py
    ```
 
 4. On Computer 2, open a terminal in its challenge folder. Confirm the same
@@ -41,7 +41,7 @@ computer; they are excluded from GitHub.
 6. Run Computer 2 setup. Record its printed high FTP and SSH ports:
 
    ```bash
-   sudo python3 deploy_rustycurtain_2.py
+   python3 deploy_rustycurtain_2.py
    ```
 
 7. From a separate Kali VM, scan Computer 1. Replace `<VM1_IP>` with the
@@ -64,14 +64,14 @@ computer; they are excluded from GitHub.
    account through high-port SSH. Confirm the browser database is visible in
    Yuri's Firefox folder.
 
-10. Follow each box's `recovery/0ReadMe.txt` from Kali. For every box, confirm
+10. Find each box's `.img.gz` evidence file from Kali. For every box, confirm
    the image downloads or copies, `gunzip` expands it, Scalpel finds the
    expected number of JPEGs, one picture opens with a readable flag, and the
    flag matches the private instructor key. Expected JPEG counts are Ivan 1,
    Tanya 1, Nikoli 2, Boris 2, Yuri 3.
 
-11. Work through the existing puzzle files as a student would. Use the supplied
-   readmes for the sedsearch, spacerace, fedcount, browser, and diff tasks.
+11. Work through the existing puzzle files as a student would. There are no
+   walkthroughs or tool instructions on the targets.
    Verify the six encrypted archives open with 7-Zip, and that Yuri's diff
    yields twelve changed characters. Keep notes on any command or clue that
    fails on the range.
