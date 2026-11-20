@@ -77,15 +77,11 @@ Download draw.io:
 
 **Short form — choose either form:**
 
-```bash
-wget -L https://github.com/jgraph/drawio-desktop/releases/download/v29.3.6/drawio-x86_64-29.3.6.AppImage
-```
+<div class="terminal lesson-command"><pre><code>wget -L https://github.com/jgraph/drawio-desktop/releases/download/v29.3.6/drawio-x86_64-29.3.6.AppImage</code></pre></div>
 
 **Long form — same result:**
 
-```bash
-wget --relative https://github.com/jgraph/drawio-desktop/releases/download/v29.3.6/drawio-x86_64-29.3.6.AppImage
-```
+<div class="terminal lesson-command"><pre><code>wget --relative https://github.com/jgraph/drawio-desktop/releases/download/v29.3.6/drawio-x86_64-29.3.6.AppImage</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -93,15 +89,11 @@ wget --relative https://github.com/jgraph/drawio-desktop/releases/download/v29.3
 
 Allow the downloaded file to run:
 
-```bash
-chmod +x drawio-x86_64-29.3.6.AppImage
-```
+<div class="terminal lesson-command"><pre><code>chmod +x drawio-x86_64-29.3.6.AppImage</code></pre></div>
 
 Launch draw.io:
 
-```bash
-./drawio-x86_64-29.3.6.AppImage
-```
+<div class="terminal lesson-command"><pre><code>./drawio-x86_64-29.3.6.AppImage</code></pre></div>
 
 ## Part 1b: Prepare the shared folder and template
 
@@ -111,15 +103,11 @@ Download the template into this folder:
 
 **Short form — choose either form:**
 
-```bash
-wget -O team-network-map.drawio https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/CyberTacticsFest_Scenerio_Base.drawio
-```
+<div class="terminal lesson-command"><pre><code>wget -O team-network-map.drawio https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/CyberTacticsFest_Scenerio_Base.drawio</code></pre></div>
 
 **Long form — same result:**
 
-```bash
-wget --output-document=team-network-map.drawio https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/CyberTacticsFest_Scenerio_Base.drawio
-```
+<div class="terminal lesson-command"><pre><code>wget --output-document=team-network-map.drawio https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/CyberTacticsFest_Scenerio_Base.drawio</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -127,9 +115,7 @@ wget --output-document=team-network-map.drawio https://raw.githubusercontent.com
 
 Find the server's IPv4 address:
 
-```bash
-ip -br -4 addr
-```
+<div class="terminal lesson-command"><pre><code>ip -br -4 addr</code></pre></div>
 
 Use the address on the interface that reaches your teammates, without the `/prefix`. Do not use the loopback address `127.0.0.1`. Share the server IP and chosen port with your team. On the CYBER.ORG range, machines may be on different subnets; use the range IP that teammates can reach. If a teammate cannot connect, check the IP, port, server terminal, and range connectivity with your instructor.
 
@@ -137,9 +123,7 @@ Use the address on the interface that reaches your teammates, without the `/pref
 
 Open a terminal in the `teamshare` folder. Start the download share:
 
-```bash
-python3 -m http.server 8080
-```
+<div class="terminal lesson-command"><pre><code>python3 -m http.server 8080</code></pre></div>
 
 Keep this terminal open. Teammates open `http://<host_ip>:8080` in their browsers, replacing `<host_ip>` with the server's reachable IP. Download `team-network-map.drawio` using **Save link as**, then open it in draw.io.
 
@@ -149,29 +133,21 @@ Python's basic HTTP server lets teammates browse and download files; it does not
 
 On the fileserver machine, update the package list:
 
-```bash
-sudo apt update
-```
+<div class="terminal lesson-command"><pre><code>sudo apt update</code></pre></div>
 
 When that finishes, install miniserve:
 
-```bash
-sudo apt install miniserve
-```
+<div class="terminal lesson-command"><pre><code>sudo apt install miniserve</code></pre></div>
 
 Open a terminal in the `teamshare` folder. Start miniserve:
 
 **Short form — choose either form:**
 
-```bash
-miniserve . -p 8080 -u -U
-```
+<div class="terminal lesson-command"><pre><code>miniserve . -p 8080 -u -U</code></pre></div>
 
 **Long form — same result:**
 
-```bash
-miniserve . --port 8080 --upload-files --mkdir
-```
+<div class="terminal lesson-command"><pre><code>miniserve . --port 8080 --upload-files --mkdir</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -197,9 +173,7 @@ Open this example to see how your instructor used draw.io during training. Look 
 
 From a range terminal, download the same file:
 
-```bash
-wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cctc_network_maps.drawio
-```
+<div class="terminal lesson-command"><pre><code>wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cctc_network_maps.drawio</code></pre></div>
 
 Open `cctc_network_maps.drawio` in draw.io to explore the example.
 
@@ -222,33 +196,25 @@ Everyone practices identifying the network from their own machine. You will need
 
 Show your IPv4 address and prefix:
 
-```bash
-ip -br -4 addr
-```
+<div class="terminal lesson-command"><pre><code>ip -br -4 addr</code></pre></div>
 
 Find the interface you are using. What is its IP address? What prefix follows the `/`?
 
 Show your routes:
 
-```bash
-ip -4 route
-```
+<div class="terminal lesson-command"><pre><code>ip -4 route</code></pre></div>
 
 Find the connected network and its prefix. Find the default gateway after `default via`. A default route is a way out of your network; it does not mean every destination is part of your local subnet.
 
 Show all routing tables:
 
-```bash
-ip -4 route show table all
-```
+<div class="terminal lesson-command"><pre><code>ip -4 route show table all</code></pre></div>
 
 Compare the local addresses and connected routes with the previous output. Which route describes the network you need to discover?
 
 Show cached neighbors:
 
-```bash
-ip neigh
-```
+<div class="terminal lesson-command"><pre><code>ip neigh</code></pre></div>
 
 These are neighbors your machine has learned about, not a complete inventory. Repeat these checks when you move to another box; its network may differ.
 
@@ -266,40 +232,31 @@ Write a host discovery command based on your routes. `-n` skips DNS lookups; `-s
 
 If the scenario and output identify `10.15.0.0/17`, a suitable command is:
 
-```bash
-nmap -sn 10.15.0.0/17
-```
+<div class="terminal lesson-command"><pre><code>nmap -sn 10.15.0.0/17</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
 | `-sn` | — | Host discovery; disable port scan. |
-
 
 If they identify `10.15.0.0/16`, use that prefix instead. Choose based on the network you have been assigned, rather than copying the example's prefix.
 
 Save the output so your team can use it later:
 
-```bash
-nmap -sn 10.15.0.0/17 > discovery-report.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -sn 10.15.0.0/17 &gt; discovery-report.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
 | `-sn` | — | Host discovery; disable port scan. |
-
 
 `>` writes the output to a file in your current folder and replaces an existing file with that name. The results appear in the file instead of the terminal. Wait for the prompt to return, then open the file.
 
 To keep an earlier scan from the same day, use the time in the filename. For a scan at 15:49:
 
-```bash
-nmap -sn 10.15.0.0/17 > discovery-report_1549.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -sn 10.15.0.0/17 &gt; discovery-report_1549.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
 | `-sn` | — | Host discovery; disable port scan. |
-
 
 ## Step 4: Use the current classroom list on CYBER.ORG
 
@@ -309,15 +266,11 @@ Open a terminal in your team's shared folder. Download the instructor's current 
 
 **Short form — choose either form:**
 
-```bash
-wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cyberorg_classroom_targets.txt
-```
+<div class="terminal lesson-command"><pre><code>wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cyberorg_classroom_targets.txt</code></pre></div>
 
 **Long form — same result:**
 
-```bash
-wget --output-document=cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cyberorg_classroom_targets.txt
-```
+<div class="terminal lesson-command"><pre><code>wget --output-document=cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cyberorg_classroom_targets.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -327,15 +280,11 @@ If the instructor supplies a newer copy through the team fileshare, use that cop
 
 Open a terminal in the folder containing the file. Inspect it:
 
-```bash
-head cyberorg_classroom_targets.txt
-```
+<div class="terminal lesson-command"><pre><code>head cyberorg_classroom_targets.txt</code></pre></div>
 
 Run discovery and save a readable report. `-iL` reads the classroom targets; `-oN` saves the report:
 
-```bash
-nmap -n -sn -iL cyberorg_classroom_targets.txt -oN discovery-report.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -n -sn -iL cyberorg_classroom_targets.txt -oN discovery-report.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -344,20 +293,15 @@ nmap -n -sn -iL cyberorg_classroom_targets.txt -oN discovery-report.txt
 | `-iL` | — | Read targets from a file. |
 | `-oN` | — | Save normal-format output. |
 
-
 After discovery finishes, extract only the responding IP addresses:
 
-```bash
-awk '/^Nmap scan report for / {ip=$NF} /Host is up/ {print ip}' discovery-report.txt > hostsup.txt
-```
+<div class="terminal lesson-command"><pre><code>awk '/^Nmap scan report for / {ip=$NF} /Host is up/ {print ip}' discovery-report.txt &gt; hostsup.txt</code></pre></div>
 
 `awk` remembers each reported IP and prints it when the next line says `Host is up`. `>` saves that list, replacing an older `hostsup.txt`.
 
 Display the saved list:
 
-```bash
-cat hostsup.txt
-```
+<div class="terminal lesson-command"><pre><code>cat hostsup.txt</code></pre></div>
 
 You should see one responding IP per line, with no headings, latency, or scan summary. This file can be used with `-iL` in later scans. To keep a timed copy, use a filename such as `hostsup_1549.txt` in the extraction command.
 
@@ -391,9 +335,7 @@ Open a terminal in the folder containing your team's `hostsup.txt`.
 
 Scan SSH on port 22:
 
-```bash
-nmap -p 22 --script ssh-auth-methods --script-args="ssh.user=<username>" -iL hostsup.txt -oN ssh_password_results.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -p 22 --script ssh-auth-methods --script-args="ssh.user=&lt;username&gt;" -iL hostsup.txt -oN ssh_password_results.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -402,7 +344,6 @@ nmap -p 22 --script ssh-auth-methods --script-args="ssh.user=<username>" -iL hos
 | — | `--script-args` | Provide arguments to NSE scripts. |
 | `-iL` | — | Read targets from a file. |
 | `-oN` | — | Save normal-format output. |
-
 
 Replace `<username>` with the classroom username supplied by the instructor. `ssh.user` is a username to test, not a wildcard search for users. Authentication methods can depend on the account.
 
@@ -429,9 +370,7 @@ Reference: [Nmap ssh-auth-methods](https://nmap.org/nsedoc/scripts/ssh-auth-meth
 
 Scan for Telnet on its usual port:
 
-```bash
-nmap -p 23 -iL hostsup.txt -oN telnet_results.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -p 23 -iL hostsup.txt -oN telnet_results.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -439,12 +378,9 @@ nmap -p 23 -iL hostsup.txt -oN telnet_results.txt
 | `-iL` | — | Read targets from a file. |
 | `-oN` | — | Save normal-format output. |
 
-
 This first scan finds open TCP port 23 without waiting for version detection. A `telnet` label based only on the port number is not proof of the service. For each IP with port 23 marked `open`, check its service:
 
-```bash
-nmap -sV -p 23 <targetIP> -oN telnet_service_results.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -sV -p 23 &lt;targetIP&gt; -oN telnet_service_results.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -452,38 +388,27 @@ nmap -sV -p 23 <targetIP> -oN telnet_service_results.txt
 | `-p` | — | Only scan specified ports. |
 | `-oN` | — | Save normal-format output. |
 
-
 Replace `<targetIP>` with one IP from `telnet_results.txt`. An unidentified service still needs manual validation. If this check times out, mark service identification **INCOMPLETE**, not absent. Use a different result filename when checking another host to preserve earlier evidence.
 
 Connect to validate the Telnet service and assigned login:
 
-```bash
-telnet <targetIP>
-```
+<div class="terminal lesson-command"><pre><code>telnet &lt;targetIP&gt;</code></pre></div>
 
 If the client is missing, update the package list:
 
-```bash
-sudo apt update
-```
+<div class="terminal lesson-command"><pre><code>sudo apt update</code></pre></div>
 
 Then install it:
 
-```bash
-sudo apt install telnet
-```
+<div class="terminal lesson-command"><pre><code>sudo apt install telnet</code></pre></div>
 
 Use the assigned credentials if prompted. If you reach a shell, check the machine name:
 
-```bash
-hostname
-```
+<div class="terminal lesson-command"><pre><code>hostname</code></pre></div>
 
 Leave the shell when finished:
 
-```bash
-exit
-```
+<div class="terminal lesson-command"><pre><code>exit</code></pre></div>
 
 Add or update the computer on the map with its IP, Telnet port, and what you confirmed: service detected, login prompt reached, or successful login. Share `telnet_results.txt`.
 
@@ -509,9 +434,7 @@ Add or update the computer on the map with its IP, Telnet port, and what you con
 
 Scan the usual FTP port and check anonymous access:
 
-```bash
-nmap -p 21 -sV --script ftp-anon -iL hostsup.txt -oN ftp_results.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -p 21 -sV --script ftp-anon -iL hostsup.txt -oN ftp_results.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -521,64 +444,45 @@ nmap -p 21 -sV --script ftp-anon -iL hostsup.txt -oN ftp_results.txt
 | `-iL` | — | Read targets from a file. |
 | `-oN` | — | Save normal-format output. |
 
-
 `--script ftp-anon` checks whether anonymous login is allowed. An FTP service is worth mapping even when it requires a login.
 
 Connect to one FTP host:
 
-```bash
-ftp <targetIP>
-```
+<div class="terminal lesson-command"><pre><code>ftp &lt;targetIP&gt;</code></pre></div>
 
 If the client is missing, update the package list:
 
-```bash
-sudo apt update
-```
+<div class="terminal lesson-command"><pre><code>sudo apt update</code></pre></div>
 
 Then install it:
 
-```bash
-sudo apt install ftp
-```
+<div class="terminal lesson-command"><pre><code>sudo apt install ftp</code></pre></div>
 
 When anonymous login is offered, use `anonymous` as the username and press Enter for the password. Otherwise use assigned credentials.
 
 List the available files:
 
-```bash
-ls
-```
+<div class="terminal lesson-command"><pre><code>ls</code></pre></div>
 
 Download a file you want to inspect:
 
-```bash
-get <filename>
-```
+<div class="terminal lesson-command"><pre><code>get &lt;filename&gt;</code></pre></div>
 
 If `ls` shows a subdirectory such as `hints`, use the FTP prompt to enter it.
 
-<div class="terminal">
-cd hints
-</div>
+<div class="terminal lesson-command"><pre><code>cd hints</code></pre></div>
 
 List the files and use `get` as above. For a database, image, or archive, select binary mode before the transfer so the client preserves the file bytes.
 
-<div class="terminal">
-binary
-</div>
+<div class="terminal lesson-command"><pre><code>binary</code></pre></div>
 
 Disconnect:
 
-```bash
-bye
-```
+<div class="terminal lesson-command"><pre><code>bye</code></pre></div>
 
 At the Kali shell, open the downloaded file. For example, if you downloaded `hint.txt`:
 
-<div class="terminal">
-cat hint.txt
-</div>
+<div class="terminal lesson-command"><pre><code>cat hint.txt</code></pre></div>
 
 One computer may offer several services on the same IP. Check the service and port in your scan before choosing which client to open. If a classroom handoff points to Telnet on the same computer, go to Part 4 and use the same IP with the assigned classroom account.
 
@@ -597,9 +501,7 @@ Add or update the computer on the map with its IP, FTP port, and whether anonymo
 
 The classroom generators choose ports between 21000 and 24000. Search the exercise's wider range for services:
 
-```bash
-nmap -p 20000-24000 -iL hostsup.txt -oN high_port_scan_results.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -p 20000-24000 -iL hostsup.txt -oN high_port_scan_results.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -607,12 +509,9 @@ nmap -p 20000-24000 -iL hostsup.txt -oN high_port_scan_results.txt
 | `-iL` | — | Read targets from a file. |
 | `-oN` | — | Save normal-format output. |
 
-
 This first scan finds open ports without waiting for service probes across the entire list. The displayed service names are port-number guesses. Identify each open port on one host before labeling it on the map:
 
-```bash
-nmap -sV -p <port#> <targetIP> -oN high_port_service_results.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -sV -p &lt;port#&gt; &lt;targetIP&gt; -oN high_port_service_results.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -620,14 +519,11 @@ nmap -sV -p <port#> <targetIP> -oN high_port_service_results.txt
 | `-p` | — | Only scan specified ports. |
 | `-oN` | — | Save normal-format output. |
 
-
 Replace the IP and port with one finding from `high_port_scan_results.txt`. Preserve each host's report under a different filename. An unknown service or a timeout needs follow-up, not an "absent" label. For a competition scenario, choose the port range based on that scenario.
 
 For SSH found on a high port, check authentication methods on that port:
 
-```bash
-nmap -sV -p <port#> --script ssh-auth-methods --script-args="ssh.user=<username>" <targetIP> -oN ssh_high_port_results.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -sV -p &lt;port#&gt; --script ssh-auth-methods --script-args="ssh.user=&lt;username&gt;" &lt;targetIP&gt; -oN ssh_high_port_results.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -637,14 +533,11 @@ nmap -sV -p <port#> --script ssh-auth-methods --script-args="ssh.user=<username>
 | — | `--script-args` | Provide arguments to NSE scripts. |
 | `-oN` | — | Save normal-format output. |
 
-
 Replace the port, username, and IP with your findings and assigned account. Look for `password` as in Part 3.
 
 For FTP found on a high port, check anonymous access:
 
-```bash
-nmap -sV -p <port#> --script ftp-anon <targetIP> -oN ftp_high_port_results.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -sV -p &lt;port#&gt; --script ftp-anon &lt;targetIP&gt; -oN ftp_high_port_results.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -653,24 +546,17 @@ nmap -sV -p <port#> --script ftp-anon <targetIP> -oN ftp_high_port_results.txt
 | — | `--script` | Run the selected NSE script. |
 | `-oN` | — | Save normal-format output. |
 
-
 Connect to validate FTP:
 
-```bash
-ftp <targetIP> <port#>
-```
+<div class="terminal lesson-command"><pre><code>ftp &lt;targetIP&gt; &lt;port#&gt;</code></pre></div>
 
 For an SSH service on a high port, use the assigned account and the port shown in your scan. The SSH client takes the port after lowercase `-p`.
 
-<div class="terminal">
-ssh -p &lt;port#&gt; &lt;username&gt;@&lt;targetIP&gt;
-</div>
+<div class="terminal lesson-command"><pre><code>ssh -p &lt;port#&gt; &lt;username&gt;@&lt;targetIP&gt;</code></pre></div>
 
 For Telnet found on a high port, connect:
 
-```bash
-telnet <targetIP> <port#>
-```
+<div class="terminal lesson-command"><pre><code>telnet &lt;targetIP&gt; &lt;port#&gt;</code></pre></div>
 
 Update the existing computer shape if you already mapped that IP. Otherwise add a computer for each host with password SSH, Telnet, or FTP. Label each service with its actual port and your evidence. Keep the on-network device report and service results in the fileshare, and upload the updated draw.io map.
 
@@ -700,15 +586,11 @@ On **Ubuntu**, open your download folder in the file manager, then right-click a
 
 **Short form:**
 
-```bash
-wget -O deploy-practice.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/practice/deploy-practice.py
-```
+<div class="terminal lesson-command"><pre><code>wget -O deploy-practice.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/practice/deploy-practice.py</code></pre></div>
 
 **Long form — same result:**
 
-```bash
-wget --output-document=deploy-practice.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/practice/deploy-practice.py
-```
+<div class="terminal lesson-command"><pre><code>wget --output-document=deploy-practice.py https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/challenges/practice/deploy-practice.py</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -716,9 +598,7 @@ wget --output-document=deploy-practice.py https://raw.githubusercontent.com/jboy
 
 After the download finishes, run it from the Ubuntu VM console:
 
-```bash
-sudo python3 deploy-practice.py
-```
+<div class="terminal lesson-command"><pre><code>sudo python3 deploy-practice.py</code></pre></div>
 
 Enter `135` for standard SSH, FTP, and Telnet, or `246` for all three on random high ports. Choose the FTP login mode and confirm the setup when prompted. Use an existing VM account; the script does not create passwords.
 
@@ -757,17 +637,13 @@ Use Zenmap to repeat the discovery and service scans from Parts 2–6, then upda
 
 Install Zenmap from Kali's package repository:
 
-```bash
-sudo apt install zenmap
-```
+<div class="terminal lesson-command"><pre><code>sudo apt install zenmap</code></pre></div>
 
 This is the installation command in the current [Kali tool documentation](https://www.kali.org/tools/nmap/#zenmap).
 
 Open the folder containing your team's scan files, right-click an empty area, and choose **Open Terminal Here**. Launch Zenmap from that terminal so relative input and output filenames refer to this folder:
 
-```bash
-zenmap
-```
+<div class="terminal lesson-command"><pre><code>zenmap</code></pre></div>
 
 ### 2. Set up the targets and Command field
 
@@ -777,15 +653,11 @@ On CYBER.ORG, download the current classroom list in the same terminal folder:
 
 **Short form — choose either form:**
 
-```bash
-wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cyberorg_classroom_targets.txt
-```
+<div class="terminal lesson-command"><pre><code>wget -O cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cyberorg_classroom_targets.txt</code></pre></div>
 
 **Long form — same result:**
 
-```bash
-wget --output-document=cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cyberorg_classroom_targets.txt
-```
+<div class="terminal lesson-command"><pre><code>wget --output-document=cyberorg_classroom_targets.txt https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/cybercartographer/cyberorg_classroom_targets.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -799,9 +671,7 @@ Use each **Zenmap Command** in that field. Blocks labeled **Terminal** run in yo
 
 **Zenmap Command — CYBER.ORG classroom list:**
 
-```text
-nmap -n -sn -iL cyberorg_classroom_targets.txt -oN discovery-report.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -n -sn -iL cyberorg_classroom_targets.txt -oN discovery-report.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -810,14 +680,11 @@ nmap -n -sn -iL cyberorg_classroom_targets.txt -oN discovery-report.txt
 | `-iL` | — | Read targets from a file. |
 | `-oN` | — | Save normal-format output. |
 
-
 For the LAN scenario, the equivalent subnet command is below. Replace the example network and prefix with the choice supported by your routes; on CYBER.ORG use the classroom-list command above in place of this broad scan.
 
 **Zenmap Command — subnet example:**
 
-```text
-nmap -n -sn 10.15.0.0/17 -oN discovery-report.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -n -sn 10.15.0.0/17 -oN discovery-report.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -825,22 +692,17 @@ nmap -n -sn 10.15.0.0/17 -oN discovery-report.txt
 | `-sn` | — | Host discovery; disable port scan. |
 | `-oN` | — | Save normal-format output. |
 
-
 When the scan finishes, read **Nmap Output** for hosts reported as up. `-oN discovery-report.txt` saves a readable discovery report while the output remains visible in Zenmap. To keep a timed version, replace the output filename with one such as `discovery-report_1549.txt`. [Nmap output options](https://nmap.org/book/man-output.html)
 
 Keep that report in the team fileshare and reference it from **On-network devices** on the draw.io map.
 
 **Terminal — after discovery finishes, refresh the same IP-only list used in Parts 3–6:**
 
-```bash
-awk '/^Nmap scan report for / {ip=$NF} /Host is up/ {print ip}' discovery-report.txt > hostsup.txt
-```
+<div class="terminal lesson-command"><pre><code>awk '/^Nmap scan report for / {ip=$NF} /Host is up/ {print ip}' discovery-report.txt &gt; hostsup.txt</code></pre></div>
 
 **Terminal — inspect the list before scanning:**
 
-```bash
-cat hostsup.txt
-```
+<div class="terminal lesson-command"><pre><code>cat hostsup.txt</code></pre></div>
 
 The scans below use `hostsup.txt`. Never pass `discovery-report.txt` or another formatted report to `-iL`. [Nmap target-file format](https://nmap.org/book/man-target-specification.html)
 
@@ -850,9 +712,7 @@ Run these scans one at a time in the same Zenmap window.
 
 **Zenmap Command — SSH on port 22:**
 
-```text
-nmap -p 22 --script ssh-auth-methods -iL hostsup.txt -oN ssh_auth_method_results.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -p 22 --script ssh-auth-methods -iL hostsup.txt -oN ssh_auth_method_results.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -860,15 +720,12 @@ nmap -p 22 --script ssh-auth-methods -iL hostsup.txt -oN ssh_auth_method_results
 | — | `--script` | Run the selected NSE script. |
 | `-iL` | — | Read targets from a file. |
 | `-oN` | — | Save normal-format output. |
-
 
 In **Nmap Output**, find `ssh-auth-methods` and look for `password` under its supported methods. This indicates an offered authentication method, not a successful login. [SSH authentication script](https://nmap.org/nsedoc/scripts/ssh-auth-methods.html)
 
 **Zenmap Command — Telnet on port 23:**
 
-```text
-nmap -p 23 -iL hostsup.txt -oN telnet_results.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -p 23 -iL hostsup.txt -oN telnet_results.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -876,14 +733,11 @@ nmap -p 23 -iL hostsup.txt -oN telnet_results.txt
 | `-iL` | — | Read targets from a file. |
 | `-oN` | — | Save normal-format output. |
 
-
 Use the rows marked `open` from the port-23 scan. Identify each of those services separately:
 
 **Zenmap Command — identify one port-23 service:**
 
-```text
-nmap -sV -p 23 <targetIP> -oN telnet_service_results.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -sV -p 23 &lt;targetIP&gt; -oN telnet_service_results.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -891,14 +745,11 @@ nmap -sV -p 23 <targetIP> -oN telnet_service_results.txt
 | `-p` | — | Only scan specified ports. |
 | `-oN` | — | Save normal-format output. |
 
-
 Replace `<targetIP>` with one reported IP. Then validate with the Telnet client from Part 4. A timed-out identification is incomplete.
 
 **Zenmap Command — FTP on port 21:**
 
-```text
-nmap -p 21 -sV --script ftp-anon -iL hostsup.txt -oN ftp_results.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -p 21 -sV --script ftp-anon -iL hostsup.txt -oN ftp_results.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -907,7 +758,6 @@ nmap -p 21 -sV --script ftp-anon -iL hostsup.txt -oN ftp_results.txt
 | — | `--script` | Run the selected NSE script. |
 | `-iL` | — | Read targets from a file. |
 | `-oN` | — | Save normal-format output. |
-
 
 For FTP, look for `Anonymous FTP login allowed` and any files shown by the script. It checks anonymous access and lists the server's root directory when permitted. [Anonymous FTP script](https://nmap.org/nsedoc/scripts/ftp-anon.html)
 
@@ -917,9 +767,7 @@ Select an IP under **Hosts**, then use **Ports / Hosts** to review its ports and
 
 **Zenmap Command — the same exercise range as Part 6:**
 
-```text
-nmap -p 20000-24000 -iL hostsup.txt -oN high_port_scan_results.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -p 20000-24000 -iL hostsup.txt -oN high_port_scan_results.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -927,16 +775,13 @@ nmap -p 20000-24000 -iL hostsup.txt -oN high_port_scan_results.txt
 | `-iL` | — | Read targets from a file. |
 | `-oN` | — | Save normal-format output. |
 
-
 After the identification check below, use the detected service to choose the SSH or FTP check. Replace placeholders with the reported port, IP, and assigned username.
 
 The range scan finds open ports first. Identify each host/port separately before choosing an authentication check:
 
 **Zenmap Command — identify one high-port service:**
 
-```text
-nmap -sV -p <port#> <targetIP> -oN high_port_service_results.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -sV -p &lt;port#&gt; &lt;targetIP&gt; -oN high_port_service_results.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -944,12 +789,9 @@ nmap -sV -p <port#> <targetIP> -oN high_port_service_results.txt
 | `-p` | — | Only scan specified ports. |
 | `-oN` | — | Save normal-format output. |
 
-
 **Zenmap Command — check SSH authentication:**
 
-```text
-nmap -sV -p <port#> --script ssh-auth-methods --script-args="ssh.user=<username>" <targetIP> -oN ssh_high_port_results.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -sV -p &lt;port#&gt; --script ssh-auth-methods --script-args="ssh.user=&lt;username&gt;" &lt;targetIP&gt; -oN ssh_high_port_results.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -959,14 +801,11 @@ nmap -sV -p <port#> --script ssh-auth-methods --script-args="ssh.user=<username>
 | — | `--script-args` | Provide arguments to NSE scripts. |
 | `-oN` | — | Save normal-format output. |
 
-
 For a high-port FTP service, replace the port and IP.
 
 **Zenmap Command — check anonymous FTP:**
 
-```text
-nmap -sV -p <port#> --script ftp-anon <targetIP> -oN ftp_high_port_results.txt
-```
+<div class="terminal lesson-command"><pre><code>nmap -sV -p &lt;port#&gt; --script ftp-anon &lt;targetIP&gt; -oN ftp_high_port_results.txt</code></pre></div>
 
 | Short option | Long option | Meaning |
 | --- | --- | --- |
@@ -975,32 +814,25 @@ nmap -sV -p <port#> --script ftp-anon <targetIP> -oN ftp_high_port_results.txt
 | — | `--script` | Run the selected NSE script. |
 | `-oN` | — | Save normal-format output. |
 
-
 ### 6. Validate access and collect flags
 
 Use the clients from Parts 4–6 to connect to the services Zenmap found. Replace the placeholders with your findings. For high-port SSH:
 
 **Terminal:**
 
-```bash
-ssh -p <port#> username@TARGET_IP
-```
+<div class="terminal lesson-command"><pre><code>ssh -p &lt;port#&gt; username@TARGET_IP</code></pre></div>
 
 For FTP on a discovered port:
 
 **Terminal:**
 
-```bash
-ftp <targetIP> <port#>
-```
+<div class="terminal lesson-command"><pre><code>ftp &lt;targetIP&gt; &lt;port#&gt;</code></pre></div>
 
 Use the FTP login and file-listing/download steps from Part 5. For Telnet on a discovered port:
 
 **Terminal:**
 
-```bash
-telnet <targetIP> <port#>
-```
+<div class="terminal lesson-command"><pre><code>telnet &lt;targetIP&gt; &lt;port#&gt;</code></pre></div>
 
 Use the credentials and validation steps from the earlier parts. Record any flags you find on the corresponding draw.io computer, including SSH high-port, anonymous FTP high-port, or other flags placed for the exercise. Update existing computers rather than adding duplicate shapes for the same IP.
 
@@ -1018,50 +850,60 @@ Put the saved reports and XML scans in the team fileshare and upload the updated
 
 ---
 # Other useful scans
-#### 'nmap -p 20000-24000 --open -sV -iL hostsup.txt'
+
+<div class="terminal lesson-command" id="nmap--p-20000-24000-open--sv--il-hostsuptxt"><pre><code>nmap -p 20000-24000 --open -sV -iL hostsup.txt</code></pre></div>
+
 -p 20000-24000 → Scans only high ports 20000-24000.    
 --open → Only show hosts with open ports.    
 -sV → Service version detection to identify if FTP, SSH, or Telnet is running.    
 -iL hostsup.txt → Scan the responding classroom hosts saved in Part 2.
 
-#### 'nmap -p 21,22,23 --open -sV -iL hostsup.txt'
+<div class="terminal lesson-command" id="nmap--p-212223-open--sv--il-hostsuptxt"><pre><code>nmap -p 21,22,23 --open -sV -iL hostsup.txt</code></pre></div>
+
 -p 21,22,23 → Scan for FTP, SSH, and Telnet.  
 --open → Only show hosts where a service is running.  
 -sV → Detect service versions.  
 -iL hostsup.txt → Scan only IPs listed in hostsup.txt.<br>
 
-#### 'nmap -sC -sV -p 80,443 -iL hostsup.txt'
+<div class="terminal lesson-command" id="nmap--sc--sv--p-80443--il-hostsuptxt"><pre><code>nmap -sC -sV -p 80,443 -iL hostsup.txt</code></pre></div>
+
 -sC → Runs default Nmap scripts.  
 -sV → Service version detection.  
 -p 80,443 → Scan for web servers on ports 80 (HTTP) and 443 (HTTPS).  
 
-#### 'nmap --script ftp-anon -p 21 -iL hostsup.txt'
+<div class="terminal lesson-command" id="nmap-script-ftp-anon--p-21--il-hostsuptxt"><pre><code>nmap --script ftp-anon -p 21 -iL hostsup.txt</code></pre></div>
+
 --script ftp-anon → Checks if anonymous FTP login is allowed.  
 -p 21 → Scan only FTP port.  
 
-#### 'nmap --script ssh-auth-methods -p 22 --open -iL hostsup.txt'
+<div class="terminal lesson-command" id="nmap-script-ssh-auth-methods--p-22-open--il-hostsuptxt"><pre><code>nmap --script ssh-auth-methods -p 22 --open -iL hostsup.txt</code></pre></div>
+
 --script ssh-auth-methods → Checks available SSH authentication methods.  
 -p 22 → Scan SSH port.  
 --open → Only show hosts with open ports.  
 -iL hostsup.txt → Scan a list of known hosts.<br>
 
-#### 'nmap -p- --open -T4 -sV -iL hostsup.txt'
+<div class="terminal lesson-command" id="nmap--p--open--t4--sv--il-hostsuptxt"><pre><code>nmap -p- --open -T4 -sV -iL hostsup.txt</code></pre></div>
+
 -p- → Scan **all** 65,535 ports.  
 --open → Show only hosts with open ports.  
 -T4 → Faster scan timing.  
 -sV → Service version detection.  
 
-#### 'nmap -p 135,137,445 --script smb-enum-shares -iL hostsup.txt'
+<div class="terminal lesson-command" id="nmap--p-135137445-script-smb-enum-shares--il-hostsuptxt"><pre><code>nmap -p 135,137,445 --script smb-enum-shares -iL hostsup.txt</code></pre></div>
+
 -p 135,137,445 → Scan SMB ports.  
 --script smb-enum-shares → Enumerate SMB shares.  
 -iL hostsup.txt → Use a list of known hosts.<br>
 
-#### 'nmap -p 3389 --open --script rdp-enum-encryption -iL hostsup.txt'
+<div class="terminal lesson-command" id="nmap--p-3389-open-script-rdp-enum-encryption--il-hostsuptxt"><pre><code>nmap -p 3389 --open --script rdp-enum-encryption -iL hostsup.txt</code></pre></div>
+
 -p 3389 → Scan for Remote Desktop Protocol (RDP).  
 --script rdp-enum-encryption → Detect RDP security settings.  
 -iL hostsup.txt → Use a list of known hosts.<br>
 
-#### 'nmap -sU -p 161 --open --script=snmp-info -iL hostsup.txt'
+<div class="terminal lesson-command" id="nmap--su--p-161-open-scriptsnmp-info--il-hostsuptxt"><pre><code>nmap -sU -p 161 --open --script=snmp-info -iL hostsup.txt</code></pre></div>
+
 -sU → Scan UDP ports.  
 -p 161 → Scan for SNMP services.  
 --script=snmp-info → Extract SNMP system details.  

@@ -134,6 +134,17 @@ a:hover {
         word-break: break-word;
         box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
+.lesson-command pre {
+    margin: 0;
+    white-space: inherit;
+}
+
+.lesson-command code {
+    display: block;
+    font: inherit;
+    padding-right: 4rem;
+}
+
 /* Mobile Styles */
 @media screen and (max-width: 768px) {
     /* Hide left-side TOC navigation */
