@@ -246,31 +246,31 @@ Try to use what you have learned so far to get the flags in these files:
 
 Download a practice book.
 
-```bash
+<div class="terminal">
 wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/With_the_Swamp_Fox_A_Story_of_General_Marions_Young_Spies.txt
-```
+</div>
 
 For this example, the recorded counts are **975, 779, 539**, in that order. Split the book into words and normalize the case.
 
-```bash
-LC_ALL=C tr -cs 'A-Za-z' '\n' < With_the_Swamp_Fox_A_Story_of_General_Marions_Young_Spies.txt > words.txt
-```
+<div class="terminal">
+LC_ALL=C tr -cs 'A-Za-z' '\n' &lt; With_the_Swamp_Fox_A_Story_of_General_Marions_Young_Spies.txt &gt; words.txt
+</div>
 
-```bash
-LC_ALL=C tr 'A-Z' 'a-z' < words.txt > lowercase-words.txt
-```
+<div class="terminal">
+LC_ALL=C tr 'A-Z' 'a-z' &lt; words.txt &gt; lowercase-words.txt
+</div>
 
-```bash
-sort lowercase-words.txt > sorted-words.txt
-```
+<div class="terminal">
+sort lowercase-words.txt &gt; sorted-words.txt
+</div>
 
-```bash
-uniq -c sorted-words.txt > word-counts.txt
-```
+<div class="terminal">
+uniq -c sorted-words.txt &gt; word-counts.txt
+</div>
 
-```bash
+<div class="terminal">
 awk '$1 == 975 || $1 == 779 || $1 == 539' word-counts.txt
-```
+</div>
 
 Match each count to its word and read the words in the order on the card. Join them with hyphens to get `by-that-with`. With several candidate texts, count each one separately and look for all the recorded counts in the same book.
 
@@ -298,17 +298,17 @@ Use xxd to determine the hexidecimal difference between files
 
 Create two short practice files.
 
-```bash
-printf '%s\n' 'The gate is open.' 'Report to post two.' > original.txt
-```
+<div class="terminal">
+printf '%s\n' 'The gate is open.' 'Report to post two.' &gt; original.txt
+</div>
 
-```bash
-printf '%s\n' 'The gate is Qpen.' 'Report to post t7o.' > modified.txt
-```
+<div class="terminal">
+printf '%s\n' 'The gate is Qpen.' 'Report to post t7o.' &gt; modified.txt
+</div>
 
-```bash
+<div class="terminal">
 diff -u original.txt modified.txt
-```
+</div>
 
 Compare each changed original line (`-`) with its modified line (`+`). In this example, `o` becomes `Q` and `w` becomes `7`. Read the characters from the modified file in line order to get `Q7`. Keep case and spacing visible when you compare files.
 
@@ -316,9 +316,9 @@ Compare each changed original line (`-`) with its modified line (`+`). In this e
     
 If Kali does not have the SQLite command-line client, install it.
 
-```bash
+<div class="terminal">
 sudo apt install sqlite3
-```
+</div>
 
 For a history saved under a hidden directory in a user home, use `ls -a` to show dot directories. Look for the supplied `.db` file in the browser folder and open that file with SQLite.
 
@@ -553,15 +553,15 @@ the collections contain PDFs and PNGs. These cases do not repeat the recovery wa
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/sedsearch/The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`
 Apply the key to the downloaded text. `-f` reads the rules from the key file and `-n` suppresses the usual output. Rules that end in `p` print matching lines. The source file stays intact.
 
-```bash
+<div class="terminal">
 sed -n -f sed-key.txt The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt
-```
+</div>
 
 Read the changed phrases together and research the historical event they point to. If the challenge supplies an encrypted ZIP and asks for the event year, enter the four-digit year at the password prompt. Replace `challenge.zip` with the supplied filename and quote filenames that contain spaces.
 
-```bash
+<div class="terminal">
 unzip "challenge.zip"
-```
+</div>
     
 ### Situation 2: put the "altered words" in order, and use the first letter in each word to develop a code    
 <span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingaltered_the_worlds_greatest_military_spies_and_secret_service_agentstxt"></span>
@@ -573,21 +573,21 @@ unzip "challenge.zip"
 
 Count only the terms from the downloaded list. `-F` treats each entry as literal text, `-w` matches whole words, and `-o` prints just the match. A multiword term stays on one line.
 
-```bash
-grep -o -w -F -f replaced_words.txt Altered_The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt > matches.txt
-```
+<div class="terminal">
+grep -o -w -F -f replaced_words.txt Altered_The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt &gt; matches.txt
+</div>
 
-```bash
-sort matches.txt > sorted-matches.txt
-```
+<div class="terminal">
+sort matches.txt &gt; sorted-matches.txt
+</div>
 
-```bash
-uniq -c sorted-matches.txt > term-counts.txt
-```
+<div class="terminal">
+uniq -c sorted-matches.txt &gt; term-counts.txt
+</div>
 
-```bash
+<div class="terminal">
 LC_ALL=C sort -k1,1nr -k2 term-counts.txt
-```
+</div>
 
 Read the six terms from highest count to lowest, then take the first letter of each term. In this practice file, `189 agent` and `49 Lower Canada` give you `a` and `L`. The final sort uses the spelling of the term to break ties.
 
