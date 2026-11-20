@@ -242,6 +242,38 @@ Try to use what you have learned so far to get the flags in these files:
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/msdis_practice3.zip`
     
 --- 
+### Turn recorded word counts into a passphrase
+
+Download a practice book.
+
+```bash
+wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/With_the_Swamp_Fox_A_Story_of_General_Marions_Young_Spies.txt
+```
+
+For this example, the recorded counts are **975, 779, 539**, in that order. Split the book into words and normalize the case.
+
+```bash
+LC_ALL=C tr -cs 'A-Za-z' '\n' < With_the_Swamp_Fox_A_Story_of_General_Marions_Young_Spies.txt > words.txt
+```
+
+```bash
+LC_ALL=C tr 'A-Z' 'a-z' < words.txt > lowercase-words.txt
+```
+
+```bash
+sort lowercase-words.txt > sorted-words.txt
+```
+
+```bash
+uniq -c sorted-words.txt > word-counts.txt
+```
+
+```bash
+awk '$1 == 975 || $1 == 779 || $1 == 539' word-counts.txt
+```
+
+Match each count to its word and read the words in the order on the card. Join them with hyphens to get `by-that-with`. With several candidate texts, count each one separately and look for all the recorded counts in the same book.
+
 # Part 5: Use diff and xxd to compare files  
 
 Spot the Differences:    
@@ -262,8 +294,34 @@ Use xxd to determine the hexidecimal difference between files
 </div>  
 
 ---
+### Read replacement characters in file order
+
+Create two short practice files.
+
+```bash
+printf '%s\n' 'The gate is open.' 'Report to post two.' > original.txt
+```
+
+```bash
+printf '%s\n' 'The gate is Qpen.' 'Report to post t7o.' > modified.txt
+```
+
+```bash
+diff -u original.txt modified.txt
+```
+
+Compare each changed original line (`-`) with its modified line (`+`). In this example, `o` becomes `Q` and `w` becomes `7`. Read the characters from the modified file in line order to get `Q7`. Keep case and spacing visible when you compare files.
+
 # Part 6: Use sqlite to query web browser history
     
+If Kali does not have the SQLite command-line client, install it.
+
+```bash
+sudo apt install sqlite3
+```
+
+For a history saved under a hidden directory in a user home, use `ls -a` to show dot directories. Look for the supplied `.db` file in the browser folder and open that file with SQLite.
+
 ### Determine the visited sites in the database
 Navigate the the directory with the .db file in it
 
@@ -374,7 +432,7 @@ Investigate specific weeks by getting a count of the sites visited during that w
 `ORDER BY visit_count DESC`    
 `LIMIT 5;`    
     
-Here we can see the url that was suspicous:
+The first row shows the most visited URL during the selected week. If the task asks for the busiest week, use the week with the highest count from the weekly results. Read the URL from SQLite and use the challenge’s flag template to determine which part to submit.
 <div style="text-align: center;">
   <img src="{{ 'workrole/msdisin/images/investigate_week_by_traffic.png' | relative_url }}" alt="worldsgreatestspies_cover" style="max-width: 80%; height: auto;">
 </div>  
@@ -493,7 +551,17 @@ the collections contain PDFs and PNGs. These cases do not repeat the recovery wa
 <span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingsedsearchthe_worlds_greatest_military_spies_and_secret_service_agentstxt"></span>
 
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/sedsearch/The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt`
-now use sed -n -f <sed text here> "Name_of_text_to_Change_Here.txt" to reveal the event
+Apply the key to the downloaded text. `-f` reads the rules from the key file and `-n` suppresses the usual output. Rules that end in `p` print matching lines. The source file stays intact.
+
+```bash
+sed -n -f sed-key.txt The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt
+```
+
+Read the changed phrases together and research the historical event they point to. If the challenge supplies an encrypted ZIP and asks for the event year, enter the four-digit year at the password prompt. Replace `challenge.zip` with the supplied filename and quote filenames that contain spaces.
+
+```bash
+unzip "challenge.zip"
+```
     
 ### Situation 2: put the "altered words" in order, and use the first letter in each word to develop a code    
 <span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingaltered_the_worlds_greatest_military_spies_and_secret_service_agentstxt"></span>
@@ -503,10 +571,26 @@ now use sed -n -f <sed text here> "Name_of_text_to_Change_Here.txt" to reveal th
 
 #### `wget https://raw.githubusercontent.com/jboyce1/ppsCTF/main/workrole/msdisin/challenges/replaced_words.txt`
 
- - Command to extract top altered words:    
-#### `grep -o -w -f replaced_words.txt Altered_Federalist_Papers.txt | sort | uniq -c | sort -nr`
+Count only the terms from the downloaded list. `-F` treats each entry as literal text, `-w` matches whole words, and `-o` prints just the match. A multiword term stays on one line.
 
-    
+```bash
+grep -o -w -F -f replaced_words.txt Altered_The_Worlds_Greatest_Military_Spies_and_Secret_Service_Agents.txt > matches.txt
+```
+
+```bash
+sort matches.txt > sorted-matches.txt
+```
+
+```bash
+uniq -c sorted-matches.txt > term-counts.txt
+```
+
+```bash
+LC_ALL=C sort -k1,1nr -k2 term-counts.txt
+```
+
+Read the six terms from highest count to lowest, then take the first letter of each term. In this practice file, `189 agent` and `49 Lower Canada` give you `a` and `L`. The final sort uses the spelling of the term to break ties.
+
 ### Situation 3: find the most visited site in the mrboyce_traffic_history.db    
 <span id="wget-httpsrawgithubusercontentcomjboyce1ppsctfmainclassesmsdisintrainingmrboyce_traffic_historydb"></span>
 

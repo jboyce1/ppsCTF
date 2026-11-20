@@ -556,11 +556,31 @@ Download a file you want to inspect:
 get <filename>
 ```
 
+If `ls` shows a subdirectory such as `hints`, use the FTP prompt to enter it.
+
+```text
+cd hints
+```
+
+List the files and use `get` as above. For a database, image, or archive, select binary mode before the transfer so the client preserves the file bytes.
+
+```text
+binary
+```
+
 Disconnect:
 
 ```bash
 bye
 ```
+
+At the Kali shell, open the downloaded file. For example, if you downloaded `hint.txt`:
+
+```bash
+cat hint.txt
+```
+
+One computer may offer several services on the same IP. Check the service and port in your scan before choosing which client to open. If a classroom handoff points to Telnet on the same computer, go to Part 4 and use the same IP with the assigned classroom account.
 
 Add or update the computer on the map with its IP, FTP port, and whether anonymous login or file retrieval worked. Share `ftp_results.txt`.
 
@@ -638,6 +658,12 @@ Connect to validate FTP:
 
 ```bash
 ftp <targetIP> <port#>
+```
+
+For an SSH service on a high port, use the assigned account and the port shown in your scan. The SSH client takes the port after lowercase `-p`.
+
+```bash
+ssh -p <port#> <username>@<targetIP>
 ```
 
 For Telnet found on a high port, connect:
