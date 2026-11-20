@@ -23,8 +23,8 @@ logging.basicConfig(
 # Box ZIPs beside this script
 # -----------------------------------------------------------------------------
 BOX_HASHES = {
-    "nikoli.zip": "6853f3ec5040cb89438f751abd0ea920033c9352197573f16514140761a76b93",
-    "yuri.zip": "082d30569fe382f320f2e9691819d0f71cfa29993c896781776a2cd05c7fb97b",
+    "nikoli.zip": "a7213b3d36c7867a2250de2a6ae9c72c11c886ddf4a80110697673da6118d11d",
+    "yuri.zip": "bde497d759ef45c7e0d22235f5e923f102bb8e22ca019dfdc3b3f80c3f34e832",
 }
 
 # Challenges folder containing the ZIP files
@@ -314,6 +314,9 @@ def main():
     if os.geteuid() != 0:
         raise RuntimeError('Run this script with sudo.')
     archive_folder = prepare_archives(CHALLENGES_DIR)
+
+    logging.info("Set a new private password for the ubuntu account before setup.")
+    subprocess.run(["passwd", "ubuntu"], check=True)
     # 1) Use the staged ZIPs beside this script; create users without sudo access.
     create_user(NIKOLI_USER, NIKOLI_PASS)
     create_user(YURI_USER, YURI_PASS)

@@ -8,6 +8,9 @@ sudo git clone https://github.com/jboyce1/ppsCTF.git /root/ppsCTF
 2. Run the setup:
 sudo python3 /root/ppsCTF/challenges/rustycurtain_v2/deploy_rustycurtain_1.py
 
+At the first prompt, set a new private password for the ubuntu account.
+Setup stops if the password change fails.
+
 At the end, set a new LOCAL root password. Write down this VM's IP.
 
 COMPUTER 2 (Nikoli, Yuri)
@@ -17,6 +20,9 @@ sudo git clone https://github.com/jboyce1/ppsCTF.git /root/ppsCTF
 
 2. Run the setup:
 sudo python3 /root/ppsCTF/challenges/rustycurtain_v2/deploy_rustycurtain_2.py
+
+At the first prompt, set a new private password for the ubuntu account.
+Setup stops if the password change fails.
 
 Write down the printed FTP and SSH ports. At the end, set a new LOCAL
 root password. Write down this VM's IP.

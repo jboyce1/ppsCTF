@@ -5,6 +5,7 @@ CTF RustyCurtain Deployer (FTP/Telnet/SSH) — clean, predictable, and testable.
 What it does:
 - Requires running as root (sudo).
 - Verifies the three ZIPs beside this script before setup.
+- Prompts for a new ubuntu password before configuring the challenge.
 - Creates users: ivan, tanya, boris and sets passwords.
 - Extracts ivan.zip -> /srv/ftp (anonymous FTP drop)
          tanya.zip -> /home/tanya/Desktop
@@ -42,9 +43,9 @@ logging.basicConfig(
 # Config
 # -----------------------------------------------------------------------------
 BOX_HASHES = {
-    "ivan.zip": "99b735014a69b2d50e0e2ab00ff5aa328b7734c0315f7019f6517687cc81c8bf",
-    "tanya.zip": "2f0799e2d211666b221ea7113e5d42c1e9237259e258e1d050d27ed82da562a5",
-    "boris.zip": "98460b330021da6de1b5763ecd84cb6459d3949ac5558a2327dffedb74eae4ba",
+    "ivan.zip": "3a4ead1decafe336d2630dd20f7472fc76d6ad307576b951f276ef0c80bb4c67",
+    "tanya.zip": "50a27f138212b07ed2ee22374444ee0e85edc7878bbc18a57f703dcd531b6054",
+    "boris.zip": "bfc753e94d0edaea003df7ac78ab2cbde9201658e0b8f76a271ee56751801e83",
 }
 
 USERS = [
@@ -317,6 +318,9 @@ def main():
 
     invoking_user, invoking_home = get_invoking_user_home()
     challenges_path = str(prepare_archives(Path(__file__).resolve().parent))
+
+    logging.info("Set a new private password for the ubuntu account before setup.")
+    subprocess.run(["passwd", "ubuntu"], check=True)
 
     logging.info("Invoking user: %s", invoking_user)
     logging.info("Challenge ZIP path: %s", challenges_path)

@@ -1,0 +1,2 @@
+You must use Telnet for the next layer of this box (same IP address, different user).
+Go back to the CyberCartographer lesson and use what you learned about identifying services.

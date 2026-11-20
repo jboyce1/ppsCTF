@@ -1,0 +1,6 @@
+RUSTY CURTAIN
+Field brief
+
+The relay missed its last check-in. A dispatch was due through the switchboard, but the receiving station has no record of it. We need to know how far it got and which station last handled it.
+
+Start with Ivan's drop. The handoff is the last message we can place with confidence. Follow the records from there. Copies may turn up along the way. Look for what ties each one to the dispatch.
